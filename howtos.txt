@@ -1,0 +1,2 @@
+add [(ngModel)] to <input />: 
+https://www.cloudhadoop.com/angular-get-input-value-multiple-ways/#:~:text=%206%20ways%20to%20get%20input%20text%20value,2-way%20binding.%20For%20Angular%20versions%2C%20less...%20More%20
