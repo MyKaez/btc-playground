@@ -1,14 +1,18 @@
 <div class="toolbar" role="banner">
-  <img
-    width="40"
-    alt="Bitcoin Logo"
-    src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=022"
-  />
-  <span>The Bitcoin Playground</span>
+  <div>
+    <img
+      width="40"
+      alt="Bitcoin Logo"
+      src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=022"
+    />
+    <span>The Bitcoin Playground</span>
+  </div>
+  <div>
+    <button mat-button (click)="navigateTo('home')">Home</button>
+    <button mat-button (click)="navigateTo('pow')">PoW Simulation</button>
+  </div>
 </div>
 
 <div class="content" role="main">
-  <app-pow></app-pow>
+  <router-outlet></router-outlet>
 </div>
-
-<router-outlet></router-outlet>

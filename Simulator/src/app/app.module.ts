@@ -13,13 +13,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './simulators/vid/vid.component';
-
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PowComponent,
-    VidComponent
+    VidComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
