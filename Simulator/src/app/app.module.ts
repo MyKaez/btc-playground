@@ -9,6 +9,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './simulators/vid/vid.component';
 
@@ -29,7 +31,9 @@ import { VidComponent } from './simulators/vid/vid.component';
     MatTabsModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    MatCardModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
