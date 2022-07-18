@@ -15,7 +15,7 @@ export class PowComponent implements OnInit {
   private _blockNo: number = 0;
 
   public dataSource: MatTableDataSource<Block>;
-  public processedBlockTimes: number = 0;
+  public executedHashrates: number = 0;
   public stopOnFoundBlock: boolean = true;
 
   constructor() {
@@ -38,7 +38,7 @@ export class PowComponent implements OnInit {
   }
 
   public get displayedColumns(): string[] {
-    return ['id', 'isValid', 'serialNo', 'processTime', 'difficulty'];
+    return ['id', 'isValid', 'serialNo', 'hashRate', 'difficulty'];
   }
 
   public get hashRate(): number {
@@ -123,7 +123,7 @@ export class PowComponent implements OnInit {
           }
           await this.delay(delay);
         }
-        this.processedBlockTimes++;
+        this.executedHashrates++;
       }
       resolve('done');
     });
@@ -133,7 +133,7 @@ export class PowComponent implements OnInit {
     const id = this.createBlockId();
     const block = {
       id: id,
-      processTime: this.processedBlockTimes,
+      hashRate: this.executedHashrates,
       difficulty: this.probability,
       serialNo: ++this._blockNo,
       isValid: this.probability === 1
@@ -184,7 +184,7 @@ export class PowComponent implements OnInit {
     }
     this._blocks = [];
     this.dataSource.data = this.blocks;
-    this.processedBlockTimes = 0;
+    this.executedHashrates = 0;
     this._blockNo = 0;
   }
 

@@ -1,6 +1,6 @@
 export interface Block {
     id: string;
-    processTime: number;
+    hashRate: number;
     difficulty: number;
     serialNo: number;
     isValid: boolean;
