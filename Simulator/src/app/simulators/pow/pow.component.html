@@ -34,12 +34,10 @@
                 </mat-form-field>
             </div>
             <div>
-                <mat-checkbox (click)="stopOnFoundBlock=!stopOnFoundBlock">Stoppen bei gefundenem Block</mat-checkbox>
-            </div>
-            <div>
                 <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
                 <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
                 <button mat-button (click)="clear()" [disabled]="isProcessing || blocks.length === 0">Clear</button>
+                <mat-checkbox (click)="stopOnFoundBlock=!stopOnFoundBlock">Stoppen bei gefundenem Block</mat-checkbox>
             </div>
             <div>
                 <span *ngIf="isProcessing"><b>Simulation gestartet...</b></span>
