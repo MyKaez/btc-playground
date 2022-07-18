@@ -172,7 +172,7 @@ export class PowComponent implements OnInit {
     let uuidValue = "", k, randomValue;
     for (k = 0; k < 64; k++) {
       randomValue = Math.random() * 16 | 0;
-      uuidValue += (k == 12 ? 4 : (k == 16 ? (randomValue & 3 | 8) : randomValue)).toString(16);
+      uuidValue += randomValue.toString(16);
     }
     return uuidValue;
   }
