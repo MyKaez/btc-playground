@@ -15,6 +15,7 @@ export class PowComponent implements OnInit {
 
   public dataSource: MatTableDataSource<Block>;
   public processedBlockTimes: number = 0;
+  public stopOnFoundBlock: boolean = false;
 
   constructor() { 
     this.dataSource = new MatTableDataSource(this.blocks);
@@ -88,6 +89,10 @@ export class PowComponent implements OnInit {
         for (let i = 0; i < this._hashRate; i++){  
           const block = this.createBlock(validationInput[0], validationInput[1]);
           this.blocks.push(block);
+          if(this.stopOnFoundBlock && block.isValid){
+            this.stop();
+            break;
+          }
           await this.delay(delay);
         }
         this.processedBlockTimes++;

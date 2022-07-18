@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PowComponent } from './simulators/pow/pow.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './simulators/vid/vid.component';
 
@@ -23,7 +24,8 @@ import { VidComponent } from './simulators/vid/vid.component';
     AppRoutingModule,
     ReactiveFormsModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

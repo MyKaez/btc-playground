@@ -2,7 +2,7 @@
 <mat-tab-group mat-align-tabs="start" selectedIndex="1">
     <mat-tab label="Erklärvideo">
         <app-vid [video]="'https://www.youtube.com/embed/E2ee5ewEddE'"></app-vid>
-    </mat-tab>>
+    </mat-tab>
     <mat-tab label="Simulation">
         <div>
             <h2>Daten</h2>
@@ -47,6 +47,7 @@
                         </td>
                     </tr>
                 </table>
+                <mat-checkbox (click)="stopOnFoundBlock = !stopOnFoundBlock">Stoppen bei gefundenem Block</mat-checkbox>
             </div>
             <div>
                 <button (click)="start()" [disabled]="isProcessing">Start</button>
