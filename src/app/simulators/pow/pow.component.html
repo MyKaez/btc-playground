@@ -17,22 +17,22 @@
             <mat-card-content>
                 <mat-form-field appearance="fill">
                     <mat-label><b>Wahrscheinlichkeit</b> [für richtigen Block]</mat-label>
-                    <input type="text" matInput [ngModel]="probability" readonly="true">
+                    <input type="number" matInput [ngModel]="probability" readonly="true">
                 </mat-form-field>
                 = 1 /
                 <mat-form-field appearance="fill">
                     <mat-label><b>Hashrate</b> [Hashes pro Blockzeit]</mat-label>
-                    <input type="text" matInput [(ngModel)]="hashRate">
+                    <input type="number" matInput [(ngModel)]="hashRate">
                 </mat-form-field>
                 *
                 <mat-form-field appearance="fill">
                     <mat-label><b>Blockzeit</b> [in Sekunden]</mat-label>
-                    <input type="text" matInput [(ngModel)]="blockTime">
+                    <input type="number" matInput [(ngModel)]="blockTime">
                 </mat-form-field>
                 ->
                 <mat-form-field appearance="fill">
                     <mat-label><b>Erwartete ID Präfixe</b></mat-label>
-                    <input type="list" matInput [ngModel]="expectedPrefixes" readonly="true">
+                    <input type="text" matInput [ngModel]="expectedPrefixes" readonly="true">
                 </mat-form-field>
             </mat-card-content>
             <mat-card-actions>
