@@ -7,12 +7,14 @@ import { PowComponent } from './simulators/pow/pow.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { VidComponent } from './simulators/vid/vid.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PowComponent
+    PowComponent,
+    VidComponent
   ],
   imports: [
     BrowserModule,
