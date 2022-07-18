@@ -79,7 +79,22 @@ export class PowComponent implements OnInit {
     for (let i = 0; i < probability; i++) {
       res.push(x + i.toString(16));
     }
-    return res.reduce((prev, cur) => prev += ', ' + cur, '').substring(2);
+    if (res.length === 1) {
+      return res[0];
+    }
+    return res[0] + '-' + res[res.length - 1];
+  }
+
+  public get hexaDecimalFormula(): string {
+    const input = this.getValidationInput();
+    const leadingZero = input[0];
+    const probability = input[1];
+    let x = '';
+    for (let i = 0; i < leadingZero; i++) {
+      x += '1/16 * ';
+    }
+    x += probability + '/16';
+    return x;
   }
 
   ngOnInit(): void {
