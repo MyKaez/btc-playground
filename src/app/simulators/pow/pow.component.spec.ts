@@ -8,9 +8,9 @@ describe('PowComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PowComponent ]
+      declarations: [PowComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PowComponent);
     component = fixture.componentInstance;

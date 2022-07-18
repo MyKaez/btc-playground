@@ -10,10 +10,10 @@ export class AppComponent {
   title = 'Simulator';
 
   constructor(private router: Router) {
-    
+
   }
 
-  navigateTo(link: string): void{
+  navigateTo(link: string): void {
     this.router.navigate(['/' + link]);
   }
 }

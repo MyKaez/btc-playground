@@ -7,13 +7,13 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./vid.component.scss']
 })
 export class VidComponent {
-  constructor(private sanitizer: DomSanitizer) { 
+  constructor(private sanitizer: DomSanitizer) {
   }
-  
+
   @Input()
   public video: string = '';
 
-  public get videoLink(): SafeResourceUrl{
+  public get videoLink(): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(this.video);
   }
 }
