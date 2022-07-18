@@ -63,6 +63,10 @@ export class PowComponent implements OnInit {
     this._blockTime = value;
   }
 
+  public get expectedAmountOfBlocks(): number {
+    return 1 / this.probability;
+  }
+
   public get expectedPrefixes(): string {
     const res = [];
     const input = this.getValidationInput();
@@ -116,7 +120,7 @@ export class PowComponent implements OnInit {
       id: id,
       processTime: this.processedBlockTimes,
       difficulty: this.probability,
-      serialNo: this._blockNo++,
+      serialNo: ++this._blockNo,
       isValid: this.probability === 1
         ? true
         : this.validate(id, leadingZeros, probability)
@@ -148,7 +152,7 @@ export class PowComponent implements OnInit {
     }
     let relevantChar = id.substring(leadingZeros, leadingZeros + 1);
     let hex = '0x' + relevantChar;
-    return Number.parseInt(hex) <= probability;
+    return Number.parseInt(hex) < probability;
   }
 
   delay(ms: number) {

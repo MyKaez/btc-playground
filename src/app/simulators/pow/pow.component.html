@@ -15,25 +15,33 @@
                 </p>
             </mat-card-header>
             <mat-card-content>
-                <mat-form-field appearance="fill">
-                    <mat-label><b>Wahrscheinlichkeit</b> [für richtigen Block]</mat-label>
-                    <input type="number" matInput [ngModel]="probability" readonly="true">
-                </mat-form-field>
-                = 1 /
-                <mat-form-field appearance="fill">
-                    <mat-label><b>Hashrate</b> [Hashes pro Sekunde]</mat-label>
-                    <input type="number" matInput [(ngModel)]="hashRate">
-                </mat-form-field>
-                *
-                <mat-form-field appearance="fill">
-                    <mat-label><b>Blockzeit</b> [in Sekunden]</mat-label>
-                    <input type="number" matInput [(ngModel)]="blockTime">
-                </mat-form-field>
-                ->
-                <mat-form-field appearance="fill">
-                    <mat-label><b>Erwartete ID Präfixe</b></mat-label>
-                    <input type="text" matInput [ngModel]="expectedPrefixes" readonly="true">
-                </mat-form-field>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label><b>Wahrscheinlichkeit</b> [für richtigen Block]</mat-label>
+                        <input type="number" matInput [ngModel]="probability" readonly="true">
+                    </mat-form-field>
+                    = 1 /
+                    <mat-form-field appearance="fill">
+                        <mat-label><b>Hashrate</b> [Hashes pro Sekunde]</mat-label>
+                        <input type="number" matInput [(ngModel)]="hashRate">
+                    </mat-form-field>
+                    *
+                    <mat-form-field appearance="fill">
+                        <mat-label><b>Blockzeit</b> [in Sekunden]</mat-label>
+                        <input type="number" matInput [(ngModel)]="blockTime">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label><b>Anzahl Blöcke nach Wahrscheinlichkeit</b></mat-label>
+                        <input type="number" matInput [ngModel]="expectedAmountOfBlocks" readonly="true">
+                    </mat-form-field>
+                    -
+                    <mat-form-field appearance="fill">
+                        <mat-label><b>Erwartete ID Präfixe</b></mat-label>
+                        <input type="text" matInput [ngModel]="expectedPrefixes" readonly="true">
+                    </mat-form-field>
+                </div>
             </mat-card-content>
             <mat-card-actions>
                 <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
