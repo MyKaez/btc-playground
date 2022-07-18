@@ -12,47 +12,34 @@
                     Auftrittswahrscheinlichkeit: 1 / (Hashrate im Netzwerk * Blockzeit) 
                 </span>
             </p>
-            <div>
-                <table>
-                    <tr>
-                        <td>
-                            <b>Hashrate</b> [Hashes pro Blockzeit]:
-                        </td>
-                        <td>
-                            <input type="text" [(ngModel)]="hashRate" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Blockzeit</b> [in Sekunden]:
-                        </td>
-                        <td>
-                            <input type="text" [(ngModel)]="blockTime" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Wahrscheinlichkeit</b> [für richtigen Block]:
-                        </td>
-                        <td>
-                            {{probability}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Erwartete ID Präfixe</b>:
-                        </td>
-                        <td>
-                            {{expectedPrefixes}}
-                        </td>
-                    </tr>
-                </table>
-                <mat-checkbox (click)="stopOnFoundBlock = !stopOnFoundBlock">Stoppen bei gefundenem Block</mat-checkbox>
+            <div>                
+                <mat-form-field appearance="fill">
+                    <mat-label><b>Wahrscheinlichkeit</b> [für richtigen Block]</mat-label>
+                    <input type="text" matInput [ngModel]="probability" readonly="true">
+                </mat-form-field>
+                = 1 / 
+                <mat-form-field appearance="fill">
+                    <mat-label><b>Hashrate</b> [Hashes pro Blockzeit]</mat-label>
+                    <input type="text" matInput [(ngModel)]="hashRate">
+                </mat-form-field>
+                *
+                <mat-form-field appearance="fill">
+                    <mat-label><b>Blockzeit</b> [in Sekunden]</mat-label>
+                    <input type="text" matInput [(ngModel)]="blockTime">
+                </mat-form-field>
+                ->
+                <mat-form-field appearance="fill">
+                    <mat-label><b>Erwartete ID Präfixe</b></mat-label>
+                    <input type="list" matInput [ngModel]="expectedPrefixes" readonly="true">
+                </mat-form-field>
             </div>
             <div>
-                <button (click)="start()" [disabled]="isProcessing">Start</button>
-                <button (click)="stop()" [disabled]="!isProcessing">Stop</button>
-                <button (click)="clear()" [disabled]="isProcessing || blocks.length === 0">Clear</button>
+                <mat-checkbox (click)="stopOnFoundBlock=!stopOnFoundBlock">Stoppen bei gefundenem Block</mat-checkbox>
+            </div>
+            <div>
+                <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
+                <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
+                <button mat-button (click)="clear()" [disabled]="isProcessing || blocks.length === 0">Clear</button>
             </div>
             <div>
                 <span *ngIf="isProcessing"><b>Simulation gestartet...</b></span>

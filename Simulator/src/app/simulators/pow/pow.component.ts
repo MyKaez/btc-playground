@@ -55,7 +55,7 @@ export class PowComponent implements OnInit {
       this._blockTime = Number.parseFloat(value);
   }
 
-  public get expectedPrefixes(): string[]{
+  public get expectedPrefixes(): string{
     const res = [];
     const input = this.getValidationInput();
     const leadingZero = input[0];
@@ -67,7 +67,7 @@ export class PowComponent implements OnInit {
     for (let i = 0; i < probability; i++){
       res.push(x + i.toString(16));
     }
-    return res;
+    return res.reduce((prev, cur)=> prev += ', ' + cur, '').substring(2);
   }
 
   ngOnInit(): void {

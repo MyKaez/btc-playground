@@ -7,6 +7,8 @@ import { PowComponent } from './simulators/pow/pow.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './simulators/vid/vid.component';
 
@@ -25,7 +27,9 @@ import { VidComponent } from './simulators/vid/vid.component';
     ReactiveFormsModule,
     MatTableModule,
     MatTabsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatButtonModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
