@@ -21,7 +21,7 @@
                 </mat-form-field>
                 = 1 /
                 <mat-form-field appearance="fill">
-                    <mat-label><b>Hashrate</b> [Hashes pro Blockzeit]</mat-label>
+                    <mat-label><b>Hashrate</b> [Hashes pro Sekunde]</mat-label>
                     <input type="number" matInput [(ngModel)]="hashRate">
                 </mat-form-field>
                 *
@@ -39,7 +39,9 @@
                 <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
                 <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
                 <button mat-button (click)="clear()" [disabled]="isProcessing || blocks.length === 0">Clear</button>
-                <mat-checkbox (click)="stopOnFoundBlock=!stopOnFoundBlock">Stoppen bei gefundenem Block</mat-checkbox>
+                <mat-checkbox [(ngModel)]="stopOnFoundBlock">
+                    Stoppen bei gefundenem Block
+                </mat-checkbox>
             </mat-card-actions>
             <mat-card-footer>
                 <span *ngIf="isProcessing"><b>Simulation gestartet...</b></span>

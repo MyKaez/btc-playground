@@ -11,12 +11,12 @@ export class PowComponent implements OnInit {
   private _blocks: Block[] = [];
   private _runJob: boolean = false;
   private _hashRate: number = 10;
-  private _blockTime: number = 1;
+  private _blockTime: number = 10;
   private _blockNo: number = 0;
 
   public dataSource: MatTableDataSource<Block>;
   public processedBlockTimes: number = 0;
-  public stopOnFoundBlock: boolean = false;
+  public stopOnFoundBlock: boolean = true;
 
   constructor() {
     this.dataSource = new MatTableDataSource(this.blocks);
@@ -91,7 +91,7 @@ export class PowComponent implements OnInit {
 
   createJob(): Promise<string> {
     return new Promise(async resolve => {
-      const delay = 1000 / this.hashRate * this.blockTime;
+      const delay = 1000 / this.hashRate;
       const validationInput = this.getValidationInput();
       while (this._runJob) {
         for (let i = 0; i < this.hashRate; i++) {
