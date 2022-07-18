@@ -140,7 +140,10 @@ export class PowComponent implements OnInit {
 
   validate(id: string, leadingZeros: number, probability: number): boolean {
     let zerosOnly = id.substring(0, leadingZeros);
-    if (zerosOnly.replace('0', '').length > 0) {
+    for (let i = 0; i < leadingZeros; i++) {
+      zerosOnly = zerosOnly.replace('0', '');
+    }
+    if (zerosOnly.length > 0) {
       return false;
     }
     let relevantChar = id.substring(leadingZeros, leadingZeros + 1);
@@ -160,9 +163,7 @@ export class PowComponent implements OnInit {
     if (this._runJob) {
       return;
     }
-    for (let i = this.blocks.length; i > 0; i--) {
-      this.blocks.pop();
-    }
+    this._blocks = [];
     this.dataSource.data = this.blocks;
     this.processedBlockTimes = 0;
   }
