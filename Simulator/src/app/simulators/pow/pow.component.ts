@@ -78,7 +78,7 @@ export class PowComponent implements OnInit {
       return;
     }
     this._runJob = true;
-    await this.createJob();
+    await this.createJob().then(_ => this.dataSource.data = this.blocks);
   }
 
   createJob():Promise<string> {
@@ -86,15 +86,17 @@ export class PowComponent implements OnInit {
       const delay = 1000 / this._hashRate * this._blockTime;
       const validationInput = this.getValidationInput();
       while(this._runJob) {
+        let blocks = [];
         for (let i = 0; i < this._hashRate; i++){  
           const block = this.createBlock(validationInput[0], validationInput[1]);
-          this.blocks.push(block);
+          blocks.push(block);
           if(this.stopOnFoundBlock && block.isValid){
             this.stop();
             break;
           }
           await this.delay(delay);
         }
+        this._blocks = this.blocks.concat(blocks);
         this.processedBlockTimes++;
       }
       resolve('done');
@@ -145,7 +147,6 @@ export class PowComponent implements OnInit {
 
   stop(): void{
     this._runJob = false;
-    this.dataSource.data = this.blocks;
   }
 
   clear(): void {
