@@ -12,6 +12,7 @@ export class PowComponent implements OnInit {
   private _runJob: boolean = false;
   private _hashRate: number = 10;
   private _blockTime: number = 1;
+  private _blockNo: number = 0;
 
   public dataSource: MatTableDataSource<Block>;
   public processedBlockTimes: number = 0;
@@ -85,25 +86,24 @@ export class PowComponent implements OnInit {
       return;
     }
     this._runJob = true;
-    await this.createJob().then(_ => this.dataSource.data = this.blocks);
+    await this.createJob();
   }
 
   createJob(): Promise<string> {
     return new Promise(async resolve => {
-      const delay = 1000 / this._hashRate * this._blockTime;
+      const delay = 1000 / this.hashRate * this.blockTime;
       const validationInput = this.getValidationInput();
       while (this._runJob) {
-        let blocks = [];
-        for (let i = 0; i < this._hashRate; i++) {
+        for (let i = 0; i < this.hashRate; i++) {
           const block = this.createBlock(validationInput[0], validationInput[1]);
-          blocks.push(block);
+          this.blocks.push(block);
+          this.dataSource.data = this.blocks.reverse().filter((_, i) => i <= 50);
           if (this.stopOnFoundBlock && block.isValid) {
             this.stop();
             break;
           }
           await this.delay(delay);
         }
-        this._blocks = this.blocks.concat(blocks);
         this.processedBlockTimes++;
       }
       resolve('done');
@@ -116,7 +116,7 @@ export class PowComponent implements OnInit {
       id: id,
       processTime: this.processedBlockTimes,
       difficulty: this.probability,
-      serialNo: this.blocks.length,
+      serialNo: this._blockNo++,
       isValid: this.probability === 1
         ? true
         : this.validate(id, leadingZeros, probability)
@@ -151,7 +151,6 @@ export class PowComponent implements OnInit {
     return Number.parseInt(hex) <= probability;
   }
 
-
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -167,6 +166,7 @@ export class PowComponent implements OnInit {
     this._blocks = [];
     this.dataSource.data = this.blocks;
     this.processedBlockTimes = 0;
+    this._blockNo = 0;
   }
 
   createBlockId(): string {
