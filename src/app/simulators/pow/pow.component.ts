@@ -10,7 +10,7 @@ import { Block } from '../block';
 export class PowComponent implements OnInit {
   private _blocks: Block[] = [];
   private _runJob: boolean = false;
-  private _hashRate: number = 1;
+  private _hashRate: number = 10;
   private _blockTime: number = 1;
 
   public dataSource: MatTableDataSource<Block>;
@@ -26,6 +26,9 @@ export class PowComponent implements OnInit {
   }
 
   public get probability(): number {
+    if (this._hashRate === 0 || this._blockTime === 0) {
+      return Number.NaN;
+    }
     return 1 / (this._hashRate * this._blockTime);
   }
 
@@ -37,22 +40,26 @@ export class PowComponent implements OnInit {
     return ['id', 'isValid', 'serialNo', 'processTime', 'difficulty'];
   }
 
-  public get hashRate(): string {
-    return this._hashRate.toString();
+  public get hashRate(): number {
+    return this._hashRate;
   }
 
-  public set hashRate(value: string) {
-    if (!Number.isNaN(value))
-      this._hashRate = Number.parseFloat(value);
+  public set hashRate(value: number) {
+    if (value <= 0 || Number.isNaN(value)) {
+      return;
+    }
+    this._hashRate = value;
   }
 
-  public get blockTime(): string {
-    return this._blockTime.toString();
+  public get blockTime(): number {
+    return this._blockTime;
   }
 
-  public set blockTime(value: string) {
-    if (!Number.isNaN(value))
-      this._blockTime = Number.parseFloat(value);
+  public set blockTime(value: number) {
+    if (value <= 0 || Number.isNaN(value)) {
+      return;
+    }
+    this._blockTime = value;
   }
 
   public get expectedPrefixes(): string {
