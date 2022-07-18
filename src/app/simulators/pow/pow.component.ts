@@ -151,6 +151,7 @@ export class PowComponent implements OnInit {
     return Number.parseInt(hex) <= probability;
   }
 
+
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
