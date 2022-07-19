@@ -22,7 +22,7 @@ export class PowService {
 
     get expectedPrefixes(): string {
         const res = [];
-        const input = this.getValidationInput();
+        const input = this.validationInput;
         let x = '';
         for (let i = 0; i < input[0]; i++) {
             x += '0';
@@ -37,7 +37,7 @@ export class PowService {
     }
 
     get hexaDecimalFormula(): string {
-        const input = this.getValidationInput();
+        const input = this.validationInput;
         let x = '';
         for (let i = 0; i < input[0]; i++) {
             x += '1/16 * ';
@@ -46,7 +46,7 @@ export class PowService {
         return x;
     }
 
-    getValidationInput(): [leadingZeros: number, probability: number] {
+    get validationInput(): [leadingZeros: number, probability: number] {
         let leadingZeros = 0;
         let probability = this.probability;
         for (let i = 0; i < BLOCK_ID_LENGTH; i++) {

@@ -85,7 +85,7 @@ export class PowComponent implements OnInit {
   createJob(): Promise<string> {
     return new Promise(async resolve => {
       const timeToWait = 1000 / this.hashRate;
-      const validationInput = this.powService.getValidationInput();
+      const validationInput = this.powService.validationInput;
       while (this.isProcessing) {
         for (let i = 0; i < this.hashRate; i++) {
           const block = this.powService.createBlock(
