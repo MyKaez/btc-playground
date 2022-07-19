@@ -4,99 +4,117 @@
         <app-vid [video]="'https://www.youtube.com/embed/E2ee5ewEddE'"></app-vid>
     </mat-tab>
     <mat-tab label="Simulation">
-        <mat-card>
-            <mat-card-title>Daten</mat-card-title>
-            <mat-card-header>
-                <p>
-                    <b>Die Formel:</b>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Die Daten</h2>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <b>Die Formel: </b>
                     <span>
                         Auftrittswahrscheinlichkeit: 1 / (Hashrate im Netzwerk * Blockzeit)
                     </span>
-                </p>
-            </mat-card-header>
-            <mat-card-content>
-                <div>
-                    <mat-form-field appearance="fill">
-                        <mat-label><b>Wahrscheinlichkeit</b> [für richtigen Block]</mat-label>
-                        <input type="number" matInput [ngModel]="probability" readonly="true">
-                    </mat-form-field>
-                    = 1 /
-                    <mat-form-field appearance="fill">
-                        <mat-label><b>Hashrate</b> [Hashes pro Sekunde]</mat-label>
-                        <input type="number" matInput [(ngModel)]="hashRate">
-                    </mat-form-field>
-                    *
-                    <mat-form-field appearance="fill">
-                        <mat-label><b>Blockzeit</b> [in Sekunden]</mat-label>
-                        <input type="number" matInput [(ngModel)]="blockTime">
-                    </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field appearance="fill">
-                        <mat-label><b>Anzahl Blöcke nach Wahrscheinlichkeit</b></mat-label>
-                        <input type="number" matInput [ngModel]="expectedAmountOfBlocks" readonly="true">
-                    </mat-form-field>
-                    -
-                    <mat-form-field appearance="fill">
-                        <mat-label><b>Erwartete ID Präfixe</b></mat-label>
-                        <input type="text" matInput [ngModel]="expectedPrefixes" readonly="true">
-                    </mat-form-field>
-                    -
-                    <mat-form-field appearance="fill">
-                        <mat-label><b>Hexadezimale Formel</b></mat-label>
-                        <input type="text" matInput [ngModel]="hexaDecimalFormula" readonly="true">
-                    </mat-form-field>
-                </div>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
-                <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
-                <button mat-button (click)="clear()" [disabled]="isProcessing || blocks.length === 0">Clear</button>
-                <mat-checkbox [(ngModel)]="stopOnFoundBlock">
-                    Stoppen bei gefundenem Block
-                </mat-checkbox>
-            </mat-card-actions>
-            <mat-card-footer>
-                <span *ngIf="isProcessing"><b>Simulation gestartet...</b></span>
-                Ausgeführte Hashraten: {{executedHashrates}}
-                <span *ngIf="!isProcessing"> | Erstellte Blöcke: {{blocks.length}}</span>
-                <mat-progress-bar mode="indeterminate" *ngIf="isProcessing"></mat-progress-bar>
-            </mat-card-footer>
-        </mat-card>
-        <mat-card>
-            <mat-card-title>Blöcke</mat-card-title>
-            <mat-card-content>
-                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-card>
+                <mat-card-content>
+                    <div>
+                        <mat-form-field appearance="fill">
+                            <mat-label><b>Wahrscheinlichkeit</b> [für richtigen Block]</mat-label>
+                            <input type="number" matInput [ngModel]="probability" readonly="true">
+                        </mat-form-field>
+                        = 1 /
+                        <mat-form-field appearance="fill">
+                            <mat-label><b>Hashrate</b> [Hashes pro Sekunde]</mat-label>
+                            <input type="number" matInput [(ngModel)]="hashRate">
+                        </mat-form-field>
+                        *
+                        <mat-form-field appearance="fill">
+                            <mat-label><b>Blockzeit</b> [in Sekunden]</mat-label>
+                            <input type="number" matInput [(ngModel)]="blockTime">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="fill">
+                            <mat-label><b>Anzahl Blöcke nach Wahrscheinlichkeit</b></mat-label>
+                            <input type="number" matInput [ngModel]="expectedAmountOfBlocks" readonly="true">
+                        </mat-form-field>
+                        -
+                        <mat-form-field appearance="fill">
+                            <mat-label><b>Erwartete ID Präfixe</b></mat-label>
+                            <input type="text" matInput [ngModel]="expectedPrefixes" readonly="true">
+                        </mat-form-field>
+                        -
+                        <mat-form-field appearance="fill">
+                            <mat-label><b>Hexadezimale Formel</b></mat-label>
+                            <input type="text" matInput [ngModel]="hexaDecimalFormula" readonly="true">
+                        </mat-form-field>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </mat-expansion-panel>
 
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef> Block ID </th>
-                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                    </ng-container>
+        <mat-expansion-panel expanded="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Die Blöcke</h2>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
 
-                    <ng-container matColumnDef="isValid">
-                        <th mat-header-cell *matHeaderCellDef> Validiert </th>
-                        <td mat-cell *matCellDef="let element"> {{element.isValid}} </td>
-                    </ng-container>
+            <mat-card>
+                <mat-card-actions>
+                    <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
+                    <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
+                    <button mat-button (click)="clear()" [disabled]="isProcessing || blocks.length === 0">Clear</button>
+                    <button mat-button (click)="clear();start()" [disabled]="isProcessing || blocks.length === 0">
+                        Restart
+                    </button>
+                    <mat-checkbox [(ngModel)]="stopOnFoundBlock">
+                        Stoppen bei gefundenem Block
+                    </mat-checkbox>
+                </mat-card-actions>
+                <mat-card-footer>
+                    <span *ngIf="isProcessing"><b>Simulation gestartet...</b></span>
+                    Ausgeführte Hashraten: {{executedHashrates}}
+                    <span *ngIf="!isProcessing"> | Erstellte Blöcke: {{blocks.length}}</span>
+                    <mat-progress-bar mode="indeterminate" *ngIf="isProcessing"></mat-progress-bar>
+                </mat-card-footer>
+            </mat-card>
 
-                    <ng-container matColumnDef="serialNo">
-                        <th mat-header-cell *matHeaderCellDef> Erstellungsnummer </th>
-                        <td mat-cell *matCellDef="let element"> {{element.serialNo}} </td>
-                    </ng-container>
+            <mat-card>
+                <mat-card-content>
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
 
-                    <ng-container matColumnDef="hashRate">
-                        <th mat-header-cell *matHeaderCellDef> Hashrate </th>
-                        <td mat-cell *matCellDef="let element"> {{element.hashRate}} </td>
-                    </ng-container>
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef> Block ID </th>
+                            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                        </ng-container>
 
-                    <ng-container matColumnDef="difficulty">
-                        <th mat-header-cell *matHeaderCellDef> Difficulty </th>
-                        <td mat-cell *matCellDef="let element"> {{element.difficulty}} </td>
-                    </ng-container>
+                        <ng-container matColumnDef="isValid">
+                            <th mat-header-cell *matHeaderCellDef> Validiert </th>
+                            <td mat-cell *matCellDef="let element"> {{element.isValid}} </td>
+                        </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-            </mat-card-content>
-        </mat-card>
+                        <ng-container matColumnDef="serialNo">
+                            <th mat-header-cell *matHeaderCellDef> Erstellungsnummer </th>
+                            <td mat-cell *matCellDef="let element"> {{element.serialNo}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="hashRate">
+                            <th mat-header-cell *matHeaderCellDef> Hashrate </th>
+                            <td mat-cell *matCellDef="let element"> {{element.hashRate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="difficulty">
+                            <th mat-header-cell *matHeaderCellDef> Difficulty </th>
+                            <td mat-cell *matCellDef="let element"> {{element.difficulty}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </mat-expansion-panel>
     </mat-tab>
 </mat-tab-group>
