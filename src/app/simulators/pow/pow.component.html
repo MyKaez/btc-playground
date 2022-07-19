@@ -1,5 +1,8 @@
 <mat-tab-group mat-align-tabs="start" selectedIndex="2">
-    <mat-tab label="PoW Simulation" disabled="true">
+    <mat-tab disabled="true">
+        <ng-template mat-tab-label>
+            <h1>PoW Simulation</h1>
+        </ng-template>
     </mat-tab>
     <mat-tab label="Erklärvideo">
         <app-vid [video]="'https://www.youtube.com/embed/E2ee5ewEddE'"></app-vid>

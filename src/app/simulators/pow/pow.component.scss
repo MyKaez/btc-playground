@@ -2,6 +2,10 @@
   width: 100%;
 }
 
+:host ::ng-deep .mat-tab-label-active {
+  font-size: medium;
+}
+
 .mat-row .mat-cell {
   border-bottom: 1px solid transparent;
   border-top: 1px solid transparent;
