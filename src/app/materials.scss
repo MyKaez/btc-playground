@@ -24,6 +24,16 @@
     -moz-box-shadow: 1px 0px 0px 0px indigo inset;
 }
 
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+    border-color: currentColor;
+}
+
 .mat-tab-label-header {
     font-size: 1.5em;
     color: black;
