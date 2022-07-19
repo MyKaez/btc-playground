@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Simulator';
+  title = 'The Bitcoin Playground';
 
   constructor(private router: Router) {
 
