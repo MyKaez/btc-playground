@@ -9,7 +9,8 @@ export class PowService {
         if (this.hashRate === 0 || this.blockTime === 0) {
             return Number.NaN;
         }
-        return 1 / (this.hashRate * this.blockTime);
+        let prob = 1 / (this.hashRate * this.blockTime);
+        return (prob >= 1) ? 1 : prob;
     }
 
     get expectedAmountOfBlocks(): number {
