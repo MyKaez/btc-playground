@@ -1,0 +1,26 @@
+.mat-card {
+    padding: 1em;
+    margin: 0.5em;
+    margin-bottom: 1.5em;
+    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75);
+}
+
+.mat-card-footer {
+    padding: 1em;
+}
+
+.mat-expansion-panel {
+    margin-top: 1em;
+    box-shadow: none;
+}
+
+.mat-tab-label-header {
+    font-size: 1.5em;
+    color: black;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+    font-size: medium;
+}

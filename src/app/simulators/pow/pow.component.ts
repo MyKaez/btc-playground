@@ -7,7 +7,7 @@ import { PowService } from './pow.service';
 @Component({
   selector: 'app-pow',
   templateUrl: './pow.component.html',
-  styleUrls: ['./pow.component.scss']
+  styleUrls: ['./pow.component.scss', '../../materials.scss']
 })
 export class PowComponent implements OnInit {
   private blockNo: number;

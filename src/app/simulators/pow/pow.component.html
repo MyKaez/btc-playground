@@ -1,7 +1,7 @@
 <mat-tab-group mat-align-tabs="start" selectedIndex="2">
     <mat-tab disabled="true">
         <ng-template mat-tab-label>
-            <h1>PoW Simulation</h1>
+            <span class="mat-tab-label-header">PoW Simulation</span>
         </ng-template>
     </mat-tab>
     <mat-tab label="Erklärvideo">
@@ -20,7 +20,7 @@
                     </span>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <mat-card class="example-card">
+            <mat-card>
                 <mat-card-content>
                     <div>
                         <mat-form-field appearance="fill">
@@ -65,7 +65,7 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
 
-            <mat-card class="example-card">
+            <mat-card>
                 <mat-card-actions>
                     <mat-form-field apperance="fill">
                         <mat-label><b>Anzahl angezeigter Hashes</b></mat-label>
@@ -89,9 +89,9 @@
                 </mat-card-footer>
             </mat-card>
 
-            <mat-card class="example-card">
+            <mat-card>
                 <mat-card-content>
-                    <table mat-table [dataSource]="dataSource" class="demo-table">
+                    <table mat-table [dataSource]="dataSource">
 
                         <ng-container matColumnDef="id">
                             <th mat-header-cell *matHeaderCellDef> Block ID </th>
