@@ -78,6 +78,10 @@
                     </mat-checkbox>
                 </mat-card-actions>
                 <mat-card-footer>
+                    <mat-form-field apperance="fill">
+                        <mat-label><b>Anzahl angezeigter Hashes</b></mat-label>
+                        <input type="number" matInput [(ngModel)]="amountHashesToShow" min="1" max="200">
+                    </mat-form-field> |
                     <span *ngIf="isProcessing"><b>Simulation gestartet...</b></span>
                     Ausgeführte Hashraten: {{executedHashrates}}
                     <span *ngIf="!isProcessing"> | Erstellte Blöcke: {{blocks.length}}</span>

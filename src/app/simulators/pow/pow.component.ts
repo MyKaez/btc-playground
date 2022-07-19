@@ -18,10 +18,12 @@ export class PowComponent implements OnInit {
   public dataSource: MatTableDataSource<PowBlock>;
   public executedHashrates: number;
   public stopOnFoundBlock: boolean;
+  public amountHashesToShow: number;
 
   constructor() {
     this.blockNo = 0;
     this.executedHashrates = 0;
+    this.amountHashesToShow = 20;
     this.blocks = [];
     this.isProcessing = false;
     this.stopOnFoundBlock = true;
@@ -91,7 +93,7 @@ export class PowComponent implements OnInit {
           const block = this.powService.createBlock(
             validationInput[0], validationInput[1], this.executedHashrates, ++this.blockNo);
           this.blocks.push(block);
-          this.dataSource.data = this.blocks.reverse().filter((_, i) => i <= 50);
+          this.dataSource.data = this.blocks.reverse().filter((_, i) => i <= this.amountHashesToShow);
           if (this.stopOnFoundBlock && block.isValid) {
             this.stop();
             break;
