@@ -16,7 +16,7 @@
                     </span>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <mat-card>
+            <mat-card class="example-card">
                 <mat-card-content>
                     <div>
                         <mat-form-field appearance="fill">
@@ -61,7 +61,7 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
 
-            <mat-card>
+            <mat-card class="example-card">
                 <mat-card-actions>
                     <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
                     <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
@@ -81,7 +81,7 @@
                 </mat-card-footer>
             </mat-card>
 
-            <mat-card>
+            <mat-card class="example-card">
                 <mat-card-content>
                     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
 
