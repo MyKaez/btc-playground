@@ -11,9 +11,17 @@
     padding: 1em;
 }
 
+.mat-expansion-panel-header {
+    box-shadow: 1px 0px 0px 0px indigo inset;
+    -webkit-box-shadow: 1px 0px 0px 0px indigo inset;
+    -moz-box-shadow: 1px 0px 0px 0px indigo inset;
+}
+
 .mat-expansion-panel {
     margin-top: 1em;
-    box-shadow: none;
+    box-shadow: 1px 0px 0px 0px indigo inset;
+    -webkit-box-shadow: 1px 0px 0px 0px indigo inset;
+    -moz-box-shadow: 1px 0px 0px 0px indigo inset;
 }
 
 .mat-tab-label-header {
