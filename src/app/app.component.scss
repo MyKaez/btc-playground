@@ -1,6 +1,13 @@
 .toolbar {
-    padding-top: 1em;
-    padding-left: 1em;
+    padding: 1em;
+    background: linear-gradient(120deg, darkslateblue 0%, darkslateblue 65%, orange 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 8em;
 }
 
 .content {

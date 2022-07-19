@@ -64,11 +64,11 @@
             <mat-card class="example-card">
                 <mat-card-actions>
                     <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
-                    <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
-                    <button mat-button (click)="clear()" [disabled]="isProcessing || blocks.length === 0">Clear</button>
                     <button mat-button (click)="clear();start()" [disabled]="isProcessing || blocks.length === 0">
                         Restart
                     </button>
+                    <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
+                    <button mat-button (click)="clear()" [disabled]="isProcessing || blocks.length === 0">Clear</button>
                     <mat-checkbox [(ngModel)]="stopOnFoundBlock">
                         Stoppen bei gefundenem Block
                     </mat-checkbox>
@@ -83,7 +83,7 @@
 
             <mat-card class="example-card">
                 <mat-card-content>
-                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+                    <table mat-table [dataSource]="dataSource" class="demo-table">
 
                         <ng-container matColumnDef="id">
                             <th mat-header-cell *matHeaderCellDef> Block ID </th>
