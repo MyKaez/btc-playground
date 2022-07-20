@@ -9,19 +9,19 @@
         flex-direction: column;
     }
 
+    .input {
+        width: 25%
+    }
+
+    .output {
+        width: 75%;
+    }
+
     .input>* {
         width: 100%;
     }
 
     .output>* {
         width: 100%;
-    }
-
-    .input {
-        width: 33%
-    }
-
-    .output {
-        width: 67%
     }
 }
