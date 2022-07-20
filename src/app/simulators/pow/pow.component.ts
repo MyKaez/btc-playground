@@ -35,6 +35,7 @@ export class PowComponent implements OnInit {
 
   public set amountHashesToShow(value: Number) {
     localStorage.setItem('sim_pow_amountHashesToShow', value.toString());
+    this.showOutput();
   }
 
   public get displayedColumns(): string[] {
@@ -99,7 +100,7 @@ export class PowComponent implements OnInit {
           const block = this.powService.createBlock(
             validationInput[0], validationInput[1], this.executedHashrates, ++this.blockNo);
           this.blocks.push(block);
-          this.dataSource.data = this.blocks.reverse().filter((_, i) => i < this.amountHashesToShow);
+          this.showOutput();
           if (this.stopOnFoundBlock && block.isValid) {
             this.stop();
             break;
@@ -110,6 +111,10 @@ export class PowComponent implements OnInit {
       }
       resolve('done');
     });
+  }
+
+  showOutput() {
+    this.dataSource.data = this.blocks.reverse().filter((_, i) => i < this.amountHashesToShow);
   }
 
   stop(): void {
