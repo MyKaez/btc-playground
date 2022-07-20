@@ -22,8 +22,8 @@
             </mat-expansion-panel-header>
             <mat-card>
                 <mat-card-content class="data">
-                    <div>
-                        <h2>Eingaben</h2>
+                    <div class="input">
+                        <h2>Input</h2>
                         <mat-form-field appearance="fill">
                             <mat-label><b>Hashrate</b> [Hashes pro Sekunde]</mat-label>
                             <input type="number" matInput [(ngModel)]="hashRate">
@@ -34,25 +34,20 @@
                             <input type="number" matInput [(ngModel)]="blockTime">
                         </mat-form-field>
                     </div>
-                    <div>
-                        <h2>Wahrscheinlichkeit</h2>
+                    <div class="output">
+                        <h2>Output</h2>
                         <mat-form-field appearance="fill">
                             <mat-label><b>Wahrscheinlichkeit</b> [für richtigen Block]</mat-label>
                             <input type="number" matInput [ngModel]="probability" readonly="true">
                         </mat-form-field>
-                        <br />
                         <mat-form-field appearance="fill">
-                            <mat-label><b>Anzahl Blöcke nach Wahrscheinlichkeit</b></mat-label>
+                            <mat-label><b>Anzahl Blöcke [zu finden - nach Wahrscheinlichkeit]</b></mat-label>
                             <input type="number" matInput [ngModel]="expectedAmountOfBlocks" readonly="true">
                         </mat-form-field>
-                    </div>
-                    <div>
-                        <h2>Erwartung</h2>
                         <mat-form-field appearance="fill">
-                            <mat-label><b>Erwartete ID Präfixe</b></mat-label>
+                            <mat-label><b>Erwartete Hash Präfixe</b></mat-label>
                             <input type="text" matInput [ngModel]="expectedPrefixes" readonly="true">
                         </mat-form-field>
-                        <br />
                         <mat-form-field appearance="fill">
                             <mat-label><b>Hexadezimale Formel</b></mat-label>
                             <input type="text" matInput [ngModel]="hexaDecimalFormula" readonly="true">
