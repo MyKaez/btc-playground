@@ -66,10 +66,6 @@
 
             <mat-card>
                 <mat-card-actions>
-                    <mat-form-field apperance="fill">
-                        <mat-label><b>Anzahl angezeigter Hashes</b></mat-label>
-                        <input type="number" matInput [(ngModel)]="amountHashesToShow" min="1" step="1" max="200">
-                    </mat-form-field> |
                     <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
                     <button mat-button (click)="clear();start()" [disabled]="isProcessing || blocks.length === 0">
                         Restart
@@ -81,10 +77,22 @@
                     </mat-checkbox>
                 </mat-card-actions>
                 <mat-card-footer>
-                    <span *ngIf="isProcessing"><b>Simulation gestartet...</b></span>
-                    Ausgeführte Hashraten: {{executedHashrates}}
-                    <span *ngIf="!isProcessing"> | Erstellte Blöcke: {{blocks.length}}</span>
-                    <mat-progress-bar mode="indeterminate" *ngIf="isProcessing"></mat-progress-bar>
+                    <div>
+                        <mat-form-field apperance="fill">
+                            <mat-label><b>Anzahl angezeigter Hashes</b></mat-label>
+                            <input type="number" matInput [(ngModel)]="amountHashesToShow" min="1" step="1" max="200">
+                        </mat-form-field>
+                        | Ausgeführte Hashraten: {{executedHashrates}}
+                        | Erstellte Blöcke: {{blocks.length}}
+                    </div>
+                    <div *ngIf="isProcessing">
+                        <span><b>Simulation gestartet...</b></span>
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </div>
+                    <div *ngIf="!isProcessing && blocks.length > 0">
+                        <span><b>Simulation beendet.</b></span>
+                        <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
+                    </div>
                 </mat-card-footer>
             </mat-card>
 
