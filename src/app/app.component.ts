@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SimpleViewComponent } from './simple-view/simple-view.component';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ export class AppComponent {
 
   private realLink: string = 'home';
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router) {
+    SimpleViewComponent.app = this;
   }
 
   public get simpleView(): boolean {

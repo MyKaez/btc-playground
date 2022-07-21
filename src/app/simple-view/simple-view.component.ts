@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AppComponent } from '../app.component';
 
 @Component({
@@ -7,9 +8,7 @@ import { AppComponent } from '../app.component';
   styleUrls: ['./simple-view.component.scss', '../materials.scss', '../app.component.scss']
 })
 export class SimpleViewComponent implements OnInit {
-  constructor() { }
-
-  @Input() app: AppComponent | undefined;
+  public static app: AppComponent;
 
   isStart: boolean = true;
   isSimulations: boolean = false;
@@ -18,7 +17,7 @@ export class SimpleViewComponent implements OnInit {
   }
 
   switchMode(): void {
-    this.app!.switchMode();
+    SimpleViewComponent.app!.switchMode();
   }
 
   navigateTo(view: string): void {
@@ -32,6 +31,6 @@ export class SimpleViewComponent implements OnInit {
   }
 
   navigateToPow() {
-    this.app?.navigateTo('pow');
+    SimpleViewComponent.app?.navigateTo('pow');
   }
 }

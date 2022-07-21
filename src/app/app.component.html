@@ -1,6 +1,8 @@
 <div *ngIf="simpleView" class="simple-view">
-  <app-simple-view [app]="this"></app-simple-view>
+  <router-outlet></router-outlet>
 </div>
+
+
 <div *ngIf="!simpleView">
   <div class="toolbar" role="banner">
     <div class="logo">
