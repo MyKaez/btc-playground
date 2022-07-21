@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,19 +7,34 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss', './materials.scss']
 })
 export class AppComponent {
-
   title: string = 'The Bitcoin Playground';
   simpleView: boolean = true;
 
-  constructor(private router: Router) {
+  private realLink: string = 'home';
+
+  constructor(private router: Router, private route: ActivatedRoute) {
 
   }
 
   switchMode() {
     this.simpleView = !this.simpleView;
+    this.navigateTo(this.realLink);
   }
 
   navigateTo(link: string): void {
-    this.router.navigate(['/' + link]);
+    if (this.simpleView) {
+      if (!link.startsWith('simple-')) {
+        this.realLink = 'simple-' + link;
+      } else {
+        this.realLink = link;
+      }
+    } else {
+      if (link.startsWith('simple-')) {
+        this.realLink = link.replace('simple-', '');
+      } else {
+        this.realLink = link;
+      }
+    }
+    this.router.navigate(['/' + this.realLink]);
   }
 }

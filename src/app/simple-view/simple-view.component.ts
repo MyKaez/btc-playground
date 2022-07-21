@@ -32,7 +32,6 @@ export class SimpleViewComponent implements OnInit {
   }
 
   navigateToPow() {
-    this.switchMode();
     this.app?.navigateTo('pow');
   }
 }
