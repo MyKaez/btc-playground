@@ -8,12 +8,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AppComponent {
   title: string = 'The Bitcoin Playground';
-  simpleView: boolean = true;
 
   private realLink: string = 'home';
 
   constructor(private router: Router, private route: ActivatedRoute) {
+  }
 
+  public get simpleView(): boolean {
+    let val = localStorage.getItem('app_simple_view') ?? 'true';
+    if (val === 'true') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public set simpleView(value: boolean) {
+    localStorage.setItem('app_simple_view', value ? 'true' : 'false');
   }
 
   switchMode() {
