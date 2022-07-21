@@ -4,7 +4,7 @@ import { SimpleViewComponent } from '../simple-view.component';
 @Component({
   selector: 'app-simple-simulations',
   templateUrl: './simulations.component.html',
-  styleUrls: ['../simple-view.component.scss']
+  styleUrls: ['../simple-view.component.scss', '../../materials.scss', '../../app.component.scss']
 })
 export class SimulationsComponent {
 

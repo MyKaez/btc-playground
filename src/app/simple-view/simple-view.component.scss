@@ -19,6 +19,17 @@
     }
 }
 
+.simulation {
+    color: black;
+    width: 100%;
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 1em;
+    min-width: 7em;
+    max-width: 40em;
+    padding: 0;
+}
+
 .inner-start>* {
     padding: 5em;
 }
