@@ -10,14 +10,18 @@ import { SimpleViewComponent } from './simple-view/simple-view.component';
 export class AppComponent implements OnInit {
   title: string = 'The Bitcoin Playground';
 
-  private realLink: string = 'home';
-
   constructor(private router: Router) {
     SimpleViewComponent.app = this;
   }
 
+  get currentRoute(): string {
+    let parts = window.location.href.split('/');
+    let res = parts[parts.length - 1];
+    return res;
+  }
+
   ngOnInit(): void {
-    this.navigateTo('home');
+    this.navigateTo(this.currentRoute);
   }
 
   public get simpleView(): boolean {
@@ -35,23 +39,23 @@ export class AppComponent implements OnInit {
 
   switchMode() {
     this.simpleView = !this.simpleView;
-    this.navigateTo(this.realLink);
+    this.navigateTo(this.currentRoute);
   }
 
   navigateTo(link: string): void {
     if (this.simpleView) {
       if (!link.startsWith('simple-')) {
-        this.realLink = 'simple-' + link;
+        link = 'simple-' + link;
       } else {
-        this.realLink = link;
+        link = link;
       }
     } else {
       if (link.startsWith('simple-')) {
-        this.realLink = link.replace('simple-', '');
+        link = link.replace('simple-', '');
       } else {
-        this.realLink = link;
+        link = link;
       }
     }
-    this.router.navigate(['/' + this.realLink]);
+    this.router.navigate(['/' + link]);
   }
 }
