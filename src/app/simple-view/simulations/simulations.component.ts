@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SimpleViewComponent } from '../simple-view.component';
 
 @Component({
-  selector: 'app-simulations',
+  selector: 'app-simple-simulations',
   templateUrl: './simulations.component.html',
   styleUrls: ['../simple-view.component.scss']
 })
