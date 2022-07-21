@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { delay } from 'src/app/shared/delay';
 import { SimpleViewComponent } from '../simple-view.component';
 
 @Component({
@@ -8,6 +9,8 @@ import { SimpleViewComponent } from '../simple-view.component';
 })
 export class PowComponent {
 
+  public simText: string = '';
+
   switchMode(): void {
     SimpleViewComponent.app!.switchMode();
   }
@@ -16,4 +19,11 @@ export class PowComponent {
     SimpleViewComponent.app!.navigateTo(link);
   }
 
+  async simulate() {
+    this.simText = '';
+    for (let i = 0; i < 150; i++) {
+      this.simText += 'Simulating ' + i + '... ';
+      await delay(1000);
+    }
+  }
 }
