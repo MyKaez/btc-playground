@@ -1,21 +1,28 @@
-<div class="toolbar" role="banner">
-  <div class="logo">
-    <img width="40" alt="{{title}}" src="../assets/bitcoin-btc-logo.svg" />
+<div *ngIf="simpleView" class="simple-view">
+  <app-simple-view [app]="this"></app-simple-view>
+</div>
+<div *ngIf="!simpleView">
+  <div class="toolbar" role="banner">
+    <div class="logo">
+      <img width="40" alt="{{title}}" src="../assets/bitcoin-btc-logo.svg" />
+    </div>
+    <div class="menu">
+      <button mat-button (click)="navigateTo('home')">Home</button>
+      <button mat-button (click)="navigateTo('pow')">PoW Simulation</button>
+    </div>
+    <div class="meta">
+      <a href="https://twitter.com/bitty_kn" target="_blank">
+        <img width="30" src="../assets/twitter_white.svg" alt="bitty_kn" />
+      </a>
+      <a href="https://github.com/MyKaez/btc-playground" target="_blank">
+        <img width="30" src="../assets/GitHub-Mark-Light-64px.png" />
+      </a>
+    </div>
   </div>
-  <div class="menu">
-    <button mat-button (click)="navigateTo('home')">Home</button>
-    <button mat-button (click)="navigateTo('pow')">PoW Simulation</button>
-  </div>
-  <div class="meta">
-    <a href="https://twitter.com/bitty_kn" target="_blank">
-      <img width="30" src="../assets/twitter_white.svg" alt="bitty_kn" />
-    </a>
-    <a href="https://github.com/MyKaez/btc-playground" target="_blank">
-      <img width="30" src="../assets/GitHub-Mark-Light-64px.png" />
-    </a>
+  <div class="content" role="main">
+    <router-outlet></router-outlet>
   </div>
 </div>
-
-<div class="content" role="main">
-  <router-outlet></router-outlet>
+<div class="switch-mode">
+  <button mat-button (click)="switchMode()">Switch Mode</button>
 </div>

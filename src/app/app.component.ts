@@ -7,10 +7,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss', './materials.scss']
 })
 export class AppComponent {
-  title = 'The Bitcoin Playground';
+
+  title: string = 'The Bitcoin Playground';
+  simpleView: boolean = true;
 
   constructor(private router: Router) {
 
+  }
+
+  switchMode() {
+    this.simpleView = !this.simpleView;
   }
 
   navigateTo(link: string): void {
