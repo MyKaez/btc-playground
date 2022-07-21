@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './simulators/vid/vid.component';
 import { HomeComponent } from './home/home.component';
 import { SimpleViewComponent } from './simple-view/simple-view.component';
+import { SimulationsComponent } from './simple-view/simulations/simulations.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SimpleViewComponent } from './simple-view/simple-view.component';
     PowComponent,
     VidComponent,
     HomeComponent,
-    SimpleViewComponent
+    SimpleViewComponent,
+    SimulationsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
 
 @Component({
@@ -10,9 +9,6 @@ import { AppComponent } from '../app.component';
 export class SimpleViewComponent implements OnInit {
   public static app: AppComponent;
 
-  isStart: boolean = true;
-  isSimulations: boolean = false;
-
   ngOnInit(): void {
   }
 
@@ -20,17 +16,7 @@ export class SimpleViewComponent implements OnInit {
     SimpleViewComponent.app!.switchMode();
   }
 
-  navigateTo(view: string): void {
-    if (view === 'simulations') {
-      this.isStart = false;
-      this.isSimulations = true;
-    } else {
-      this.isStart = true;
-      this.isSimulations = false;
-    }
-  }
-
-  navigateToPow() {
-    SimpleViewComponent.app?.navigateTo('pow');
+  navigateTo(link: string) {
+    SimpleViewComponent.app!.navigateTo(link);
   }
 }

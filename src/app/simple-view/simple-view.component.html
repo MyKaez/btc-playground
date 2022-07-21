@@ -1,56 +1,17 @@
-<div class="body">
+<div class="inner-start">
+    <div class="text">
+        <h1>Bitcoin</h1>
+        <h1><b>Simulationen</b></h1>
+        <h2>fixes this...</h2>
+        Erkunde anhand realistischer Simulationen wie Bitcoin im Detail funktioniert und welche Probleme wie gelöst
+        werden.
 
-    <div *ngIf="isStart" class="inner-start">
-        <div class="text">
-            <h1>Bitcoin</h1>
-            <h1><b>Simulationen</b></h1>
-            <h2>fixes this...</h2>
-            Erkunde anhand realistischer Simulationen wie Bitcoin im Detail funktioniert und welche Probleme wie gelöst
-            werden.
-
-            <div class="buttons">
-                <button mat-button (click)="navigateTo('simulations')">Simulationen</button>
-                <button mat-button>Erfahre mehr</button>
-            </div>
-        </div>
-        <div class="picture">
-            <img src="../../assets/SimulierteWelt_seite1.png" />
-        </div>
-    </div>
-
-    <div *ngIf="isSimulations" class="inner-items">
-        <h1>Simulationen</h1>
-        <div class="items">
-            <mat-card (click)="navigateToPow()">
-                <img src="../../assets/SimulierteWelt_seite1.png" />
-                <h2>Hashrate</h2>
-                <p>
-                    Fixes this... Determinismus / Vorhersehbarkeit
-                </p>
-            </mat-card>
-            <mat-card>
-                <img src="../../assets/SimulierteWelt_seite1.png" />
-                <h2>Hashrate</h2>
-                <p>
-                    Fixes this... Determinismus / Vorhersehbarkeit
-                </p>
-            </mat-card>
-            <mat-card>
-                <img src="../../assets/SimulierteWelt_seite1.png" />
-                <h2>Hashrate</h2>
-                <p>
-                    Fixes this... Determinismus / Vorhersehbarkeit
-                </p>
-            </mat-card>
-        </div>
         <div class="buttons">
-            <button mat-button (click)="navigateTo('start')">Start</button>
+            <button mat-button (click)="navigateTo('simulations')">Simulationen</button>
             <button mat-button>Erfahre mehr</button>
         </div>
     </div>
-
-</div>
-
-<div class=" switch-mode">
-    <button mat-button (click)="switchMode()">Switch Mode</button>
+    <div class="picture">
+        <img src="../../assets/SimulierteWelt_seite1.png" />
+    </div>
 </div>

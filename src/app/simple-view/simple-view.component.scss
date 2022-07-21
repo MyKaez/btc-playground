@@ -1,15 +1,3 @@
-.body {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg, orange 0%, darkslateblue 65%, darkslateblue 100%);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-.body>* {
-    color: white;
-}
-
 .inner-start {
     display: flex;
     flex-direction: row;
@@ -36,6 +24,7 @@
 }
 
 .inner-items {
+    color: white;
     width: 100%;
     padding-top: 5em;
     text-align: center;
@@ -69,6 +58,7 @@
 }
 
 .text {
+    color: white;
     background: 0;
     width: 18em;
     padding: 0.5em;

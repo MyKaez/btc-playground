@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { SimpleViewComponent } from '../simple-view.component';
 
 @Component({
-  selector: 'app-pow',
-  templateUrl: './pow.component.html',
+  selector: 'app-simulations',
+  templateUrl: './simulations.component.html',
   styleUrls: ['../simple-view.component.scss']
 })
-export class PowComponent {
+export class SimulationsComponent {
 
   switchMode(): void {
     SimpleViewComponent.app!.switchMode();
@@ -15,5 +15,4 @@ export class PowComponent {
   navigateTo(link: string) {
     SimpleViewComponent.app!.navigateTo(link);
   }
-
 }
