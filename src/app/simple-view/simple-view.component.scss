@@ -1,5 +1,88 @@
-div {
+.body {
     width: 100%;
     height: 100%;
     background: linear-gradient(120deg, orange 0%, darkslateblue 65%, darkslateblue 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.body>* {
+    color: white;
+}
+
+.inner-start {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    justify-content: center;
+
+    .text {
+        text-align: left;
+    }
+
+    .picture {
+        img {
+            width: 100%;
+            border: 2px solid white;
+            border-radius: 1em;
+            min-width: 7em;
+            max-width: 40em;
+        }
+    }
+}
+
+.inner-start>* {
+    padding: 5em;
+}
+
+.inner-items {
+    width: 100%;
+    padding-top: 5em;
+    text-align: center;
+    justify-content: center;
+
+    h1 {
+        font-size: 3em;
+    }
+
+    .items {
+        display: flex;
+        justify-content: center;
+
+        .mat-card {
+            color: white;
+            background-color: orange;
+            width: 10em;
+            margin-left: 2em;
+            margin-right: 2em;
+            border: 2px solid white;
+            border-radius: 0em 2em 0em 2em;
+            cursor: pointer;
+        }
+
+        img {
+            width: 100%;
+            border: 2px solid white;
+            border-radius: 1em;
+        }
+    }
+}
+
+.text {
+    background: 0;
+    width: 18em;
+    padding: 0.5em;
+    font-size: 1em;
+
+    h1 {
+        font-size: 3em;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+}
+
+.buttons {
+    padding-top: 1em;
 }

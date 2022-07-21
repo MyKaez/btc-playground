@@ -11,10 +11,28 @@ export class SimpleViewComponent implements OnInit {
 
   @Input() app: AppComponent | undefined;
 
+  isStart: boolean = true;
+  isSimulations: boolean = false;
+
   ngOnInit(): void {
   }
 
   switchMode(): void {
     this.app!.switchMode();
+  }
+
+  navigateTo(view: string): void {
+    if (view === 'simulations') {
+      this.isStart = false;
+      this.isSimulations = true;
+    } else {
+      this.isStart = true;
+      this.isSimulations = false;
+    }
+  }
+
+  navigateToPow() {
+    this.switchMode();
+    this.app?.navigateTo('pow');
   }
 }
