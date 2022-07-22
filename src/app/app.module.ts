@@ -15,8 +15,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './simulators/vid/vid.component';
 import { HomeComponent } from './home/home.component';
-import { SimpleViewComponent } from './simple-view/simple-view.component';
 import { SimulationsComponent } from './simple-view/simulations/simulations.component';
+import { SimpleViewComponent } from './simple-view/simple-view.component';
+import { SimulationsComponent as SimpleSimulationsComponent } from './simple-view/simulations/simulations.component';
+import { PowComponent as SimplePowComponent } from './simple-view/pow/pow.component';
+
 
 @NgModule({
   declarations: [
@@ -24,8 +27,10 @@ import { SimulationsComponent } from './simple-view/simulations/simulations.comp
     PowComponent,
     VidComponent,
     HomeComponent,
+    SimulationsComponent,
     SimpleViewComponent,
-    SimulationsComponent
+    SimpleSimulationsComponent,
+    SimplePowComponent
   ],
   imports: [
     BrowserModule,
