@@ -21,7 +21,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.navigateTo(this.currentRoute);
+    let route = this.currentRoute;
+    if (this.currentRoute === '') {
+      route = 'simple-home';
+    }
+    this.navigateTo(route);
   }
 
   public get simpleView(): boolean {

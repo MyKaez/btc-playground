@@ -8,7 +8,7 @@ import { SimulationsComponent } from './simple-view/simulations/simulations.comp
 import { SimulationsComponent as SimpleSimulationsComponent } from './simple-view/simulations/simulations.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/simple-home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'simple-home', component: SimpleViewComponent },
   { path: 'simulations', component: SimulationsComponent },
