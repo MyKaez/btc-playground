@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { delay } from 'src/app/shared/delay';
+import { createBlockId } from 'src/app/simulators/helpers/block';
 import { SimpleViewComponent } from '../simple-view.component';
 
 @Component({
@@ -10,6 +11,7 @@ import { SimpleViewComponent } from '../simple-view.component';
 export class PowComponent {
 
   public simText: string = '';
+  public hashes: string[] = []
 
   switchMode(): void {
     SimpleViewComponent.app!.switchMode();
@@ -21,9 +23,9 @@ export class PowComponent {
 
   async simulate() {
     this.simText = '';
-    for (let i = 0; i < 150; i++) {
-      this.simText += 'Simulating ' + i + '... ';
-      await delay(1000);
+    for (let i = 0; i < 20; i++) {
+      this.hashes.push(createBlockId());
+      await delay(100);
     }
   }
 }
