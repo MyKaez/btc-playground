@@ -4,12 +4,29 @@
         <div class="text">
             PoW is nice!
 
+            <mat-form-field appearance="fill">
+                <mat-label class="input">Hashrate <i>[Hashes pro Sekunde]</i></mat-label>
+                <input type="number" matInput [(ngModel)]="hashRate" min="1" max="50" step="1">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label class="input">Blockzeit <i>[in Sekunden]</i></mat-label>
+                <input type="number" matInput [(ngModel)]="blockTime" min="1" max="50" step="1">
+            </mat-form-field>
+
+            <hr />
+            <span>Erwartete Hashes: {{expectedPrefixes}}</span><br />
+            <span>Erwartete Anzahl Blöcke: {{expectedAmountOfBlocks}}</span><br />
+            <span>Erstellte Blöcke: {{hashes.length}}</span><br />
+
+            <hr />
+
             <div class="buttons">
                 <button mat-button (click)="simulate()">Simulieren</button>
             </div>
         </div>
         <div class="simulation">
-            <span *ngFor="let hash of hashes">{{hash}}<br /></span>
+            <span *ngFor="let hash of hashes.reverse()">{{hash}}<br /></span>
         </div>
     </div>
     <div class="buttons">
