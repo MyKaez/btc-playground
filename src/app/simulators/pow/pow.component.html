@@ -1,4 +1,4 @@
-<mat-tab-group mat-align-tabs="start" selectedIndex="2">
+<mat-tab-group mat-align-tabs="start" selectedIndex="3">
     <mat-tab disabled="true">
         <ng-template mat-tab-label>
             <span class="mat-tab-label-header">PoW Simulation</span>
@@ -6,6 +6,20 @@
     </mat-tab>
     <mat-tab label="Erklärvideo">
         <app-vid [video]="'https://www.youtube.com/embed/E2ee5ewEddE'"></app-vid>
+    </mat-tab>
+    <mat-tab label="Mathematik">
+        <div>
+            Data by <a href="https://chain.api.btc.com/v3/block/latest" target="_blank">
+                https://chain.api.btc.com/v3/block/latest
+            </a>.
+        </div>
+        <div>
+            <ul>
+                <li>Höhe: {{currentBlock.height}}</li>
+                <li>Hash: {{currentBlock.hash}}</li>
+                <li>Difficulty: {{currentBlock.difficulty}}</li>
+            </ul>
+        </div>
     </mat-tab>
     <mat-tab label="Simulation">
         <mat-expansion-panel>

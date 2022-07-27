@@ -1,8 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { delay } from 'src/app/shared/delay';
 import { PowBlock } from './pow.block';
 import { PowService } from './pow.service';
+
+
+export interface ApiBlock {
+  data: Block;
+}
+
+export interface Block {
+  height: number,
+  hash: string;
+  difficulty: number;
+}
 
 @Component({
   selector: 'app-pow',
@@ -12,6 +24,11 @@ import { PowService } from './pow.service';
 export class PowComponent implements OnInit {
   private blockNo: number;
   private powService: PowService;
+  private curBlock: Block = {
+    height: 0,
+    difficulty: 0,
+    hash: ''
+  };
 
   public isProcessing: boolean;
   public blocks: PowBlock[];
@@ -19,7 +36,7 @@ export class PowComponent implements OnInit {
   public executedHashrates: number;
   public stopOnFoundBlock: boolean;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.blockNo = 0;
     this.executedHashrates = 0;
     this.blocks = [];
@@ -27,6 +44,14 @@ export class PowComponent implements OnInit {
     this.stopOnFoundBlock = true;
     this.powService = new PowService();
     this.dataSource = new MatTableDataSource(this.blocks);
+  }
+
+  public get currentBlock(): Block {
+    return this.curBlock;
+  }
+
+  public set currentBlock(value: Block) {
+    this.curBlock = value;
   }
 
   public get amountHashesToShow(): Number {
@@ -80,7 +105,16 @@ export class PowComponent implements OnInit {
     return this.powService.hexaDecimalFormula;
   }
 
+
   ngOnInit(): void {
+    const url = 'https://chain.api.btc.com/v3/block/latest';
+    this.http.get<ApiBlock>(url).subscribe(res => {
+      this.currentBlock = res.data;
+    });
+  }
+
+  handleError(e: any): any {
+    alert(JSON.stringify(e))
   }
 
   async start() {
