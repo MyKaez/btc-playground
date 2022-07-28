@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { delay } from 'src/app/shared/delay';
-import { PowService } from 'src/app/simulations/pow/pow.service';
+import { PowService } from 'src/app/simulations/pow/simulation/pow.service';
 import { SimpleViewComponent } from '../simple-view.component';
 
 @Component({

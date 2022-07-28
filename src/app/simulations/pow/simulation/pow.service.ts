@@ -1,5 +1,5 @@
 import { PowBlock } from "./pow.block";
-import { BLOCK_ID_LENGTH, createBlockId } from "../../shared/helpers/block";
+import { BLOCK_ID_LENGTH, createBlockId } from "../../../shared/helpers/block";
 
 export class PowService {
     public hashRate: number = 10;

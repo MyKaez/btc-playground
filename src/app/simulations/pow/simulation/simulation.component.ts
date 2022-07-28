@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { delay } from 'src/app/shared/delay';
-import { PowBlock } from '../pow.block';
-import { PowService } from '../pow.service';
+import { PowBlock } from './pow.block';
+import { PowService } from './pow.service';
 
 @Component({
   selector: 'app-pow-simulation',
