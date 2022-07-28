@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { BLOCK_ID_LENGTH } from 'src/app/shared/helpers/block';
+import { AfterViewInit, Component } from '@angular/core';
 import { calculateHashDetails, calculateHexaDecimalFormula } from '../../hash.methods';
 import { ApiBlock, Block } from './interfaces';
 
@@ -9,22 +8,28 @@ import { ApiBlock, Block } from './interfaces';
   templateUrl: './calculator.component.html',
   styleUrls: ['../pow.component.scss', '../../../materials.scss']
 })
-export class CalculatorComponent implements OnInit {
-  private curBlock: Block = {
-    height: 0,
-    difficulty: 0,
-    hash: ''
-  };
+export class CalculatorComponent implements AfterViewInit {
+  private readonly latBlocks: Block[] = [{
+    difficulty: 0, hash: '', height: 0
+  }];
 
   constructor(private http: HttpClient) {
   }
 
-  public get currentBlock(): Block {
-    return this.curBlock;
+  ngAfterViewInit(): void {
+    const url = 'https://chain.api.btc.com/v3/block/latest';
+    this.http.get<ApiBlock>(url).subscribe(res => {
+      this.latBlocks.push(res.data);
+      this.latBlocks.shift();
+    });
   }
 
-  public set currentBlock(value: Block) {
-    this.curBlock = value;
+  public get latestBlocks(): Block[] {
+    return this.latBlocks;
+  }
+
+  public get currentBlock(): Block {
+    return this.latBlocks[0];
   }
 
   public get probabilityString(): string {
@@ -33,7 +38,7 @@ export class CalculatorComponent implements OnInit {
   }
 
   public get probability(): number {
-    return 1 / this.curBlock.difficulty;
+    return 1 / this.currentBlock.difficulty;
   }
 
   get hexaDecimalFormula(): string {
@@ -42,17 +47,4 @@ export class CalculatorComponent implements OnInit {
 
     return formula;
   }
-
-
-  ngOnInit(): void {
-    const url = 'https://chain.api.btc.com/v3/block/latest';
-    this.http.get<ApiBlock>(url).subscribe(res => {
-      this.currentBlock = res.data;
-    });
-  }
-
-  handleError(e: any): any {
-    alert(JSON.stringify(e))
-  }
-
 }

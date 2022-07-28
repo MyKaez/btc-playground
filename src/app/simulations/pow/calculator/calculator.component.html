@@ -30,11 +30,11 @@
         </mat-panel-title>
     </mat-expansion-panel-header>
     <div>
-        <h2>Aktuellster Block</h2>
-        <ul>
-            <li>Höhe: {{currentBlock.height}}</li>
-            <li>Hash: {{currentBlock.hash}}</li>
-            <li>Difficulty: {{currentBlock.difficulty}}</li>
+        <h2>Aktuellste Blöcke</h2>
+        <ul *ngFor="let block of latestBlocks">
+            <li>Höhe: {{block.height}}</li>
+            <li>Hash: {{block.hash}}</li>
+            <li>Difficulty: {{block.difficulty}}</li>
         </ul>
     </div>
     <div>
