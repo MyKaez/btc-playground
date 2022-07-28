@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SimpleViewComponent } from './simple-view/simple-view.component';
-import { PowComponent } from './simulators/pow/pow.component';
+import { PowComponent } from './simulations/pow/pow.component';
 import { PowComponent as SimplePowComponent } from './simple-view/pow/pow.component';
 import { SimulationsComponent } from './simple-view/simulations/simulations.component';
 import { SimulationsComponent as SimpleSimulationsComponent } from './simple-view/simulations/simulations.component';

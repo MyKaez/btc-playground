@@ -1,4 +1,4 @@
-import { createBlockId } from "../helpers/block";
+import { createBlockId } from "../../shared/helpers/block";
 import { PowService } from "./pow.service"
 
 describe('PowService', () => {
