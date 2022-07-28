@@ -16,9 +16,13 @@
                 <h2>Input</h2>
                 <mat-form-field appearance="fill">
                     <mat-label><b>Hashrate</b> [Hashes pro Sekunde]</mat-label>
-                    <input type="number" matInput [(ngModel)]="hashRate" min="1" max="50" step="1">
+                    <input type="number" matInput [(ngModel)]="hashRate" [min]="minHashRate" [max]="maxHashRate"
+                        step="1">
                 </mat-form-field>
-                <br />
+                <mat-form-field appearance="fill">
+                    <mat-label><b>externe Hashrate</b> [Hashes pro Sekunde]</mat-label>
+                    <input type="number" matInput [(ngModel)]="externalHashRate" min="0" step="1">
+                </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label><b>Blockzeit</b> [in Sekunden]</mat-label>
                     <input type="number" matInput [(ngModel)]="blockTime" min="1" max="600" step="1">
@@ -57,11 +61,11 @@
     <mat-card>
         <mat-card-actions>
             <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
-            <button mat-button (click)="clear();start()" [disabled]="isProcessing || blocks.length === 0">
+            <button mat-button (click)="clear();start()" [disabled]="isProcessing || hashes.length === 0">
                 Restart
             </button>
             <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
-            <button mat-button (click)="clear()" [disabled]="isProcessing || blocks.length === 0">Clear</button>
+            <button mat-button (click)="clear()" [disabled]="isProcessing || hashes.length === 0">Clear</button>
             <mat-checkbox [(ngModel)]="stopOnFoundBlock">
                 Stoppen bei gefundenem Block
             </mat-checkbox>
@@ -72,14 +76,14 @@
                     <mat-label><b>Anzahl angezeigter Hashes</b></mat-label>
                     <input type="number" matInput [(ngModel)]="amountHashesToShow" min="1" step="1" max="200">
                 </mat-form-field>
-                | Ausgeführte Hashraten: {{executedHashrates}}
-                | Erstellte Blöcke: {{blocks.length}}
+                | Ausgeführte eigene Hashraten: {{executedHashrates}}
+                | Anzahl eigener Hashes: {{hashes.length}}
             </div>
             <div *ngIf="isProcessing">
                 <span><b>Simulation gestartet...</b></span>
                 <mat-progress-bar mode="indeterminate"></mat-progress-bar>
             </div>
-            <div *ngIf="!isProcessing && blocks.length > 0">
+            <div *ngIf="!isProcessing && hashes.length > 0">
                 <span><b>Simulation beendet.</b></span>
                 <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
             </div>

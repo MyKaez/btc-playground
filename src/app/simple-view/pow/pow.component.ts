@@ -70,7 +70,7 @@ export class PowComponent {
         const timeToWait = 1000 / this.hashRate;
         const validationInput = this.validationInput;
         for (let i = 0; i < this.hashRate; i++) {
-          const block = this.powService.createBlock(
+          const block = this.powService.createHash(
             validationInput[0], validationInput[1], 0, 0);
           this.hashes.push(block.id);
           if (block.isValid) {

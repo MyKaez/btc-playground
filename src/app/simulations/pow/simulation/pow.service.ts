@@ -1,16 +1,21 @@
-import { PowBlock } from "./pow.block";
+import { PowHash } from "./interfaces";
 import { BLOCK_ID_LENGTH, createBlockId } from "../../../shared/helpers/block";
 
 export class PowService {
     public hashRate: number = 10;
     public blockTime: number = 10;
+    public externalHashRate: number = 0;
 
     get probability(): number {
-        if (this.hashRate === 0 || this.blockTime === 0) {
+        if (this.totalHashRate === 0 || this.blockTime === 0) {
             return Number.NaN;
         }
-        let prob = 1 / (this.hashRate * this.blockTime);
+        let prob = 1 / (this.totalHashRate * this.blockTime);
         return (prob >= 1) ? 1 : prob;
+    }
+
+    get totalHashRate(): number {
+        return this.hashRate + this.externalHashRate;
     }
 
     get expectedAmountOfBlocks(): number {
@@ -74,7 +79,7 @@ export class PowService {
         return Number.parseInt(hex) < probability;
     }
 
-    createBlock(leadingZeros: number, probability: number, executedHashrates: number, blockNo: number): PowBlock {
+    createHash(leadingZeros: number, probability: number, executedHashrates: number, blockNo: number): PowHash {
         const id = createBlockId();
         const block = {
             id: id,

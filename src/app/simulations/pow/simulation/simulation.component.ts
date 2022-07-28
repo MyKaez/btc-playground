@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { delay } from 'src/app/shared/delay';
-import { PowBlock } from './pow.block';
+import { PowHash } from './interfaces';
 import { PowService } from './pow.service';
 
 @Component({
@@ -10,23 +10,26 @@ import { PowService } from './pow.service';
   styleUrls: ['../pow.component.scss', '../../../materials.scss']
 })
 export class SimulationComponent implements OnInit {
-  private blockNo: number;
+  public readonly maxHashRate = 50;
+  public readonly minHashRate = 1;
+
+  private hashNo: number;
   private powService: PowService;
 
   public isProcessing: boolean;
-  public blocks: PowBlock[];
-  public dataSource: MatTableDataSource<PowBlock>;
+  public hashes: PowHash[];
+  public dataSource: MatTableDataSource<PowHash>;
   public executedHashrates: number;
   public stopOnFoundBlock: boolean;
 
   constructor() {
-    this.blockNo = 0;
+    this.hashNo = 0;
     this.executedHashrates = 0;
-    this.blocks = [];
+    this.hashes = [];
     this.isProcessing = false;
     this.stopOnFoundBlock = true;
     this.powService = new PowService();
-    this.dataSource = new MatTableDataSource(this.blocks);
+    this.dataSource = new MatTableDataSource(this.hashes);
   }
 
   public get amountHashesToShow(): Number {
@@ -47,10 +50,21 @@ export class SimulationComponent implements OnInit {
   }
 
   public set hashRate(value: number) {
-    if (value <= 0 || Number.isNaN(value)) {
+    if (value < this.minHashRate || Number.isNaN(value)) {
       return;
     }
     this.powService.hashRate = value;
+  }
+
+  public get externalHashRate(): number {
+    return this.powService.externalHashRate;
+  }
+
+  public set externalHashRate(value: number) {
+    if (value < 0 || Number.isNaN(value)) {
+      return;
+    }
+    this.powService.externalHashRate = value;
   }
 
   public get blockTime(): number {
@@ -96,11 +110,11 @@ export class SimulationComponent implements OnInit {
       const validationInput = this.powService.validationInput;
       while (this.isProcessing) {
         for (let i = 0; i < this.hashRate; i++) {
-          const block = this.powService.createBlock(
-            validationInput[0], validationInput[1], this.executedHashrates, ++this.blockNo);
-          this.blocks.push(block);
+          const hash = this.powService.createHash(
+            validationInput[0], validationInput[1], this.executedHashrates, ++this.hashNo);
+          this.hashes.push(hash);
           this.showOutput();
-          if (this.stopOnFoundBlock && block.isValid) {
+          if (this.stopOnFoundBlock && hash.isValid) {
             this.stop();
             break;
           }
@@ -113,7 +127,7 @@ export class SimulationComponent implements OnInit {
   }
 
   showOutput() {
-    this.dataSource.data = this.blocks.reverse().filter((_, i) => i < this.amountHashesToShow);
+    this.dataSource.data = this.hashes.reverse().filter((_, i) => i < this.amountHashesToShow);
   }
 
   stop(): void {
@@ -124,11 +138,9 @@ export class SimulationComponent implements OnInit {
     if (this.isProcessing) {
       return;
     }
-    this.blocks = [];
-    this.dataSource.data = this.blocks;
+    this.hashes = [];
+    this.dataSource.data = this.hashes;
     this.executedHashrates = 0;
-    this.blockNo = 0;
+    this.hashNo = 0;
   }
-
-
 }

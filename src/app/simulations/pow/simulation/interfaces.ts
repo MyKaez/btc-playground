@@ -1,4 +1,4 @@
-export interface PowBlock {
+export interface PowHash {
     id: string;
     hashRate: number;
     difficulty: number;
