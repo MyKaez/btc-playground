@@ -29,7 +29,7 @@ export class SimulationComponent implements OnInit {
     this.isProcessing = false;
     this.stopOnFoundBlock = true;
     this.powService = new PowService();
-    this.dataSource = new MatTableDataSource(this.hashes);
+    this.dataSource = new MatTableDataSource();
   }
 
   public get amountHashesToShow(): Number {
