@@ -1,5 +1,6 @@
 import { PowHash } from "./interfaces";
-import { BLOCK_ID_LENGTH, createBlockId } from "../../../shared/helpers/block";
+import { createBlockId } from "../../../shared/helpers/block";
+import { calculateProbability, calculateDifficulty, calculateHashDetails, calculateHexaDecimalFormula } from "../../hash.methods";
 
 export class PowService {
     public hashRate: number = 10;
@@ -10,8 +11,7 @@ export class PowService {
         if (this.totalHashRate === 0 || this.blockTime === 0) {
             return Number.NaN;
         }
-        let prob = 1 / (this.totalHashRate * this.blockTime);
-        return (prob >= 1) ? 1 : prob;
+        return calculateProbability(this.totalHashRate, this.blockTime);
     }
 
     get totalHashRate(): number {
@@ -23,7 +23,7 @@ export class PowService {
         if (Number.isNaN(probability)) {
             return Number.NaN;
         }
-        return 1 / probability;
+        return calculateDifficulty(probability);
     }
 
     get expectedPrefixes(): string {
@@ -44,26 +44,12 @@ export class PowService {
 
     get hexaDecimalFormula(): string {
         const input = this.validationInput;
-        let x = '';
-        for (let i = 0; i < input[0]; i++) {
-            x += '1/16 * ';
-        }
-        x += input[1] + '/16';
-        return x;
+        return calculateHexaDecimalFormula(input[0], input[1]);
     }
 
     get validationInput(): [leadingZeros: number, probability: number] {
-        let leadingZeros = 0;
         let probability = this.probability;
-        for (let i = 0; i < BLOCK_ID_LENGTH; i++) {
-            probability = probability * 16;
-            if (probability >= 1) {
-                break;
-            }
-            leadingZeros++;
-        }
-        probability = Math.round(probability);
-        return [leadingZeros, probability];
+        return calculateHashDetails(probability);
     }
 
     validate(id: string, leadingZeros: number, probability: number): boolean {

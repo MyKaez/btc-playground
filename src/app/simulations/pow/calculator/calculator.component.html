@@ -1,15 +1,44 @@
-<div>
-    Data by <a href="https://chain.api.btc.com/v3/block/latest" target="_blank">
-        https://chain.api.btc.com/v3/block/latest
-    </a>.
-</div>
-<div>
-    <ul>
-        <li>Höhe: {{currentBlock.height}}</li>
-        <li>Hash: {{currentBlock.hash}}</li>
-        <li>Difficulty: {{currentBlock.difficulty}}</li>
-    </ul>
-</div>
-<div>
-    We'll add some calculations here for you to play around with :)
-</div>
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <h2>Allgemeines</h2>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div>
+        Used API: <a href="https://chain.api.btc.com/v3/block/latest" target="_blank">
+            https://chain.api.btc.com/v3/block/latest
+        </a>.<br>
+        Bitcoin Wiki: <a href="https://en.bitcoinwiki.org/wiki/Difficulty_in_Mining" target="_blank">
+            https://en.bitcoinwiki.org/wiki/Difficulty_in_Mining
+        </a><br>
+        Mining calculator 1: <a href="https://alloscomp.com/bitcoin/calculator" target="_blank">
+            https://alloscomp.com/bitcoin/calculator
+        </a>
+        <br>
+        Mining calculator 2: <a href="https://99bitcoins.com/bitcoin-mining/calculator/" target="_blank">
+            https://99bitcoins.com/bitcoin-mining/calculator/
+        </a>
+    </div>
+</mat-expansion-panel>
+<mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <h2>Block Daten</h2>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div>
+        <h2>Aktuellster Block</h2>
+        <ul>
+            <li>Höhe: {{currentBlock.height}}</li>
+            <li>Hash: {{currentBlock.hash}}</li>
+            <li>Difficulty: {{currentBlock.difficulty}}</li>
+        </ul>
+    </div>
+    <div>
+        <h2>Berechnungen</h2>
+        <ul>
+            <li>Wahrscheinlichkeit: {{probabilityString}}</li>
+            <li>Hexa Formel: {{hexaDecimalFormula}}</li>
+        </ul>
+    </div>
+</mat-expansion-panel>
