@@ -27,6 +27,14 @@ export class PowComponent {
     this.powService.hashRate = value;
   }
 
+  get externalHashRate(): number {
+    return this.powService.externalHashRate;
+  }
+
+  set externalHashRate(value: number) {
+    this.powService.externalHashRate = value;
+  }
+
   get blockTime(): number {
     return this.powService.blockTime;
   }

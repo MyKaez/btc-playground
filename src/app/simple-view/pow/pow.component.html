@@ -10,6 +10,11 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill">
+                <mat-label class="input">externe Hashrate <i>[Hashes pro Sekunde]</i></mat-label>
+                <input type="number" matInput [(ngModel)]="externalHashRate" min="0" step="1">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
                 <mat-label class="input">Blockzeit <i>[in Sekunden]</i></mat-label>
                 <input type="number" matInput [(ngModel)]="blockTime" min="1" max="50" step="1">
             </mat-form-field>
