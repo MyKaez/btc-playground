@@ -19,8 +19,8 @@ export class CalculatorComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const url = 'https://chain.api.btc.com/v3/block/latest';
     this.http.get<ApiBlock>(url).subscribe(res => {
-      this.latBlocks.push(res.data);
-      this.latBlocks.shift();
+      this.latestBlocks.push(res.data);
+      this.latestBlocks.shift();
     });
   }
 
