@@ -20,6 +20,7 @@ import { SimulationsComponent } from './simple-view/simulations/simulations.comp
 import { SimpleViewComponent } from './simple-view/simple-view.component';
 import { SimulationsComponent as SimpleSimulationsComponent } from './simple-view/simulations/simulations.component';
 import { PowComponent as SimplePowComponent } from './simple-view/pow/pow.component';
+import { SimulationComponent as PowSimulationComponent } from './simulations/pow/simulation/simulation.component';
 
 
 @NgModule({
@@ -28,10 +29,11 @@ import { PowComponent as SimplePowComponent } from './simple-view/pow/pow.compon
     PowComponent,
     VidComponent,
     HomeComponent,
-    SimulationsComponent,
     SimpleViewComponent,
     SimpleSimulationsComponent,
-    SimplePowComponent
+    SimplePowComponent,
+    SimulationsComponent,
+    PowSimulationComponent
   ],
   imports: [
     BrowserModule,
