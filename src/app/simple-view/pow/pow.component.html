@@ -22,7 +22,10 @@
             <hr />
             <span>Erwartete Hashes: {{expectedPrefixes}}</span><br />
             <span>Erwartete Anzahl Blöcke: {{expectedAmountOfBlocks}}</span><br />
-            <span>Erstellte Blöcke: {{hashes.length}}</span><br />
+            <span>Erstellte Blöcke: {{amountOfHashesCreated}}</span><br />
+            <span *ngIf="amountOfHashesCreated > maxAmountOfHashesCreated">
+                Anzahl angezeigter Blöcke: {{maxAmountOfHashesCreated}}
+            </span><br />
 
             <hr />
 
@@ -31,7 +34,7 @@
             </div>
         </div>
         <div class="simulation">
-            <span *ngFor="let hash of hashes.reverse()">{{hash}}<br /></span>
+            <span *ngFor="let hash of hashes">{{hash}}<br /></span>
         </div>
     </div>
     <div class="buttons">

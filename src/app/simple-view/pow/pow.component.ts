@@ -9,9 +9,12 @@ import { SimpleViewComponent } from '../simple-view.component';
   styleUrls: ['../simple-view.component.scss', '../../materials.scss', '../../app.component.scss']
 })
 export class PowComponent {
+  public readonly maxAmountOfHashesCreated = 100;
+
   private powService: PowService;
   private isRunning: boolean;
   public hashes: string[];
+  public amountOfHashesCreated: number = 0;
 
   constructor() {
     this.hashes = [];
@@ -80,7 +83,10 @@ export class PowComponent {
         for (let i = 0; i < this.hashRate; i++) {
           const block = this.powService.createHash(
             validationInput[0], validationInput[1], 0, 0);
-          this.hashes.push(block.id);
+          this.amountOfHashesCreated++;
+          if (this.hashes.unshift(block.id) > this.maxAmountOfHashesCreated) {
+            this.hashes.pop();
+          }
           if (block.isValid) {
             this.isRunning = false;
             break;
