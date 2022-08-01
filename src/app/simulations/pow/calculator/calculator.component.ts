@@ -17,11 +17,11 @@ export class CalculatorComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const url = 'https://chain.api.btc.com/v3/block/latest';
-    this.http.get<ApiBlock>(url).subscribe(res => {
-      this.latestBlocks.push(res.data);
+    this.http.get<ApiBlock>(`https://chain.api.btc.com/v3/block/latest`).subscribe(res => {
+      let block = res.data;
+      this.latestBlocks.push(block);
       this.latestBlocks.shift();
-    });
+    })
   }
 
   public get latestBlocks(): Block[] {
