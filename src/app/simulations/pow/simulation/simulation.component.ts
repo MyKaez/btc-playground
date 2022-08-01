@@ -23,6 +23,7 @@ export class SimulationComponent implements OnInit {
   public dataSource: MatTableDataSource<PowHash>;
   public executedHashrates: number;
   public stopOnFoundBlock: boolean;
+  public clearOnStart: boolean;
 
   constructor() {
     this.hashNo = 0;
@@ -30,6 +31,7 @@ export class SimulationComponent implements OnInit {
     this.hashes = [];
     this.isProcessing = false;
     this.stopOnFoundBlock = true;
+    this.clearOnStart = true;
     this.powService = new PowService();
     this.dataSource = new MatTableDataSource();
   }
@@ -98,9 +100,13 @@ export class SimulationComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   async start() {
     if (this.isProcessing) {
       return;
+    }
+    if (this.clearOnStart) {
+      this.clear();
     }
     this.isProcessing = true;
     await this.createJob();

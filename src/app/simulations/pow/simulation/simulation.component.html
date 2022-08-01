@@ -60,15 +60,20 @@
 
     <mat-card>
         <mat-card-actions>
-            <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
-            <button mat-button (click)="clear();start()" [disabled]="isProcessing || hashes.length === 0">
-                Restart
-            </button>
-            <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
-            <button mat-button (click)="clear()" [disabled]="isProcessing || hashes.length === 0">Clear</button>
-            <mat-checkbox [(ngModel)]="stopOnFoundBlock">
-                Stoppen bei gefundenem Block
-            </mat-checkbox>
+            <div>
+                <mat-checkbox [(ngModel)]="stopOnFoundBlock">
+                    Stoppen bei gefundenem Block
+                </mat-checkbox>
+                |
+                <mat-checkbox [(ngModel)]="clearOnStart">
+                    Clear bei Start
+                </mat-checkbox>
+            </div>
+            <div>
+                <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
+                <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
+                <button mat-button (click)="clear()" [disabled]="isProcessing || hashes.length === 0">Clear</button>
+            </div>
         </mat-card-actions>
         <mat-card-footer>
             <div>
