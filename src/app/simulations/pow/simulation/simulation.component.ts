@@ -15,9 +15,9 @@ export class SimulationComponent implements OnInit {
   public readonly maxAmountOfHashesToShow = 200;
   public readonly minAmountOfHashesToShow = 1;
 
-  private hashNo: number;
   private powService: PowService;
 
+  public hashNo: number;
   public isProcessing: boolean;
   public hashes: PowHash[];
   public dataSource: MatTableDataSource<PowHash>;
