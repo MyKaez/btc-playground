@@ -12,6 +12,8 @@ import { PowService } from './pow.service';
 export class SimulationComponent implements OnInit {
   public readonly maxHashRate = 50;
   public readonly minHashRate = 1;
+  public readonly maxAmountOfHashesToShow = 200;
+  public readonly minAmountOfHashesToShow = 1;
 
   private hashNo: number;
   private powService: PowService;
@@ -112,7 +114,9 @@ export class SimulationComponent implements OnInit {
         for (let i = 0; i < this.hashRate; i++) {
           const hash = this.powService.createHash(
             validationInput[0], validationInput[1], this.executedHashrates, ++this.hashNo);
-          this.hashes.push(hash);
+          if (this.hashes.unshift(hash) > this.maxAmountOfHashesToShow) {
+            this.hashes.pop();
+          }
           this.showOutput();
           if (this.stopOnFoundBlock && hash.isValid) {
             this.stop();
@@ -127,7 +131,7 @@ export class SimulationComponent implements OnInit {
   }
 
   showOutput() {
-    this.dataSource.data = this.hashes.reverse().filter((_, i) => i < this.amountHashesToShow);
+    this.dataSource.data = this.hashes.filter((_, i) => i < this.amountHashesToShow);
   }
 
   stop(): void {

@@ -74,7 +74,8 @@
             <div>
                 <mat-form-field apperance="fill">
                     <mat-label><b>Anzahl angezeigter Hashes</b></mat-label>
-                    <input type="number" matInput [(ngModel)]="amountHashesToShow" min="1" step="1" max="200">
+                    <input type="number" matInput [(ngModel)]="amountHashesToShow" [min]="minAmountOfHashesToShow"
+                        step="1" [max]="maxAmountOfHashesToShow">
                 </mat-form-field>
                 | Ausgeführte eigene Hashraten: {{executedHashrates}}
                 | Anzahl eigener Hashes: {{hashes.length}}
