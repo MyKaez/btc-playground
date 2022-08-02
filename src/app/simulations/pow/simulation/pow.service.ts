@@ -23,7 +23,7 @@ export class PowService {
         if (Number.isNaN(probability)) {
             return Number.NaN;
         }
-        return calculateDifficulty(probability);
+        return Math.round(calculateDifficulty(probability));
     }
 
     get expectedAmountOfHashrates(): number {
