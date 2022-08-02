@@ -39,10 +39,10 @@ export class AppComponent implements OnInit {
 
   public set simpleView(value: boolean) {
     localStorage.setItem('app_simple_view', value ? 'true' : 'false');
+    this.switchMode();
   }
 
   switchMode() {
-    this.simpleView = !this.simpleView;
     this.navigateTo(this.currentRoute);
   }
 

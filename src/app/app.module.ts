@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './shared/vid/vid.component';
 import { HomeComponent } from './home/home.component';
@@ -51,7 +52,8 @@ import { CalculatorComponent as PowCalculatorComponent } from './simulations/pow
     MatInputModule,
     MatCardModule,
     MatProgressBarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
