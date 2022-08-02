@@ -4,21 +4,22 @@
         <div class="text">
             <h2>Parameter</h2>
 
-            <button mat-button (click)="determineHashRate()">Hashrate ermitteln</button>
+            <button mat-button (click)="determineHashRate()" [disabled]="isRunning">Hashrate ermitteln</button>
 
             <mat-form-field appearance="fill">
                 <mat-label class="input">Hashrate <i>[Hashes pro Sekunde]</i></mat-label>
-                <input type="number" matInput [(ngModel)]="hashRate" min="1" max="50" step="1">
+                <input type="number" matInput [(ngModel)]="hashRate" min="1" [max]="maxHashRate" step="1"
+                    [readonly]="isRunning">
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label class="input">externe Hashrate <i>[Hashes pro Sekunde]</i></mat-label>
-                <input type="number" matInput [(ngModel)]="externalHashRate" min="0" step="1">
+                <input type="number" matInput [(ngModel)]="externalHashRate" min="0" step="1" [readonly]="isRunning">
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label class="input">Blockzeit <i>[in Sekunden]</i></mat-label>
-                <input type="number" matInput [(ngModel)]="blockTime" min="1" max="50" step="1">
+                <input type="number" matInput [(ngModel)]="blockTime" min="1" max="50" step="1" [readonly]="isRunning">
             </mat-form-field>
 
             <hr />
@@ -27,12 +28,14 @@
             <span>Erstellte Blöcke: {{amountOfHashesCreated}}</span><br />
             <span *ngIf="amountOfHashesCreated > maxAmountOfHashesCreated">
                 Anzahl angezeigter Blöcke: {{maxAmountOfHashesCreated}}
-            </span><br />
+                <br />
+            </span>
 
             <hr />
 
             <div class="buttons">
-                <button mat-button (click)="simulate()">Simulieren</button>
+                <button mat-button (click)="simulate()" [disabled]="isRunning">Simulieren</button>
+                <button mat-button (click)="stop()" [disabled]="!isRunning">Stop</button>
             </div>
         </div>
 
