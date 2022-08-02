@@ -35,8 +35,12 @@
                 <button mat-button (click)="simulate()">Simulieren</button>
             </div>
         </div>
+
         <div class="simulation">
-            <span *ngFor="let hash of hashes">{{hash}}<br /></span>
+            <div class="header">Bitcoin Simulation</div>
+            <div class="data">
+                <span *ngFor="let hash of hashes">{{hash}}<br /></span>
+            </div>
         </div>
     </div>
     <div class="buttons">

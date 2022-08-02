@@ -59,17 +59,29 @@
 }
 
 .simulation {
-    color: black;
     width: 100%;
-    background-color: white;
     border: 3px solid white;
-    border-radius: 0.5em;
+    border-radius: 0.2em;
     min-width: 7em;
     max-width: 40em;
     min-height: 30em;
     max-height: 30em;
-    padding: 0;
-    overflow-y: scroll;
+    text-align: left;
+
+    .header {
+        height: 6%;
+        padding-left: 1em;
+        background-color: white;
+        color: black;
+    }
+
+    .data {
+        color: orange;
+        background-color: black;
+        overflow-y: scroll;
+        height: 94%;
+        padding-left: 1em;
+    }
 }
 
 .text {
