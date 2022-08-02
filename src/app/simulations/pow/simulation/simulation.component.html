@@ -1,4 +1,4 @@
-<mat-expansion-panel>
+<mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
         <mat-panel-title>
             <h2>Die Daten</h2>
@@ -10,11 +10,12 @@
             </span>
         </mat-panel-description>
     </mat-expansion-panel-header>
-    <mat-card>
-        <mat-card-content class="data">
-            <div class="input">
+    <div class="data">
+        <mat-card class="input">
+            <mat-card-content>
                 <h2>Input</h2>
-                <button mat-button (click)="determineHashRate()" [disabled]="isCalculating">Hashrate ermitteln</button>
+                <button mat-button (click)="determineHashRate()" [disabled]="isCalculating">Hashrate
+                    ermitteln</button>
                 <mat-form-field appearance="fill">
                     <mat-label><b>Hashrate</b> [Hashes pro Sekunde]</mat-label>
                     <input type="number" matInput [(ngModel)]="hashRate" [min]="minHashRate" [max]="maxHashRate"
@@ -28,8 +29,10 @@
                     <mat-label><b>Blockzeit</b> [in Sekunden]</mat-label>
                     <input type="number" matInput [(ngModel)]="blockTime" min="1" max="600" step="1">
                 </mat-form-field>
-            </div>
-            <div class="output">
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="output">
+            <mat-card-content>
                 <h2>Output</h2>
                 <mat-form-field appearance="fill">
                     <mat-label><b>Wahrscheinlichkeit</b> [für richtigen Block]</mat-label>
@@ -51,9 +54,9 @@
                     <mat-label><b>Hexadezimale Formel</b></mat-label>
                     <input type="text" matInput [ngModel]="hexaDecimalFormula" readonly="true">
                 </mat-form-field>
-            </div>
-        </mat-card-content>
-    </mat-card>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </mat-expansion-panel>
 
 <mat-expansion-panel expanded="true">

@@ -1,28 +1,29 @@
 .data {
     display: flex;
     justify-content: center;
-
-    div {
-        padding-left: 0.5em;
-        padding-right: 0.5em;
-        display: flex;
-        flex-direction: column;
-    }
+    flex-wrap: wrap;
+    width: 100%;
 
     .input {
-        width: 25%
+        min-width: 30%;
+        max-width: 100%;
     }
 
     .output {
-        width: 75%;
+        min-width: 60%;
+        max-width: 100%;
     }
 
     .input>* {
         width: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
     .output>* {
         width: 100%;
+        display: flex;
+        flex-direction: column;
     }
 }
 
