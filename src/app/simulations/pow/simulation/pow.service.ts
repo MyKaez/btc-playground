@@ -26,6 +26,10 @@ export class PowService {
         return calculateDifficulty(probability);
     }
 
+    get expectedHashrates(): number {
+        return (this.totalHashRate / this.hashRate) * this.blockTime;
+    }
+
     get expectedPrefixes(): string {
         const res = [];
         const input = this.validationInput;

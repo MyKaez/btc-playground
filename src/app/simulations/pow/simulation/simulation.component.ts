@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { TitleStrategy } from '@angular/router';
 import { delay } from 'src/app/shared/delay';
 import { PowHash } from './interfaces';
 import { PowService } from './pow.service';
@@ -11,13 +10,14 @@ import { PowService } from './pow.service';
   styleUrls: ['../pow.component.scss', '../../../materials.scss']
 })
 export class SimulationComponent implements OnInit {
-  public readonly maxHashRate = 50;
+
   public readonly minHashRate = 1;
   public readonly maxAmountOfHashesToShow = 200;
   public readonly minAmountOfHashesToShow = 1;
 
   private powService: PowService;
 
+  public maxHashRate: number = 50;
   public hashNo: number;
   public isProcessing: boolean;
   public isCalculating: boolean;
@@ -49,7 +49,7 @@ export class SimulationComponent implements OnInit {
   }
 
   public get displayedColumns(): string[] {
-    return ['id', 'isValid', 'serialNo', 'hashRate', 'difficulty'];
+    return ['id', 'isValid', 'serialNo', 'hashRate'];
   }
 
   public get hashRate(): number {
@@ -91,6 +91,10 @@ export class SimulationComponent implements OnInit {
 
   public get expectedAmountOfBlocks(): number {
     return this.powService.expectedAmountOfBlocks;
+  }
+
+  public get expectedHashrates(): number {
+    return this.powService.expectedHashrates;
   }
 
   public get expectedPrefixes(): string {
@@ -141,6 +145,7 @@ export class SimulationComponent implements OnInit {
       this.clear();
     }
     this.hashRate = Math.round(curHash / determineRounds);
+    this.maxHashRate = this.hashRate;
     this.isCalculating = false;
   }
 
@@ -149,6 +154,7 @@ export class SimulationComponent implements OnInit {
       const timeToWait = 1000 / this.hashRate;
       const validationInput = this.powService.validationInput;
       while (this.isProcessing) {
+        this.executedHashrates++;
         for (let i = 0; i < this.hashRate; i++) {
           const hash = this.powService.createHash(
             validationInput[0], validationInput[1], this.executedHashrates, ++this.hashNo);
@@ -162,7 +168,6 @@ export class SimulationComponent implements OnInit {
           }
           await delay(timeToWait);
         }
-        this.executedHashrates++;
       }
       resolve('done');
     });

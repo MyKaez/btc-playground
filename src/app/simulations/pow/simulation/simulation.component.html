@@ -18,7 +18,7 @@
                 <mat-form-field appearance="fill">
                     <mat-label><b>Hashrate</b> [Hashes pro Sekunde]</mat-label>
                     <input type="number" matInput [(ngModel)]="hashRate" [min]="minHashRate" [max]="maxHashRate"
-                        step="1">
+                        step="1" [readonly]="isCalculating">
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label><b>externe Hashrate</b> [Hashes pro Sekunde]</mat-label>
@@ -38,6 +38,10 @@
                 <mat-form-field appearance="fill">
                     <mat-label><b>Anzahl Blöcke</b> [zu finden - nach Wahrscheinlichkeit]</mat-label>
                     <input type="number" matInput [ngModel]="expectedAmountOfBlocks" readonly="true">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label><b>Anzahl HashRates</b> [zu finden - nach Wahrscheinlichkeit]</mat-label>
+                    <input type="text" matInput [ngModel]="expectedHashrates" readonly="true">
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label><b>Erwartete Hash Präfixe</b></mat-label>
@@ -120,11 +124,6 @@
                 <ng-container matColumnDef="hashRate">
                     <th mat-header-cell *matHeaderCellDef> Hashrate </th>
                     <td mat-cell *matCellDef="let element"> {{element.hashRate}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="difficulty">
-                    <th mat-header-cell *matHeaderCellDef> Difficulty </th>
-                    <td mat-cell *matCellDef="let element"> {{element.difficulty}} </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
