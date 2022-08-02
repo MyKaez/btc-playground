@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { TitleStrategy } from '@angular/router';
 import { delay } from 'src/app/shared/delay';
 import { PowHash } from './interfaces';
 import { PowService } from './pow.service';
@@ -110,6 +111,38 @@ export class SimulationComponent implements OnInit {
     }
     this.isProcessing = true;
     await this.createJob();
+  }
+
+  async determineHashRate() {
+    if (this.isProcessing) {
+      return;
+    }
+    this.clear();
+    this.isProcessing = true;
+    let curHash = 0;
+    const determineRounds = 5;
+    const validationInput = this.powService.validationInput;
+    for (let i = 0; i < determineRounds; i++) {
+      const hash = this.powService.createHash(
+        validationInput[0], validationInput[1], this.executedHashrates, ++this.hashNo);
+      this.hashes.unshift(hash);
+      const start = new Date();
+      start.setSeconds(start.getSeconds() + 1);
+      while (start.getTime() > new Date().getTime()) {
+        const hash = this.powService.createHash(
+          validationInput[0], validationInput[1], this.executedHashrates, ++this.hashNo);
+        if (this.hashes.unshift(hash) > this.maxAmountOfHashesToShow) {
+          this.hashes.pop();
+        }
+        this.showOutput();
+        await delay(1);
+      }
+      this.hashRate = Math.round(this.hashes.length * 0.75);
+      curHash += this.hashRate;
+      this.isProcessing = false;
+      this.clear();
+    }
+    this.hashRate = Math.round(curHash / determineRounds);
   }
 
   createJob(): Promise<string> {
