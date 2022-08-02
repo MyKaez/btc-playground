@@ -10,10 +10,12 @@ import { SimpleViewComponent } from '../simple-view.component';
 })
 export class PowComponent {
   private powService: PowService;
-  private isRunning: boolean;
+
+  public isRunning: boolean;
   public hashes: string[];
   public amountOfHashesCreated: number = 0;
   public maxAmountOfHashesCreated: number = 100;
+  public maxHashRate: number = 50;
 
   constructor() {
     this.hashes = [];
@@ -74,12 +76,22 @@ export class PowComponent {
     await this.createJob();
   }
 
+  async stop() {
+    if (!this.isRunning) {
+      return;
+    }
+    this.isRunning = false;
+  }
+
   createJob(): Promise<string> {
     return new Promise(async resolve => {
       while (this.isRunning) {
         const timeToWait = 1000 / this.hashRate;
         const validationInput = this.validationInput;
         for (let i = 0; i < this.hashRate; i++) {
+          if (!this.isRunning) {
+            break;
+          }
           const block = this.powService.createHash(
             validationInput[0], validationInput[1], 0, 0);
           this.amountOfHashesCreated++;
@@ -98,6 +110,10 @@ export class PowComponent {
   }
 
   async determineHashRate() {
+    if (this.isRunning) {
+      return;
+    }
+    this.isRunning = true;
     this.hashes = [];
     let curHash = 0;
     const determineRounds = 5;
@@ -119,7 +135,8 @@ export class PowComponent {
       this.hashes = [];
     }
     this.hashRate = Math.round(curHash / determineRounds);
-    this.maxAmountOfHashesCreated = this.hashRate;
+    this.maxHashRate = this.hashRate;
     this.hashes = [];
+    this.isRunning = false;
   }
 }

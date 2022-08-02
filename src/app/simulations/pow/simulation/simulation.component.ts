@@ -153,6 +153,9 @@ export class SimulationComponent implements OnInit {
       while (this.isProcessing) {
         this.executedHashrates++;
         for (let i = 0; i < this.hashRate; i++) {
+          if (!this.isProcessing) {
+            break;
+          }
           const hash = this.powService.createHash(
             validationInput[0], validationInput[1], this.executedHashrates, ++this.hashNo);
           if (this.hashes.unshift(hash) > this.maxAmountOfHashesToShow) {
