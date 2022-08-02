@@ -73,6 +73,7 @@ export class PowComponent {
     }
     this.isRunning = true;
     this.hashes = [];
+    this.amountOfHashesCreated = 0;
     await this.createJob();
   }
 
