@@ -20,6 +20,7 @@ export class SimulationComponent implements OnInit {
 
   public hashNo: number;
   public isProcessing: boolean;
+  public isCalculating: boolean;
   public hashes: PowHash[];
   public dataSource: MatTableDataSource<PowHash>;
   public executedHashrates: number;
@@ -31,6 +32,7 @@ export class SimulationComponent implements OnInit {
     this.executedHashrates = 0;
     this.hashes = [];
     this.isProcessing = false;
+    this.isCalculating = false;
     this.stopOnFoundBlock = true;
     this.clearOnStart = true;
     this.powService = new PowService();
@@ -114,11 +116,8 @@ export class SimulationComponent implements OnInit {
   }
 
   async determineHashRate() {
-    if (this.isProcessing) {
-      return;
-    }
+    this.isCalculating = true;
     this.clear();
-    this.isProcessing = true;
     let curHash = 0;
     const determineRounds = 5;
     const validationInput = this.powService.validationInput;
@@ -139,10 +138,10 @@ export class SimulationComponent implements OnInit {
       }
       this.hashRate = Math.round(this.hashes.length * 0.75);
       curHash += this.hashRate;
-      this.isProcessing = false;
       this.clear();
     }
     this.hashRate = Math.round(curHash / determineRounds);
+    this.isCalculating = false;
   }
 
   createJob(): Promise<string> {

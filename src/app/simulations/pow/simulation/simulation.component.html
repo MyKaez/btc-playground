@@ -14,7 +14,7 @@
         <mat-card-content class="data">
             <div class="input">
                 <h2>Input</h2>
-                <button mat-button (click)="determineHashRate()" [disabled]="isProcessing">Hashrate ermitteln</button>
+                <button mat-button (click)="determineHashRate()" [disabled]="isCalculating">Hashrate ermitteln</button>
                 <mat-form-field appearance="fill">
                     <mat-label><b>Hashrate</b> [Hashes pro Sekunde]</mat-label>
                     <input type="number" matInput [(ngModel)]="hashRate" [min]="minHashRate" [max]="maxHashRate"
@@ -71,9 +71,10 @@
                 </mat-checkbox>
             </div>
             <div>
-                <button mat-button (click)="start()" [disabled]="isProcessing">Start</button>
-                <button mat-button (click)="stop()" [disabled]="!isProcessing">Stop</button>
-                <button mat-button (click)="clear()" [disabled]="isProcessing || hashes.length === 0">Clear</button>
+                <button mat-button (click)="start()" [disabled]="isProcessing || isCalculating">Start</button>
+                <button mat-button (click)="stop()" [disabled]="!isProcessing || isCalculating">Stop</button>
+                <button mat-button (click)="clear()"
+                    [disabled]="isProcessing || hashes.length === 0 || isCalculating">Clear</button>
             </div>
         </mat-card-actions>
         <mat-card-footer>
