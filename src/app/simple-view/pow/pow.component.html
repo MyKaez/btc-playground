@@ -4,6 +4,8 @@
         <div class="text">
             <h2>Parameters</h2>
 
+            <button mat-button (click)="determineHashRate()">Hashrate ermitteln</button>
+
             <mat-form-field appearance="fill">
                 <mat-label class="input">Hashrate <i>[Hashes pro Sekunde]</i></mat-label>
                 <input type="number" matInput [(ngModel)]="hashRate" min="1" max="50" step="1">

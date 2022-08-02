@@ -9,12 +9,11 @@ import { SimpleViewComponent } from '../simple-view.component';
   styleUrls: ['../simple-view.component.scss', '../../materials.scss', '../../app.component.scss']
 })
 export class PowComponent {
-  public readonly maxAmountOfHashesCreated = 100;
-
   private powService: PowService;
   private isRunning: boolean;
   public hashes: string[];
   public amountOfHashesCreated: number = 0;
+  public maxAmountOfHashesCreated: number = 100;
 
   constructor() {
     this.hashes = [];
@@ -96,5 +95,31 @@ export class PowComponent {
       }
       resolve('done');
     });
+  }
+
+  async determineHashRate() {
+    this.hashes = [];
+    let curHash = 0;
+    const determineRounds = 5;
+    const validationInput = this.powService.validationInput;
+    for (let i = 0; i < determineRounds; i++) {
+      const start = new Date();
+      start.setSeconds(start.getSeconds() + 1);
+      while (start.getTime() > new Date().getTime()) {
+        const hash = this.powService.createHash(
+          validationInput[0], validationInput[1], 0, 0);
+        if (this.hashes.unshift(hash.id) > ++this.amountOfHashesCreated) {
+          this.hashes.pop();
+        }
+        await delay(1);
+      }
+      this.amountOfHashesCreated = 0;
+      this.hashRate = Math.round(this.hashes.length * 0.75);
+      curHash += this.hashRate;
+      this.hashes = [];
+    }
+    this.hashRate = Math.round(curHash / determineRounds);
+    this.maxAmountOfHashesCreated = this.hashRate;
+    this.hashes = [];
   }
 }
