@@ -93,8 +93,8 @@ export class SimulationComponent implements OnInit {
     return this.powService.expectedAmountOfBlocks;
   }
 
-  public get expectedHashrates(): number {
-    return this.powService.expectedHashrates;
+  public get expectedAmountOfHashrates(): number {
+    return this.powService.expectedAmountOfHashrates;
   }
 
   public get expectedPrefixes(): string {
@@ -126,9 +126,6 @@ export class SimulationComponent implements OnInit {
     const determineRounds = 5;
     const validationInput = this.powService.validationInput;
     for (let i = 0; i < determineRounds; i++) {
-      const hash = this.powService.createHash(
-        validationInput[0], validationInput[1], this.executedHashrates, ++this.hashNo);
-      this.hashes.unshift(hash);
       const start = new Date();
       start.setSeconds(start.getSeconds() + 1);
       while (start.getTime() > new Date().getTime()) {

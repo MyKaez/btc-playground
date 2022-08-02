@@ -26,8 +26,8 @@ export class PowService {
         return calculateDifficulty(probability);
     }
 
-    get expectedHashrates(): number {
-        return (this.totalHashRate / this.hashRate) * this.blockTime;
+    get expectedAmountOfHashrates(): number {
+        return Math.round((this.totalHashRate / this.hashRate) * this.blockTime);
     }
 
     get expectedPrefixes(): string {
