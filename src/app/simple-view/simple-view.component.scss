@@ -61,12 +61,14 @@
 .simulation {
     width: 100%;
     border: 3px solid white;
+    background-color: white;
     border-radius: 0.2em;
     min-width: 5em;
     max-width: 60em;
     min-height: 30em;
     max-height: 30em;
     text-align: left;
+    margin-right: 0.5em;
 
     .header {
         height: 6%;
@@ -87,7 +89,8 @@
     color: white;
     background: 0;
     width: 18em;
-    padding: 0.5em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
     font-size: 1em;
 
     h1 {

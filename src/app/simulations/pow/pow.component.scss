@@ -5,13 +5,13 @@
     width: 100%;
 
     .input {
-        min-width: 30%;
-        max-width: 100%;
+        width: 100%;
+        max-width: 28em;
     }
 
     .output {
-        min-width: 65%;
-        max-width: 100%;
+        width: 100%;
+        max-width: 56em;
     }
 
     .input>* {
