@@ -5,13 +5,15 @@
     width: 100%;
 
     .input {
+        display: flex;
+        flex-direction: column;
         width: 100%;
-        max-width: 28em;
+        max-width: 20em;
     }
 
     .output {
-        width: 100%;
-        max-width: 56em;
+        min-width: 50%;
+        max-width: max-content;
     }
 
     .input>* {
@@ -28,6 +30,26 @@
 }
 
 .results {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .input {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 20em;
+    }
+
+    .output {
+        min-width: 50%;
+        max-width: max-content;
+    }
+
+}
+
+.table {
     width: 100%;
     max-width: 100%;
     overflow: auto;

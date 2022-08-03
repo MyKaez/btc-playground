@@ -66,73 +66,70 @@
         </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-card>
-        <mat-card-actions>
-            <div>
-                <mat-checkbox [(ngModel)]="stopOnFoundBlock">
-                    Stoppen bei gefundenem Block
-                </mat-checkbox>
-                |
-                <mat-checkbox [(ngModel)]="clearOnStart">
-                    Clear bei Start
-                </mat-checkbox>
-            </div>
-            <div>
+    <div class="results">
+        <mat-card class="input">
+            <mat-form-field apperance="fill">
+                <mat-label><b>Anzahl angezeigter Hashes</b></mat-label>
+                <input type="number" matInput [(ngModel)]="amountHashesToShow" [min]="minAmountOfHashesToShow" step="1"
+                    [max]="maxAmountOfHashesToShow">
+            </mat-form-field>
+            <mat-checkbox [(ngModel)]="stopOnFoundBlock">
+                Stoppen bei gefundenem Block
+            </mat-checkbox>
+
+            <mat-checkbox [(ngModel)]="clearOnStart">
+                Clear bei Start
+            </mat-checkbox>
+        </mat-card>
+
+        <mat-card class="output">
+            <mat-card-actions>
                 <button mat-button (click)="start()" [disabled]="isProcessing || isCalculating">Start</button>
                 <button mat-button (click)="stop()" [disabled]="!isProcessing || isCalculating">Stop</button>
                 <button mat-button (click)="clear()"
                     [disabled]="isProcessing || hashes.length === 0 || isCalculating">Clear</button>
-            </div>
-        </mat-card-actions>
-        <mat-card-footer>
-            <div>
-                <mat-form-field apperance="fill">
-                    <mat-label><b>Anzahl angezeigter Hashes</b></mat-label>
-                    <input type="number" matInput [(ngModel)]="amountHashesToShow" [min]="minAmountOfHashesToShow"
-                        step="1" [max]="maxAmountOfHashesToShow">
-                </mat-form-field>
-                | Ausgeführte eigene Hashraten: {{executedHashrates}}
-                | Anzahl eigener Hashes: {{hashNo}}
-            </div>
-            <div *ngIf="isProcessing">
-                <span><b>Simulation gestartet...</b></span>
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-            </div>
-            <div *ngIf="!isProcessing && hashes.length > 0">
-                <span><b>Simulation beendet.</b></span>
-                <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
-            </div>
-        </mat-card-footer>
-    </mat-card>
+            </mat-card-actions>
+            <mat-card-content class="table">
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> Hash </th>
+                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
 
-    <mat-card>
-        <mat-card-content class="results">
-            <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="isValid">
+                        <th mat-header-cell *matHeaderCellDef> Validiert </th>
+                        <td mat-cell *matCellDef="let element"> {{element.isValid}} </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> Hash </th>
-                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                </ng-container>
+                    <ng-container matColumnDef="serialNo">
+                        <th mat-header-cell *matHeaderCellDef> Erstellungsnr. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.serialNo}} </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="isValid">
-                    <th mat-header-cell *matHeaderCellDef> Validiert </th>
-                    <td mat-cell *matCellDef="let element"> {{element.isValid}} </td>
-                </ng-container>
+                    <ng-container matColumnDef="hashRate">
+                        <th mat-header-cell *matHeaderCellDef> Hashrate </th>
+                        <td mat-cell *matCellDef="let element"> {{element.hashRate}} </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="serialNo">
-                    <th mat-header-cell *matHeaderCellDef> Erstellungsnr. </th>
-                    <td mat-cell *matCellDef="let element"> {{element.serialNo}} </td>
-                </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-                <ng-container matColumnDef="hashRate">
-                    <th mat-header-cell *matHeaderCellDef> Hashrate </th>
-                    <td mat-cell *matCellDef="let element"> {{element.hashRate}} </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-            </table>
-        </mat-card-content>
-    </mat-card>
+                </table>
+            </mat-card-content>
+            <mat-card-footer *ngIf="isProcessing || hashes.length > 0">
+                <span>
+                    <b>Simulation {{isProcessing ? 'gestartet...' : 'beendet.'}}</b>
+                    Ausgeführte eigene Hashraten: {{executedHashrates}}.
+                    Anzahl eigener Hashes: {{hashNo}}
+                </span>
+                <mat-progress-bar [mode]="isProcessing ? 'indeterminate' : 'determinate'"></mat-progress-bar>
+            </mat-card-footer>
+            <mat-card-footer *ngIf="!isProcessing && hashes.length == 0">
+                <span>
+                    <b>Bereit für Simulation.</b>
+                </span>
+                <mat-progress-bar [mode]="isProcessing ? 'indeterminate' : 'determinate'"></mat-progress-bar>
+            </mat-card-footer>
+        </mat-card>
+    </div>
 </mat-expansion-panel>
