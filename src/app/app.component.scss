@@ -1,9 +1,14 @@
 .simple-view {
     width: 100%;
     height: 100%;
+    overflow: auto;
     background: linear-gradient(120deg, orange 0%, darkslateblue 65%, darkslateblue 100%);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+}
+
+.work-mode {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
 .toolbar {
@@ -16,12 +21,10 @@
 }
 
 .switch-mode {
-    background: 0.2;
     position: fixed;
-    right: 0px;
-    bottom: 0px;
-    width: 3em;
-    padding: 0.5em;
+    right: 1em;
+    bottom: 1em;
+    width: 4em;
     z-index: 9999999;
 }
 
