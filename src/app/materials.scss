@@ -1,3 +1,5 @@
+@import '../styles.scss';
+
 .mat-card {
     padding: 1em;
     margin: 0.5em;
@@ -12,22 +14,43 @@
 }
 
 .mat-expansion-panel-header {
-    box-shadow: 1px 0px 0px 0px indigo inset;
-    -webkit-box-shadow: 1px 0px 0px 0px indigo inset;
-    -moz-box-shadow: 1px 0px 0px 0px indigo inset;
+    box-shadow: 1px 0px 0px 0px $primary inset;
+    -webkit-box-shadow: 1px 0px 0px 0px $primary inset;
+    -moz-box-shadow: 1px 0px 0px 0px $primary inset;
 }
 
 .mat-expansion-panel {
     margin-top: 1em;
-    box-shadow: 1px 0px 0px 0px indigo inset;
-    -webkit-box-shadow: 1px 0px 0px 0px indigo inset;
-    -moz-box-shadow: 1px 0px 0px 0px indigo inset;
+    box-shadow: 1px 0px 0px 0px $primary inset;
+    -webkit-box-shadow: 1px 0px 0px 0px $primary inset;
+    -moz-box-shadow: 1px 0px 0px 0px $primary inset;
 }
 
 .mat-row .mat-cell {
     border-bottom: 1px solid transparent;
     border-top: 1px solid transparent;
     cursor: pointer;
+}
+
+.mat-cell,
+.mat-header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0em 1em;
+    line-break: unset;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.mat-row,
+.mat-header-row {
+    display: table-row;
+    overflow-x: scroll;
+}
+
+.mat-row {
+    font-family: $code-font;
 }
 
 .mat-row:hover .mat-cell {

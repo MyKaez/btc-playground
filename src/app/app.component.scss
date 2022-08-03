@@ -25,7 +25,7 @@
 
 .toolbar {
     padding: 1em;
-    background: linear-gradient(120deg, $primary 0%, $primary, $accent);
+    background: linear-gradient(120deg, $primary 0%, $primary 65%, $accent 100%);
     color: white;
     display: flex;
     align-items: center;

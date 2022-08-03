@@ -1,5 +1,3 @@
-@import '../../../styles.scss';
-
 .data {
     display: flex;
     justify-content: center;
@@ -33,25 +31,4 @@
     width: 100%;
     max-width: 100%;
     overflow: auto;
-
-    .mat-cell,
-    .mat-header-cell {
-        word-wrap: initial;
-        display: table-cell;
-        padding: 0em 1em;
-        line-break: unset;
-        white-space: nowrap;
-        overflow: hidden;
-        vertical-align: middle;
-    }
-
-    .mat-row,
-    .mat-header-row {
-        display: table-row;
-        overflow-x: scroll;
-    }
-
-    .mat-row {
-        font-family: $code-font;
-    }
 }

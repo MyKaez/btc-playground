@@ -16,7 +16,7 @@
 }
 
 .inner-items {
-    color: $light-background;
+    color: $light-color;
     width: 100%;
     padding-top: 5em;
     text-align: center;
@@ -31,19 +31,19 @@
         justify-content: center;
 
         .mat-card {
-            color: $light-background;
+            color: $light-color;
             background-color: $accent;
             width: 10em;
             margin-left: 2em;
             margin-right: 2em;
-            border: 2px solid $light-background;
+            border: 2px solid $light-color;
             border-radius: 0em 2em 0em 2em;
             cursor: pointer;
         }
 
         img {
             width: 100%;
-            border: 2px solid $light-background;
+            border: 2px solid $light-color;
             border-radius: 1em;
         }
     }
@@ -52,7 +52,7 @@
 .picture {
     img {
         width: 100%;
-        border: 2px solid $light-background;
+        border: 2px solid $light-color;
         border-radius: 1em;
         min-width: 6em;
         max-width: 40em;
@@ -61,8 +61,8 @@
 
 .simulation {
     width: 100%;
-    border: 3px solid $light-background;
-    background-color: $light-background;
+    border: 3px solid $light-color;
+    background-color: $light-color;
     border-radius: 0.2em;
     min-width: 5em;
     max-width: 60em;
@@ -85,8 +85,8 @@
 
     .header {
         height: 6%;
-        background-color: $light-background;
-        color: $dark-background;
+        background-color: $light-color;
+        color: $dark-color;
         display: flex;
         flex-direction: row;
         vertical-align: middle;
@@ -106,7 +106,7 @@
 
     .data {
         color: $accent;
-        background-color: $dark-background;
+        background-color: $dark-color;
         overflow-y: scroll;
         height: 94%;
         padding-left: 1em;
@@ -115,7 +115,7 @@
 }
 
 .text {
-    color: $light-background;
+    color: $light-color;
     background: 0;
     width: 30em;
     min-width: 18em;
@@ -143,10 +143,10 @@
 }
 
 .input {
-    color: $light-background;
+    color: $light-color;
 }
 
 button {
-    border: 1px solid $light-background;
+    border: 1px solid $light-color;
     margin: 0.5em;
 }
