@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PowComponent } from './pow.component';
 
 describe('PowComponent', () => {
@@ -8,9 +7,9 @@ describe('PowComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PowComponent ]
+      declarations: [PowComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PowComponent);
     component = fixture.componentInstance;

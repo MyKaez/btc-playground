@@ -1,55 +1,59 @@
-<div class="inner-items">
-    <div class="items">
-        <div class="text">
-            <h2>Parameter</h2>
+<div class="wrapper">
+    <div class="inner-items">
+        <div class="items">
+            <div class="text">
+                <h2>Parameter</h2>
 
-            <button mat-button (click)="determineHashRate()" [disabled]="isRunning">Hashrate ermitteln</button>
+                <button mat-button (click)="determineHashRate()" [disabled]="isRunning">Hashrate ermitteln</button>
 
-            <mat-form-field appearance="fill">
-                <mat-label class="input">Hashrate <i>[Hashes pro Sekunde]</i></mat-label>
-                <input type="number" matInput [(ngModel)]="hashRate" min="1" [max]="maxHashRate" step="1"
-                    [readonly]="isRunning">
-            </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label class="input">Hashrate <i>[Hashes pro Sekunde]</i></mat-label>
+                    <input type="number" matInput [(ngModel)]="hashRate" min="1" [max]="maxHashRate" step="1"
+                        [readonly]="isRunning">
+                </mat-form-field>
 
-            <mat-form-field appearance="fill">
-                <mat-label class="input">externe Hashrate <i>[Hashes pro Sekunde]</i></mat-label>
-                <input type="number" matInput [(ngModel)]="externalHashRate" min="0" step="1" [readonly]="isRunning">
-            </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label class="input">externe Hashrate <i>[Hashes pro Sekunde]</i></mat-label>
+                    <input type="number" matInput [(ngModel)]="externalHashRate" min="0" step="1"
+                        [readonly]="isRunning">
+                </mat-form-field>
 
-            <mat-form-field appearance="fill">
-                <mat-label class="input">Blockzeit <i>[in Sekunden]</i></mat-label>
-                <input type="number" matInput [(ngModel)]="blockTime" min="1" max="50" step="1" [readonly]="isRunning">
-            </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label class="input">Blockzeit <i>[in Sekunden]</i></mat-label>
+                    <input type="number" matInput [(ngModel)]="blockTime" min="1" max="50" step="1"
+                        [readonly]="isRunning">
+                </mat-form-field>
 
-            <hr />
-            <span>Erwartete Hashes: {{expectedPrefixes}}</span><br />
-            <span>Erwartete Anzahl Blöcke: {{expectedAmountOfBlocks}}</span><br />
-            <span>Erstellte Blöcke: {{amountOfHashesCreated}}</span><br />
-            <span *ngIf="amountOfHashesCreated > maxAmountOfHashesCreated">
-                Anzahl angezeigter Blöcke: {{maxAmountOfHashesCreated}}
-                <br />
-            </span>
+                <hr />
+                <span>Erwartete Hashes: {{expectedPrefixes}}</span><br />
+                <span>Erwartete Anzahl Blöcke: {{expectedAmountOfBlocks}}</span><br />
+                <span>Erstellte Blöcke: {{amountOfHashesCreated}}</span><br />
+                <span *ngIf="amountOfHashesCreated > maxAmountOfHashesCreated">
+                    Anzahl angezeigter Blöcke: {{maxAmountOfHashesCreated}}
+                    <br />
+                </span>
 
-            <hr />
+                <hr />
 
-            <div class="buttons">
-                <button mat-button (click)="simulate()" [disabled]="isRunning">Simulieren</button>
-                <button mat-button (click)="stop()" [disabled]="!isRunning">Stop</button>
+                <div class="buttons">
+                    <button mat-button (click)="simulate()" [disabled]="isRunning">Simulieren</button>
+                    <button mat-button (click)="stop()" [disabled]="!isRunning">Stop</button>
+                </div>
+            </div>
+
+            <div class="simulation">
+                <div class="header">
+                    Hashrate Simulation
+                </div>
+                <div class="data">
+                    <span *ngFor="let hash of hashes">{{hash}}<br /></span>
+                </div>
             </div>
         </div>
-
-        <div class="simulation">
-            <div class="header">
-                Hashrate Simulation
-            </div>
-            <div class="data">
-                <span *ngFor="let hash of hashes">{{hash}}<br /></span>
-            </div>
+        <div class="buttons">
+            <button mat-button (click)="navigateTo('home')">Start</button>
+            <button mat-button (click)="navigateTo('simulations')">Simulationen</button>
+            <button mat-button>Erfahre mehr</button>
         </div>
-    </div>
-    <div class="buttons">
-        <button mat-button (click)="navigateTo('home')">Start</button>
-        <button mat-button (click)="navigateTo('simulations')">Simulationen</button>
-        <button mat-button>Erfahre mehr</button>
     </div>
 </div>
