@@ -12,7 +12,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $Simulator-primary: mat.define-palette(mat.$indigo-palette);
-$Simulator-accent: mat.define-palette(mat.$orange-palette, A200, A100, A400);
+$Simulator-accent: mat.define-palette(mat.$orange-palette);
 
 // The warn palette is optional (defaults to red).
 $Simulator-warn: mat.define-palette(mat.$red-palette);
@@ -24,12 +24,19 @@ $Simulator-theme: mat.define-light-theme((color: (primary: $Simulator-primary,
         warn: $Simulator-warn,
       )));
 
+
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($Simulator-theme);
 
 /* You can add global styles to this file, and also import other style files */
+
+$primary: mat.get-color-from-palette($Simulator-primary, 800);
+$accent: mat.get-color-from-palette($Simulator-accent, 500);
+$code-font: 'Courier New', Courier, monospace;
+
 
 html,
 body {
