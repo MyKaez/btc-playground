@@ -36,7 +36,8 @@ $Simulator-theme: mat.define-light-theme((color: (primary: $Simulator-primary,
 $primary: mat.get-color-from-palette($Simulator-primary, 800);
 $accent: mat.get-color-from-palette($Simulator-accent, 500);
 $code-font: 'Courier New', Courier, monospace;
-
+$dark-background: black;
+$light-background: white;
 
 html,
 body {
