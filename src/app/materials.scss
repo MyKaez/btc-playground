@@ -4,9 +4,9 @@
     padding: 1em;
     margin: 0.5em;
     margin-bottom: 1.5em;
-    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75);
-    -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75) !important;
+    -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75) !important;
+    -moz-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75) !important;
 }
 
 .mat-card-footer {
@@ -14,16 +14,16 @@
 }
 
 .mat-expansion-panel-header {
-    box-shadow: 1px 0px 0px 0px $primary inset;
-    -webkit-box-shadow: 1px 0px 0px 0px $primary inset;
-    -moz-box-shadow: 1px 0px 0px 0px $primary inset;
+    box-shadow: 1px 0px 0px 0px $primary inset !important;
+    -webkit-box-shadow: 1px 0px 0px 0px $primary inset !important;
+    -moz-box-shadow: 1px 0px 0px 0px $primary inset !important;
 }
 
 .mat-expansion-panel {
     margin-top: 1em;
-    box-shadow: 1px 0px 0px 0px $primary inset;
-    -webkit-box-shadow: 1px 0px 0px 0px $primary inset;
-    -moz-box-shadow: 1px 0px 0px 0px $primary inset;
+    box-shadow: 1px 0px 0px 0px $primary inset !important;
+    -webkit-box-shadow: 1px 0px 0px 0px $primary inset !important;
+    -moz-box-shadow: 1px 0px 0px 0px $primary inset !important;
 }
 
 .mat-row .mat-cell {
