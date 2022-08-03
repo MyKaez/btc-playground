@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="inner-items">
         <div class="items">
-            <div class="text">
+            <div class="text parameters">
                 <h2>Parameter</h2>
 
                 <button mat-button (click)="determineHashRate()" [disabled]="isRunning">Hashrate ermitteln</button>
@@ -24,16 +24,10 @@
                         [readonly]="isRunning">
                 </mat-form-field>
 
-                <hr />
-                <span>Erwartete Hashes: {{expectedPrefixes}}</span><br />
-                <span>Erwartete Anzahl Blöcke: {{expectedAmountOfBlocks}}</span><br />
-                <span>Erstellte Blöcke: {{amountOfHashesCreated}}</span><br />
-                <span *ngIf="amountOfHashesCreated > maxAmountOfHashesCreated">
-                    Anzahl angezeigter Blöcke: {{maxAmountOfHashesCreated}}
-                    <br />
-                </span>
-
-                <hr />
+                <span>Erwartete Hashes: {{expectedPrefixes}}</span>
+                <span>Erwartete Anzahl Blöcke: {{expectedAmountOfBlocks}}</span>
+                <span>Erstellte Blöcke: {{amountOfHashesCreated}}</span>
+                <span>Anzahl angezeigter Blöcke: {{maxAmountOfHashesCreated}}</span>
 
                 <div class="buttons">
                     <button mat-button (click)="simulate()" [disabled]="isRunning">Simulieren</button>

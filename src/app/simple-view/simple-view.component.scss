@@ -102,10 +102,20 @@
     }
 }
 
+.parameters {
+    display: flex;
+    flex-direction: column;
+}
+
 .buttons {
     padding-top: 1em;
 }
 
 .input {
     color: white;
+}
+
+button {
+    border: 1px solid white;
+    margin: 0.5em;
 }
