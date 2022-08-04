@@ -7,7 +7,7 @@ import { PowService } from './pow.service';
 @Component({
   selector: 'app-pow-simulation',
   templateUrl: './simulation.component.html',
-  styleUrls: ['../pow.component.scss', '../../../materials.scss']
+  styleUrls: ['../../../app.component.scss', '../../../materials.scss']
 })
 export class SimulationComponent implements OnInit {
 

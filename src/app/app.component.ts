@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SimpleViewComponent } from './simple-view/simple-view.component';
 
 @Component({
   selector: 'app-root',

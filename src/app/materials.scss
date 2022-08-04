@@ -20,12 +20,16 @@
 }
 
 .mat-expansion-panel-header {
+    color: $light-color;
+    background: 0;
     box-shadow: 1px 0px 0px 0px $primary inset !important;
     -webkit-box-shadow: 1px 0px 0px 0px $primary inset !important;
     -moz-box-shadow: 1px 0px 0px 0px $primary inset !important;
 }
 
 .mat-expansion-panel {
+    color: $light-color;
+    background: 0;
     margin-top: 1em;
     box-shadow: 1px 0px 0px 0px $primary inset !important;
     -webkit-box-shadow: 1px 0px 0px 0px $primary inset !important;
@@ -65,14 +69,12 @@
 
 .mat-tab-label-header {
     font-size: 1.5em;
-    color: black;
+    color: $light-color;
 }
 
 :host ::ng-deep .mat-tab-label-active {
     font-size: medium;
 }
-
-
 
 button {
     border: 1px solid $light-color;
