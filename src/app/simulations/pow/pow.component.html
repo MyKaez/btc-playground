@@ -1,5 +1,5 @@
 <div class="content">
-    <mat-tab-group mat-align-tabs="start" selectedIndex="3">
+    <mat-tab-group mat-align-tabs="start" selectedIndex="1">
         <mat-tab disabled="true">
             <ng-template mat-tab-label>
                 <span class="mat-tab-label-header">Proof of Work</span>
@@ -8,11 +8,11 @@
         <mat-tab label="Definition">
             <app-vid [video]="'https://www.youtube.com/embed/E2ee5ewEddE'"></app-vid>
         </mat-tab>
-        <mat-tab label="Blockchain">
-            <app-pow-calculator></app-pow-calculator>
-        </mat-tab>
         <mat-tab label="Simulation">
             <app-pow-simulation></app-pow-simulation>
+        </mat-tab>
+        <mat-tab label="Blockchain">
+            <app-pow-calculator></app-pow-calculator>
         </mat-tab>
     </mat-tab-group>
 </div>
