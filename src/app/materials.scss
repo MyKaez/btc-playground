@@ -27,6 +27,10 @@
     -moz-box-shadow: 1px 0px 0px 0px $primary inset !important;
 }
 
+.mat-expansion-panel-header-title {
+    color: $light-color;
+}
+
 .mat-expansion-panel {
     color: $light-color;
     background: 0;
@@ -65,15 +69,21 @@
 
 .mat-row:hover .mat-cell {
     border-color: currentColor;
+    color: $light-color;
 }
 
 .mat-tab-label-header {
     font-size: 1.5em;
-    color: red;
+    color: $light-color;
 }
 
 :host ::ng-deep .mat-tab-label-active {
+    color: $light-color;
     font-size: medium;
+}
+
+mat-label {
+    color: $light-color;
 }
 
 button {

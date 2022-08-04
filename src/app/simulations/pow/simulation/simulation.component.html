@@ -15,16 +15,16 @@
                         Hashrate ermitteln
                     </button>
                     <mat-form-field appearance="fill">
-                        <mat-label><b>Hashrate</b> [Hashes pro Sekunde]</mat-label>
+                        <mat-label>Hashrate [Hashes pro Sekunde]</mat-label>
                         <input type="number" matInput [(ngModel)]="hashRate" [min]="minHashRate" [max]="maxHashRate"
                             step="1" [readonly]="isCalculating">
                     </mat-form-field>
                     <mat-form-field appearance="fill">
-                        <mat-label><b>externe Hashrate</b> [Hashes pro Sekunde]</mat-label>
+                        <mat-label>externe Hashrate [Hashes pro Sekunde]</mat-label>
                         <input type="number" matInput [(ngModel)]="externalHashRate" min="0" step="1">
                     </mat-form-field>
                     <mat-form-field appearance="fill">
-                        <mat-label><b>Blockzeit</b> [in Sekunden]</mat-label>
+                        <mat-label>Blockzeit [in Sekunden]</mat-label>
                         <input type="number" matInput [(ngModel)]="blockTime" min="1" max="600" step="1">
                     </mat-form-field>
                 </div>
@@ -38,23 +38,23 @@
                 </mat-expansion-panel-header>
                 <div class="calculations">
                     <mat-form-field appearance="fill">
-                        <mat-label><b>Wahrscheinlichkeit</b> [für richtigen Block]</mat-label>
+                        <mat-label>Wahrscheinlichkeit [für richtigen Block]</mat-label>
                         <input type="number" matInput [ngModel]="probability" readonly="true">
                     </mat-form-field>
                     <mat-form-field appearance="fill">
-                        <mat-label><b>Anzahl Blöcke</b> [zu finden - nach Wahrscheinlichkeit]</mat-label>
+                        <mat-label>Anzahl Blöcke [zu finden - nach Wahrscheinlichkeit]</mat-label>
                         <input type="number" matInput [ngModel]="expectedAmountOfBlocks" readonly="true">
                     </mat-form-field>
                     <mat-form-field appearance="fill">
-                        <mat-label><b>Anzahl HashRates</b> [zu finden - nach Wahrscheinlichkeit]</mat-label>
+                        <mat-label>Anzahl HashRates [zu finden - nach Wahrscheinlichkeit]</mat-label>
                         <input type="text" matInput [ngModel]="expectedAmountOfHashrates" readonly="true">
                     </mat-form-field>
                     <mat-form-field appearance="fill">
-                        <mat-label><b>Erwartete Hash Präfixe</b></mat-label>
+                        <mat-label>Erwartete Hash Präfixe</mat-label>
                         <input type="text" matInput [ngModel]="expectedPrefixes" readonly="true">
                     </mat-form-field>
                     <mat-form-field appearance="fill">
-                        <mat-label><b>Hexadezimale Formel</b></mat-label>
+                        <mat-label>Hexadezimale Formel</mat-label>
                         <input type="text" matInput [ngModel]="hexaDecimalFormula" readonly="true">
                     </mat-form-field>
                 </div>
@@ -68,7 +68,7 @@
                 </mat-expansion-panel-header>
                 <div class="options">
                     <mat-form-field apperance="fill">
-                        <mat-label><b>Anzahl angezeigter Hashes</b></mat-label>
+                        <mat-label>Anzahl angezeigter Hashes</mat-label>
                         <input type="number" matInput [(ngModel)]="amountHashesToShow" [min]="minAmountOfHashesToShow"
                             step="1" [max]="maxAmountOfHashesToShow">
                     </mat-form-field>
