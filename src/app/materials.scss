@@ -71,3 +71,11 @@
 :host ::ng-deep .mat-tab-label-active {
     font-size: medium;
 }
+
+
+
+button {
+    border: 1px solid $light-color;
+    margin: 0.5em;
+    border-radius: 2em;
+}

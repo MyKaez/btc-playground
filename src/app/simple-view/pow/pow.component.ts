@@ -59,10 +59,6 @@ export class PowComponent {
     return this.powService.validationInput;
   }
 
-  switchMode(): void {
-    SimpleViewComponent.app!.switchMode();
-  }
-
   navigateTo(link: string) {
     SimpleViewComponent.app!.navigateTo(link);
   }

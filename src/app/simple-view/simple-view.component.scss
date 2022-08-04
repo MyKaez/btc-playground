@@ -1,19 +1,6 @@
 @import "../../styles.scss";
 
-.inner-start {
-    display: flex;
-    flex-direction: row;
-    flex-flow: wrap;
-    justify-content: center;
 
-    .text {
-        text-align: left;
-    }
-}
-
-.inner-start>* {
-    padding: 2em;
-}
 
 .inner-items {
     color: $light-color;

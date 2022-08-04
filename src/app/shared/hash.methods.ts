@@ -1,4 +1,4 @@
-import { BLOCK_ID_LENGTH } from "../shared/helpers/block";
+import { BLOCK_ID_LENGTH } from "./helpers/block";
 
 export function calculateProbability(hashRate: number, blockTime: number) {
     let prob = 1 / (hashRate * blockTime);

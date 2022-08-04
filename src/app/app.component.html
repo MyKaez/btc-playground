@@ -1,15 +1,11 @@
-<div *ngIf="simpleView" class="simple-view">
-  <router-outlet></router-outlet>
-</div>
-
-<div *ngIf="!simpleView" class="work-mode">
-  <div class="toolbar" role="banner">
+<div class="app">
+  <div class="toolbar">
     <div class="logo">
       <img width="40" alt="{{title}}" src="assets/bitcoin-btc-logo.svg" />
     </div>
     <div class="menu">
       <button mat-button (click)="navigateTo('home')">Home</button>
-      <button mat-button (click)="navigateTo('pow')">Proof of Work</button>
+      <button mat-button (click)="navigateTo('simulations')">Simulationen</button>
       <button mat-button>Info</button>
     </div>
     <div class="meta">
@@ -21,12 +17,8 @@
       </a>
     </div>
   </div>
-  <div class="content" role="main">
+
+  <div class="content-wrapper">
     <router-outlet></router-outlet>
   </div>
-</div>
-
-<div class="switch-mode">
-  <mat-slide-toggle [(ngModel)]="simpleView">
-  </mat-slide-toggle>
 </div>

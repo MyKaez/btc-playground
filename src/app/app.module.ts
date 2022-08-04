@@ -17,9 +17,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './shared/vid/vid.component';
 import { HomeComponent } from './home/home.component';
-import { SimulationsComponent } from './simple-view/simulations/simulations.component';
+import { SimulationsComponent } from './simulations/simulations.component';
 import { SimpleViewComponent } from './simple-view/simple-view.component';
-import { SimulationsComponent as SimpleSimulationsComponent } from './simple-view/simulations/simulations.component';
 import { PowComponent as SimplePowComponent } from './simple-view/pow/pow.component';
 import { SimulationComponent as PowSimulationComponent } from './simulations/pow/simulation/simulation.component';
 import { CalculatorComponent as PowCalculatorComponent } from './simulations/pow/calculator/calculator.component';
@@ -32,7 +31,6 @@ import { CalculatorComponent as PowCalculatorComponent } from './simulations/pow
     VidComponent,
     HomeComponent,
     SimpleViewComponent,
-    SimpleSimulationsComponent,
     SimplePowComponent,
     SimulationsComponent,
     PowSimulationComponent,

@@ -1,6 +1,6 @@
 import { PowHash } from "./interfaces";
 import { createBlockId } from "../../../shared/helpers/block";
-import { calculateProbability, calculateDifficulty, calculateHashDetails, calculateHexaDecimalFormula } from "../../hash.methods";
+import { calculateProbability, calculateDifficulty, calculateHashDetails, calculateHexaDecimalFormula } from "../../../shared/hash.methods";
 
 export class PowService {
     public hashRate: number = 10;

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component } from '@angular/core';
-import { calculateHashDetails, calculateHexaDecimalFormula } from '../../hash.methods';
+import { calculateHashDetails, calculateHexaDecimalFormula } from '../../../shared/hash.methods';
 import { ApiBlock, Block } from './interfaces';
 
 @Component({

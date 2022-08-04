@@ -12,10 +12,6 @@ export class SimpleViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  switchMode(): void {
-    SimpleViewComponent.app!.switchMode();
-  }
-
   navigateTo(link: string) {
     SimpleViewComponent.app!.navigateTo(link);
   }
