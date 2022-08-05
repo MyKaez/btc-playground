@@ -1,47 +1,52 @@
-<mat-expansion-panel>
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            <h2>Allgemeines</h2>
-        </mat-panel-title>
-    </mat-expansion-panel-header>
-    <div>
-        Used API: <a href="https://chain.api.btc.com/v3/block/latest" target="_blank">
-            https://chain.api.btc.com/v3/block/latest
-        </a>.<br>
-        Bitcoin Wiki: <a href="https://en.bitcoinwiki.org/wiki/Difficulty_in_Mining" target="_blank">
-            https://en.bitcoinwiki.org/wiki/Difficulty_in_Mining
-        </a><br>
-        Mining calculator 1: <a href="https://alloscomp.com/bitcoin/calculator" target="_blank">
-            https://alloscomp.com/bitcoin/calculator
-        </a>
-        <br>
-        Mining calculator 2: <a href="https://99bitcoins.com/bitcoin-mining/calculator/" target="_blank">
-            https://99bitcoins.com/bitcoin-mining/calculator/
-        </a><br>
-        Some documentation: <a href="https://minerdaily.com/2021/how-are-bitcoins-difficulty-and-hash-rate-calculated/"
-            target="_blank">https://minerdaily.com/2021/how-are-bitcoins-difficulty-and-hash-rate-calculated/
-        </a>
+<div class="content">
+    <div class="items">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Allgemeines</h2>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                Used API: <a href="https://chain.api.btc.com/v3/block/latest" target="_blank">
+                    https://chain.api.btc.com/v3/block/latest
+                </a>.<br>
+                Bitcoin Wiki: <a href="https://en.bitcoinwiki.org/wiki/Difficulty_in_Mining" target="_blank">
+                    https://en.bitcoinwiki.org/wiki/Difficulty_in_Mining
+                </a><br>
+                Mining calculator 1: <a href="https://alloscomp.com/bitcoin/calculator" target="_blank">
+                    https://alloscomp.com/bitcoin/calculator
+                </a>
+                <br>
+                Mining calculator 2: <a href="https://99bitcoins.com/bitcoin-mining/calculator/" target="_blank">
+                    https://99bitcoins.com/bitcoin-mining/calculator/
+                </a><br>
+                Some documentation: <a
+                    href="https://minerdaily.com/2021/how-are-bitcoins-difficulty-and-hash-rate-calculated/"
+                    target="_blank">https://minerdaily.com/2021/how-are-bitcoins-difficulty-and-hash-rate-calculated/
+                </a>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel expanded="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Block Daten</h2>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                <h2>Aktuellste Blöcke</h2>
+                <ul *ngFor="let block of latestBlocks">
+                    <li>Höhe: {{block.height}}</li>
+                    <li>Hash: {{block.hash}}</li>
+                    <li>Difficulty: {{block.difficulty}}</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Berechnungen</h2>
+                <ul>
+                    <li>Wahrscheinlichkeit: {{probabilityString}}</li>
+                    <li>Hexa Formel: {{hexaDecimalFormula}}</li>
+                </ul>
+            </div>
+        </mat-expansion-panel>
     </div>
-</mat-expansion-panel>
-<mat-expansion-panel expanded="true">
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            <h2>Block Daten</h2>
-        </mat-panel-title>
-    </mat-expansion-panel-header>
-    <div>
-        <h2>Aktuellste Blöcke</h2>
-        <ul *ngFor="let block of latestBlocks">
-            <li>Höhe: {{block.height}}</li>
-            <li>Hash: {{block.hash}}</li>
-            <li>Difficulty: {{block.difficulty}}</li>
-        </ul>
-    </div>
-    <div>
-        <h2>Berechnungen</h2>
-        <ul>
-            <li>Wahrscheinlichkeit: {{probabilityString}}</li>
-            <li>Hexa Formel: {{hexaDecimalFormula}}</li>
-        </ul>
-    </div>
-</mat-expansion-panel>
+</div>
