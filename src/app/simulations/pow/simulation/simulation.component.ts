@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { delay } from 'src/app/shared/delay';
 import { PowHash } from './interfaces';
 import { PowService } from './pow.service';
@@ -16,13 +15,12 @@ export class SimulationComponent implements OnInit {
   public readonly minAmountOfHashesToShow = 1;
 
   private powService: PowService;
+  private cachedHashes: PowHash[];
 
   public maxHashRate: number = 50;
   public hashNo: number;
   public isProcessing: boolean;
   public isCalculating: boolean;
-  public hashes: PowHash[];
-  public dataSource: MatTableDataSource<PowHash>;
   public executedHashrates: number;
   public stopOnFoundBlock: boolean;
   public clearOnStart: boolean;
@@ -30,13 +28,16 @@ export class SimulationComponent implements OnInit {
   constructor() {
     this.hashNo = 0;
     this.executedHashrates = 0;
-    this.hashes = [];
+    this.cachedHashes = [];
     this.isProcessing = false;
     this.isCalculating = false;
     this.stopOnFoundBlock = true;
     this.clearOnStart = true;
     this.powService = new PowService();
-    this.dataSource = new MatTableDataSource();
+  }
+
+  public get hashes() {
+    return this.cachedHashes.filter((_, index) => index < this.amountHashesToShow);
   }
 
   public get amountHashesToShow(): Number {
@@ -45,7 +46,6 @@ export class SimulationComponent implements OnInit {
 
   public set amountHashesToShow(value: Number) {
     localStorage.setItem('sim_pow_amountHashesToShow', value.toString());
-    this.showOutput();
   }
 
   public get displayedColumns(): string[] {
@@ -131,13 +131,12 @@ export class SimulationComponent implements OnInit {
       while (start.getTime() > new Date().getTime()) {
         const hash = this.powService.createHash(
           validationInput[0], validationInput[1], this.executedHashrates, ++this.hashNo);
-        if (this.hashes.unshift(hash) > this.maxAmountOfHashesToShow) {
-          this.hashes.pop();
+        if (this.cachedHashes.unshift(hash) > this.maxAmountOfHashesToShow) {
+          this.cachedHashes.pop();
         }
-        this.showOutput();
         await delay(1);
       }
-      this.hashRate = Math.round(this.hashes.length * 0.75);
+      this.hashRate = Math.round(this.cachedHashes.length * 0.75);
       curHash += this.hashRate;
       this.clear();
     }
@@ -158,10 +157,9 @@ export class SimulationComponent implements OnInit {
           }
           const hash = this.powService.createHash(
             validationInput[0], validationInput[1], this.executedHashrates, ++this.hashNo);
-          if (this.hashes.unshift(hash) > this.maxAmountOfHashesToShow) {
-            this.hashes.pop();
+          if (this.cachedHashes.unshift(hash) > this.maxAmountOfHashesToShow) {
+            this.cachedHashes.pop();
           }
-          this.showOutput();
           if (this.stopOnFoundBlock && hash.isValid) {
             this.stop();
             break;
@@ -173,10 +171,6 @@ export class SimulationComponent implements OnInit {
     });
   }
 
-  showOutput() {
-    this.dataSource.data = this.hashes.filter((_, i) => i < this.amountHashesToShow);
-  }
-
   stop(): void {
     this.isProcessing = false;
   }
@@ -185,8 +179,7 @@ export class SimulationComponent implements OnInit {
     if (this.isProcessing) {
       return;
     }
-    this.hashes = [];
-    this.dataSource.data = this.hashes;
+    this.cachedHashes = [];
     this.executedHashrates = 0;
     this.hashNo = 0;
   }
