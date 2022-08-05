@@ -13,6 +13,7 @@ export class SimulationComponent implements OnInit {
   public readonly minHashRate = 1;
   public readonly maxAmountOfHashesToShow = 200;
   public readonly minAmountOfHashesToShow = 1;
+  private readonly separator = ' | ';
 
   private powService: PowService;
   private cachedHashes: PowHash[];
@@ -110,16 +111,17 @@ export class SimulationComponent implements OnInit {
   public get header(): string {
     let header = '';
     for (let c of this.columns) {
-      header += c.name.padEnd(c.length, '.') + ' | ';
+      header += c.name.padEnd(c.length, '.') + this.separator;
     }
-    header = header.substring(0, header.length - 3);
+    header = header.substring(0, header.length - this.separator.length);
     return header;
   }
 
   public get headerLine(): string {
-    let length = -3;
-    for (let l of this.columns.map(c => c.length + 3))
-      length += l;
+    const length = this.columns
+      .map(c => c.length + this.separator.length)
+      .reduce((prev, cur,) => prev + cur)
+      - this.separator.length;
     return ''.padEnd(length, '-');
   }
 
@@ -131,18 +133,18 @@ export class SimulationComponent implements OnInit {
         mapFunc: c => c.id
       },
       {
-        name: 'Valid',
-        length: 5,
+        name: 'Is Valid',
+        length: 'Is Valid'.length,
         mapFunc: c => c.isValid
       },
       {
-        name: 'HashRate',
-        length: 'HashRate'.length,
+        name: 'Hashrate',
+        length: 'Hashrate'.length,
         mapFunc: c => c.hashRate
       },
       {
-        name: 'HashNr.',
-        length: 'HashNr.'.length,
+        name: 'HashNr',
+        length: 'HashNr'.length,
         mapFunc: c => c.serialNo
       }
     ];
