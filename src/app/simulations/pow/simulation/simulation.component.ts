@@ -114,27 +114,34 @@ export class SimulationComponent implements OnInit {
     return header;
   }
 
+  public get headerLine(): string {
+    let length = -3;
+    for (let l of this.columns.map(c => c.length + 3))
+      length += l;
+    return ''.padEnd(length, '-');
+  }
+
   public get columns(): Column<PowHash>[] {
     return [
       {
         name: 'Hash',
         length: 64,
-        mapFunc: (c: { id: any; }) => c.id
+        mapFunc: c => c.id
       },
       {
         name: 'Valid',
         length: 5,
-        mapFunc: (c: { isValid: any; }) => c.isValid
+        mapFunc: c => c.isValid
       },
       {
         name: 'HashRate',
         length: 'HashRate'.length,
-        mapFunc: (c: { hashRate: any; }) => c.hashRate
+        mapFunc: c => c.hashRate
       },
       {
         name: 'HashNr.',
         length: 'HashNr.'.length,
-        mapFunc: (c: { serialNo: any }) => c.serialNo
+        mapFunc: c => c.serialNo
       }
     ];
   }

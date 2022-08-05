@@ -121,10 +121,12 @@
                 </span>
             </div>
             <div class="data">
-                <span>{{header}}</span>
+                <span>> {{header}}</span>
+                <span>> {{headerLine}}</span>
                 <span *ngFor="let hash of hashes">
-                    <span *ngFor="let col of columns">{{columnValue(hash, col)}}</span>
+                    > <span *ngFor="let col of columns">{{columnValue(hash, col)}}</span>
                 </span>
+                <span>> ...</span>
             </div>
         </div>
 
