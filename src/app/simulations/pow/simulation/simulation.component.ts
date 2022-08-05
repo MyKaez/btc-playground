@@ -24,6 +24,7 @@ export class SimulationComponent implements OnInit {
   public executedHashrates: number;
   public stopOnFoundBlock: boolean;
   public clearOnStart: boolean;
+  public blink: boolean;
 
   constructor() {
     this.hashNo = 0;
@@ -33,6 +34,7 @@ export class SimulationComponent implements OnInit {
     this.isCalculating = false;
     this.stopOnFoundBlock = true;
     this.clearOnStart = true;
+    this.blink = true;
     this.powService = new PowService();
   }
 
@@ -154,7 +156,17 @@ export class SimulationComponent implements OnInit {
     return val;
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.executeBlink();
+  }
+
+  async executeBlink() {
+    if (this.isCalculating || this.isProcessing) {
+      this.blink = true;
+    } else {
+      this.blink = !this.blink;
+    }
+    setTimeout(async () => await this.executeBlink(), this.blink ? 1000 : 500);
   }
 
   async start() {

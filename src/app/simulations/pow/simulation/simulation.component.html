@@ -126,7 +126,7 @@
                 <span *ngFor="let hash of hashes">
                     > <span *ngFor="let col of columns">{{columnValue(hash, col)}}</span>
                 </span>
-                <span>> ...</span>
+                <span>> <span *ngIf="blink">...</span></span>
             </div>
         </div>
 
