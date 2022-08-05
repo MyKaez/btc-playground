@@ -1,5 +1,5 @@
 export interface Column<T> {
     name: string;
-    mapFunc: Function;
+    mapFunc: (item: T) => any;
     length: number;
 }
