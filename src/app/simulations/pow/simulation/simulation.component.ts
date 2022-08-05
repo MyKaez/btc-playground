@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { delay } from 'src/app/shared/delay';
+import { Column } from 'src/app/shared/helpers/interfaces';
 import { PowHash } from './interfaces';
 import { PowService } from './pow.service';
 
@@ -9,7 +10,6 @@ import { PowService } from './pow.service';
   styleUrls: ['../../../app.component.scss', '../../../materials.scss']
 })
 export class SimulationComponent implements OnInit {
-
   public readonly minHashRate = 1;
   public readonly maxAmountOfHashesToShow = 200;
   public readonly minAmountOfHashesToShow = 1;
@@ -103,6 +103,48 @@ export class SimulationComponent implements OnInit {
 
   public get hexaDecimalFormula(): string {
     return this.powService.hexaDecimalFormula;
+  }
+
+  public get header(): string {
+    let header = '';
+    for (let c of this.columns) {
+      header += c.name.padEnd(c.length, '.') + ' | ';
+    }
+    header = header.substring(0, header.length - 3);
+    return header;
+  }
+
+  public get columns(): Column<PowHash>[] {
+    return [
+      {
+        name: 'Hash',
+        length: 64,
+        mapFunc: (c: { id: any; }) => c.id
+      },
+      {
+        name: 'Valid',
+        length: 5,
+        mapFunc: (c: { isValid: any; }) => c.isValid
+      },
+      {
+        name: 'HashRate',
+        length: 'HashRate'.length,
+        mapFunc: (c: { hashRate: any; }) => c.hashRate
+      },
+      {
+        name: 'HashNr.',
+        length: 'HashNr.'.length,
+        mapFunc: (c: { serialNo: any }) => c.serialNo
+      }
+    ];
+  }
+
+  columnValue(hash: PowHash, col: Column<PowHash>): string {
+    let val = col.mapFunc(hash).toString().padEnd(col.length, '.');
+    if (this.columns.findIndex(c => c.name === col.name) + 1 != this.columns.length) {
+      val += ' | ';
+    }
+    return val;
   }
 
   ngOnInit(): void {

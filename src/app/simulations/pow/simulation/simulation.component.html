@@ -121,9 +121,9 @@
                 </span>
             </div>
             <div class="data">
-                <span>Hash | Valid | HashRate | Erstellungsnummer</span>
+                <span>{{header}}</span>
                 <span *ngFor="let hash of hashes">
-                    {{hash.id}} | {{hash.isValid}} | {{hash.hashRate}} | {{hash.serialNo}}
+                    <span *ngFor="let col of columns">{{columnValue(hash, col)}}</span>
                 </span>
             </div>
         </div>

@@ -140,8 +140,9 @@
         display: flex;
         flex-direction: column;
         color: $accent;
+        white-space: nowrap;
         background-color: $dark-color;
-        overflow-y: scroll;
+        overflow: auto;
         height: 94%;
         font-family: $code-font;
     }
