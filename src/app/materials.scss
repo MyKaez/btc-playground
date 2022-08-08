@@ -77,7 +77,11 @@
     color: $light-color;
 }
 
-:host ::ng-deep .mat-tab-label-active {
+.mat-tab-label {
+    color: $light-color;
+}
+
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
     color: $light-color;
     font-size: medium;
 }
