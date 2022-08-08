@@ -7,6 +7,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./vid.component.scss']
 })
 export class VidComponent {
+  private link?: SafeResourceUrl;
+
   constructor(private sanitizer: DomSanitizer) {
   }
 
@@ -14,6 +16,9 @@ export class VidComponent {
   public video: string = '';
 
   public get videoLink(): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.video);
+    if (!this.link) {
+      this.link = this.sanitizer.bypassSecurityTrustResourceUrl(this.video);
+    }
+    return this.link;;
   }
 }
