@@ -5,13 +5,22 @@
                 <span class="mat-tab-label-header">Proof of Work</span>
             </ng-template>
         </mat-tab>
-        <mat-tab label="Definition">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="mat-tab-label">Definition</span>
+            </ng-template>
             <app-vid [video]="'https://www.youtube.com/embed/E2ee5ewEddE'"></app-vid>
         </mat-tab>
-        <mat-tab label="Simulation">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="mat-tab-label">Simulation</span>
+            </ng-template>
             <app-pow-simulation></app-pow-simulation>
         </mat-tab>
-        <mat-tab label="Rechner">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="mat-tab-label">Rechner</span>
+            </ng-template>
             <app-pow-calculator></app-pow-calculator>
         </mat-tab>
     </mat-tab-group>
