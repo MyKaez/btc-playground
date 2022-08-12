@@ -28,36 +28,35 @@
                         <input type="number" matInput [(ngModel)]="blockTime" min="1" max="600" step="1">
                     </mat-form-field>
                 </div>
-            </mat-expansion-panel>
-
-            <mat-expansion-panel expanded="false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h2>Berechnungen</h2>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="calculations">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Wahrscheinlichkeit [für richtigen Block]</mat-label>
-                        <input type="number" matInput [ngModel]="probability" readonly="true">
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Anzahl Blöcke [zu finden - nach Wahrscheinlichkeit]</mat-label>
-                        <input type="number" matInput [ngModel]="expectedAmountOfBlocks" readonly="true">
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Anzahl HashRates [zu finden - nach Wahrscheinlichkeit]</mat-label>
-                        <input type="text" matInput [ngModel]="expectedAmountOfHashrates" readonly="true">
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Erwartete Hash Präfixe</mat-label>
-                        <input type="text" matInput [ngModel]="expectedPrefixes" readonly="true">
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Hexadezimale Formel</mat-label>
-                        <input type="text" matInput [ngModel]="hexaDecimalFormula" readonly="true">
-                    </mat-form-field>
-                </div>
+                <mat-expansion-panel expanded="false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h3>Berechungen</h3>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="calculations">
+                        <p>
+                            <mat-label>Wahrscheinlichkeit [für richtigen Block]</mat-label><br />
+                            <span> = {{probability}}</span>
+                        </p>
+                        <p>
+                            <mat-label>Anzahl Blöcke [zu finden - nach Wahrscheinlichkeit]</mat-label><br />
+                            <span> = {{expectedAmountOfBlocks}}</span>
+                        </p>
+                        <p>
+                            <mat-label>Anzahl HashRates [zu finden - nach Wahrscheinlichkeit]</mat-label><br />
+                            <span> = {{expectedAmountOfHashrates}}</span>
+                        </p>
+                        <p>
+                            <mat-label>Erwartete Hash Präfixe</mat-label><br />
+                            <span> = {{expectedPrefixes}}</span>
+                        </p>
+                        <p>
+                            <mat-label>Hexadezimale Formel</mat-label><br />
+                            <span> = {{hexaDecimalFormula}}</span>
+                        </p>
+                    </div>
+                </mat-expansion-panel>
             </mat-expansion-panel>
 
             <mat-expansion-panel>
