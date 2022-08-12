@@ -44,7 +44,7 @@ export class SimulationComponent implements OnInit {
   }
 
   public get amountHashesToShow(): Number {
-    return Number.parseInt(localStorage.getItem('sim_pow_amountHashesToShow') ?? '3');
+    return Number.parseInt(localStorage.getItem('sim_pow_amountHashesToShow') ?? '16');
   }
 
   public set amountHashesToShow(value: Number) {

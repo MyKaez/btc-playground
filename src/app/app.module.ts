@@ -20,6 +20,12 @@ import { HomeComponent } from './home/home.component';
 import { SimulationsComponent } from './simulations/simulations.component';
 import { SimulationComponent as PowSimulationComponent } from './simulations/pow/simulation/simulation.component';
 import { CalculatorComponent as PowCalculatorComponent } from './simulations/pow/calculator/calculator.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
@@ -30,7 +36,8 @@ import { CalculatorComponent as PowCalculatorComponent } from './simulations/pow
     HomeComponent,
     SimulationsComponent,
     PowSimulationComponent,
-    PowCalculatorComponent
+    PowCalculatorComponent,
+    MainNavComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +54,12 @@ import { CalculatorComponent as PowCalculatorComponent } from './simulations/pow
     MatCardModule,
     MatProgressBarModule,
     MatExpansionModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

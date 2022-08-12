@@ -60,7 +60,7 @@
                 </div>
             </mat-expansion-panel>
 
-            <mat-expansion-panel expanded="true">
+            <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <h2>Optionen</h2>
@@ -82,35 +82,28 @@
                 </div>
             </mat-expansion-panel>
 
-            <mat-expansion-panel expanded="true">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h2>Aktionen</h2>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="actions">
-                    <button mat-button (click)="start()" [disabled]="isProcessing || isCalculating">Start</button>
-                    <button mat-button (click)="stop()" [disabled]="!isProcessing || isCalculating">Stop</button>
-                    <button mat-button (click)="clear()"
-                        [disabled]="isProcessing || hashes.length === 0 || isCalculating">Clear</button>
-                    <div *ngIf="isProcessing || hashes.length > 0">
-                        <span>
-                            Simulation {{isProcessing ? 'gestartet...' : 'beendet.'}}
-                            Ausgeführte eigene Hashraten: {{executedHashrates}}.
-                            Anzahl eigener Hashes: {{hashNo}}
-                        </span>
-                        <mat-progress-bar [mode]="isProcessing ? 'indeterminate' : 'determinate'">
-                        </mat-progress-bar>
-                    </div>
-                    <div *ngIf="!isProcessing && hashes.length == 0">
-                        <span>
-                            Bereit für Simulation.
-                        </span>
-                        <mat-progress-bar [mode]="isProcessing ? 'indeterminate' : 'determinate'">
-                        </mat-progress-bar>
-                    </div>
+            <div class="actions">
+                <button mat-button (click)="start()" [disabled]="isProcessing || isCalculating">Start</button>
+                <button mat-button (click)="stop()" [disabled]="!isProcessing || isCalculating">Stop</button>
+                <button mat-button (click)="clear()"
+                    [disabled]="isProcessing || hashes.length === 0 || isCalculating">Clear</button>
+                <div *ngIf="isProcessing || hashes.length > 0">
+                    <span>
+                        Simulation {{isProcessing ? 'gestartet...' : 'beendet.'}}<br />
+                        Ausgeführte eigene Hashraten: {{executedHashrates}}<br />
+                        Anzahl eigener Hashes: {{hashNo}}<br />
+                    </span>
+                    <mat-progress-bar [mode]="isProcessing ? 'indeterminate' : 'determinate'">
+                    </mat-progress-bar>
                 </div>
-            </mat-expansion-panel>
+                <div *ngIf="!isProcessing && hashes.length == 0">
+                    <span>
+                        Bereit für Simulation.
+                    </span>
+                    <mat-progress-bar [mode]="isProcessing ? 'indeterminate' : 'determinate'">
+                    </mat-progress-bar>
+                </div>
+            </div>
         </div>
 
         <div class="simulation">

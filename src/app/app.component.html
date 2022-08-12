@@ -1,24 +1,3 @@
-<div class="app">
-  <div class="toolbar">
-    <div class="logo">
-      <img width="40" alt="{{title}}" src="assets/bitcoin-btc-logo.svg" />
-    </div>
-    <div class="menu">
-      <button mat-button (click)="navigateTo('home')">Home</button>
-      <button mat-button (click)="navigateTo('simulations')">Simulationen</button>
-      <button mat-button>Info</button>
-    </div>
-    <div class="meta">
-      <a href="https://twitter.com/bitty_kn" target="_blank">
-        <img width="30" src="assets/twitter_white.svg" alt="bitty_kn" />
-      </a>
-      <a href="https://github.com/MyKaez/btc-playground" target="_blank">
-        <img width="30" src="assets/GitHub-Mark-Light-64px.png" />
-      </a>
-    </div>
-  </div>
-
-  <div class="content-wrapper">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+<app-main-nav class="app">
+  <router-outlet></router-outlet>
+</app-main-nav>

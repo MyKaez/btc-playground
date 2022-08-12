@@ -22,9 +22,9 @@
 .mat-expansion-panel-header {
     color: $light-color;
     background: 0;
-    box-shadow: 1px 0px 0px 0px $primary inset !important;
-    -webkit-box-shadow: 1px 0px 0px 0px $primary inset !important;
-    -moz-box-shadow: 1px 0px 0px 0px $primary inset !important;
+    box-shadow: 2px 0px 0px 0px $light-color inset !important;
+    -webkit-box-shadow: 2px 0px 0px 0px $light-color inset !important;
+    -moz-box-shadow: 2px 0px 0px 0px $light-color inset !important;
 }
 
 .mat-expansion-panel-header-title {
@@ -35,14 +35,14 @@
     color: $light-color;
     background: 0;
     margin-top: 1em;
-    box-shadow: 1px 0px 0px 0px $primary inset !important;
-    -webkit-box-shadow: 1px 0px 0px 0px $primary inset !important;
-    -moz-box-shadow: 1px 0px 0px 0px $primary inset !important;
+    box-shadow: 2px 0px 0px 0px $light-color inset !important;
+    -webkit-box-shadow: 2px 0px 0px 0px $light-color inset !important;
+    -moz-box-shadow: 2px 0px 0px 0px $light-color inset !important;
 }
 
 .mat-row .mat-cell {
-    border-bottom: 1px solid transparent;
-    border-top: 1px solid transparent;
+    border-bottom: 2px solid transparent;
+    border-top: 2px solid transparent;
     cursor: pointer;
 }
 
@@ -91,7 +91,7 @@ mat-label {
 }
 
 button {
-    border: 1px solid $light-color;
+    border: 2px solid $light-color;
     margin: 0.5em;
     border-radius: 2em;
 }

@@ -1,0 +1,38 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" [ngClass]="{hidden: !(isHandset$ |async)}" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+    <mat-nav-list>
+      <a mat-list-item (click)="navigateTo('home')">Home</a>
+      <a mat-list-item (click)="navigateTo('simulations')">Simulationen</a>
+      <a mat-list-item href="#">Info</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <div class="logo" [ngClass]="{hidden: (isHandset$ |async)}">
+        <img width="40" alt=" {{title}}" src="assets/bitcoin-btc-logo.svg" />
+      </div>
+      <div class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
+        <a mat-list-item (click)="navigateTo('home')">Home</a>
+        <a mat-list-item (click)="navigateTo('simulations')">Simulationen</a>
+        <a mat-list-item href="#">Info</a>
+      </div>
+      <div class="meta">
+        <a href="https://twitter.com/bitty_kn" target="_blank">
+          <img width="30" src="assets/twitter_white.svg" alt="bitty_kn" />
+        </a>
+        <a href="https://github.com/MyKaez/btc-playground" target="_blank">
+          <img width="30" src="assets/GitHub-Mark-Light-64px.png" />
+        </a>
+      </div>
+    </mat-toolbar>
+    <div class="content-wrapper">
+      <ng-content></ng-content>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
