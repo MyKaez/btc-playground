@@ -53,3 +53,19 @@ mat-toolbar a {
   align-items: center;
   overflow: auto;
 }
+
+.logo {
+  width: 8em;
+}
+
+.menu {
+  size: 1.5em;
+}
+
+.meta {
+  margin-left: auto;
+
+  a {
+    padding-left: 1em;
+  }
+}
