@@ -40,52 +40,6 @@
     -moz-box-shadow: 2px 0px 0px 0px $light-color inset !important;
 }
 
-.mat-row .mat-cell {
-    border-bottom: 2px solid transparent;
-    border-top: 2px solid transparent;
-    cursor: pointer;
-}
-
-.mat-cell,
-.mat-header-cell {
-    word-wrap: initial;
-    display: table-cell;
-    padding: 0em 1em;
-    line-break: unset;
-    white-space: nowrap;
-    overflow: hidden;
-    vertical-align: middle;
-}
-
-.mat-row,
-.mat-header-row {
-    display: table-row;
-    overflow-x: scroll;
-}
-
-.mat-row {
-    font-family: $code-font;
-}
-
-.mat-row:hover .mat-cell {
-    border-color: currentColor;
-    color: $light-color;
-}
-
-.mat-tab-label-header {
-    font-size: 1.5em;
-    color: $light-color;
-}
-
-.mat-tab-label {
-    color: $light-color;
-}
-
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
-    color: $light-color;
-    font-size: medium;
-}
-
 mat-label {
     color: $light-color;
 }
