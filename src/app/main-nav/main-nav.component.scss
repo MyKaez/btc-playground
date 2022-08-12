@@ -23,6 +23,7 @@
 mat-toolbar {
   color: $light-color;
   background-color: transparentize($color: $light-color, $amount: 0.75) !important;
+  border-bottom: 1px dashed $light-color;
 }
 
 mat-toolbar a {
