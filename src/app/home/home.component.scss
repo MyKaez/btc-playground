@@ -1,0 +1,43 @@
+@import "../../styles.scss";
+
+.text {
+    .question {
+        font-size: 0.7em;
+        font-style: italic;
+        margin-bottom: 1.5em;
+    }
+
+    h1 {
+        font-size: 2em;
+        line-height: 1.2em;
+    }
+
+    h2 {
+        font-size: 2em;
+        line-height: 1.2em;
+    }
+
+    .explanation {
+        margin-top: 1.5em;
+    }
+
+    font-size: 2em;
+    line-height: 1.2em;
+
+    text-align: left;
+    width: 40%;
+    max-width: 30em;
+    min-width: 20em;
+}
+
+.picture {
+    margin: 1em;
+    min-width: 25em;
+    max-width: 55%;
+
+    img {
+        width: 100%;
+        border: 2px solid $light-color;
+        border-radius: 1em;
+    }
+}
