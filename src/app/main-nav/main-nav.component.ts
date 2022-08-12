@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 
 @Component({
   selector: 'app-main-nav',
@@ -17,9 +17,30 @@ export class MainNavComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router) { }
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
+  }
 
-  ngOnInit(): void {
+  public isLast(part: string): boolean {
+    return this.pathParts[this.pathParts.length - 1] == part;
+  }
+
+  public get pathParts(): string[] {
+    return this.router.url.split('/').filter(p => p && p !== '');
+  }
+
+  getFullPath(path: string): string {
+    const parts = this.pathParts;
+    let fullPath = '';
+    for (let p of parts) {
+      if (fullPath.length > 0) {
+        fullPath += '/';
+      }
+      fullPath += p;
+      if (p === path) {
+        break;
+      }
+    }
+    return fullPath;
   }
 
   navigateTo(link: string): void {

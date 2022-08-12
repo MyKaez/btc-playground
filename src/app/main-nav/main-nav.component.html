@@ -31,7 +31,15 @@
         </a>
       </div>
     </mat-toolbar>
-    <div class="content-wrapper">
+    <div class="breadcrumbs">
+      <i>Wo bin ich?</i>
+      <span *ngFor="let path of pathParts">
+        <a (click)="navigateTo(getFullPath(path))">{{path}}</a>
+        <span *ngIf="!isLast(path)">...</span>
+      </span>
+
+    </div>
+    <div class=" content-wrapper">
       <ng-content></ng-content>
     </div>
   </mat-sidenav-content>
