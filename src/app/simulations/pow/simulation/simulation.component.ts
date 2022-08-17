@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { delay } from 'src/app/shared/delay';
 import { Column } from 'src/app/shared/helpers/interfaces';
 import { PowHash } from './interfaces';
@@ -10,33 +12,63 @@ import { PowService } from './pow.service';
   styleUrls: ['../../../app.component.scss', '../../../materials.scss']
 })
 export class SimulationComponent implements OnInit {
-  public readonly minHashRate = 1;
   public readonly maxAmountOfHashesToShow = 200;
   public readonly minAmountOfHashesToShow = 1;
   private readonly separator = ' | ';
 
-  private powService: PowService;
-  private cachedHashes: PowHash[];
+  private powService: PowService = new PowService();
+  private cachedHashes: PowHash[] = [];
 
-  public maxHashRate: number = 50;
-  public hashNo: number;
-  public isProcessing: boolean;
-  public isCalculating: boolean;
-  public executedHashrates: number;
-  public stopOnFoundBlock: boolean;
-  public clearOnStart: boolean;
-  public blink: boolean;
+  inputs: FormGroup = new FormGroup({
+    hashRate: new FormControl(this.powService.hashRate, this.createHashRateValidators(50)),
+    externalHashRate: new FormControl(this.powService.externalHashRate,
+      [Validators.required, Validators.min(0)]),
+    blockTime: new FormControl(this.powService.blockTime,
+      [Validators.required, Validators.min(1), Validators.max(3600)])
+  });
+
+  hashNo: number = 0;
+  executedHashrates: number = 0;
+  stopOnFoundBlock: boolean = true;
+  clearOnStart: boolean = true;
+  blink: boolean = true;
+  isExecuting: boolean = true;
+  isCalculating: Subject<boolean> = new Subject();
+  isProcessing: Subject<boolean> = new Subject();
 
   constructor() {
-    this.hashNo = 0;
-    this.executedHashrates = 0;
-    this.cachedHashes = [];
-    this.isProcessing = false;
-    this.isCalculating = false;
-    this.stopOnFoundBlock = true;
-    this.clearOnStart = true;
-    this.blink = true;
-    this.powService = new PowService();
+    this.inputs.get('hashRate')!.valueChanges.subscribe(val => this.powService.hashRate = val);
+    this.inputs.get('externalHashRate')!.valueChanges.subscribe(val => this.powService.externalHashRate = val);
+    this.inputs.get('blockTime')!.valueChanges.subscribe(val => this.powService.blockTime = val);
+    this.isProcessing.subscribe(value => this.toggleAccessibility(value));
+    this.isCalculating.subscribe(value => this.toggleAccessibility(value));
+    this.isProcessing.next(false);
+    this.isCalculating.next(false);
+  }
+
+  private toggleAccessibility(value: boolean): void {
+    if (value) {
+      this.inputs.disable();
+    } else {
+      this.inputs.enable();
+    }
+    this.isExecuting = value;
+  }
+
+  private createHashRateValidators(maxHashRate: number) {
+    return [Validators.required, Validators.min(1), Validators.max(maxHashRate)];
+  }
+
+  getErrors(control: string) {
+    return JSON.stringify(this.inputs.controls[control].errors);
+  }
+
+  private get hashRate(): number {
+    return this.inputs.get('hashRate')!.value;
+  }
+
+  private set hashRate(value: number) {
+    this.inputs.patchValue({ 'hashRate': value });
   }
 
   public get hashes() {
@@ -53,39 +85,6 @@ export class SimulationComponent implements OnInit {
 
   public get displayedColumns(): string[] {
     return ['id', 'isValid', 'serialNo', 'hashRate'];
-  }
-
-  public get hashRate(): number {
-    return this.powService.hashRate;
-  }
-
-  public set hashRate(value: number) {
-    if (value < this.minHashRate || Number.isNaN(value)) {
-      return;
-    }
-    this.powService.hashRate = value;
-  }
-
-  public get externalHashRate(): number {
-    return this.powService.externalHashRate;
-  }
-
-  public set externalHashRate(value: number) {
-    if (value < 0 || Number.isNaN(value)) {
-      return;
-    }
-    this.powService.externalHashRate = value;
-  }
-
-  public get blockTime(): number {
-    return this.powService.blockTime;
-  }
-
-  public set blockTime(value: number) {
-    if (value <= 0 || Number.isNaN(value)) {
-      return;
-    }
-    this.powService.blockTime = value;
   }
 
   public get probability(): number {
@@ -163,7 +162,7 @@ export class SimulationComponent implements OnInit {
   }
 
   async executeBlink() {
-    if (this.isCalculating || this.isProcessing) {
+    if (this.isExecuting) {
       this.blink = true;
     } else {
       this.blink = !this.blink;
@@ -172,23 +171,26 @@ export class SimulationComponent implements OnInit {
   }
 
   async start() {
-    if (this.isProcessing) {
+    if (this.isExecuting) {
       return;
     }
     if (this.clearOnStart) {
       this.clear();
     }
-    this.isProcessing = true;
+    this.isProcessing.next(true);
     await this.createJob();
   }
 
   async determineHashRate() {
-    this.isCalculating = true;
+    this.isCalculating.next(true);
     this.clear();
     let curHash = 0;
     const determineRounds = 5;
     const validationInput = this.powService.validationInput;
     for (let i = 0; i < determineRounds; i++) {
+      if (!this.isExecuting) {
+        break;
+      }
       const start = new Date();
       start.setSeconds(start.getSeconds() + 1);
       while (start.getTime() > new Date().getTime()) {
@@ -204,18 +206,19 @@ export class SimulationComponent implements OnInit {
       this.clear();
     }
     this.hashRate = Math.round(curHash / determineRounds);
-    this.maxHashRate = this.hashRate;
-    this.isCalculating = false;
+    this.inputs.controls['hashRate'].clearValidators();
+    this.inputs.controls['hashRate'].addValidators(this.createHashRateValidators(this.hashRate));
+    this.isCalculating.next(false);
   }
 
   createJob(): Promise<string> {
     return new Promise(async resolve => {
       const timeToWait = 1000 / this.hashRate;
       const validationInput = this.powService.validationInput;
-      while (this.isProcessing) {
+      while (this.isExecuting) {
         this.executedHashrates++;
         for (let i = 0; i < this.hashRate; i++) {
-          if (!this.isProcessing) {
+          if (!this.isExecuting) {
             break;
           }
           const hash = this.powService.createHash(
@@ -235,11 +238,11 @@ export class SimulationComponent implements OnInit {
   }
 
   stop(): void {
-    this.isProcessing = false;
+    this.isProcessing.next(false);
   }
 
   clear(): void {
-    if (this.isProcessing) {
+    if (this.isExecuting) {
       return;
     }
     this.cachedHashes = [];

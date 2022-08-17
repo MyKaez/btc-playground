@@ -11,22 +11,32 @@
                     <span>
                         Auftrittswahrscheinlichkeit: 1 / (Hashrate im Netzwerk * Blockzeit)
                     </span>
-                    <button mat-button (click)="determineHashRate()" [disabled]="isCalculating">
-                        Hashrate ermitteln
-                    </button>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Hashrate [Hashes pro Sekunde]</mat-label>
-                        <input type="number" matInput [(ngModel)]="hashRate" [min]="minHashRate" [max]="maxHashRate"
-                            step="1" [readonly]="isCalculating">
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>externe Hashrate [Hashes pro Sekunde]</mat-label>
-                        <input type="number" matInput [(ngModel)]="externalHashRate" min="0" step="1">
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Blockzeit [in Sekunden]</mat-label>
-                        <input type="number" matInput [(ngModel)]="blockTime" min="1" max="600" step="1">
-                    </mat-form-field>
+                    <form [formGroup]="inputs">
+                        <button mat-button (click)="determineHashRate()" [disabled]="isExecuting">
+                            Hashrate ermitteln
+                        </button>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Hashrate [Hashes pro Sekunde]</mat-label>
+                            <input matInput type="number" formControlName="hashRate" />
+                            <label *ngIf="!isExecuting && !inputs.controls['hashRate'].valid">
+                                <span>{{getErrors('hashRate')}}</span>
+                            </label>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>externe Hashrate [Hashes pro Sekunde]</mat-label>
+                            <input matInput type="number" formControlName="externalHashRate" />
+                            <label *ngIf="!isExecuting && !inputs.controls['externalHashRate'].valid">
+                                <span>{{getErrors('externalHashRate')}}</span>
+                            </label>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Blockzeit [in Sekunden]</mat-label>
+                            <input matInput type="number" formControlName="blockTime" />
+                            <label *ngIf="!isExecuting && !inputs.controls['blockTime'].valid">
+                                <span>{{getErrors('blockTime')}}</span>
+                            </label>
+                        </mat-form-field>
+                    </form>
                 </div>
                 <mat-expansion-panel expanded="false">
                     <mat-expansion-panel-header>
@@ -82,24 +92,23 @@
             </mat-expansion-panel>
 
             <div class="actions">
-                <button mat-button (click)="start()" [disabled]="isProcessing || isCalculating">Start</button>
-                <button mat-button (click)="stop()" [disabled]="!isProcessing || isCalculating">Stop</button>
-                <button mat-button (click)="clear()"
-                    [disabled]="isProcessing || hashes.length === 0 || isCalculating">Clear</button>
-                <div *ngIf="isProcessing || hashes.length > 0">
+                <button mat-button (click)="start()" [disabled]="isExecuting">Start</button>
+                <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
+                <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
+                <div *ngIf="isExecuting">
                     <span>
                         Simulation {{isProcessing ? 'gestartet...' : 'beendet.'}}<br />
                         Ausgeführte eigene Hashraten: {{executedHashrates}}<br />
                         Anzahl eigener Hashes: {{hashNo}}<br />
                     </span>
-                    <mat-progress-bar [mode]="isProcessing ? 'indeterminate' : 'determinate'">
+                    <mat-progress-bar [mode]="'indeterminate'">
                     </mat-progress-bar>
                 </div>
-                <div *ngIf="!isProcessing && hashes.length == 0">
+                <div *ngIf="!isExecuting">
                     <span>
                         Bereit für Simulation.
                     </span>
-                    <mat-progress-bar [mode]="isProcessing ? 'indeterminate' : 'determinate'">
+                    <mat-progress-bar [mode]="'determinate'">
                     </mat-progress-bar>
                 </div>
             </div>
@@ -116,7 +125,7 @@
                 <span>> {{header}}</span>
                 <span>> {{headerLine}}</span>
                 <span *ngFor="let hash of hashes">
-                    > <span *ngFor="let col of columns">{{columnValue(hash, col)}}</span>
+                    &gt; <span *ngFor="let col of columns">{{columnValue(hash, col)}}</span>
                 </span>
                 <span>> <span *ngIf="blink">...</span></span>
             </div>
