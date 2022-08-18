@@ -95,12 +95,12 @@
                 <button mat-button (click)="start()" [disabled]="isExecuting">Start</button>
                 <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
                 <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
+                <span *ngIf="hashNo > 0">
+                    Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br />
+                    Ausgeführte eigene Hashraten: {{executedHashrates}}<br />
+                    Anzahl eigener Hashes: {{hashNo}}<br />
+                </span>
                 <div *ngIf="isExecuting">
-                    <span>
-                        Simulation {{isProcessing ? 'gestartet...' : 'beendet.'}}<br />
-                        Ausgeführte eigene Hashraten: {{executedHashrates}}<br />
-                        Anzahl eigener Hashes: {{hashNo}}<br />
-                    </span>
                     <mat-progress-bar [mode]="'indeterminate'">
                     </mat-progress-bar>
                 </div>
