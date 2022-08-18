@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -105,6 +106,10 @@ export class SimulationComponent implements OnInit {
 
   public get hexaDecimalFormula(): string {
     return this.powService.hexaDecimalFormula;
+  }
+
+  public get expectedDuration(): string {
+    return this.powService.expectedDuration;
   }
 
   public get header(): string {

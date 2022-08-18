@@ -51,6 +51,30 @@ export class PowService {
         return calculateHexaDecimalFormula(input[0], input[1]);
     }
 
+    get expectedDuration(): string {
+        let stringify = (val: number) => val.toString().padStart(2, '0');
+        let time = this.totalHashRate * this.blockTime / this.hashRate;
+        let minutes = Math.trunc(time / 60);
+        let seconds = Math.round(time % 60);
+        if (seconds === 60) {
+            seconds = 0;
+            minutes++;
+        }
+        if (minutes < 60) {
+            return `${stringify(minutes)}:${stringify(seconds)} Minuten`;
+        }
+        let hours = Math.trunc(minutes / 60);
+        minutes = Math.round(time % 60);
+        if (minutes === 60) {
+            minutes = 0;
+            hours++;
+        }
+        if (hours < 24) {
+            return `${stringify(hours)}:${stringify(minutes)}:${stringify(seconds)} Stunden`;
+        }
+        return 'über 24 Stunden';
+    }
+
     get validationInput(): [leadingZeros: number, probability: number] {
         let probability = this.probability;
         return calculateHashDetails(probability);
