@@ -184,7 +184,7 @@ export class SimulationComponent implements OnInit {
   async determineHashRate() {
     this.isCalculating.next(true);
     this.clear();
-    let curHash = 0;
+    let overallHashRate = 0;
     const determineRounds = 5;
     const validationInput = this.powService.validationInput;
     for (let i = 0; i < determineRounds; i++) {
@@ -202,13 +202,14 @@ export class SimulationComponent implements OnInit {
         await delay(1);
       }
       this.hashRate = Math.round(this.cachedHashes.length * 0.75);
-      curHash += this.hashRate;
-      this.clear();
+      overallHashRate += this.hashRate;
+      this.cachedHashes = [];
     }
-    this.hashRate = Math.round(curHash / determineRounds);
+    this.hashRate = Math.round(overallHashRate / determineRounds);
     this.inputs.controls['hashRate'].clearValidators();
     this.inputs.controls['hashRate'].addValidators(this.createHashRateValidators(this.hashRate));
     this.isCalculating.next(false);
+    this.clear();
   }
 
   createJob(): Promise<string> {
