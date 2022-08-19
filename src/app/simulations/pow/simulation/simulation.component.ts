@@ -10,7 +10,7 @@ import { PowService } from './pow.service';
 @Component({
   selector: 'app-pow-simulation',
   templateUrl: './simulation.component.html',
-  styleUrls: ['../../../app.component.scss', '../../../materials.scss']
+  styleUrls: ['simulation.component.scss']
 })
 export class SimulationComponent implements OnInit {
   public readonly maxAmountOfHashesToShow = 200;
