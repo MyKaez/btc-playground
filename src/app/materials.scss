@@ -1,5 +1,16 @@
 @import '../styles.scss';
 
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: $light-color;
+}
+
+.mat-tab-label {
+    color: $light-color;
+    opacity: 1 !important;
+}
+
 .mat-card {
     padding: 1em;
     margin: 0.5em;
