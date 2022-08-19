@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-simple-simulations',
   templateUrl: './simulations.component.html',
-  styleUrls: ['../materials.scss', '../app.component.scss']
+  styleUrls: ['../materials.scss', './simulations.component.scss']
 })
 export class SimulationsComponent {
 
