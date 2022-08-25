@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'simulations', component: SimulationsComponent },
   { path: 'simulations/pow', component: PowComponent },
+  { path: 'simulations/pow/:tab', component: PowComponent },
   { path: 'simulations/xpa', component: XpaComponent }
 ];
 

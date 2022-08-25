@@ -24,14 +24,19 @@ mat-toolbar {
   color: $light-color;
   background-color: transparentize($color: $light-color, $amount: 0.75) !important;
   border-bottom: 1px dashed $light-color;
-}
 
-mat-toolbar a {
-  color: $light-color;
-  display: inline-block;
-  text-decoration: none;
-  margin: 0 10px;
-  cursor: pointer;
+  a {
+    color: $light-color;
+    display: inline-block;
+    text-decoration: none;
+    margin: 0 10px;
+    cursor: pointer;
+    transition-duration: .5s;
+
+    &:hover {
+      color: darken($light-color, 10);
+    }
+  }
 }
 
 .breadcrumbs {

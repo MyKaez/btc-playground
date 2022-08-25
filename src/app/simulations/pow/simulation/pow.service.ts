@@ -31,14 +31,14 @@ export class PowService {
     }
 
     get expectedPrefixes(): string {
-        const res = [];
+        const res: string[] = [];
         const input = this.validationInput;
         let x = '';
         for (let i = 0; i < input[0]; i++) {
             x += '0';
         }
         for (let i = 0; i < input[1]; i++) {
-            res.push(x + i.toString(16));
+            res.push(x + i.toString(16)); 
         }
         if (res.length === 1) {
             return res[0];
