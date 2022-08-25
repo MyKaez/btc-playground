@@ -1,0 +1,80 @@
+<div class="items">
+    <div class="text">
+        <mat-expansion-panel expanded="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Input</h2>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="parameters">
+                <form [formGroup]="inputs">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Anzahl Blöcke</mat-label>
+                        <input matInput type="number" formControlName="blocksToComplete" />
+                        <label *ngIf="!isExecuting && !inputs.controls['blocksToComplete'].valid">
+                            <span>{{getErrors('blocksToComplete')}}</span>
+                        </label>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Prozentuale Power</mat-label>
+                        <input matInput type="number" formControlName="attackingPower" />
+                        <label *ngIf="!isExecuting && !inputs.controls['attackingPower'].valid">
+                            <span>{{getErrors('attackingPower')}}</span>
+                        </label>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Vorsprung Blöcke</mat-label>
+                        <input matInput type="number" formControlName="preminedBlocks" />
+                        <label *ngIf="!isExecuting && !inputs.controls['preminedBlocks'].valid">
+                            <span>{{getErrors('preminedBlocks')}}</span>
+                        </label>
+                    </mat-form-field>
+                </form>
+            </div>
+            <mat-expansion-panel expanded="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h3>Berechungen</h3>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="calculations">
+
+                </div>
+            </mat-expansion-panel>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>Optionen</h2>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="options">
+
+            </div>
+        </mat-expansion-panel>
+
+        <div class="actions">
+            <button mat-button (click)="execute()" [disabled]="isExecuting">Simulieren</button>
+        </div>
+    </div>
+
+    <div class=" simulation">
+        <div class="header">
+            <img src="assets/bitcoin-btc-logo.svg">
+            <span>
+                51% Attacke Simulation
+            </span>
+        </div>
+        <div class="data">
+            <p>
+                Aktuelle Blockchain ({{blockchain.length}}/{{blocksToComplete}})<br />
+                &#9608;&#9608;<span *ngFor="let i of blockchain">&horbar;&#9608;&#9608;</span>
+            </p>
+            <p>
+                Angreifende Blockchain ({{attackingBlockchain.length}}/{{blocksToComplete}})<br />
+                &#9608;&#9608;<span *ngFor="let i of attackingBlockchain">&horbar;&#9608;&#9608;</span>
+            </p>
+        </div>
+    </div>
+</div>

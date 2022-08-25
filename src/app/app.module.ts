@@ -26,6 +26,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { XpaComponent } from './simulations/xpa/xpa.component';
+import { SimulationComponent as XpaSimulationComponent } from './simulations/xpa/simulation/simulation.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { MatListModule } from '@angular/material/list';
     SimulationsComponent,
     PowSimulationComponent,
     PowCalculatorComponent,
-    MainNavComponent
+    MainNavComponent,
+    XpaComponent,
+    XpaSimulationComponent
   ],
   imports: [
     BrowserModule,
