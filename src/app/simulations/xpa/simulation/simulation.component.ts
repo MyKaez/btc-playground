@@ -52,6 +52,7 @@ export class SimulationComponent implements OnInit {
     return this.blockchain.length / this.blocksToComplete * 100;
   }
 
+  // todo: not calculating properly
   get probabilityBlockchain(): number {
     return this.blockchain.length * this.progressBlockchain / 100 + this.defendingPower;
   }
@@ -60,6 +61,7 @@ export class SimulationComponent implements OnInit {
     return this.attackingBlockchain.length / this.blocksToComplete * 100;
   }
 
+  // todo: not calculating properly
   get probabilityAttackingBlockchain(): number {
     return this.attackingBlockchain.length * this.progressAttackingBlockchain / 100 + this.attackingPower;
   }
