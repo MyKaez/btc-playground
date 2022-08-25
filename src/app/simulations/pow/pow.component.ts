@@ -1,4 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ActivatedRoute } from '@angular/router';
+import { PowTabParamMapping, PowTabs } from './pow-tabs';
 
 @Component({
   selector: 'app-pow',
@@ -7,12 +10,30 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class PowComponent implements OnInit {
+  public selectedTabIndex = 1;
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
+    this.initializeTabRoute();
+  }
 
+  onTabChanged(event: MatTabChangeEvent) {
+    this.selectedTabIndex = event.index;
+  }
+
+  private initializeTabRoute() {
+    const tabRouteValue = this.route.snapshot.paramMap.get('tab') as string;
+    if(!tabRouteValue) return;
+
+    const selectedTab = PowTabParamMapping[tabRouteValue.toLowerCase()];
+    if(selectedTab == null) {      
+      console.warn(`Failed at parsing tab route for value. Use any of ${Object.keys(PowTabParamMapping).join(";")} instead of `, tabRouteValue);
+      return;
+    }
+
+    this.selectedTabIndex = selectedTab;
   }
 }

@@ -1,5 +1,5 @@
 <div class="content">
-    <mat-tab-group mat-align-tabs="center" selectedIndex="1">
+    <mat-tab-group mat-align-tabs="center" [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabChanged($event)">
         <mat-tab>
             <ng-template mat-tab-label>
                 <span class="mat-tab-label">Definition</span>
