@@ -68,12 +68,18 @@
         </div>
         <div class="data">
             <p>
-                Aktuelle Blockchain ({{blockchain.length}}/{{blocksToComplete}})<br />
-                &#9608;&#9608;<span *ngFor="let i of blockchain">&horbar;&#9608;&#9608;</span>
+                Bitcoin Blockchain<br />
+                &#9608;&#9608;<span *ngFor="let i of blockchain">&horbar;&#9608;&#9608;</span><br />
+                &gt; Anzahl: ({{blockchain.length}}/{{blocksToComplete}})<br />
+                &gt; Forstschritt: {{progressBlockchain}}%<br />
+                &gt; Gewinnchance: {{probabilityBlockchain}}%
             </p>
             <p>
-                Angreifende Blockchain ({{attackingBlockchain.length}}/{{blocksToComplete}})<br />
-                &#9608;&#9608;<span *ngFor="let i of attackingBlockchain">&horbar;&#9608;&#9608;</span>
+                Angreifende Blockchain<br />
+                &#9608;&#9608;<span *ngFor="let i of attackingBlockchain">&horbar;&#9608;&#9608;</span><br />
+                &gt; Anzahl: ({{attackingBlockchain.length}}/{{blocksToComplete}})<br />
+                &gt; Forstschritt: {{progressAttackingBlockchain}}%<br />
+                &gt; Gewinnchance: {{probabilityAttackingBlockchain}}%
             </p>
         </div>
     </div>

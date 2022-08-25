@@ -11,12 +11,26 @@ export class SimulationComponent implements OnInit {
   inputs: FormGroup = new FormGroup({
     blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
     attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),
-    preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5)])
+    preminedBlocks: new FormControl(0, [Validators.min(-5), Validators.max(5)])
   });
   blockchain: number[] = [];
   attackingBlockchain: number[] = [];
 
-  constructor() { }
+  constructor() {
+    this.inputs.controls['preminedBlocks'].valueChanges.subscribe(value => {
+      this.attackingBlockchain = [];
+      this.blockchain = [];
+      let val = Number.parseInt(value);
+      for (let i = 0; i < Math.abs(val); i++) {
+        if (val < 0) {
+          this.blockchain.push(this.blockchain.length);
+        } else {
+          this.attackingBlockchain.push(this.attackingBlockchain.length);
+        }
+      }
+    });
+    this.inputs.controls['preminedBlocks'].setValue(2);
+  }
 
   get blocksToComplete(): number {
     return Number.parseInt(this.inputs.controls['blocksToComplete'].value);
@@ -26,8 +40,28 @@ export class SimulationComponent implements OnInit {
     return Number.parseInt(this.inputs.controls['attackingPower'].value);
   }
 
+  get defendingPower(): number {
+    return 100 - this.attackingPower;
+  }
+
   get preminedBlocks(): number {
     return Number.parseInt(this.inputs.controls['preminedBlocks'].value);
+  }
+
+  get progressBlockchain(): number {
+    return this.blockchain.length / this.blocksToComplete * 100;
+  }
+
+  get probabilityBlockchain(): number {
+    return this.blockchain.length * this.progressBlockchain / 100 + this.defendingPower;
+  }
+
+  get progressAttackingBlockchain(): number {
+    return this.attackingBlockchain.length / this.blocksToComplete * 100;
+  }
+
+  get probabilityAttackingBlockchain(): number {
+    return this.attackingBlockchain.length * this.progressAttackingBlockchain / 100 + this.attackingPower;
   }
 
   ngOnInit(): void {
