@@ -49,6 +49,21 @@
         <div class="actions">
             <button mat-button (click)="start()" [disabled]="isExecuting">Start</button>
             <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
+            <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
+            <span *ngIf="totalAmountBlocks > 0">
+                Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br />
+            </span>
+            <div *ngIf="isExecuting">
+                <mat-progress-bar [mode]="'indeterminate'">
+                </mat-progress-bar>
+            </div>
+            <div *ngIf="!isExecuting">
+                <span>
+                    Bereit für Simulation.
+                </span>
+                <mat-progress-bar [mode]="'determinate'">
+                </mat-progress-bar>
+            </div>
         </div>
     </div>
 
@@ -65,14 +80,14 @@
                 &#9608;&#9608;<span *ngFor="let i of blockchain">&horbar;&#9608;&#9608;</span><br />
                 &gt; Anzahl: ({{blockchain.length}}/{{blocksToComplete}})<br />
                 &gt; Forstschritt: {{progressBlockchain}}%<br />
-                &gt; Gewinnchance: {{probabilityBlockchain}}%
+                &gt; Gewinnchance: {{probabilityBlockchain}}
             </p>
             <p>
                 Angreifende Blockchain<br />
                 &#9608;&#9608;<span *ngFor="let i of attackingBlockchain">&horbar;&#9608;&#9608;</span><br />
                 &gt; Anzahl: ({{attackingBlockchain.length}}/{{blocksToComplete}})<br />
                 &gt; Forstschritt: {{progressAttackingBlockchain}}%<br />
-                &gt; Gewinnchance: {{probabilityAttackingBlockchain}}%
+                &gt; Gewinnchance: {{probabilityAttackingBlockchain}}
             </p>
         </div>
     </div>

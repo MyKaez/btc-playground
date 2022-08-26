@@ -30,7 +30,11 @@ export class SimulationComponent implements OnInit {
         }
       }
     });
-    this.inputs.controls['preminedBlocks'].setValue(2);
+  }
+
+  get totalAmountBlocks() {
+    let val = this.preminedBlocks > 0 ? this.preminedBlocks : -this.preminedBlocks
+    return this.blockchain.length + this.attackingBlockchain.length;
   }
 
   get blocksToComplete(): number {
@@ -53,37 +57,40 @@ export class SimulationComponent implements OnInit {
     return this.blockchain.length / this.blocksToComplete * 100;
   }
 
-  // todo: not calculating properly
-  get probabilityBlockchain(): number {
-    return this.blockchain.length * this.progressBlockchain / 100 + this.defendingPower;
-  }
-
   get progressAttackingBlockchain(): number {
     return this.attackingBlockchain.length / this.blocksToComplete * 100;
   }
 
-  // todo: not calculating properly
-  get probabilityAttackingBlockchain(): number {
-    return this.attackingBlockchain.length * this.progressAttackingBlockchain / 100 + this.attackingPower;
+  get probabilityBlockchain(): string {
+    return 'Formel?!';
   }
+
+  get probabilityAttackingBlockchain(): string {
+    return 'Formel?!';
+  }
+
 
   ngOnInit(): void {
   }
 
   start() {
     this.isExecuting = true;
-    if (this.clearOnStart || this.probabilityAttackingBlockchain >= 100 || this.progressBlockchain >= 100) {
-      this.blockchain = [];
-      this.attackingBlockchain = [];
-      for (let i = 0; i < this.preminedBlocks; i++) {
-        this.attackingBlockchain.push(this.attackingBlockchain.length);
-      }
+    if (this.clearOnStart || this.progressAttackingBlockchain >= 100 || this.progressBlockchain >= 100) {
+      this.clear();
     }
     this.addBlockIfNecessary();
   }
 
-  stop() {
+  stop(): void {
     this.isExecuting = false;
+  }
+
+  clear(): void {
+    this.blockchain = [];
+    this.attackingBlockchain = [];
+    for (let i = 0; i < this.preminedBlocks; i++) {
+      this.attackingBlockchain.push(this.attackingBlockchain.length);
+    }
   }
 
   addBlockIfNecessary(): void {
