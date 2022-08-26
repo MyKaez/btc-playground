@@ -15,6 +15,7 @@ export class SimulationComponent implements OnInit {
   });
   blockchain: number[] = [];
   attackingBlockchain: number[] = [];
+  clearOnStart: boolean = true;
 
   constructor() {
     this.inputs.controls['preminedBlocks'].valueChanges.subscribe(value => {
@@ -69,29 +70,41 @@ export class SimulationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  execute() {
+  start() {
     this.isExecuting = true;
-    this.blockchain = [];
-    this.attackingBlockchain = [];
-    for (let i = 0; i < this.preminedBlocks; i++) {
-      this.attackingBlockchain.push(this.attackingBlockchain.length);
+    if (this.clearOnStart || this.probabilityAttackingBlockchain >= 100 || this.progressBlockchain >= 100) {
+      this.blockchain = [];
+      this.attackingBlockchain = [];
+      for (let i = 0; i < this.preminedBlocks; i++) {
+        this.attackingBlockchain.push(this.attackingBlockchain.length);
+      }
     }
     this.addBlockIfNecessary();
+  }
+
+  stop() {
     this.isExecuting = false;
   }
 
   addBlockIfNecessary(): void {
     setTimeout(() => {
+      if (!this.isExecuting) {
+        return;
+      }
       let random = Math.random() * 100;
       if (random > this.attackingPower) {
         this.blockchain.push(this.blockchain.length);
         if (this.blockchain.length < this.blocksToComplete) {
           this.addBlockIfNecessary();
+        } else {
+          this.isExecuting = false;
         }
       } else {
         this.attackingBlockchain.push(this.attackingBlockchain.length);
         if (this.attackingBlockchain.length < this.blocksToComplete) {
           this.addBlockIfNecessary();
+        } else {
+          this.isExecuting = false;
         }
       }
     }, 400)

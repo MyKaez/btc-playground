@@ -31,16 +31,6 @@
                     </mat-form-field>
                 </form>
             </div>
-            <mat-expansion-panel expanded="false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h3>Berechungen</h3>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="calculations">
-
-                </div>
-            </mat-expansion-panel>
         </mat-expansion-panel>
 
         <mat-expansion-panel>
@@ -50,12 +40,15 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="options">
-
+                <mat-checkbox [(ngModel)]="clearOnStart">
+                    Clear bei Start
+                </mat-checkbox>
             </div>
         </mat-expansion-panel>
 
         <div class="actions">
-            <button mat-button (click)="execute()" [disabled]="isExecuting">Simulieren</button>
+            <button mat-button (click)="start()" [disabled]="isExecuting">Start</button>
+            <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
         </div>
     </div>
 
