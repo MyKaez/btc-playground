@@ -1,5 +1,6 @@
 build with this command:
 	ng build --base-href "/btc-playground/"
+    npm run build -- --base-href '/btc-playground/'
 
 
 add [(ngModel)] to <input />: 
