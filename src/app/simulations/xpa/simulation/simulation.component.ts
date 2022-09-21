@@ -111,8 +111,10 @@ export class SimulationComponent implements OnInit {
 
   addBlockIfNecessary(): void {
     setTimeout(() => {
-      if (this.blockchain.length > this.confirmations && this.blockchain.length - this.attackingBlockchain.length === this.cancelAttack){
-        this.isExecuting = false;
+      if (this.blockchain.length > this.confirmations) {
+        if ((this.blockchain.length - this.attackingBlockchain.length) >= this.cancelAttack) {
+          this.isExecuting = false;
+        }
       }
       if (!this.isExecuting) {
         return;
