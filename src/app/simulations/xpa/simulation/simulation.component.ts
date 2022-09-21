@@ -11,7 +11,9 @@ export class SimulationComponent implements OnInit {
   inputs: FormGroup = new FormGroup({
     blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
     attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),
-    preminedBlocks: new FormControl(0, [Validators.min(-5), Validators.max(5)])
+    preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5)]),
+    confirmations: new FormControl(6, [Validators.min(0), Validators.max(10)]),
+    cancelAttack:  new FormControl(3, [Validators.min(0), Validators.max(10)])
   });
   blockchain: number[] = [];
   attackingBlockchain: number[] = [];
@@ -33,7 +35,6 @@ export class SimulationComponent implements OnInit {
   }
 
   get totalAmountBlocks() {
-    let val = this.preminedBlocks > 0 ? this.preminedBlocks : -this.preminedBlocks
     return this.blockchain.length + this.attackingBlockchain.length;
   }
 
@@ -43,6 +44,14 @@ export class SimulationComponent implements OnInit {
 
   get attackingPower(): number {
     return Number.parseInt(this.inputs.controls['attackingPower'].value);
+  }
+
+  get confirmations():number{
+    return Number.parseInt(this.inputs.controls['confirmations'].value);
+  }
+
+  get cancelAttack():number{
+    return Number.parseInt(this.inputs.controls['cancelAttack'].value);
   }
 
   get defendingPower(): number {
@@ -69,6 +78,13 @@ export class SimulationComponent implements OnInit {
     return 'Formel?!';
   }
 
+  get totalBlocks():number[]{
+    let numbers = [];
+    for(let i = 0 ; i < this.blocksToComplete; i ++){
+      numbers.push(i);
+    }
+    return numbers;
+  }
 
   ngOnInit(): void {
   }
@@ -95,6 +111,9 @@ export class SimulationComponent implements OnInit {
 
   addBlockIfNecessary(): void {
     setTimeout(() => {
+      if (this.blockchain.length > this.confirmations && this.blockchain.length - this.attackingBlockchain.length === this.cancelAttack){
+        this.isExecuting = false;
+      }
       if (!this.isExecuting) {
         return;
       }

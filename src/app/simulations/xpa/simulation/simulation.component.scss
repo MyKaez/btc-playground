@@ -56,6 +56,10 @@
         font-family: $code-font;
         padding-right: .3em;
         padding-left: .3em;
+        
+        .non-confirm{
+            color: $accent2;
+        }
     }
 }
 

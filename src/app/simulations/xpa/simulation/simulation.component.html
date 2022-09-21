@@ -9,24 +9,38 @@
             <div class="parameters">
                 <form [formGroup]="inputs">
                     <mat-form-field appearance="fill">
-                        <mat-label>Anzahl Blöcke</mat-label>
+                        <mat-label>Maximale Angriffszahl <i>[in Blöcken]</i></mat-label>
                         <input matInput type="number" formControlName="blocksToComplete" />
                         <label *ngIf="!isExecuting && !inputs.controls['blocksToComplete'].valid">
                             <span>{{getErrors('blocksToComplete')}}</span>
                         </label>
                     </mat-form-field>
                     <mat-form-field appearance="fill">
-                        <mat-label>Prozentuale Power</mat-label>
+                        <mat-label>Angriffspower <i>[in Prozent]</i></mat-label>
                         <input matInput type="number" formControlName="attackingPower" />
                         <label *ngIf="!isExecuting && !inputs.controls['attackingPower'].valid">
                             <span>{{getErrors('attackingPower')}}</span>
                         </label>
                     </mat-form-field>
                     <mat-form-field appearance="fill">
-                        <mat-label>Vorsprung Blöcke</mat-label>
+                        <mat-label>Vorsprung Angriff <i>[in Blöcken]</i></mat-label>
                         <input matInput type="number" formControlName="preminedBlocks" />
                         <label *ngIf="!isExecuting && !inputs.controls['preminedBlocks'].valid">
                             <span>{{getErrors('preminedBlocks')}}</span>
+                        </label>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Abbruch Angriff <i>[nach x Blöcken]</i></mat-label>
+                        <input matInput type="number" formControlName="cancelAttack" />
+                        <label *ngIf="!isExecuting && !inputs.controls['cancelAttack'].valid">
+                            <span>{{getErrors('cancelAttack')}}</span>
+                        </label>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Anzahl Bestätigungen <i>[in Blöcken]</i></mat-label>
+                        <input matInput type="number" formControlName="confirmations" />
+                        <label *ngIf="!isExecuting && !inputs.controls['confirmations'].valid">
+                            <span>{{getErrors('confirmations')}}</span>
                         </label>
                     </mat-form-field>
                 </form>
@@ -77,14 +91,18 @@
         <div class="data">
             <p>
                 Bitcoin Blockchain<br />
-                &#9608;&#9608;<span *ngFor="let i of blockchain">&horbar;&#9608;&#9608;</span><br />
+                &gt; <span *ngFor="let i of totalBlocks" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br/>
+                &gt; <span *ngFor="let i of blockchain" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
                 &gt; Anzahl: ({{blockchain.length}}/{{blocksToComplete}})<br />
                 &gt; Forstschritt: {{progressBlockchain}}%<br />
                 &gt; Gewinnchance: {{probabilityBlockchain}}
             </p>
+            <p></p>
+            <p></p>
             <p>
                 Angreifende Blockchain<br />
-                &#9608;&#9608;<span *ngFor="let i of attackingBlockchain">&horbar;&#9608;&#9608;</span><br />
+                &gt; <span *ngFor="let i of totalBlocks" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br/>
+                &gt; <span *ngFor="let i of attackingBlockchain" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
                 &gt; Anzahl: ({{attackingBlockchain.length}}/{{blocksToComplete}})<br />
                 &gt; Forstschritt: {{progressAttackingBlockchain}}%<br />
                 &gt; Gewinnchance: {{probabilityAttackingBlockchain}}
