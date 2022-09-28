@@ -28,6 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { XpaComponent } from './simulations/xpa/xpa.component';
 import { SimulationComponent as XpaSimulationComponent } from './simulations/xpa/simulation/simulation.component';
+import { InfoComponent } from './info/info.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { SimulationComponent as XpaSimulationComponent } from './simulations/xpa
     PowCalculatorComponent,
     MainNavComponent,
     XpaComponent,
-    XpaSimulationComponent
+    XpaSimulationComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,
