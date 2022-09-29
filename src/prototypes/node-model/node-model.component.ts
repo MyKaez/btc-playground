@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'node-model',
     templateUrl: 'node-model.component.html'
 })
 
-export class NodeModel implements OnInit {
+export class NodeModelComponent implements OnInit {    
+    @Input("node-count")
+    nodeCount = 3;
+
+
     constructor() { }
 
     ngOnInit() { }

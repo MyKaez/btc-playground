@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: 'ring-of-fire.component.html'
 })
 
-export class RingOfFire implements OnInit {
+export class RingOfFireComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { }
