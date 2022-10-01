@@ -2,6 +2,7 @@ import { VisualizedNode } from "./visualized-node";
 import { VisualizedPin } from "./visualized-pin";
 
 export interface VisualizedNodeRelation {
+    id?: number;
     first: VisualizedNode;
     last: VisualizedNode;
 

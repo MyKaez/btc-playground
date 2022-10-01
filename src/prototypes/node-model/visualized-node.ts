@@ -1,7 +1,7 @@
 import { VisualizedNodeRelation } from "./visualized-node-relation";
 
 export interface VisualizedNode {
-    id: number;
+    id?: number;
     text: string;
 
     connections: VisualizedNodeRelation;
@@ -9,4 +9,5 @@ export interface VisualizedNode {
     color: string;
     x: number;
     y: number;
+    size: number;
 }
