@@ -19,7 +19,8 @@ button {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(120deg, $accent 0%, $primary 65%, $primary 100%);
+    //background: linear-gradient(120deg, $accent 0%, $primary 65%, $primary 100%);
+    background-color: var(--background-color);
 }
 
 .content {

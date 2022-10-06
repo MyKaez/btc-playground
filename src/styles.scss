@@ -33,13 +33,26 @@ $Simulator-theme: mat.define-light-theme((color: (primary: $Simulator-primary,
 
 /* You can add global styles to this file, and also import other style files */
 
-$primary: mat.get-color-from-palette($Simulator-primary, 800);
+$primary: #21212a;  //mat.get-color-from-palette($Simulator-primary, 800);
 $secondary: #ff9800;
 $accent: mat.get-color-from-palette($Simulator-accent, 500);
 $accent2: mat.get-color-from-palette($Simulator-accent, 100);
-$code-font: 'Courier New', Courier, monospace;
+
 $dark-color: #1d1000;
 $light-color: white;
+
+$gray: #788;
+$gray-50: $gray;
+$gray-10: darken($gray, 80%);
+$gray-20: darken($gray, 60%);
+$gray-30: darken($gray, 40%);
+$gray-40: darken($gray, 20%);
+$gray-60: lighten($gray, 20%);
+$gray-70: lighten($gray, 40%);
+$gray-80: lighten($gray, 60%);
+$gray-90: lighten($gray, 80%);
+
+$code-font: 'Courier New', Courier, monospace;
 
 /* experimental colors */
 
@@ -60,6 +73,13 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  --primary: $primary;
+  --secondary: $secondary;
+
+  background-color: #{lighten($primary, 10%)};
+  --header-color: #{lighten($primary, 10%)};
+  --footer-color: #{lighten($primary, 15%)};
 }
 
 table {
