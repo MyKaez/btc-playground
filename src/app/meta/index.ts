@@ -1,0 +1,1 @@
+export * from "./social-bar/social-bar.component";

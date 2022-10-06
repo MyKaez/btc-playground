@@ -20,9 +20,9 @@ $Simulator-warn: mat.define-palette(mat.$red-palette);
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
 $Simulator-theme: mat.define-light-theme((color: (primary: $Simulator-primary,
-        accent: $Simulator-accent,
-        warn: $Simulator-warn,
-      )));
+  accent: $Simulator-accent,
+  warn: $Simulator-warn,
+)));
 
 
 
@@ -34,11 +34,14 @@ $Simulator-theme: mat.define-light-theme((color: (primary: $Simulator-primary,
 /* You can add global styles to this file, and also import other style files */
 
 $primary: mat.get-color-from-palette($Simulator-primary, 800);
+$secondary: #ff9800;
 $accent: mat.get-color-from-palette($Simulator-accent, 500);
 $accent2: mat.get-color-from-palette($Simulator-accent, 100);
 $code-font: 'Courier New', Courier, monospace;
-$dark-color: black;
+$dark-color: #1d1000;
 $light-color: white;
+
+/* experimental colors */
 
 /* sizes */
 $max-content-width: 1200px;

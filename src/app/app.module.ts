@@ -29,6 +29,7 @@ import { MatListModule } from '@angular/material/list';
 import { XpaComponent } from './simulations/xpa/xpa.component';
 import { SimulationComponent as XpaSimulationComponent } from './simulations/xpa/simulation/simulation.component';
 import { InfoComponent } from './info/info.component';
+import { SocialBarComponent } from './meta';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { InfoComponent } from './info/info.component';
     FooterComponent,
     XpaComponent,
     XpaSimulationComponent,
-    InfoComponent
+    InfoComponent,
+    SocialBarComponent
   ],
   imports: [
     BrowserModule,
