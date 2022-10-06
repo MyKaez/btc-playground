@@ -9,7 +9,8 @@
 .mat-sidenav-content {
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
+  overflow: auto;
 }
 
 .sidenav {
@@ -53,14 +54,19 @@ mat-toolbar {
 }
 
 .content-wrapper {
-  color: $light-color;
-  display: flex;
   justify-content: center;
-  overflow: auto;
+  color: $light-color;
 
   .content-area {
     max-width: $max-content-width;
   }
+}
+
+/* ensure top level divs growing */
+.content-wrapper,
+.content-area {
+  display: flex;
+  flex-grow: 1;
 }
 
 .logo {

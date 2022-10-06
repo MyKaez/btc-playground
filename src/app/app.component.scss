@@ -23,8 +23,12 @@ button {
 }
 
 .content {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+
     height: 100%;
-    width: 100%;
+    margin: $margin-large;
 }
 
 .items {
