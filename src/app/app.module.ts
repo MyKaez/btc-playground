@@ -20,7 +20,7 @@ import { HomeComponent } from './home/home.component';
 import { SimulationsComponent } from './simulations/simulations.component';
 import { SimulationComponent as PowSimulationComponent } from './simulations/pow/simulation/simulation.component';
 import { CalculatorComponent as PowCalculatorComponent } from './simulations/pow/calculator/calculator.component';
-import { MainNavComponent } from './main-nav/main-nav.component';
+import { MainNavComponent } from './page-layout/main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
-  styleUrls: ['./main-nav.component.scss', '../app.component.scss', '../../styles.scss']
+  styleUrls: ['./main-nav.component.scss']
 })
 export class MainNavComponent {
   title: string = 'The Bitcoin Playground';
