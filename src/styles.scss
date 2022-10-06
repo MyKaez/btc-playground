@@ -40,6 +40,15 @@ $code-font: 'Courier New', Courier, monospace;
 $dark-color: black;
 $light-color: white;
 
+/* sizes */
+$max-content-width: 1200px;
+
+/* spaces */
+$margin-slim: .25em;
+$margin-small: .5em;
+$margin-large: 1em;
+$margin-huge: 2em;
+
 html,
 body {
   height: 100%;

@@ -32,7 +32,7 @@
         </a>
       </div>
     </mat-toolbar>
-    <div class="breadcrumbs">
+    <div class="breadcrumbs" *ngIf="false">
       <i>Wo bin ich?</i>
       <span *ngFor="let path of pathParts">
         <a (click)="navigateTo(getFullPath(path))">{{path}}</a>
@@ -41,7 +41,12 @@
 
     </div>
     <div class=" content-wrapper">
-      <ng-content></ng-content>
+      <div class="content-area">
+        <ng-content></ng-content>
+      </div>
+    </div>
+    <div class="footer">
+      <span>Sipping content</span>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

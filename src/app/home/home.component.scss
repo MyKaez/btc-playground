@@ -31,9 +31,8 @@
 }
 
 .picture {
-    margin: 1em;
-    min-width: 25em;
-    max-width: 55%;
+    max-width: 600px;
+    margin-left: $margin-huge;
 
     img {
         width: 100%;

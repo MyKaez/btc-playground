@@ -54,10 +54,13 @@ mat-toolbar {
 
 .content-wrapper {
   color: $light-color;
-  height: 100%;
+  display: flex;
   justify-content: center;
-  align-items: center;
   overflow: auto;
+
+  .content-area {
+    max-width: $max-content-width;
+  }
 }
 
 .logo {
