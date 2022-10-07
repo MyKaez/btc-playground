@@ -74,8 +74,8 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 
-  --primary: $primary;
-  --secondary: $secondary;
+  --primary: #{$primary};
+  --secondary: #{$secondary};
 
   background-color: #{lighten($primary, 10%)};
   --header-color: #{lighten($primary, 10%)};
