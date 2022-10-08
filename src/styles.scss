@@ -80,6 +80,7 @@ body {
   background-color: #{lighten($primary, 10%)};
   --header-color: #{lighten($primary, 10%)};
   --footer-color: #{lighten($primary, 15%)};
+  --font-color: #{$gray-70};
 }
 
 table {
@@ -112,3 +113,47 @@ table {
 
 .hidden { display: none; }
 .transparent { opacity: 0; }
+
+/* ### shared component styles ### */
+
+.mat-form-field.inconspicuous { 
+  .mat-form-field-wrapper {
+    padding: 12px 0 24px 0;
+  }
+
+ .mat-form-field-flex {
+    padding: 0;
+    background-color: unset;
+  }
+
+  .mat-form-field-infix {
+    width: auto;
+    padding: 0 4px;
+    border: none;
+  }
+
+  .mat-form-field-label-wrapper {
+    display: none;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+    color: var(--font-color);
+    border-bottom: 1px solid var(--font-color);
+
+    .mat-form-field-ripple {
+      background-color: var(--font-color);
+    }
+  }
+
+  .mat-select-value-text, 
+  .mat-select-arrow {
+    color: var(--font-color);
+  }
+
+  .mat-select-arrow-wrapper {
+    transform: none !important;
+    margin-top: 2px;
+    margin-left: 4px;
+  }
+}

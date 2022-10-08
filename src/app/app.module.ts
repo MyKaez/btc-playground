@@ -30,7 +30,8 @@ import { XpaComponent } from './simulations/xpa/xpa.component';
 import { SimulationComponent as XpaSimulationComponent } from './simulations/xpa/simulation/simulation.component';
 import { InfoComponent } from './info/info.component';
 import { SocialBarComponent } from './meta';
-
+import { LanguageSelectorComponent, ThemeEditorComponent } from './shared/personal';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,9 @@ import { SocialBarComponent } from './meta';
     XpaComponent,
     XpaSimulationComponent,
     InfoComponent,
-    SocialBarComponent
+    SocialBarComponent,
+    LanguageSelectorComponent,
+    ThemeEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,7 @@ import { SocialBarComponent } from './meta';
     MatCheckboxModule,
     MatButtonModule,
     MatInputModule,
+    MatSelectModule,
     MatCardModule,
     MatProgressBarModule,
     MatExpansionModule,

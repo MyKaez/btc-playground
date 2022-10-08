@@ -1,0 +1,8 @@
+<div class="language-selector">
+    <mat-form-field appearance="fill" class="inconspicuous">
+        <mat-label>-</mat-label>
+        <mat-select [(value)]="selectedLanguage">
+          <mat-option *ngFor="let lang of languages" [value]="lang.short">{{lang.short}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
