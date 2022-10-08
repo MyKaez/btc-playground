@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "publish-ftp": "ng build --base-href /btc-playground/ && gulp publish-ftp",
+    "publish-fancy-ftp": "ng build --base-href /btc-fancy/ && gulp publish-fancy-ftp"
   },
   "private": true,
   "dependencies": {
@@ -30,12 +32,14 @@
     "@angular/cli": "~14.0.6",
     "@angular/compiler-cli": "^14.0.0",
     "@types/jasmine": "~4.0.0",
+    "gulp": "^4.0.2",
     "jasmine-core": "~4.1.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "typescript": "~4.7.2"
+    "typescript": "~4.7.2",
+    "vinyl-ftp": "^0.6.1"
   }
 }
