@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-nav.component.scss']
 })
 export class MainNavComponent {
+  navLinks: NavLink[] = [];
   title: string = 'The Bitcoin Playground';
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -18,6 +19,7 @@ export class MainNavComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
+    this.navLinks = this.getNavLinks();
   }
 
   public isLast(part: string): boolean {
@@ -26,6 +28,22 @@ export class MainNavComponent {
 
   public get pathParts(): string[] {
     return this.router.url.split('/').filter(p => p && p !== '');
+  }
+
+  private getNavLinks(): NavLink[] {
+    return [{
+      title: "Simulationen",
+      href: "simulations"
+    },{
+      title: "Info",
+      href: "info"
+    },{
+      title: "Über Uns",
+      href: "about"
+    },{
+      title: "Unterstütze uns",
+      href: "support"
+    }];
   }
 
   getFullPath(path: string): string {
@@ -46,4 +64,10 @@ export class MainNavComponent {
   navigateTo(link: string): void {
     this.router.navigate(['/' + link]);
   }
+}
+
+
+export interface NavLink {
+  title: string;
+  href: string;
 }

@@ -32,6 +32,7 @@ import { InfoComponent } from './info/info.component';
 import { SocialBarComponent } from './meta';
 import { LanguageSelectorComponent, ThemeEditorComponent } from './shared/personal';
 import { MatSelectModule } from '@angular/material/select';
+import { AboutComponent, SupportUsComponent } from './pages';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,9 @@ import { MatSelectModule } from '@angular/material/select';
     InfoComponent,
     SocialBarComponent,
     LanguageSelectorComponent,
-    ThemeEditorComponent
+    ThemeEditorComponent,
+    AboutComponent,
+    SupportUsComponent
   ],
   imports: [
     BrowserModule,

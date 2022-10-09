@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { InfoComponent } from './info/info.component';
+import { AboutComponent, SupportUsComponent } from './pages';
 import { PowComponent } from './simulations/pow/pow.component';
 import { SimulationsComponent } from './simulations/simulations.component';
 import { XpaComponent } from './simulations/xpa/xpa.component';
@@ -13,7 +14,9 @@ const routes: Routes = [
   { path: 'simulations', component: SimulationsComponent },
   { path: 'simulations/pow', component: PowComponent },
   { path: 'simulations/pow/:tab', component: PowComponent },
-  { path: 'simulations/xpa', component: XpaComponent }
+  { path: 'simulations/xpa', component: XpaComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'support', component: SupportUsComponent }
 ];
 
 @NgModule({
