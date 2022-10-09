@@ -24,7 +24,7 @@
 mat-toolbar {
   color: $light-color;
   background-color: transparentize($color: $light-color, $amount: 0.75) !important;
-  border-bottom: 1px dashed $light-color;
+  /*border-bottom: 1px dashed $light-color;*/
 
   a {
     color: $light-color;
@@ -57,8 +57,9 @@ mat-toolbar {
   justify-content: center;
   color: $light-color;
 
-  .content-area {
-    max-width: $max-content-width;
+  .content-area {   
+    padding: $margin-huge;
+    max-width: $max-content-width; 
   }
 }
 

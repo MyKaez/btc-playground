@@ -8,18 +8,80 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
+
+/* Color Theme Swatches in Hex */
+$fixesthis-test-1-hex: #373747;
+$fixesthis-test-2-hex: #434355;
+$fixesthis-test-3-hex: #5405D0;
+$fixesthis-test-4-hex: #04D94F;
+$fixesthis-test-5-hex: #F25D07;
+
+$fixes-primary-color: #21212a;
+$fixes-primary-contrast: #cce;
+$fixes-primary-palette: (
+ 50: lighten($fixes-primary-color, 50),
+ 100: lighten($fixes-primary-color, 35),
+ 200: lighten($fixes-primary-color, 25),
+ 300: lighten($fixes-primary-color, 15),
+ 400: lighten($fixes-primary-color, 5),
+ 500: $fixes-primary-color,
+ 600: darken($fixes-primary-color, 5),
+ 700: darken($fixes-primary-color, 10),
+ 800: darken($fixes-primary-color, 15),
+ 900: darken($fixes-primary-color, 20),
+ contrast: (
+    50: lighten($fixes-primary-contrast, 35),
+    100: lighten($fixes-primary-contrast, 25),
+    200: lighten($fixes-primary-contrast, 15),
+    300: lighten($fixes-primary-contrast, 10),
+    400: lighten($fixes-primary-contrast, 5),
+    500: $fixes-primary-contrast,
+    600: darken($fixes-primary-contrast, 15),
+    700: darken($fixes-primary-contrast, 25),
+    800: darken($fixes-primary-contrast, 35),
+    900: darken($fixes-primary-contrast, 50)
+ )
+);
+
+$fixes-accent-color: #F25D07;
+$fixes-accent-contrast: #032222;
+$fixes-accent-palette: (
+ 50: lighten($fixes-accent-color, 50),
+ 100: lighten($fixes-accent-color, 35),
+ 200: lighten($fixes-accent-color, 25),
+ 300: lighten($fixes-accent-color, 15),
+ 400: lighten($fixes-accent-color, 5),
+ 500: $fixes-accent-color,
+ 600: darken($fixes-accent-color, 1),
+ 700: darken($fixes-accent-color, 2),
+ 800: darken($fixes-accent-color, 3),
+ 900: darken($fixes-accent-color, 5),
+ contrast: (
+    50: lighten($fixes-accent-contrast, 35),
+    100: lighten($fixes-accent-contrast, 25),
+    200: lighten($fixes-accent-contrast, 15),
+    300: lighten($fixes-accent-contrast, 10),
+    400: lighten($fixes-accent-contrast, 5),
+    500: $fixes-accent-contrast,
+    600: darken($fixes-accent-contrast, 15),
+    700: darken($fixes-accent-contrast, 25),
+    800: darken($fixes-accent-contrast, 35),
+    900: darken($fixes-accent-contrast, 50)
+ )
+);
+
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$Simulator-primary: mat.define-palette(mat.$indigo-palette);
-$Simulator-accent: mat.define-palette(mat.$orange-palette);
+$Simulator-primary: mat.define-palette($fixes-primary-palette, 500, );
+$Simulator-accent: mat.define-palette($fixes-accent-palette);
 
 // The warn palette is optional (defaults to red).
 $Simulator-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$Simulator-theme: mat.define-light-theme((color: (primary: $Simulator-primary,
+$Simulator-theme: mat.define-dark-theme((color: (primary: $Simulator-primary,
   accent: $Simulator-accent,
   warn: $Simulator-warn,
 )));
@@ -33,8 +95,9 @@ $Simulator-theme: mat.define-light-theme((color: (primary: $Simulator-primary,
 
 /* You can add global styles to this file, and also import other style files */
 
-$primary: #21212a;  //mat.get-color-from-palette($Simulator-primary, 800);
-$secondary: #ff9800;
+// desired: #21212a;
+
+$primary: mat.get-color-from-palette($Simulator-primary, 500);
 $accent: mat.get-color-from-palette($Simulator-accent, 500);
 $accent2: mat.get-color-from-palette($Simulator-accent, 100);
 
@@ -75,7 +138,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 
   --primary: #{$primary};
-  --secondary: #{$secondary};
+  --accent: #{$accent};
 
   background-color: #{lighten($primary, 10%)};
   --header-color: #{lighten($primary, 10%)};
