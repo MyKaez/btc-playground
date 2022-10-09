@@ -14,11 +14,7 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <div class="logo" [ngClass]="{hidden: (isHandset$ |async)}">
-        <a (click)="navigateTo('home')">
-          <img width="40" alt=" {{title}}" src="assets/bitcoin-btc-logo.svg" /> FixesTh.is
-        </a>
-      </div>
+      <app-logo [ngClass]="{hidden: (isHandset$ |async)}"></app-logo>
       <div class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
         <a mat-list-item (click)="navigateTo('simulations')">Simulationen</a>
         <a mat-list-item (click)="navigateTo('info')">Info</a>
