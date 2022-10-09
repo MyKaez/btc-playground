@@ -4,4 +4,15 @@
     height: 40px;
     padding: $margin-large;
     background-color: var(--footer-color);
+
+    .bottom-nav {
+        display: flex;
+
+        ::ng-deep .mat-list-item {
+            height: auto;
+            .mat-list-item-content {
+                height: auto;
+            }
+        }
+    }
 }
