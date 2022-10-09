@@ -1,0 +1,66 @@
+@import "/src/styles.scss";
+
+.visions {
+    display: flex;
+    justify-content: space-between;
+
+    .vision {
+        display: flex;
+        flex-direction: column;
+
+        .vision-head {
+            display: flex;
+
+            :not(:last-child) {
+                margin-right: $margin-small;
+            }
+        }
+
+        &:not(:last-child) {
+            margin-right: $margin-huge;
+        }
+    }
+}
+
+.contacts {
+    margin-top: $margin-huge;
+    display: flex;
+    flex-direction: column;
+
+    .contact {
+        display: flex;
+        max-width: 800px;
+
+        &:not(:first-child) {
+            margin-top: $margin-huge;
+        }
+
+        .contact-data {
+            display: flex;
+            flex-direction: column;
+
+            .contact-image {
+                margin-right: $margin-large;
+            }
+
+            .contact-properties {       
+                margin-top: $margin-small;         
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+
+    &.alternate .contact:nth-child(even) {
+        align-self: flex-end;
+
+        .contact-data {            
+            order: 2;
+            
+            .contact-image {
+                margin-right: 0;
+                margin-left: $margin-large;
+            }
+        }
+    }
+}
