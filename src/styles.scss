@@ -140,10 +140,12 @@ body {
   --primary: #{$primary};
   --accent: #{$accent};
 
-  background-color: #{lighten($primary, 10%)};
+  --background-color: #{lighten($primary, 10%)};
   --header-color: #{lighten($primary, 10%)};
   --footer-color: #{lighten($primary, 15%)};
   --font-color: #{$gray-70};
+
+  background-color: var(--background-color);
 }
 
 table {

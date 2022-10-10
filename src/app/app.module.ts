@@ -33,6 +33,9 @@ import { SocialBarComponent } from './meta';
 import { LanguageSelectorComponent, ThemeEditorComponent } from './shared/personal';
 import { MatSelectModule } from '@angular/material/select';
 import { AboutComponent, SupportUsComponent } from './pages';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } 
+  from '@angular-material-components/color-picker';
 
 @NgModule({
   declarations: [
@@ -62,6 +65,7 @@ import { AboutComponent, SupportUsComponent } from './pages';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatDialogModule,
     MatTableModule,
     MatTabsModule,
     MatCheckboxModule,
@@ -72,13 +76,15 @@ import { AboutComponent, SupportUsComponent } from './pages';
     MatProgressBarModule,
     MatExpansionModule,
     MatSlideToggleModule,
+    NgxMatColorPickerModule,
     LayoutModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
     MatListModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

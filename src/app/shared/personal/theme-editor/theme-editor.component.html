@@ -1,1 +1,13 @@
-<p>theme-editor works!</p>
+<h1 mat-dialog-title>Bit Brush</h1>
+<div mat-dialog-content class="theme-editor">
+  <div class="colors">
+    <div *ngFor="let c of currentTheme.colors" class="color">
+        <label>{{c.title}}</label>
+        <mat-form-field>
+        <input matInput [ngxMatColorPicker]="picker" (value)="c.color">
+        <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+        <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+        </mat-form-field>
+    </div>
+  </div>
+</div>
