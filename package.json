@@ -12,7 +12,6 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-material-components/color-picker": "^8.0.0",
     "@angular/animations": "^14.0.0",
     "@angular/cdk": "^14.0.5",
     "@angular/common": "^14.0.0",
@@ -24,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
     "c": "^1.1.1",
+    "ngx-color-picker": "^13.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

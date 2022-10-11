@@ -34,8 +34,7 @@ import { LanguageSelectorComponent, ThemeEditorComponent } from './shared/person
 import { MatSelectModule } from '@angular/material/select';
 import { AboutComponent, SupportUsComponent } from './pages';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } 
-  from '@angular-material-components/color-picker';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -76,15 +75,14 @@ import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS }
     MatProgressBarModule,
     MatExpansionModule,
     MatSlideToggleModule,
-    NgxMatColorPickerModule,
+    ColorPickerModule,
     LayoutModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
     MatListModule
   ],
-  providers: [
-    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,13 +1,15 @@
 <h1 mat-dialog-title>Bit Brush</h1>
 <div mat-dialog-content class="theme-editor">
-  <div class="colors">
-    <div *ngFor="let c of currentTheme.colors" class="color">
-        <label>{{c.title}}</label>
-        <mat-form-field>
-        <input matInput [ngxMatColorPicker]="picker" (value)="c.color">
-        <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-        <ngx-mat-color-picker #picker></ngx-mat-color-picker>
-        </mat-form-field>
+  <div class="colors flex-column">
+    <div *ngFor="let c of currentTheme.colors" class="color d-flex justify-between">
+        <label class="color-title">{{c.title}}</label>
+        <input [value]="c.color"
+          [style.background]="c.color"
+          [cpEyeDropper]="true"
+          [cpOKButtonClass]= "'btn btn-primary btn-xs'"
+          [(colorPicker)]="c.color"
+          (colorPickerChange)="changeColor(c, $event)" />
+        <span class="color-text">{{c.color}}</span>
     </div>
   </div>
 </div>

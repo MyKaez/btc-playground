@@ -1,4 +1,4 @@
-import { Color } from '@angular-material-components/color-picker';
+import { style } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 
@@ -14,17 +14,37 @@ export class ThemeEditorComponent implements OnInit {
   constructor() {
     this.currentTheme = this.getStaticTheme();
     console.log(this.currentTheme);
-   }
+  }
 
   ngOnInit(): void {
+  }
+
+  changeColor(color: ThemeColor, colorValue: string) {
+    console.log("Color changed", color, colorValue);
+    this.applyThemeToUi(this.currentTheme);
+  }
+
+  private applyThemeToUi(theme: CssColorTheme) {
+    let themeKey = "theme-editor-" + theme.title;
+    let colorStyles = theme.colors.map(color => `--${color.key}: ${color.color}`);
+    let cssRule = `.${themeKey} { ${colorStyles.join(";\r\n")} }`;
+
+    let styleElement = document.getElementById(themeKey);
+    if(!styleElement) {
+      styleElement = document.createElement("style");
+      styleElement.id = themeKey;
+      document.head.appendChild(styleElement);
+      document.body.classList.add(themeKey);
+    }
+
+    styleElement.innerText = cssRule;
   }
 
   private getStaticTheme(): CssColorTheme {
     let colors = this.getDefinedColors();
     colors.forEach(c => {
       let hashColor = getComputedStyle(document.body).getPropertyValue(`--${c.key}`);
-      let computedColor = this.hexToRgb(hashColor);
-      c.color = computedColor;
+      c.color = hashColor;
     });
 
     return {
@@ -36,40 +56,30 @@ export class ThemeEditorComponent implements OnInit {
   private getDefinedColors(): ThemeColor[] {
     return [{
       title: "Primär",
-      key: "primary"
+      key: "primary",
+      color: ""
     },{
       title: "Akzent",
-      key: "accent"
+      key: "accent",
+      color: ""
     },{
       title: "Hintergrund",
-      key: "background-color"
+      key: "background-color",
+      color: ""
     },{
       title: "Header",
-      key: "header-color"
+      key: "header-color",
+      color: ""
     },{
       title: "Footer",
-      key: "footer-color"
+      key: "footer-color",
+      color: ""
     },{
       title: "Schrift",
-      key: "font-color"
+      key: "font-color",
+      color: ""
     }];
   }
-
-  /* See: https://stackoverflow.com/questions/63157253/how-to-initialize-a-angular-material-components-color-picker-side-ts-with-stri */
-  private hexToRgb(hex: string): Color | undefined {
-    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, (m, r, g, b) => {
-      return r + r + g + g + b + b;
-    });
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    let rgb = result && {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    };
-
-    return rgb ? new Color(rgb.r, rgb.g, rgb.b) : undefined;
-  } 
 }
 
 export interface CssColorTheme {
@@ -80,7 +90,7 @@ export interface CssColorTheme {
 export interface ThemeColor {
   key: string;
   title: string;
-  color?: Color;
+  color: string;
 }
 
 /*@Component({

@@ -162,6 +162,11 @@ table {
   flex-direction: row; 
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .justify-start { justify-content: flex-start; }
 .justify-center { justify-content: center; }
 .justify-end { justify-content: flex-end; }
@@ -180,6 +185,17 @@ table {
 .transparent { opacity: 0; }
 
 /* ### shared component styles ### */
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: $margin-large;
+
+  :not(:first-child) {
+    margin-left: $margin-large;
+    margin-bottom: $margin-large;
+  }
+}
 
 .mat-form-field.inconspicuous { 
   .mat-form-field-wrapper {
