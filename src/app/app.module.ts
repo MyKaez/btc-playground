@@ -28,6 +28,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { XpaComponent } from './simulations/xpa/xpa.component';
 import { SimulationComponent as XpaSimulationComponent } from './simulations/xpa/simulation/simulation.component';
+import { NodeModelComponent } from 'src/prototypes/node-model/node-model.component';
+import { RingOfFireComponent } from './simulations/rof/ring-of-fire.component';
 import { InfoComponent } from './info/info.component';
 import { SocialBarComponent } from './meta';
 import { LanguageSelectorComponent, ThemeEditorComponent } from './shared/personal';
@@ -38,7 +40,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent,    
+    NodeModelComponent,
     PowComponent,
     VidComponent,
     HomeComponent,
@@ -46,6 +49,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     PowSimulationComponent,
     PowCalculatorComponent,
     LogoComponent,
+    RingOfFireComponent,
     MainNavComponent,
     FooterComponent,
     XpaComponent,
