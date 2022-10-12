@@ -28,18 +28,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { XpaComponent } from './simulations/xpa/xpa.component';
 import { SimulationComponent as XpaSimulationComponent } from './simulations/xpa/simulation/simulation.component';
+import { NodeModelComponent } from 'src/prototypes/node-model/node-model.component';
+import { RingOfFireComponent } from './simulations/rof/ring-of-fire.component';
 import { InfoComponent } from './info/info.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent,    
+    NodeModelComponent,
     PowComponent,
     VidComponent,
     HomeComponent,
     SimulationsComponent,
     PowSimulationComponent,
     PowCalculatorComponent,
+    RingOfFireComponent,
     MainNavComponent,
     XpaComponent,
     XpaSimulationComponent,
