@@ -1,3 +1,59 @@
+@keyframes jump {
+    0% {
+        padding: 0px;
+    }
+    20% {
+        padding: 5px;
+    }
+    50% {
+        padding: 4px;
+    }
+    100% {
+        padding: 0px;
+    }
+}
+
 .node-model {
     display: flex;
+    position: relative;
+
+    width: 600px;
+    height: 400px;
+
+    > * {
+        position: absolute;
+    }
+
+    .node {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+    }
+
+    .pin {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+
+        transition-delay: 1s;
+        transition-duration: 3s;
+        transition-property: top, left;
+
+        &.clicked {
+            animation: jump 1s;
+        }
+
+        &:hover {
+            cursor: pointer;
+            -webkit-box-shadow: 4px -4px 15px 0px #FF1F1F, 12px -11px 7px 0px #FF9376, 20px -5px 7px 0px #FFE264, 20px 6px 7px 0px #F6FF33, 13px 12px 17px 0px #FF9527, 2px 17px 17px 0px #FF0000, -9px 21px 18px 0px #FFF212, -9px 6px 11px 0px #FF0808, -11px -9px 11px 0px #FFFA17, -11px -9px 11px 0px #FFFA17, 5px 5px 15px 5px rgba(0,0,0,0); 
+            box-shadow: 4px -4px 15px 0px #FF1F1F, 12px -11px 7px 0px #FF9376, 20px -5px 7px 0px #FFE264, 20px 6px 7px 0px #F6FF33, 13px 12px 17px 0px #FF9527, 2px 17px 17px 0px #FF0000, -9px 21px 18px 0px #FFF212, -9px 6px 11px 0px #FF0808, -11px -9px 11px 0px #FFFA17, -11px -9px 11px 0px #FFFA17, 5px 5px 15px 5px rgba(0,0,0,0);
+        }
+    }
+
+    .node, .pin {
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

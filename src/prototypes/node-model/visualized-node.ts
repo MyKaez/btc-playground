@@ -1,13 +1,11 @@
+import { CanvasElement } from "./canvas-element";
 import { VisualizedNodeRelation } from "./visualized-node-relation";
 
-export interface VisualizedNode {
+export interface VisualizedNode extends CanvasElement {
     id?: number;
     text: string;
 
-    connections: VisualizedNodeRelation;
+    connections: VisualizedNodeRelation[];
 
     color: string;
-    x: number;
-    y: number;
-    size: number;
 }

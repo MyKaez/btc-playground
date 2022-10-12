@@ -1,14 +1,14 @@
+import { CanvasElement } from "./canvas-element";
 import { VisualizedNode } from "./visualized-node";
 import { VisualizedPin } from "./visualized-pin";
 
-export interface VisualizedNodeRelation {
+export interface VisualizedNodeRelation extends CanvasElement {
     id?: number;
     first: VisualizedNode;
-    last: VisualizedNode;
+    firstPins: VisualizedPin[];
 
-    pins: VisualizedPin[];
+    last: VisualizedNode;
+    lastPins: VisualizedPin[];
 
     color: string;
-    x: number;
-    y: number;
 }

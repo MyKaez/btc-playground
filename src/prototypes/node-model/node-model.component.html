@@ -1,3 +1,16 @@
 <div class="node-model">
-    <span>Text ist {{nodeCount}}</span>
+    <span *ngIf="!nodeCanvas">Loading...</span>
+    <div *ngFor="let node of nodeCanvas.nodes" class="node" 
+        [style.top]="node.yPx" 
+        [style.left]="node.xPx"
+        [style.background-color]="node.color"
+        >{{node.text}}</div>
+    <div *ngFor="let relation of nodeCanvas.relations" class="relation">{{relation.id}}</div>
+    <div *ngFor="let pin of nodeCanvas.pins" class="pin"
+        (click)="clickedPin(pin)"
+        [style.top]="pin.yPx" 
+        [style.left]="pin.xPx"
+        [style.background-color]="pin.color"
+        [class.clicked]="pin.clicked"
+    >{{pin.id}}</div>
 </div>
