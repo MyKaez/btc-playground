@@ -14,6 +14,7 @@ function getFtpConnection(ftpConfig){
 
 const filesToPublish = ["./dist/**/*"];
 const remoteLocation = "fixesth.is/btc-fancy";
+/** Publishes the dist folder to fancy folder on ftp server - config required! */
 gulp.task('publish-fancy-ftp', function(){
       const ftpConfig = require("./.config/private/ftp-deployment.json");
       var conn = getFtpConnection(ftpConfig);
@@ -22,6 +23,7 @@ gulp.task('publish-fancy-ftp', function(){
                 .pipe(conn.dest(remoteLocation));
 });
 
+/** Publishes the dist folder to prod folder on ftp server - config required! */
 const prodRemoteLocation = "fixesth.is/btc-playground";
 gulp.task('publish-ftp', function(){
       const ftpConfig = require("./.config/private/ftp-deployment.json");
@@ -35,6 +37,7 @@ const matchSourcesHtml = /<link rel="stylesheet" href="styles\.css(.|\n|\r)*<\/b
 const defaultSourcesHtml = `<link rel="stylesheet" href="styles.css{version}" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.css{version}"></noscript></head><body class="mat-typography"><app-root></app-root>
 <script src="runtime.js{version}" type="module"></script><script src="polyfills.js{version}" type="module"></script><script src="main.js{version}" type="module"></script></body>`;
 
+/** Applys a current timestamp to all js and css references in index.html */
 gulp.task('apply-timestamp-to-script-references', () => {
       const modifyFile = require('gulp-modify-file')
 

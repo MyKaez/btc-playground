@@ -14,4 +14,13 @@ add new component
 install material
     ng add @angular/material
 
+publish to ftp
+    1.  Create a config at .config/private/ftp-deployment.json 
+        See private-readme.md for more info
+
+    2.  Run npm script "publish-ftp" to build and deploy to ftp prod folder
+        npm run publish-ftp
+
+    2a. Run npm script "publish-fancy-ftp" to build and deploy to ftp fancy folder
+        npm run publish-fancy-ftp
 
