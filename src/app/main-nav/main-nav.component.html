@@ -5,7 +5,7 @@
     <mat-nav-list>
       <a mat-list-item (click)="navigateTo('home')">Home</a>
       <a mat-list-item (click)="navigateTo('simulations')">Simulationen</a>
-      <a mat-list-item href="#">Info</a>
+      <a mat-list-item (click)="navigateTo('info')">Info</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -15,12 +15,13 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <div class="logo" [ngClass]="{hidden: (isHandset$ |async)}">
-        <img width="40" alt=" {{title}}" src="assets/bitcoin-btc-logo.svg" />
+        <a (click)="navigateTo('home')">
+          <img width="40" alt=" {{title}}" src="assets/bitcoin-btc-logo.svg" /> FixesTh.is
+        </a>
       </div>
       <div class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
-        <a mat-list-item (click)="navigateTo('home')">Home</a>
         <a mat-list-item (click)="navigateTo('simulations')">Simulationen</a>
-        <a mat-list-item href="#">Info</a>
+        <a mat-list-item (click)="navigateTo('info')">Info</a>
       </div>
       <div class="meta">
         <a href="https://twitter.com/bitty_kn" target="_blank">

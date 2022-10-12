@@ -30,6 +30,7 @@ import { XpaComponent } from './simulations/xpa/xpa.component';
 import { SimulationComponent as XpaSimulationComponent } from './simulations/xpa/simulation/simulation.component';
 import { NodeModelComponent } from 'src/prototypes/node-model/node-model.component';
 import { RingOfFireComponent } from './simulations/rof/ring-of-fire.component';
+import { InfoComponent } from './info/info.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { RingOfFireComponent } from './simulations/rof/ring-of-fire.component';
     RingOfFireComponent,
     MainNavComponent,
     XpaComponent,
-    XpaSimulationComponent
+    XpaSimulationComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,
