@@ -21,22 +21,31 @@
   display: none;
 }
 
-mat-toolbar {
+.mat-toolbar {
   color: $light-color;
   background-color: transparentize($color: $light-color, $amount: 0.75) !important;
   /*border-bottom: 1px dashed $light-color;*/
+
+  height: auto;
+  min-height: $header-height;
 
   a {
     color: $light-color;
     display: inline-block;
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0 $margin-huge;
+    padding: 2px 0;
     cursor: pointer;
     transition-duration: .5s;
+    transition-property: color;
 
     &:hover {
       color: darken($light-color, 10);
     }
+
+    &.active {
+      border-bottom: 2px solid var(--accent);
+    } 
   }
 }
 

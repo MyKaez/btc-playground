@@ -13,7 +13,7 @@
       </button>
       <app-logo [ngClass]="{hidden: (isHandset$ |async)}"></app-logo>
       <div class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
-        <a mat-list-item *ngFor="let link of navLinks" (click)="navigateTo(link.href)">{{link.title}}</a>
+        <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href" [routerLinkActive]="['active']">{{link.title}}</a>
       </div>
     </mat-toolbar>
     <div class="breadcrumbs" *ngIf="false">

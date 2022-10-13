@@ -14,6 +14,10 @@
             :not(:last-child) {
                 margin-right: $margin-small;
             }
+
+            .mat-icon {
+                color: $accent2;
+            }
         }
 
         &:not(:last-child) {
