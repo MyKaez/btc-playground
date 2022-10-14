@@ -235,6 +235,16 @@ h1, h2, h3 {
   }
 }
 
+.polygon {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 48%, 75% 100%, 25% 100%, 0% 50%);
+
+  img {
+    height: inherit;
+    width: inherit;
+    object-fit: cover;
+  }
+}
+
 .mat-form-field.inconspicuous { 
   .mat-form-field-wrapper {
     padding: 12px 0 24px 0;
