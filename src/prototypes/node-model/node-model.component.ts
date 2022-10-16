@@ -59,7 +59,7 @@ export class NodeModelComponent implements OnInit {
 
         let combinations: VisualizedNode[][] = [];
         canvas.nodes.forEach(node => {
-            canvas.nodes.forEach(other => {
+            canvas.nodes.forEach(other => {                
                 if(node === other) return;
                 if(combinations.some(combination => combination.indexOf(node) >= 0 && combination.indexOf(other) >= 0)) return;
                 combinations.push([node, other]);
@@ -74,7 +74,6 @@ export class NodeModelComponent implements OnInit {
                     y: 0,
                     id: StringHelper.createUiId()
                 };
-
                 for(let i = 0; i < 6; i++) {
                     let first: VisualizedPin = {
                         color: "gray",
