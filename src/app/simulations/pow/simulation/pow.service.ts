@@ -1,7 +1,9 @@
 import { PowHash } from "./interfaces";
 import { createBlockId } from "../../../shared/helpers/block";
 import { calculateProbability, calculateDifficulty, calculateHashDetails, calculateHexaDecimalFormula } from "../../../shared/hash.methods";
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class PowService {
     public hashRate: number = 10;
     public blockTime: number = 10;
@@ -38,7 +40,7 @@ export class PowService {
             x += '0';
         }
         for (let i = 0; i < input[1]; i++) {
-            res.push(x + i.toString(16)); 
+            res.push(x + i.toString(16));
         }
         if (res.length === 1) {
             return res[0];

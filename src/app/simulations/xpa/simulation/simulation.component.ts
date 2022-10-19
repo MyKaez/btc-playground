@@ -8,18 +8,19 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class SimulationComponent implements OnInit {
   isExecuting: boolean = false;
-  inputs: FormGroup = new FormGroup({
-    blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
-    attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),
-    preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5)]),
-    confirmations: new FormControl(6, [Validators.min(0), Validators.max(10)]),
-    cancelAttack:  new FormControl(3, [Validators.min(0), Validators.max(10)])
-  });
+  inputs: FormGroup;
   blockchain: number[] = [];
   attackingBlockchain: number[] = [];
   clearOnStart: boolean = true;
 
   constructor() {
+    this.inputs = new FormGroup({
+      blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
+      attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),
+      preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5)]),
+      confirmations: new FormControl(6, [Validators.min(0), Validators.max(10)]),
+      cancelAttack: new FormControl(3, [Validators.min(0), Validators.max(10)])
+    });
     this.inputs.controls['preminedBlocks'].valueChanges.subscribe(value => {
       this.attackingBlockchain = [];
       this.blockchain = [];
@@ -46,11 +47,11 @@ export class SimulationComponent implements OnInit {
     return Number.parseInt(this.inputs.controls['attackingPower'].value);
   }
 
-  get confirmations():number{
+  get confirmations(): number {
     return Number.parseInt(this.inputs.controls['confirmations'].value);
   }
 
-  get cancelAttack():number{
+  get cancelAttack(): number {
     return Number.parseInt(this.inputs.controls['cancelAttack'].value);
   }
 
@@ -78,9 +79,9 @@ export class SimulationComponent implements OnInit {
     return 'Formel?!';
   }
 
-  get totalBlocks():number[]{
+  get totalBlocks(): number[] {
     let numbers = [];
-    for(let i = 0 ; i < this.blocksToComplete; i ++){
+    for (let i = 0; i < this.blocksToComplete; i++) {
       numbers.push(i);
     }
     return numbers;

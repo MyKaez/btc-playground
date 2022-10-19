@@ -16,17 +16,9 @@ export class SimulationComponent implements OnInit {
   public readonly minAmountOfHashesToShow = 1;
   private readonly separator = ' | ';
 
-  private powService: PowService = new PowService();
   private cachedHashes: PowHash[] = [];
 
-  inputs: FormGroup = new FormGroup({
-    hashRate: new FormControl(this.powService.hashRate, this.createHashRateValidators(50)),
-    externalHashRate: new FormControl(this.powService.externalHashRate,
-      [Validators.required, Validators.min(0)]),
-    blockTime: new FormControl(this.powService.blockTime,
-      [Validators.required, Validators.min(1), Validators.max(3600)])
-  });
-
+  inputs: FormGroup;
   hashNo: number = 0;
   executedHashrates: number = 0;
   stopOnFoundBlock: boolean = true;
@@ -36,7 +28,14 @@ export class SimulationComponent implements OnInit {
   isCalculating: Subject<boolean> = new Subject();
   isProcessing: Subject<boolean> = new Subject();
 
-  constructor() {
+  constructor(private powService: PowService) {
+    this.inputs = new FormGroup({
+      hashRate: new FormControl(this.powService.hashRate, this.createHashRateValidators(50)),
+      externalHashRate: new FormControl(this.powService.externalHashRate,
+        [Validators.required, Validators.min(0)]),
+      blockTime: new FormControl(this.powService.blockTime,
+        [Validators.required, Validators.min(1), Validators.max(3600)])
+    });
     this.inputs.get('hashRate')!.valueChanges.subscribe(val => this.powService.hashRate = val);
     this.inputs.get('externalHashRate')!.valueChanges.subscribe(val => this.powService.externalHashRate = val);
     this.inputs.get('blockTime')!.valueChanges.subscribe(val => this.powService.blockTime = val);

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BlockSizeService } from './simulation/blocksize.service';
 
 @Component({
   selector: 'app-blocksize',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BlocksizeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private blocksizeService: BlockSizeService) { }
 
   ngOnInit(): void {
   }

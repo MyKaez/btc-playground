@@ -38,10 +38,12 @@ import { AboutComponent, SupportUsComponent } from './pages';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { BlocksizeComponent } from './simulations/blocksize/blocksize.component';
+import { BlockSizeService } from './simulations/blocksize/simulation/blocksize.service';
+import { PowService } from './simulations/pow/simulation/pow.service';
 
 @NgModule({
   declarations: [
-    AppComponent,    
+    AppComponent,
     NodeModelComponent,
     PowComponent,
     VidComponent,
@@ -88,7 +90,10 @@ import { BlocksizeComponent } from './simulations/blocksize/blocksize.component'
     MatIconModule,
     MatListModule
   ],
-  providers: [],
+  providers: [
+    BlockSizeService,
+    PowService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
