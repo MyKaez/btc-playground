@@ -11,6 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -74,6 +75,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     MatCheckboxModule,
     MatButtonModule,
     MatInputModule,
+    MatSliderModule,
     MatSelectModule,
     MatCardModule,
     MatProgressBarModule,

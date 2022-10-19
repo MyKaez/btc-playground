@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSliderChange } from '@angular/material/slider';
 import { StringHelper } from 'src/model/text';
 import { NodeCanvas, VisualizedNode, VisualizedNodeRelation, VisualizedPin } from "./";
 
@@ -34,6 +35,24 @@ export class NodeModelComponent implements OnInit {
         window.setTimeout(() => pin.clicked = false, 1000);
     }
 
+    updateRelations(event: MatSliderChange, relation: VisualizedNodeRelation) {
+        let afflictedPins = [... relation.firstPins, ... relation.lastPins];
+        //let possiblePins = [... relation.first.pins, ... relation.last.pins];
+        //afflictedPins = afflictedPins.filter()
+
+        let value = event.value || 0;
+        let takeFromLeft = Math.floor(value / 100 * afflictedPins.length);
+        console.log("Take from left", takeFromLeft);
+        let firstPins = afflictedPins.splice(0, takeFromLeft);
+        relation.firstPins = firstPins;
+        relation.lastPins = afflictedPins;
+
+        console.log("Took from left", firstPins.length);
+        console.log("Remaining", relation.lastPins.length);
+
+        this.nodeCanvas.updatePositions(true);
+    }
+
     static createDefaultCanvas(nodeCount: number): NodeCanvas {
         const colors = ["#66f", "#ec3", "#5db"];
         const nodeTexts = ["A", "B", "C"];
@@ -49,6 +68,7 @@ export class NodeModelComponent implements OnInit {
             canvas.nodes.push({
                 color: colors[i % 3],
                 connections: [],
+                pins: [],
                 size: 80 + "px",
                 text: nodeTexts[i % 3],
                 x: i * 60,
@@ -93,7 +113,9 @@ export class NodeModelComponent implements OnInit {
                     relation.firstPins.push(first);
                     relation.lastPins.push(second);
                     canvas.pins.push(first);
+                    node.pins.push(first);
                     canvas.pins.push(second);
+                    other.pins.push(first);
                 }
 
                 node.connections.push(relation);
