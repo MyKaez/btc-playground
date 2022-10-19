@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { calculateSize } from 'src/app/shared/helpers/size';
 import { BlockSizeService } from './simulation/blocksize.service';
-import { Interval } from './simulation/types';
+import { BlockData, Interval } from './simulation/types';
 
 @Component({
   selector: 'app-blocksize',
@@ -9,27 +9,29 @@ import { Interval } from './simulation/types';
   styleUrls: ['./blocksize.component.scss']
 })
 export class BlocksizeComponent implements OnInit {
-  blocksPerHour: number;
-  blocksPerDay: number;
-  blocksPerWeek: number;
-  blocksPerYear: number;
-  blockSizePerHour: string;
-  blockSizePerDay: string;
-  blockSizePerWeek: string;
-  blockSizePerYear: string;
+
+  blocks: BlockData[];
 
   constructor(private blocksizeService: BlockSizeService) {
-    this.blocksPerHour = this.blocksizeService.blocksPer(1, Interval.Hour);
-    this.blocksPerDay = this.blocksizeService.blocksPer(1, Interval.Day);
-    this.blocksPerWeek = this.blocksizeService.blocksPer(1, Interval.Week);
-    this.blocksPerYear = this.blocksizeService.blocksPer(1, Interval.Year);
-    this.blockSizePerHour = this.calculateSize(this.blocksizeService.blockSizeInBytesPer(1, Interval.Hour));
-    this.blockSizePerDay = this.calculateSize(this.blocksizeService.blockSizeInBytesPer(1, Interval.Day));
-    this.blockSizePerWeek = this.calculateSize(this.blocksizeService.blockSizeInBytesPer(1, Interval.Week));
-    this.blockSizePerYear = this.calculateSize(this.blocksizeService.blockSizeInBytesPer(1, Interval.Year));
+    this.blocks = [
+      this.createBlockData(1, Interval.hour),
+      this.createBlockData(1, Interval.day),
+      this.createBlockData(1, Interval.week),
+      this.createBlockData(1, Interval.year),
+      this.createBlockData(1, Interval.decade),
+    ];
   }
 
   ngOnInit(): void {
+  }
+
+  createBlockData(amountOfTime: number, interval: Interval): BlockData {
+    return {
+      interval: interval.text,
+      amountOfTime: amountOfTime,
+      amountOfBlocks: this.blocksizeService.blocksPer(amountOfTime, interval),
+      blockSize: this.calculateSize(this.blocksizeService.blockSizeInBytesPer(amountOfTime, interval))
+    }
   }
 
   get blockTime(): number {
@@ -44,7 +46,7 @@ export class BlocksizeComponent implements OnInit {
     return this.blocksizeService.blockSizeInBytes;
   }
 
-  calculateSize(bytes: number): string {
-    return calculateSize(bytes);
+  calculateSize(size: number): string {
+    return calculateSize(size);
   }
 }

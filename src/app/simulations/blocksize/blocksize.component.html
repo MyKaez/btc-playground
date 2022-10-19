@@ -17,30 +17,18 @@
     </tr>
 </table>
 
+<hr />
+
 <table>
     <tr>
         <th>Einheit</th>
         <th>Anzahl Blöcke</th>
-        <th>Größe in Bytes</th>
+        <th>Größe</th>
     </tr>
-    <tr>
-        <td>Stunde</td>
-        <td>{{blocksPerHour}}</td>
-        <td>{{blockSizePerHour}}</td>
-    </tr>
-    <tr>
-        <td>Tag</td>
-        <td>{{blocksPerDay}}</td>
-        <td>{{blockSizePerDay}}</td>
-    </tr>
-    <tr>
-        <td>Woche</td>
-        <td>{{blocksPerWeek}}</td>
-        <td>{{blockSizePerWeek}}</td>
-    </tr>
-    <tr>
-        <td>Jahr</td>
-        <td>{{blocksPerYear}}</td>
-        <td>{{blockSizePerYear}}</td>
+
+    <tr *ngFor="let block of blocks">
+        <td>{{block.interval}}</td>
+        <td>{{block.amountOfBlocks}}</td>
+        <td>{{block.blockSize}}</td>
     </tr>
 </table>

@@ -10,20 +10,23 @@ export class BlockSizeService {
         return 1_000_000;
     }
     blocksPer(amount: number, interval: Interval): number {
-        if (interval > Interval.Second) {
+        if (interval.index > Interval.second.index) {
             amount *= 60;
         }
-        if (interval > Interval.Minute) {
+        if (interval.index > Interval.minute.index) {
             amount *= 60;
         }
-        if (interval > Interval.Hour) {
+        if (interval.index > Interval.hour.index) {
             amount *= 24;
         }
-        if (interval === Interval.Day) {
+        if (interval.index === Interval.week.index) {
             amount *= 7;
         }
-        if (interval === Interval.Year) {
+        if (interval.index === Interval.year.index) {
             amount *= 355.75;
+        }
+        if (interval.index === Interval.decade.index) {
+            amount *= 3557.5;
         }
 
         return amount / this.blockTimeInSeconds;
