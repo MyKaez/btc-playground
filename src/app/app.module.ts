@@ -37,6 +37,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AboutComponent, SupportUsComponent } from './pages';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { BlocksizeComponent } from './simulations/blocksize/blocksize.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
     LanguageSelectorComponent,
     ThemeEditorComponent,
     AboutComponent,
-    SupportUsComponent
+    SupportUsComponent,
+    BlocksizeComponent
   ],
   imports: [
     BrowserModule,

@@ -8,13 +8,13 @@ add [(ngModel)] to <input />:
 
 
 add new component
-    ng generate c simulators/pow
+    ng generate c simulations/pow
 
 
 install material
     ng add @angular/material
 
-publish to ftp
+publish to ftpng 
     1.  Create a config at .config/private/ftp-deployment.json 
         See private-readme.md for more info
 
