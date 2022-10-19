@@ -8,7 +8,39 @@
         <td>{{blockTime}}</td>
     </tr>
     <tr>
-        <td>Blocksize <i>[in Bytes]</i></td>
-        <td>{{blockSize}}</td>
+        <td>Blockzeit <i>[in Minuten]</i></td>
+        <td>{{blockTimeInMinutes}}</td>
+    </tr>
+    <tr>
+        <td>Blocksize</td>
+        <td>{{calculateSize(blockSize)}}</td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <th>Einheit</th>
+        <th>Anzahl Blöcke</th>
+        <th>Größe in Bytes</th>
+    </tr>
+    <tr>
+        <td>Stunde</td>
+        <td>{{blocksPerHour}}</td>
+        <td>{{blockSizePerHour}}</td>
+    </tr>
+    <tr>
+        <td>Tag</td>
+        <td>{{blocksPerDay}}</td>
+        <td>{{blockSizePerDay}}</td>
+    </tr>
+    <tr>
+        <td>Woche</td>
+        <td>{{blocksPerWeek}}</td>
+        <td>{{blockSizePerWeek}}</td>
+    </tr>
+    <tr>
+        <td>Jahr</td>
+        <td>{{blocksPerYear}}</td>
+        <td>{{blockSizePerYear}}</td>
     </tr>
 </table>
