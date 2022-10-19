@@ -13,4 +13,12 @@ export class BlocksizeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  get blockTime(): number {
+    return this.blocksizeService.blockTime;
+  }
+
+  get blockSize(): number {
+    return this.blocksizeService.blockSize;
+  }
+
 }
