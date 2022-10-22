@@ -45,7 +45,11 @@ export class NodeCanvas {
         console.log("pinMargin", this.pinMargin);
         console.log("pingPadding", this.pinPadding);
 
-        if(updateNodes) this.updateNodePositions();
+        if(updateNodes) {
+            this.updateNodePositions();
+            this.updateRelationPositions();
+        }
+
         this.updatePinPositions();
     }
 
@@ -68,41 +72,53 @@ export class NodeCanvas {
     private updatePinPositions() {
         this.relations.forEach(relation => {
             this.updateStrangPosititions(relation.firstPins, relation.first, relation.last);
-            this.updateStrangPosititions(relation.lastPins, relation.last, relation.first);
+            this.updateStrangPosititions(relation.lastPins, relation.last, relation.first, true);
         });
         
         this.syncCanvasValues(... this.pins);
     }
 
-    private updateStrangPosititions(pins: VisualizedPin[], from: VisualizedNode, to: VisualizedNode) { 
+    private updateRelationPositions() {
+        this.relations.forEach(relation => {
+            let betweenBothNodes = new Victor((relation.first.x + relation.last.x) / 2, (relation.first.y + relation.last.y) / 2);
+            relation.x = betweenBothNodes.x;
+            relation.y = betweenBothNodes.y;
+        });
+
+        this.syncCanvasValues(... this.relations);
+    }
+
+    private updateStrangPosititions(pins: VisualizedPin[], from: VisualizedNode, to: VisualizedNode, invert = false) { 
         let vector = new Victor(to.x - from.x, to.y - from.y);
         let absoluteVector = vector.clone();
-        console.log("From vector", vector.x, vector.y);
+        //console.log("From vector", vector.x, vector.y);
         let offset: any = null;// new Victor(this.nodePadding, this.nodePadding);
         vector.normalize();
-        console.log("Normalized", vector.x, vector.y);
+        //console.log("Normalized", vector.x, vector.y);
         //vector.multiply(new Victor(this.pinPadding, this.pinPadding));
 
 
         let counter = 0;
+        if(invert)  pins = [... pins].reverse();
+
         pins.forEach(pin => {
             let pinVector = vector.clone();
-            console.log("cloned", pinVector.x, pinVector.y);
-            let elementFactor = (this.pinSize * 2) * counter;
+            //console.log("cloned", pinVector.x, pinVector.y);
+            let elementFactor = (this.pinSize * 1.5) * counter;
             //if(elementFactor === 0) pinVector = new Victor(0,0);
             pinVector.multiply(new Victor(elementFactor, elementFactor));
 
             if(!offset) {
                 offset = this.getNodeCenter(from, this.nodeSize);
-                console.log("Got center", offset.x, offset.y);
+                //console.log("Got center", offset.x, offset.y);
                 offset = offset.add(new Victor(vector.x * this.nodeSize, vector.y * this.nodeSize));
                 offset = offset.subtract(new Victor(from.x, from.y));
-                console.log("Got offset", offset.x, offset.y);
+                //console.log("Got offset", offset.x, offset.y);
             }
 
             pin.x = from.x + offset.x + pinVector.x;
             pin.y = from.y + offset.y + pinVector.y;
-            console.log("Set vector", pinVector.x, pinVector.y);
+            //console.log("Set vector", pinVector.x, pinVector.y);
 
             counter++;
         });

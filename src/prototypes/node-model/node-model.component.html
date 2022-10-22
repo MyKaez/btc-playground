@@ -5,7 +5,13 @@
         [style.left]="node.xPx"
         [style.background-color]="node.color"
         >{{node.text}}</div>
-    <div *ngFor="let relation of nodeCanvas.relations" class="relation">{{relation.id}}</div>
+    <div *ngFor="let relation of nodeCanvas.relations" class="relation"            
+        [style.top]="relation.yPx" 
+        [style.left]="relation.xPx">
+        <mat-slider min="1" max="100" step="1" value="50" 
+            (change)="updateRelations($event, relation)">
+        </mat-slider>
+    </div>
     <div *ngFor="let pin of nodeCanvas.pins" class="pin"
         (click)="clickedPin(pin)"
         [style.top]="pin.yPx" 
