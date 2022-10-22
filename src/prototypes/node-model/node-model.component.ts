@@ -42,10 +42,12 @@ export class NodeModelComponent implements OnInit {
 
         let value = event.value || 0;
         let takeFromLeft = Math.floor(value / 100 * afflictedPins.length);
+        let isReversed = (relation.last.x - relation.first.x) > 0;// || (relation.last.y - relation.first.y) > 0; 
         console.log("Take from left", takeFromLeft);
         let firstPins = afflictedPins.splice(0, takeFromLeft);
-        relation.firstPins = firstPins;
-        relation.lastPins = afflictedPins;
+
+        relation.firstPins =  isReversed ? afflictedPins : firstPins;
+        relation.lastPins = isReversed ? firstPins : afflictedPins;
 
         console.log("Took from left", firstPins.length);
         console.log("Remaining", relation.lastPins.length);
