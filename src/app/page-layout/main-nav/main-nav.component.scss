@@ -40,7 +40,7 @@
     transition-property: color;
 
     &:hover {
-      color: darken($light-color, 10);
+      opacity: .4;
     }
 
     &.active {

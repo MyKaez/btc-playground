@@ -1,21 +1,8 @@
 <div class="items">
-    <mat-card (click)="navigateTo('simulations/pow')">
-        <img src="assets/Miner_seite2.png" />
-        <h2>Proof of Work</h2>
-        <p>
-            Fixes this... Determinismus / Vorhersehbarkeit
-        </p>
-    </mat-card>
-    <mat-card (click)="navigateTo('simulations/xpa')">
-        <img src="assets/Miner_seite2.png" />
-        <h2>51% Attacke</h2>
-        <p>
-            Fixes this... Determinismus / Vorhersehbarkeit
-        </p>
-    </mat-card>
-    <mat-card (click)="navigateTo('simulations/rof')">
-        <img src="assets/Miner_seite2.png" />
-        <h2>Ring Of Fire</h2>
-        <p>Wie funktioniert denn Lightning?</p>
-    </mat-card>
+    <app-simulation-card *ngFor="let sim of simulations"
+        (click)="sim.navigationLink && navigateTo(sim.navigationLink)"
+        [title]="sim.title"
+        [description]="sim.description"
+        [image-src]="sim.imageSrc"
+        [youtube-src]="sim.youtubeSrc"></app-simulation-card>
 </div>

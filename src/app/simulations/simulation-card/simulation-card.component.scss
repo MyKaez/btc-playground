@@ -1,0 +1,22 @@
+@import "/src/styles.scss";
+
+.mat-card {
+    color: $light-color;
+    background-color: $accent;
+    width: 25%;
+    height: max-content;
+    min-width: 20em;
+    border: 2px solid $light-color;
+    border-radius: 0em 2em 0em 2em;
+    cursor: pointer;
+}
+
+img {
+    width: 100%;
+    border: 2px solid $light-color;
+    border-radius: 1em;
+}
+
+h2 {
+    color: var(--primary);
+}

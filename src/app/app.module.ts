@@ -17,19 +17,20 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './shared/vid/vid.component';
 import { HomeComponent } from './home/home.component';
-import { SimulationsComponent } from './simulations/simulations.component';
-import { SimulationComponent as PowSimulationComponent } from './simulations/pow/simulation/simulation.component';
-import { CalculatorComponent as PowCalculatorComponent } from './simulations/pow/calculator/calculator.component';
+import { SimulationCardComponent,
+  SimulationsComponent, 
+  PowSimulationComponent,
+  PowCalculatorComponent,
+  XpaComponent,
+  XpaSimulationComponent,
+  RingOfFireComponent } from './simulations';
 import { LogoComponent, MainNavComponent, FooterComponent } from './page-layout';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { XpaComponent } from './simulations/xpa/xpa.component';
-import { SimulationComponent as XpaSimulationComponent } from './simulations/xpa/simulation/simulation.component';
 import { NodeModelComponent } from 'src/prototypes/node-model/node-model.component';
-import { RingOfFireComponent } from './simulations/rof/ring-of-fire.component';
 import { InfoComponent } from './info/info.component';
 import { SocialBarComponent } from './meta';
 import { LanguageSelectorComponent, ThemeEditorComponent } from './shared/personal';
@@ -37,6 +38,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AboutComponent, SupportUsComponent } from './pages';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     PowComponent,
     VidComponent,
     HomeComponent,
+    SimulationCardComponent,
     SimulationsComponent,
     PowSimulationComponent,
     PowCalculatorComponent,
@@ -79,6 +82,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     MatProgressBarModule,
     MatExpansionModule,
     MatSlideToggleModule,
+    YouTubePlayerModule,
     ColorPickerModule,
     LayoutModule,
     MatToolbarModule,
