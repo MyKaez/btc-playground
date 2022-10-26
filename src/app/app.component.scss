@@ -34,8 +34,12 @@ button {
 
 .items {
     display: flex;
-    justify-content: center;
-    align-content: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    >* {
+        max-width: 320px;
+    }
 }
 
 /***

@@ -39,7 +39,14 @@ export class MainNavComponent {
       href: "info"
     },{
       title: "Über Uns",
-      href: "about"
+      href: "about",
+      links: [{
+        title: "Über das Team",
+        href: "about"
+      }, {
+        title: "Über das Projekt",
+        href: "about"
+      }]
     },{
       title: "Unterstütze uns",
       href: "support"
@@ -69,5 +76,6 @@ export class MainNavComponent {
 
 export interface NavLink {
   title: string;
-  href: string;
+  href?: string;
+  links?: NavLink[];
 }
