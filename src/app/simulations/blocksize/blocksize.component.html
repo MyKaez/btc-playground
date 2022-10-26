@@ -5,18 +5,20 @@
         <th> Beautified </th>
     </tr>
     <tr>
-        <td> Blockzeit <i>[in Sekunden]</i> </td>
+        <td> Blockzeit</td>
         <td>
             <mat-form-field appearance="fill">
+                <mat-label><i>[in Sekunden]</i></mat-label>
                 <input matInput type="number" [(ngModel)]="blockTime" />
             </mat-form-field>
         </td>
         <td> {{calculateTime(blockTime)}} </td>
     </tr>
     <tr>
-        <td> Blocksize <i>[in Bytes]</i> </td>
+        <td> Blocksize </td>
         <td>
             <mat-form-field appearance="fill">
+                <mat-label><i>[in Bytes]</i></mat-label>
                 <input matInput type="number" [(ngModel)]="blockSize" />
             </mat-form-field>
         </td>
@@ -45,13 +47,12 @@
 <p>
     Speicherplatz:<br />
     <mat-form-field appearance="fill">
-        <mat-label>Speicherplatz <i>[in Bytes]</i></mat-label>
+        <mat-label><i>[in Bytes]</i></mat-label>
         <input matInput type="number" [(ngModel)]="spaceInBytes" />
     </mat-form-field>
     {{space}}
 </p>
 
 <p>
-    Voll nach: <br />
-    {{spaceIsEmpty}}
+    Voll nach: {{outOfSpaceTime}}
 </p>

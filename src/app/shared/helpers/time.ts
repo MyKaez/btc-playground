@@ -15,7 +15,7 @@ export function calculateTime(seconds: number): string {
     let days = Math.floor(hours / 24);
     hours = hours % 24;
     if (days < 365.25) {
-        return days.toFixed(0) + ' Tagen ' + hours.toFixed(0) + ' Stunden';
+        return days.toFixed(0) + ' Tage ' + hours.toFixed(0) + ' Stunde/n';
     }
     let years = days / 365.25;
     days = days % 365.25;

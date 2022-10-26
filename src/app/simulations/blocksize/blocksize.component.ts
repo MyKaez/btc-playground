@@ -61,7 +61,7 @@ export class BlocksizeComponent implements OnInit {
     return this.calculateSize(this.spaceInBytes);
   }
 
-  get spaceIsEmpty(): string {
+  get outOfSpaceTime(): string {
     let duration = this.spaceInBytes / this.blockSize * this.blockTime;
     return this.calculateTime(duration);
   }
