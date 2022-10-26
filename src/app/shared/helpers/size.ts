@@ -18,11 +18,7 @@ export class Size {
 }
 
 export class Unit {
-    multiplicator: number;
-    text: string;
-    private constructor(multiplicator: number, text: string) {
-        this.multiplicator = multiplicator;
-        this.text = text;
+    private constructor(public multiplicator: number, public text: string) {
     }
     static readonly bytes = new Unit(0, 'bytes');
     static readonly kiloBytes = new Unit(1, 'kilobytes');
