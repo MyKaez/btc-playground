@@ -42,6 +42,7 @@ import { AboutComponent, SupportUsComponent } from './pages';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { YouTubePlayerModule } from '@angular/youtube-player';
+import { AboutTheTeamComponent } from './pages/about-the-team/about-the-team.component';
 
 @NgModule({
   declarations: [
@@ -65,8 +66,9 @@ import { YouTubePlayerModule } from '@angular/youtube-player';
     LanguageSelectorComponent,
     ThemeEditorComponent,
     AboutComponent,
+    AboutTheTeamComponent,
     SupportUsComponent,
-    BlocksizeComponent
+    BlocksizeComponent    
   ],
   imports: [
     BrowserModule,

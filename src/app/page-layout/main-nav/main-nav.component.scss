@@ -29,7 +29,7 @@
   height: auto;
   min-height: $header-height;
 
-  a {
+  > div > a {
     color: $light-color;
     display: inline-block;
     text-decoration: none;
@@ -40,12 +40,41 @@
     transition-property: color;
 
     &:hover {
-      opacity: .4;
+      &:not(.with-sub-nav) {
+        color: rgba(255,255,255,.4);
+      }
+
+      .sub-nav {
+          display: flex;
+      }
     }
 
     &.active {
       border-bottom: 2px solid var(--accent);
     } 
+
+    .sub-nav {
+      display: none;    
+      position: absolute;
+      flex-direction: column;
+      justify-content: flex-start;
+      left: 0px;
+      z-index: 10;
+
+      >* {
+        color: $light-color;
+        display: inline-block;
+        text-decoration: none;
+        background-color: var(--footer-color);
+        padding: 8px 12px;
+        transition-duration: .5s;
+        transition-property: background-color;
+
+        &:hover {
+          background-color: var(--primary);
+        }
+      }
+    }
   }
 }
 

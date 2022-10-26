@@ -39,10 +39,9 @@ export class MainNavComponent {
       href: "info"
     },{
       title: "Über Uns",
-      href: "about",
       links: [{
         title: "Über das Team",
-        href: "about"
+        href: "team"
       }, {
         title: "Über das Projekt",
         href: "about"
