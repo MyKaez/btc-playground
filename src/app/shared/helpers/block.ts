@@ -1,4 +1,6 @@
 export const BLOCK_ID_LENGTH: number = 64;
+export const BLOCK_DURATION_IN_SECONDS = 600;
+export const BLOCK_SIZE_LIMIT_IN_BYTES = 1_000_000;
 
 export function createBlockId(): string {
     // origins from here: https://www.cloudhadoop.com/javascript-uuid-tutorial/#:~:text=Typescript%20-%20generate%20UUID%20or%20GUID%20with%20an,directly%20use%20the%20uuid%20%28%29%20function%20as%20below.
