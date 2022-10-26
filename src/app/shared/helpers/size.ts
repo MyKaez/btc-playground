@@ -1,22 +1,25 @@
-export function calculateSize(bytes: number): Size {
+export function calculateSize(bytes: number, unit?: Unit): Size {
+    let sizeInBytes = bytes;
     for (let i in Unit.units) {
         if (bytes < 1_000) {
-            return new Size(bytes, Unit.units[i]);
+            return new Size(sizeInBytes, bytes, Unit.units[i]);
         }
         bytes /= 1_000;
     }
-    return new Size(bytes, Unit.units[Unit.units.length - 1]);
+    return new Size(sizeInBytes, bytes, Unit.units[Unit.units.length - 1]);
 }
 
 export class Size {
-    size: number;
-    sizeUnit: Unit;
-    constructor(size: number, sizeUnit: Unit) {
-        this.size = size;
-        this.sizeUnit = sizeUnit;
+    bytes: number;
+    value: number;
+    unit: Unit;
+    constructor(bytes: number, value: number, unit: Unit) {
+        this.bytes = bytes;
+        this.value = value;
+        this.unit = unit;
     }
     toText(): string {
-        return this.size.toFixed(2) + ' ' + this.sizeUnit.text;
+        return this.value.toFixed(2) + ' ' + this.unit.text;
     }
 }
 
