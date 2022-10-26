@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { InfoComponent } from './info/info.component';
-import { AboutComponent, SupportUsComponent } from './pages';
+import { AboutComponent, AboutTheTeamComponent, SupportUsComponent } from './pages';
 import { BlocksizeComponent } from './simulations/blocksize/blocksize.component';
 import { PowComponent } from './simulations/pow/pow.component';
 import { RingOfFireComponent } from './simulations/rof/ring-of-fire.component';
@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'simulations/rof', component: RingOfFireComponent },
   { path: 'simulations/blocksize', component: BlocksizeComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'team', component: AboutTheTeamComponent },
   { path: 'support', component: SupportUsComponent }
 ];
 
