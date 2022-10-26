@@ -1,4 +1,4 @@
-export function calculateSize(bytes: number, unit?: Unit): Size {
+export function calculateSize(bytes: number): Size {
     let sizeInBytes = bytes;
     for (let i in Unit.units) {
         if (bytes < 1_000) {
@@ -10,13 +10,7 @@ export function calculateSize(bytes: number, unit?: Unit): Size {
 }
 
 export class Size {
-    bytes: number;
-    value: number;
-    unit: Unit;
-    constructor(bytes: number, value: number, unit: Unit) {
-        this.bytes = bytes;
-        this.value = value;
-        this.unit = unit;
+    constructor(public bytes: number, public value: number, public unit: Unit) {
     }
     toText(): string {
         return this.value.toFixed(2) + ' ' + this.unit.text;
