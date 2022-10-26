@@ -12,8 +12,18 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <app-logo [ngClass]="{hidden: (isHandset$ |async)}"></app-logo>
+      <div *ngIf="false" class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
+        <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href" [routerLinkActive]="['active']">
+          <span>{{link.title}}</span>
+          <div *ngIf="link.links">
+            <a mat-list-item *ngFor="let sub of link.links" [routerLink]="sub.href" [routerLinkActive]="['active']"></a>
+          </div>
+        </a>
+      </div>
       <div class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
-        <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href" [routerLinkActive]="['active']">{{link.title}}</a>
+        <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href" [routerLinkActive]="['active']">
+          {{link.title}}
+        </a>
       </div>
     </mat-toolbar>
     <div class="breadcrumbs" *ngIf="false">
