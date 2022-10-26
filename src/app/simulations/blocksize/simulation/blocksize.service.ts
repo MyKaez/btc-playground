@@ -3,12 +3,9 @@ import { Interval } from "./types";
 
 @Injectable()
 export class BlockSizeService {
-    get blockTimeInSeconds(): number {
-        return 600;
-    }
-    get blockSizeInBytes(): number {
-        return 1_000_000;
-    }
+    blockTimeInSeconds: number = 600;
+    blockSizeInBytes: number = 1_000_000;
+
     blocksPer(amount: number, interval: Interval): number {
         if (interval.index > Interval.second.index) {
             amount *= 60;

@@ -2,18 +2,17 @@
     <tr>
         <th> Setting Name </th>
         <th> Value </th>
+        <th> Beautified </th>
     </tr>
     <tr>
-        <td>Blockzeit <i>[in Sekunden]</i></td>
-        <td>{{blockTime}}</td>
+        <td> Blockzeit <i>[in Sekunden]</i> </td>
+        <td> <input type="number" matInput [(ngModel)]="blockTime"> </td>
+        <td> {{calculateTime(blockTime)}} </td>
     </tr>
     <tr>
-        <td>Blockzeit <i>[in Minuten]</i></td>
-        <td>{{blockTimeInMinutes}}</td>
-    </tr>
-    <tr>
-        <td>Blocksize</td>
-        <td>{{calculateSize(blockSize)}}</td>
+        <td> Blocksize <i>[in Bytes]</i> </td>
+        <td> <input type="number" matInput [(ngModel)]="blockSize"> </td>
+        <td> {{calculateSize(blockSize)}} </td>
     </tr>
 </table>
 
@@ -32,3 +31,16 @@
         <td>{{block.blockSize}}</td>
     </tr>
 </table>
+
+<hr />
+
+<p>
+    Speicherplatz:<br />
+    <input type="number" matInput [(ngModel)]="spaceInBytes">
+    {{space}}
+</p>
+
+<p>
+    Voll nach: <br />
+    {{spaceIsEmpty}}
+</p>
