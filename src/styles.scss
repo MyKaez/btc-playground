@@ -173,8 +173,8 @@ body {
   --sugar: #{$sugar};
 
   --background-color: #{lighten($primary, 10%)};
-  --header-color: #{lighten($primary, 10%)};
-  --footer-color: #{lighten($primary, 15%)};
+  --header-color: #{red(lighten($primary, 10%)), green(lighten($primary, 10%)), blue(lighten($primary, 10%))};
+  --footer-color: #{red(lighten($primary, 15%)), green(lighten($primary, 15%)), blue(lighten($primary, 15%))};
   --font-color: #{$gray-70};
 
   background-color: var(--background-color);

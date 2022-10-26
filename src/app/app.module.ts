@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { CarouselModule } from '@coreui/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -43,11 +44,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { AboutTheTeamComponent } from './pages/about-the-team/about-the-team.component';
+import { ImageCarouselComponent } from './shared/media';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent,    
     NodeModelComponent,
+    ImageCarouselComponent,
     PowComponent,
     VidComponent,
     HomeComponent,
@@ -95,7 +99,8 @@ import { AboutTheTeamComponent } from './pages/about-the-team/about-the-team.com
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    CarouselModule
   ],
   providers: [
     BlockSizeService,

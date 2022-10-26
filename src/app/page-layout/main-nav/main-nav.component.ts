@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-nav.component.scss']
 })
 export class MainNavComponent {
+  homeImages = HomeBackgroundImages;
   navLinks: NavLink[] = [];
   title: string = 'The Bitcoin Playground';
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -78,3 +79,9 @@ export interface NavLink {
   href?: string;
   links?: NavLink[];
 }
+
+const HomeBackgroundImages: string[] = [
+  "/assets/img/fixed-crystals.png",
+  "/assets/img/fixed-cascade.png",
+  "/assets/img/fixed-connected.png"
+] 

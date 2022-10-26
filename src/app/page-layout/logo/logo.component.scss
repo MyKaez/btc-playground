@@ -15,18 +15,18 @@
         span {
             margin-left: 22px;
             display: block;
-            background: linear-gradient(120deg, #ff9800 0%, #283593 65%, #283593 100%);
+            background: linear-gradient(120deg, var(--accent) 0%, #283593 65%, #283593 100%);
             padding: 0px;
             font-size: medium;
             padding-left: 24px;
             padding-right: 10px;
-            border: 2px solid #373747;
+            border: 2px solid #ccc;
             border-radius: 15%;
             font-style: italic;
         }
     }
 
     &:hover a span {        
-        background: linear-gradient(110deg,  #283593 0%,  65%, #ff9800 100%);
+        background: linear-gradient(110deg,  #283593 0%, #283593 65%, var(--accent) 100%);
     }
 }

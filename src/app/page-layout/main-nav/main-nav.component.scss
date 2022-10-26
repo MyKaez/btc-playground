@@ -11,6 +11,15 @@
   display: flex;
   flex-direction: column;  
   overflow: auto;
+
+  > * {
+    z-index: 10;
+  }
+
+  .app-images {
+    position: fixed;
+    z-index: 5;
+  }
 }
 
 .sidenav {
@@ -23,7 +32,7 @@
 
 .mat-toolbar {
   color: $light-color;
-  background-color: transparentize($color: $light-color, $amount: 0.75) !important;
+  background-color: rgba(var(--header-color), 0.75);
   /*border-bottom: 1px dashed $light-color;*/
 
   height: auto;

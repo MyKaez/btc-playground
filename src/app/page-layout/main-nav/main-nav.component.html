@@ -37,6 +37,11 @@
         <ng-content></ng-content>
       </div>
     </div>
+
+    <div class="app-images">
+      <app-image-carousel [image-urls]="homeImages" [interval]="15000"></app-image-carousel>
+    </div>
+
     <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

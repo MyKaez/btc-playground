@@ -2,8 +2,9 @@
 
 .footer {
     height: 40px;
-    padding: $margin-large;
-    background-color: var(--footer-color);
+    padding: $margin-large;    
+    background-color: rgba(var(--footer-color), 0.75);
+
 
     .bottom-nav {
         display: flex;
