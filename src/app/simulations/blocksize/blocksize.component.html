@@ -6,12 +6,20 @@
     </tr>
     <tr>
         <td> Blockzeit <i>[in Sekunden]</i> </td>
-        <td> <input type="number" matInput [(ngModel)]="blockTime"> </td>
+        <td>
+            <mat-form-field appearance="fill">
+                <input matInput type="number" [(ngModel)]="blockTime" />
+            </mat-form-field>
+        </td>
         <td> {{calculateTime(blockTime)}} </td>
     </tr>
     <tr>
         <td> Blocksize <i>[in Bytes]</i> </td>
-        <td> <input type="number" matInput [(ngModel)]="blockSize"> </td>
+        <td>
+            <mat-form-field appearance="fill">
+                <input matInput type="number" [(ngModel)]="blockSize" />
+            </mat-form-field>
+        </td>
         <td> {{calculateSize(blockSize)}} </td>
     </tr>
 </table>
@@ -36,7 +44,10 @@
 
 <p>
     Speicherplatz:<br />
-    <input type="number" matInput [(ngModel)]="spaceInBytes">
+    <mat-form-field appearance="fill">
+        <mat-label>Speicherplatz <i>[in Bytes]</i></mat-label>
+        <input matInput type="number" [(ngModel)]="spaceInBytes" />
+    </mat-form-field>
     {{space}}
 </p>
 
