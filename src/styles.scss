@@ -70,11 +70,39 @@ $fixes-accent-palette: (
  )
 );
 
+$fixes-sugar-color: #493BAE;
+$fixes-sugar-contrast: #AACD55;
+$fixes-sugar-palette: (
+ 50: lighten($fixes-sugar-color, 50),
+ 100: lighten($fixes-sugar-color, 35),
+ 200: lighten($fixes-sugar-color, 25),
+ 300: lighten($fixes-sugar-color, 15),
+ 400: lighten($fixes-sugar-color, 5),
+ 500: $fixes-sugar-color,
+ 600: darken($fixes-sugar-color, 1),
+ 700: darken($fixes-sugar-color, 2),
+ 800: darken($fixes-sugar-color, 3),
+ 900: darken($fixes-sugar-color, 5),
+ contrast: (
+    50: lighten($fixes-sugar-contrast, 35),
+    100: lighten($fixes-sugar-contrast, 25),
+    200: lighten($fixes-sugar-contrast, 15),
+    300: lighten($fixes-sugar-contrast, 10),
+    400: lighten($fixes-sugar-contrast, 5),
+    500: $fixes-sugar-contrast,
+    600: darken($fixes-sugar-contrast, 15),
+    700: darken($fixes-sugar-contrast, 25),
+    800: darken($fixes-sugar-contrast, 35),
+    900: darken($fixes-sugar-contrast, 50)
+ )
+);
+
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$Simulator-primary: mat.define-palette($fixes-primary-palette, 500, );
+$Simulator-primary: mat.define-palette($fixes-primary-palette, 500);
 $Simulator-accent: mat.define-palette($fixes-accent-palette);
+$Simulator-sugar: mat.define-palette($fixes-sugar-palette);
 
 // The warn palette is optional (defaults to red).
 $Simulator-warn: mat.define-palette(mat.$red-palette);
@@ -100,6 +128,7 @@ $Simulator-theme: mat.define-dark-theme((color: (primary: $Simulator-primary,
 $primary: mat.get-color-from-palette($Simulator-primary, 500);
 $accent: mat.get-color-from-palette($Simulator-accent, 500);
 $accent2: mat.get-color-from-palette($Simulator-accent, 100);
+$sugar: mat.get-color-from-palette($Simulator-sugar, 500);
 
 $dark-color: #1d1000;
 $light-color: white;
@@ -120,6 +149,7 @@ $code-font: 'Courier New', Courier, monospace;
 /* experimental colors */
 
 /* sizes */
+$header-height: 50px;
 $max-content-width: 1200px;
 
 /* spaces */
@@ -139,6 +169,8 @@ body {
 
   --primary: #{$primary};
   --accent: #{$accent};
+  --accent2: #{$accent2};
+  --sugar: #{$sugar};
 
   --background-color: #{lighten($primary, 10%)};
   --header-color: #{lighten($primary, 10%)};
@@ -184,6 +216,12 @@ table {
 .hidden { display: none; }
 .transparent { opacity: 0; }
 
+/* global theme applyment */
+h1, h2, h3 {
+  color: var(--accent);
+}
+
+
 /* ### shared component styles ### */
 
 .container {
@@ -194,6 +232,16 @@ table {
   :not(:first-child) {
     margin-left: $margin-large;
     margin-bottom: $margin-large;
+  }
+}
+
+.polygon {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 48%, 75% 100%, 25% 100%, 0% 50%);
+
+  img {
+    height: inherit;
+    width: inherit;
+    object-fit: cover;
   }
 }
 

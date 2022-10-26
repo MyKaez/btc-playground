@@ -1,5 +1,7 @@
 import { ArrayHelper } from "src/model/collections";
 import { CanvasElement, VisualizedNode, VisualizedNodeRelation, VisualizedPin } from ".";
+/* see: http://victorjs.org/ */
+const Victor = require("victor");
 
 export class NodeCanvas {    
     constructor(
@@ -36,7 +38,18 @@ export class NodeCanvas {
         this.pinMargin = this.pinSize / 2 / 5;
         this.pinPadding = this.pinMargin + this.pinSize / 2;
 
-        if(updateNodes) this.updateNodePositions();
+        console.log("nodeSize", this.nodeSize);
+        console.log("nodeMargin", this.nodeMargin);
+        console.log("nodePadding", this.nodePadding);
+        console.log("pinSize", this.pinSize);
+        console.log("pinMargin", this.pinMargin);
+        console.log("pingPadding", this.pinPadding);
+
+        if(updateNodes) {
+            this.updateNodePositions();
+            this.updateRelationPositions();
+        }
+
         this.updatePinPositions();
     }
 
@@ -59,27 +72,60 @@ export class NodeCanvas {
     private updatePinPositions() {
         this.relations.forEach(relation => {
             this.updateStrangPosititions(relation.firstPins, relation.first, relation.last);
-            this.updateStrangPosititions(relation.lastPins, relation.last, relation.first);
+            this.updateStrangPosititions(relation.lastPins, relation.last, relation.first, true);
         });
         
         this.syncCanvasValues(... this.pins);
     }
 
-    private updateStrangPosititions(pins: VisualizedPin[], from: VisualizedNode, to: VisualizedNode) { 
-        let vector = {
-            x: to.x - from.x,
-            y: to.y - from.y
-        };
+    private updateRelationPositions() {
+        this.relations.forEach(relation => {
+            let betweenBothNodes = new Victor((relation.first.x + relation.last.x) / 2, (relation.first.y + relation.last.y) / 2);
+            relation.x = betweenBothNodes.x;
+            relation.y = betweenBothNodes.y;
+        });
+
+        this.syncCanvasValues(... this.relations);
+    }
+
+    private updateStrangPosititions(pins: VisualizedPin[], from: VisualizedNode, to: VisualizedNode, invert = false) { 
+        let vector = new Victor(to.x - from.x, to.y - from.y);
+        let absoluteVector = vector.clone();
+        //console.log("From vector", vector.x, vector.y);
+        let offset: any = null;// new Victor(this.nodePadding, this.nodePadding);
+        vector.normalize();
+        //console.log("Normalized", vector.x, vector.y);
+        //vector.multiply(new Victor(this.pinPadding, this.pinPadding));
+
 
         let counter = 0;
-        pins.forEach(pin => {
-            pin.x = from.x + (vector.x / 3 / pins.length) + (vector.x / 3) * counter;
-            pin.x += (pin.x >= 0) ? this.nodePadding : this.nodePadding * -1; // offset
+        if(invert)  pins = [... pins].reverse();
 
-            pin.y = from.y + (vector.y / 3 / pins.length) + (vector.y / 3) * counter;
-            pin.y += (pin.y >= 0 ? this.nodePadding : this.nodePadding * -1); // offset
+        pins.forEach(pin => {
+            let pinVector = vector.clone();
+            //console.log("cloned", pinVector.x, pinVector.y);
+            let elementFactor = (this.pinSize * 1.5) * counter;
+            //if(elementFactor === 0) pinVector = new Victor(0,0);
+            pinVector.multiply(new Victor(elementFactor, elementFactor));
+
+            if(!offset) {
+                offset = this.getNodeCenter(from, this.nodeSize);
+                //console.log("Got center", offset.x, offset.y);
+                offset = offset.add(new Victor(vector.x * this.nodeSize, vector.y * this.nodeSize));
+                offset = offset.subtract(new Victor(from.x, from.y));
+                //console.log("Got offset", offset.x, offset.y);
+            }
+
+            pin.x = from.x + offset.x + pinVector.x;
+            pin.y = from.y + offset.y + pinVector.y;
+            //console.log("Set vector", pinVector.x, pinVector.y);
+
             counter++;
         });
+    }
+
+    private getNodeCenter(node: VisualizedNode, nodeSize: number): any {
+        return new Victor(node.x + nodeSize / 2, node.y + nodeSize / 2);
     }
 
     syncCanvasValues(... elements: CanvasElement[]) {
