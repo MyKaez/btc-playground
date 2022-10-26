@@ -16,7 +16,7 @@ export class Size {
         this.sizeUnit = sizeUnit;
     }
     toText(): string {
-        return this.size + ' ' + this.sizeUnit.text;
+        return this.size.toFixed(2) + ' ' + this.sizeUnit.text;
     }
 }
 

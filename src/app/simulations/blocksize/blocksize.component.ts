@@ -67,7 +67,7 @@ export class BlocksizeComponent implements OnInit {
   }
 
   calculateSize(size: number): string {
-    return calculateSize(size);
+    return calculateSize(size).toText();
   }
 
   calculateTime(seconds: number): string {
