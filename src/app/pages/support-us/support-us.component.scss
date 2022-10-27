@@ -1,9 +1,11 @@
 @import "../../app.component.scss";
 
 .text {
-    width: 70%;
+    max-width: 65%;
+    min-width: 350px;
 }
 
 .donate {
-    width: 30%;
+    width: 35%;
+    min-width: 350px;
 }
