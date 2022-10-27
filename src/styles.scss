@@ -174,9 +174,9 @@ body {
   --accent2: #{$accent2};
   --sugar: #{$sugar};
 
-  --background-color: #{lighten($primary, 10%)};
-  --header-color: #{red(lighten($primary, 10%)), green(lighten($primary, 10%)), blue(lighten($primary, 10%))};
-  --footer-color: #{red(lighten($primary, 15%)), green(lighten($primary, 15%)), blue(lighten($primary, 15%))};
+  --background-color: #{lighten($primary, 5%)};
+  --header-color: #{red(lighten($primary, 15%)), green(lighten($primary, 15%)), blue(lighten($primary, 15%))};
+  --footer-color: #{red(lighten($primary, 20%)), green(lighten($primary, 20%)), blue(lighten($primary, 20%))};
   --font-color: #{$gray-70};
 
   background-color: var(--background-color);

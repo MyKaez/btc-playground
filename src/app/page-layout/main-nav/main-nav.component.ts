@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { LayoutService, ContentLayoutMode } from 'src/app/pages';
 
 @Component({
   selector: 'app-main-nav',
@@ -19,7 +20,11 @@ export class MainNavComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
+  hideImages = () => this.layout.currentLayoutMode !== ContentLayoutMode.ImageCarousel;
+  
+  constructor(private breakpointObserver: BreakpointObserver, 
+    private router: Router,
+    public layout: LayoutService) {
     this.navLinks = this.getNavLinks();
   }
 

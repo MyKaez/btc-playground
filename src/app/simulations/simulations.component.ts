@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ContentLayoutMode, LayoutService } from '../pages';
 import { SimulationCardProps } from './simulation-card/simulation-card.component';
 
 @Component({
@@ -11,11 +12,13 @@ export class SimulationsComponent {
   simulations: SimulationCardProps[] = []; 
   apiLoaded = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    private layout: LayoutService) {
     this.simulations = this.getSimulations();
   }
 
   ngOnInit(): void {    
+    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
   }
 
   navigateTo(link: string): void {

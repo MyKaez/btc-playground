@@ -3,12 +3,13 @@
 .mat-card {
     color: $light-color;
     background-color: $accent;
-    width: 25%;
+    width: 320px;
     height: max-content;
     min-width: 20em;
     border: 2px solid $light-color;
     border-radius: 0em 2em 0em 2em;
     cursor: pointer;
+    margin-bottom: $margin-large;
 }
 
 img {

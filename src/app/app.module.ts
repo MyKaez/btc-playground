@@ -39,7 +39,7 @@ import { InfoComponent } from './info/info.component';
 import { SocialBarComponent } from './meta';
 import { LanguageSelectorComponent, ThemeEditorComponent } from './shared/personal';
 import { MatSelectModule } from '@angular/material/select';
-import { AboutComponent, SupportUsComponent } from './pages';
+import { AboutComponent, LayoutService, SupportUsComponent } from './pages';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { YouTubePlayerModule } from '@angular/youtube-player';
@@ -103,6 +103,7 @@ import { ImageCarouselComponent } from './shared/media';
     CarouselModule
   ],
   providers: [
+    LayoutService,
     BlockSizeService,
     PowService
   ],

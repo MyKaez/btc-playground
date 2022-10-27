@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContentLayoutMode, LayoutService } from '../pages';
 
 @Component({
   selector: 'app-info',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./info.component.scss']
 })
 export class InfoComponent implements OnInit {
-
-  constructor() { }
+  
+  constructor(private layout: LayoutService) { }
 
   ngOnInit(): void {
+    this.layout.setLayoutMode(ContentLayoutMode.Plane);
   }
 
 }

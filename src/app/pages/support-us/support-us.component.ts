@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContentLayoutMode, LayoutService } from '../layout-service';
 
 @Component({
   selector: 'app-support-us',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SupportUsComponent implements OnInit {
 
-  constructor() { }
+  
+  constructor(private layout: LayoutService) { }
 
   ngOnInit(): void {
+    this.layout.setLayoutMode(ContentLayoutMode.Plane);
   }
 
 }
