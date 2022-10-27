@@ -1,19 +1,39 @@
 @import "/src/styles.scss";
 
-.footer {
-    height: 40px;
-    padding: $margin-large;    
+.fixed-footer {
+    padding: $margin-large 0 $margin-small 0;    
     background-color: rgba(var(--footer-color), 0.75);
-
 
     .bottom-nav {
         display: flex;
 
         ::ng-deep .mat-list-item {
             height: auto;
+            text-decoration: none;
+            transition-duration: .5s;
+            transition-property: color;
+
+            &:hover {                
+                background: none; // overwrite material                
+                color: rgba(255,255,255,.4);
+            }
+
             .mat-list-item-content {
                 height: auto;
             }
+        }
+    }
+
+    ::ng-deep .bottom-actions {
+        button:hover,
+        .language-selector:hover .mat-select-value-text {              
+            color: rgba(255,255,255,.4);
+        }
+
+        button,
+        .mat-select-value-text {
+            transition-duration: .5s;
+            transition-property: color;
         }
     }
 }

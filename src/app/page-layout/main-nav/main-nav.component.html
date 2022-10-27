@@ -6,42 +6,44 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar>
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <app-logo [ngClass]="{hidden: (isHandset$ |async)}"></app-logo>
-      <div class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
-        <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href" [routerLinkActive]="['active']"
-        [class.with-sub-nav]="link.links">
-          <span>{{link.title}}</span>
-          <div class="sub-nav" *ngIf="link.links">
-            <a mat-list-item *ngFor="let sub of link.links" [routerLink]="sub.href" [routerLinkActive]="['active']">
-              {{sub.title}}
-            </a>
-          </div>
-        </a>
-      </div>
-    </mat-toolbar>
-    <div class="breadcrumbs" *ngIf="false">
-      <i>Wo bin ich?</i>
-      <span *ngFor="let path of pathParts">
-        <a (click)="navigateTo(getFullPath(path))">{{path}}</a>
-        <span *ngIf="!isLast(path)">...</span>
-      </span>
+    <div class="main">
+      <mat-toolbar>
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <app-logo [ngClass]="{hidden: (isHandset$ |async)}"></app-logo>
+        <div class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
+          <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href" [routerLinkActive]="['active']"
+          [class.with-sub-nav]="link.links">
+            <span>{{link.title}}</span>
+            <div class="sub-nav" *ngIf="link.links">
+              <a mat-list-item *ngFor="let sub of link.links" [routerLink]="sub.href" [routerLinkActive]="['active']">
+                {{sub.title}}
+              </a>
+            </div>
+          </a>
+        </div>
+      </mat-toolbar>
 
-    </div>
-    <div class=" content-wrapper">
-      <div class="content-area">
-        <ng-content></ng-content>
+      <div class="breadcrumbs" *ngIf="false">
+        <i>Wo bin ich?</i>
+        <span *ngFor="let path of pathParts">
+          <a (click)="navigateTo(getFullPath(path))">{{path}}</a>
+          <span *ngIf="!isLast(path)">...</span>
+        </span>  
       </div>
-    </div>
 
+      <div class=" content-wrapper">
+        <div class="content-area">
+          <ng-content></ng-content>
+        </div>
+      </div>  
+
+      <app-footer></app-footer>
+    </div>
     <div class="app-images">
       <app-image-carousel [image-urls]="homeImages" [interval]="15000"></app-image-carousel>
     </div>
-
-    <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

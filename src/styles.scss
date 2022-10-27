@@ -7,6 +7,8 @@
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat.core();
+//@import "~@coreui/coreui-pro/scss/coreui";
+@import "@coreui/coreui/dist/css/coreui.min.css";
 
 
 /* Color Theme Swatches in Hex */
@@ -247,7 +249,7 @@ h1, h2, h3 {
 
 .mat-form-field.inconspicuous { 
   .mat-form-field-wrapper {
-    padding: 12px 0 24px 0;
+    padding: 0;
   }
 
  .mat-form-field-flex {

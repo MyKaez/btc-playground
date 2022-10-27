@@ -8,17 +8,23 @@
 
 .mat-sidenav-content {
   height: 100%;
-  display: flex;
-  flex-direction: column;  
-  overflow: auto;
 
-  > * {
-    z-index: 10;
+  .main {
+    z-index: 8;
+    display: flex;
+    flex-direction: column;  
+    overflow: auto;
+    height: 100%;
+    position: relative;
   }
 
   .app-images {
     position: fixed;
     z-index: 5;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
   }
 }
 
@@ -38,7 +44,7 @@
   height: auto;
   min-height: $header-height;
 
-  > div > a {
+  a {
     color: $light-color;
     display: inline-block;
     text-decoration: none;
@@ -68,13 +74,13 @@
       flex-direction: column;
       justify-content: flex-start;
       left: 0px;
-      z-index: 10;
+      z-index: 100;
 
       >* {
         color: $light-color;
         display: inline-block;
         text-decoration: none;
-        background-color: var(--footer-color);
+        background-color: rgb(var(--footer-color));
         padding: 8px 12px;
         transition-duration: .5s;
         transition-property: background-color;
