@@ -27,6 +27,7 @@ button {
     display: flex;
     flex-grow: 1;
     align-items: center;
+    flex-wrap: wrap;
 
     height: 100%;
     color: var(--font-color);
