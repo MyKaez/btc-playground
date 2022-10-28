@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 
 @Component({
   selector: 'app-xpa',
@@ -8,9 +9,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class XpaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private layout: LayoutService) {}
 
   ngOnInit(): void {
+    this.layout.setLayoutMode(ContentLayoutMode.Plane);
   }
 
 }

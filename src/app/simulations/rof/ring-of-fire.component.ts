@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 
 @Component({
     selector: 'ring-of-fire',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class RingOfFireComponent implements OnInit {
-    constructor() { }
+    constructor(private layout: LayoutService) { }
 
-    ngOnInit() { }
+    ngOnInit() { 
+        this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
+    }
 }

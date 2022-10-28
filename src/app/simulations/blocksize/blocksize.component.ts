@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { calculateSize } from 'src/app/shared/helpers/size';
 import { calculateTime } from 'src/app/shared/helpers/time';
 import { BlockSizeService } from './simulation/blocksize.service';
@@ -13,11 +14,13 @@ export class BlocksizeComponent implements OnInit {
   blocks: BlockData[];
   spaceInBytes: number = 1_000_000_000_000;
 
-  constructor(private blocksizeService: BlockSizeService) {
+  constructor(private blocksizeService: BlockSizeService,
+    private layout: LayoutService) {
     this.blocks = this.createBlocks();
   }
-
+  
   ngOnInit(): void {
+    this.layout.setLayoutMode(ContentLayoutMode.Plane);
   }
 
   private createBlocks(): BlockData[] {
