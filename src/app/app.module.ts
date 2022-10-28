@@ -18,23 +18,24 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './shared/vid/vid.component';
-import { BlockSizeService, PowService,
+import {
+  BlockSizeService, PowService,
   SimulationCardComponent,
   BlocksizeComponent,
   PowSimulationComponent,
   PowCalculatorComponent,
   XpaComponent,
   XpaSimulationComponent,
-  RingOfFireComponent 
+  RingOfFireComponent
 } from './simulations';
 
-import {   
+import {
   HomeComponent,
-  AboutComponent, 
-  LayoutService, 
+  AboutComponent,
+  LayoutService,
   SupportUsComponent,
   AboutTheTeamComponent,
-  SimulationsComponent, 
+  SimulationsComponent,
   InfoComponent
 } from './pages';
 
@@ -52,11 +53,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { ImageCarouselComponent } from './shared/media';
+import { SimulationService } from './pages/simulations/simulation.service';
 
 
 @NgModule({
   declarations: [
-    AppComponent,    
+    AppComponent,
     NodeModelComponent,
     ImageCarouselComponent,
     PowComponent,
@@ -79,7 +81,7 @@ import { ImageCarouselComponent } from './shared/media';
     AboutComponent,
     AboutTheTeamComponent,
     SupportUsComponent,
-    BlocksizeComponent    
+    BlocksizeComponent
   ],
   imports: [
     BrowserModule,
@@ -112,7 +114,8 @@ import { ImageCarouselComponent } from './shared/media';
   providers: [
     LayoutService,
     BlockSizeService,
-    PowService
+    PowService,
+    SimulationService
   ],
   bootstrap: [AppComponent]
 })
