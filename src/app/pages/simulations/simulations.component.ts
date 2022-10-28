@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from '..';
-import { SimulationCardProps } from '../../simulations/simulation-card/simulation-card.component';
-import { SimulationService } from './simulation.service';
+import { Simulation, SimulationService } from './simulation.service';
 
 @Component({
   selector: 'app-simple-simulations',
@@ -9,7 +8,7 @@ import { SimulationService } from './simulation.service';
   styleUrls: ['./simulations.component.scss']
 })
 export class SimulationsComponent {
-  simulations: SimulationCardProps[] = [];
+  simulations: Simulation[] = [];
   apiLoaded = false;
 
   constructor(

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Simulation } from 'src/app/pages/simulations/simulation.service';
 import { WebHelper } from 'src/model/web';
 
 @Component({
@@ -7,7 +8,7 @@ import { WebHelper } from 'src/model/web';
   templateUrl: './simulation-card.component.html',
   styleUrls: ['./simulation-card.component.scss']
 })
-export class SimulationCardComponent implements OnInit, SimulationCardProps {
+export class SimulationCardComponent implements OnInit, Simulation {
   @Input("title")
   title = DefaultSimulationCardProps.title;
 
@@ -34,15 +35,7 @@ export class SimulationCardComponent implements OnInit, SimulationCardProps {
   }
 }
 
-export interface SimulationCardProps {
-  title: string;
-  description: string;
-  imageSrc: string;
-  youtubeSrc: string;
-  navigationLink: string;
-}
-
-export const DefaultSimulationCardProps: SimulationCardProps = {
+export const DefaultSimulationCardProps: Simulation = {
   title: "You missed a title",
   description: "Every card needs some little description",
   imageSrc: "https://www.innovationnewsnetwork.com/wp-content/uploads/2021/07/iStockPitris-831501722-696x392.jpg",
