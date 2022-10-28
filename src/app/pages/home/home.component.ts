@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutService, ContentLayoutMode } from '../pages';
+import { LayoutService, ContentLayoutMode } from '../';
 
 @Component({
   selector: 'app-home',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ContentLayoutMode, LayoutService } from '../pages';
+import { ContentLayoutMode, LayoutService } from '..';
 
 @Component({
   selector: 'app-info',

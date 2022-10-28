@@ -18,16 +18,26 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './shared/vid/vid.component';
-import { HomeComponent } from './home/home.component';
 import { BlockSizeService, PowService,
   SimulationCardComponent,
-  SimulationsComponent, 
   BlocksizeComponent,
   PowSimulationComponent,
   PowCalculatorComponent,
   XpaComponent,
   XpaSimulationComponent,
-  RingOfFireComponent } from './simulations';
+  RingOfFireComponent 
+} from './simulations';
+
+import {   
+  HomeComponent,
+  AboutComponent, 
+  LayoutService, 
+  SupportUsComponent,
+  AboutTheTeamComponent,
+  SimulationsComponent, 
+  InfoComponent
+} from './pages';
+
 import { LogoComponent, MainNavComponent, FooterComponent } from './page-layout';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -35,15 +45,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { NodeModelComponent } from 'src/prototypes/node-model/node-model.component';
-import { InfoComponent } from './info/info.component';
 import { SocialBarComponent } from './meta';
 import { LanguageSelectorComponent, ThemeEditorComponent } from './shared/personal';
 import { MatSelectModule } from '@angular/material/select';
-import { AboutComponent, LayoutService, SupportUsComponent } from './pages';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { YouTubePlayerModule } from '@angular/youtube-player';
-import { AboutTheTeamComponent } from './pages/about-the-team/about-the-team.component';
 import { ImageCarouselComponent } from './shared/media';
 
 

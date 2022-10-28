@@ -1,5 +1,4 @@
 export * from "./simulation-card/simulation-card.component";
-export * from "./simulations.component";
 export { CalculatorComponent as PowCalculatorComponent} from "./pow/calculator/calculator.component";
 export * from "./pow/simulation/pow.service";
 export { SimulationComponent as PowSimulationComponent} from "./pow/simulation/simulation.component";

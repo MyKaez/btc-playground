@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ContentLayoutMode, LayoutService } from '../pages';
-import { SimulationCardProps } from './simulation-card/simulation-card.component';
+import { ContentLayoutMode, LayoutService } from '..';
+import { SimulationCardProps } from '../../simulations/simulation-card/simulation-card.component';
 
 @Component({
   selector: 'app-simple-simulations',

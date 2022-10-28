@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { InfoComponent } from './info/info.component';
-import { AboutComponent, AboutTheTeamComponent, SupportUsComponent } from './pages';
-import { BlocksizeComponent } from './simulations/blocksize/blocksize.component';
-import { PowComponent } from './simulations/pow/pow.component';
-import { RingOfFireComponent } from './simulations/rof/ring-of-fire.component';
-import { SimulationsComponent } from './simulations/simulations.component';
-import { XpaComponent } from './simulations/xpa/xpa.component';
+
+import {   
+  HomeComponent,
+  AboutComponent, 
+  InfoComponent,
+  SupportUsComponent,
+  AboutTheTeamComponent,
+  SimulationsComponent
+} from './pages';
+
+import { 
+  BlocksizeComponent,
+  XpaComponent,
+  RingOfFireComponent,
+  PowComponent
+} from './simulations';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
