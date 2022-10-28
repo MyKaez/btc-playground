@@ -1,12 +1,16 @@
-export function calculateSize(bytes: number): Size {
-    let sizeInBytes = bytes;
-    for (let i in Unit.units) {
-        if (bytes < 1_000) {
-            return new Size(sizeInBytes, bytes, Unit.units[i]);
-        }
-        bytes /= 1_000;
+export function calculateSize(value: number, unit: Unit = Unit.bytes): Size {
+    let multi = Math.pow(1000, unit.multiplicator);
+    if (multi === 0) {
+        multi = 1;
     }
-    return new Size(sizeInBytes, bytes, Unit.units[Unit.units.length - 1]);
+    let sizeInBytes = value * multi;
+    for (let i in Unit.units) {
+        if (value < 1_000) {
+            return new Size(sizeInBytes, value, Unit.units[i]);
+        }
+        value /= 1_000;
+    }
+    return new Size(sizeInBytes, value, Unit.units[Unit.units.length - 1]);
 }
 
 export class Size {
