@@ -2,12 +2,12 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
-import { PowTabParamMapping, PowTabs } from './pow-tabs';
+import { PowTabParamMapping } from './pow-tabs';
 
 @Component({
   selector: 'app-pow',
   templateUrl: './pow.component.html',
-  styleUrls: ['../../app.component.scss'],
+  styleUrls: ['./pow.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PowComponent implements OnInit {
@@ -19,7 +19,7 @@ export class PowComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.Plane);
+    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
     this.initializeTabRoute();
   }
 
@@ -29,10 +29,10 @@ export class PowComponent implements OnInit {
 
   private initializeTabRoute() {
     const tabRouteValue = this.route.snapshot.paramMap.get('tab') as string;
-    if(!tabRouteValue) return;
+    if (!tabRouteValue) return;
 
     const selectedTab = PowTabParamMapping[tabRouteValue.toLowerCase()];
-    if(selectedTab == null) {      
+    if (selectedTab == null) {
       console.warn(`Failed at parsing tab route for value. Use any of ${Object.keys(PowTabParamMapping).join(";")} instead of `, tabRouteValue);
       return;
     }

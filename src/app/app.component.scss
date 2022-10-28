@@ -31,6 +31,15 @@ button {
 
     height: 100%;
     color: var(--font-color);
+    width: 100%;
+}
+
+.simulation-card {
+    background-color: rgba(var(--footer-color), 0.85);
+    height: max-content;
+    padding: $margin-large;
+    border: 2px solid $light-color;
+    border-radius: 0em 2em 0em 2em;
 }
 
 .items {
@@ -55,25 +64,6 @@ button {
 .mat-tab-label {
     color: $light-color;
     opacity: 1 !important;
-}
-
-.mat-card {
-    padding: 1em;
-    margin: 0.5em;
-    margin-bottom: 1.5em;
-    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75) !important;
-    -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75) !important;
-    -moz-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.75) !important;
-}
-
-.mat-card-actions {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.mat-card-footer {
-    padding: 1em;
 }
 
 .mat-expansion-panel-header {
