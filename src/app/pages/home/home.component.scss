@@ -1,6 +1,13 @@
 @import "/src/app/app.component.scss";
 
 .text {
+
+    background-color: rgba(var(--footer-color), 0.85);
+    border: 2px solid $light-color;
+    border-radius: 0em 2em 0em 2em;
+    margin-bottom: $margin-large;
+    padding: 1em 1.3em;
+
     .question {
         font-size: 0.7em;
         font-style: italic;
@@ -8,17 +15,17 @@
     }
 
     h1 {
-        font-size: 2em;
+        font-size: 1.6em;
         line-height: 1.2em;
     }
 
     h2 {
-        font-size: 2em;
+        font-size: 1.6em;
         line-height: 1.2em;
     }
 
     .explanation {
-        margin-top: 1.5em;
+        margin-top: 1.2em;
     }
 
     font-size: 2em;
