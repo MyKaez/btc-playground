@@ -49,11 +49,11 @@ export class BlocksizeComponent implements OnInit {
   }
 
   get blockSize(): number {
-    return this.blocksizeService.blockSizeInBytes;
+    return this.blocksizeService.size.bytes;
   }
 
   set blockSize(value: number) {
-    this.blocksizeService.blockSizeInBytes = value;
+    this.blocksizeService.size.bytes = value;
     this.blocks = this.createBlocks();
   }
 
@@ -67,7 +67,7 @@ export class BlocksizeComponent implements OnInit {
   }
 
   calculateSize(size: number): string {
-    return calculateSize(size);
+    return calculateSize(size).toText();
   }
 
   calculateTime(seconds: number): string {
