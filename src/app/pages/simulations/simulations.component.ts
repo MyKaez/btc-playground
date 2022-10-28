@@ -9,42 +9,38 @@ import { SimulationCardProps } from '../../simulations/simulation-card/simulatio
   styleUrls: ['./simulations.component.scss']
 })
 export class SimulationsComponent {
-  simulations: SimulationCardProps[] = []; 
+  simulations: SimulationCardProps[] = [];
   apiLoaded = false;
 
-  constructor(private router: Router,
+  constructor(
     private layout: LayoutService) {
     this.simulations = this.getSimulations();
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
-  }
-
-  navigateTo(link: string): void {
-    this.router.navigate(['/' + link]);
   }
 
   private getSimulations(): SimulationCardProps[] {
     return [{
-        title: "Blocksize",
-        description: "Wie entwickelt sich die Blockchain Größe?",
-        imageSrc: "assets/Miner_seite2.png",
-        youtubeSrc: "Act1XIKj1w0",
-        navigationLink: "simulations/blocksize"
-      },{
+      title: "Blocksize",
+      description: "Wie entwickelt sich die Blockchain Größe?",
+      imageSrc: "assets/Miner_seite2.png",
+      youtubeSrc: "Act1XIKj1w0",
+      navigationLink: "simulations/blocksize"
+    }, {
       title: "Proof of Work",
       description: "Fixes this... Determinismus / Vorhersehbarkeit",
       imageSrc: "assets/Miner_seite2.png",
       youtubeSrc: "MRNSudh565Y",
       navigationLink: "simulations/pow"
-    },{
+    }, {
       title: "51% Attacke",
       description: "Stellen wir uns vor, China kauft das Internet...",
       imageSrc: "assets/Miner_seite2.png",
       youtubeSrc: "-adMIa1jV80",
       navigationLink: "simulations/xpa"
-    },{
+    }, {
       title: "Ring Of Fire",
       description: "Wie funktioniert denn Lightning?",
       imageSrc: "assets/Miner_seite2.png",

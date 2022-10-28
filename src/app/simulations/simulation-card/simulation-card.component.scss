@@ -8,8 +8,11 @@
     min-width: 20em;
     border: 2px solid $light-color;
     border-radius: 0em 2em 0em 2em;
-    cursor: pointer;
     margin-bottom: $margin-large;
+}
+
+button {
+    padding: 1em;
 }
 
 img {
