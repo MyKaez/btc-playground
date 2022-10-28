@@ -29,15 +29,3 @@
     max-width: 30em;
     min-width: 20em;
 }
-
-.picture {
-    display: flex;
-    max-width: 600px;
-    margin-left: $margin-huge;
-
-    img {
-        width: 100%;
-        border: 2px solid $light-color;
-        border-radius: 1em;
-    }
-}
