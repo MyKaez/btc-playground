@@ -5,6 +5,7 @@
     justify-content: space-between;
     flex-wrap: wrap;
     height: 100%;
+    overflow: auto;
 }
 
 .text {
@@ -21,10 +22,6 @@
     min-width: 5em;
     min-height: 30em;
     text-align: left;
-    /*
-    margin-left: $margin-large;
-    margin-right: $margin-large;
-    margin-top: $margin-large;*/
 
     .header {
         height: 6%;
@@ -35,15 +32,15 @@
         vertical-align: middle;
 
         img {
-            margin-top: $margin-slim;
+            //margin-top: $margin-slim;
             height: 80%;
             max-width: 2em;
             border: 0px;
         }
 
         span {
-            margin-top: $margin-slim;
-            margin-left: $margin-slim;
+            //margin-top: $margin-slim;
+            //margin-left: $margin-slim;
         }
     }
 
@@ -54,15 +51,11 @@
         white-space: nowrap;
         background-color: $dark-color;
         overflow: auto;
-        height: 94%;
+        height: 100%;
         font-family: $code-font;
-        padding-right: $margin-slim;
-        padding-left: $margin-slim;
+        //padding-right: $margin-slim;
+        //padding-left: $margin-slim;
     }
-}
-
-.simulation {
-    min-width: 20%;
 }
 
 .parameters,
