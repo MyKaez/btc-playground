@@ -1,8 +1,8 @@
 @import "/src/styles.scss";
 
 .mat-card {
-    color: $light-color;
-    background-color: $accent;
+    color: var(--font-color);
+    background-color: rgba(var(--footer-color), 0.85);
     width: 320px;
     height: max-content;
     min-width: 20em;
@@ -19,5 +19,5 @@ img {
 }
 
 h2 {
-    color: var(--primary);
+    color: var(--accent);
 }
