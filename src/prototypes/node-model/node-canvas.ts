@@ -1,7 +1,6 @@
+import { Vector } from "src/model/anim";
 import { ArrayHelper } from "src/model/collections";
 import { CanvasElement, VisualizedNode, VisualizedNodeRelation, VisualizedPin } from ".";
-/* see: http://victorjs.org/ */
-const Victor = require("victor");
 
 export class NodeCanvas {    
     constructor(
@@ -80,7 +79,7 @@ export class NodeCanvas {
 
     private updateRelationPositions() {
         this.relations.forEach(relation => {
-            let betweenBothNodes = new Victor((relation.first.x + relation.last.x) / 2, (relation.first.y + relation.last.y) / 2);
+            let betweenBothNodes = new Vector((relation.first.x + relation.last.x) / 2, (relation.first.y + relation.last.y) / 2);
             relation.x = betweenBothNodes.x;
             relation.y = betweenBothNodes.y;
         });
@@ -89,30 +88,30 @@ export class NodeCanvas {
     }
 
     private updateStrangPosititions(pins: VisualizedPin[], from: VisualizedNode, to: VisualizedNode, invert = false) { 
-        let vector = new Victor(to.x - from.x, to.y - from.y);
-        let absoluteVector = vector.clone();
+        let vector = new Vector(to.x - from.x, to.y - from.y);
+        let absoluteVector = vector.copy();
         //console.log("From vector", vector.x, vector.y);
-        let offset: any = null;// new Victor(this.nodePadding, this.nodePadding);
+        let offset: any = null;// new Vector(this.nodePadding, this.nodePadding);
         vector.normalize();
         //console.log("Normalized", vector.x, vector.y);
-        //vector.multiply(new Victor(this.pinPadding, this.pinPadding));
+        //vector.multiply(new Vector(this.pinPadding, this.pinPadding));
 
 
         let counter = 0;
         if(invert)  pins = [... pins].reverse();
 
         pins.forEach(pin => {
-            let pinVector = vector.clone();
+            let pinVector = vector.copy();
             //console.log("cloned", pinVector.x, pinVector.y);
             let elementFactor = (this.pinSize * 1.5) * counter;
-            //if(elementFactor === 0) pinVector = new Victor(0,0);
-            pinVector.multiply(new Victor(elementFactor, elementFactor));
+            //if(elementFactor === 0) pinVector = new Vector(0,0);
+            pinVector = pinVector.multiply(elementFactor);
 
             if(!offset) {
                 offset = this.getNodeCenter(from, this.nodeSize);
                 //console.log("Got center", offset.x, offset.y);
-                offset = offset.add(new Victor(vector.x * this.nodeSize, vector.y * this.nodeSize));
-                offset = offset.subtract(new Victor(from.x, from.y));
+                offset = offset.add(new Vector(vector.x * this.nodeSize, vector.y * this.nodeSize));
+                offset = offset.subtract(new Vector(from.x, from.y));
                 //console.log("Got offset", offset.x, offset.y);
             }
 
@@ -125,7 +124,7 @@ export class NodeCanvas {
     }
 
     private getNodeCenter(node: VisualizedNode, nodeSize: number): any {
-        return new Victor(node.x + nodeSize / 2, node.y + nodeSize / 2);
+        return new Vector(node.x + nodeSize / 2, node.y + nodeSize / 2);
     }
 
     syncCanvasValues(... elements: CanvasElement[]) {
