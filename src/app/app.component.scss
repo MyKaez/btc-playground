@@ -9,12 +9,6 @@ body {
     height: 100%;
 }
 
-button {
-    border: 2px solid $light-color;
-    margin: 0.5em;
-    border-radius: 2em;
-}
-
 .app {
     height: 100%;
     display: flex;
@@ -36,9 +30,9 @@ button {
 
 .simulation-card {
     background-color: rgba(var(--footer-color), 0.85);
-    padding: $margin-large;
     border: 2px solid $light-color;
     border-radius: 0em 2em 0em 2em;
+    padding: $margin-large;
 }
 
 .items {
@@ -46,9 +40,17 @@ button {
     justify-content: space-between;
     flex-wrap: wrap;
 
+    /*
     >* {
         max-width: 320px;
-    }
+    }*/
+}
+
+
+button {
+    border: 2px solid $light-color;
+    margin: 0.5em;
+    border-radius: 2em;
 }
 
 /***
