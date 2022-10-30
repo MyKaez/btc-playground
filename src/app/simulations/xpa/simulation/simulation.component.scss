@@ -54,10 +54,10 @@
         overflow: auto;
         height: 94%;
         font-family: $code-font;
-        padding-right: .3em;
-        padding-left: .3em;
-        
-        .non-confirm{
+        padding-right: $margin-slim;
+        padding-left: $margin-slim;
+
+        .non-confirm {
             color: $accent2;
         }
     }
