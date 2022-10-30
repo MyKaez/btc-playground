@@ -10,6 +10,6 @@ export class RingOfFireComponent implements OnInit {
     constructor(private layout: LayoutService) { }
 
     ngOnInit() { 
-        this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
+        this.layout.setLayoutMode(ContentLayoutMode.Plane);
     }
 }
