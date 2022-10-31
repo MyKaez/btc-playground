@@ -7,7 +7,10 @@ export interface ILightningChannel {
     outboundLiquidity: number;
 
     sendSats(origin: ILightningNode, sats: number): ILightningTransaction;
-    canSendSats(origin: ILightningNode, sats: number): boolean; 
+    isTransactionValid(transaction: ILightningTransaction): boolean;
+    canSendSats(origin: ILightningNode, sats: number): boolean;
+    getTransaction(origin: ILightningNode, sats: number): ILightningTransaction;
+    getOppositeNode(origin: ILightningNode): ILightningNode;
 }
 
 export class LightningChannel implements ILightningChannel {
@@ -21,7 +24,7 @@ export class LightningChannel implements ILightningChannel {
 
     sendSats(origin: ILightningNode, sats: number): ILightningTransaction {
         let transaction = this.getTransaction(origin, sats);
-        if(transaction.liquidity < transaction.sats) throw new NotEnoughLiquidityError(transaction, "Missing liquidity");
+        if(transaction.liquidity < transaction.sats) throw new NotEnoughLiquidityError("Missing liquidity", transaction);
         
         if(transaction.to === this.from) sats *= -1;
         this.inboundLiquidity += sats;
@@ -34,7 +37,11 @@ export class LightningChannel implements ILightningChannel {
         return transaction.liquidity >= transaction.sats;
     }
 
-    private getTransaction(origin: ILightningNode, sats: number): ILightningTransaction {
+    isTransactionValid(transaction: ILightningTransaction): boolean {
+        return transaction.liquidity >= transaction.sats;
+    }
+
+    getTransaction(origin: ILightningNode, sats: number): ILightningTransaction {
         if(this.from !== origin && this.to !== origin) throw new Error(`Node ${origin.title} is foreign to this channel.`);
         let currentLiquidity = this.outboundLiquidity;
         let target = this.to;
@@ -51,5 +58,12 @@ export class LightningChannel implements ILightningChannel {
             firstChannel: this,
             usedRoute: [this]
         };
+    }
+
+    getOppositeNode(origin: ILightningNode): ILightningNode {
+        if(this.from !== origin && this.to !== origin) throw new Error(`Node ${origin.title} is foreign to this channel.`)
+        return this.from === origin
+            ? this.to
+            : this.from;
     }
 }
