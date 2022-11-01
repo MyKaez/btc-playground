@@ -3,31 +3,68 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class TeamService {
     getContactDescriptions(): ContactDescription[] {
-        let items = [{
-            name: "Nolan Grayson",
-            description: "Omni-Man, 55",
-            imageSrc: "assets/omniman.png",
-            quote: "That's the neat thing, you don't",
+        return [
+            this.getDanny(),
+            this.getKenny(),
+            this.getSarah(),
+            this.getNico()
+        ];
+    }
+
+    private getDanny(): ContactDescription {
+        return {
+            name: "Danny",
+            description: "geb. 1989",
+            imageSrc: "assets/team/danny.png",
+            quote: "Bitcoin, there is no second best.",
             paragraphs: [
-                "Nolan Grayson, besser als der Superheld Omni-Man bekannt, ist der Hauptschurke der 2021 erschienenen Animationsserie Invincible, die auf der gleichnamigen Comic-Serie von Robert Kirkman basiert.",
-                "Er wurde im Original von J. K. Simmons gesprochen. In der deutschen Fassung wurde er von Thomas Nero Wolff synchronisiert."
-            ],
-            cites: [
-                "Sieh dir an, was sie brauchen um einen Bruchteil unserer Macht nachzuahmen! Es ist richtig, sie zu bemitleiden, aber falsch, sie deinem eigenen Volk vorzuziehen!"
-            ]
-        }, {
-            name: "Terry Jeffords",
-            description: "Sergeant, 54",
-            imageSrc: "assets/terryjeffords.jpg",
-            quote: "Niemand geht an meinen Joghurt!",
-            paragraphs: [
-                "Terry ist fürsorglich, beschützt die Truppe und ist fleißig. Er hat die Angewohnheit, sich auf die dritte Person zu beziehen. Als er Zwillingstöchter hatte, flippte er aus und hatte Angst, sich zu verletzen, aber bald genug zeigte er sich als harter, heldenhafter, furchterregender Mann, der alles tun würde, um seine Truppe zu schützen.",
-                "Er beschuldigte furchtlos einen bewaffneten Verbrecher, zweimal Captain Holts Leben gerettet zu haben, und als Jake, Charles und Gina mit einbrechenden Terroristen in einem Geschäft gefangen waren, widersetzte sich Terry den Anweisungen, um ihre Gefährdung zu verhindern - er widersetzte sich offen Detective Pembroke um ihn daran zu hindern, seine Freunde zu gefährden. Holt sieht in Terry das Potenzial, ein Kapitän zu sein, und erkennt ihn als einen großartigen Anführer und eine mitfühlende Person an."
+                "Aktuell mint er Fiat als Elektrotechnik-Ingenieur.",
+                "Außerhalb der „normalen Arbeit“ startete er im Jahr 2021 einen Podcast  „Orange Relationship“ - der Name soll hierbei auf die täglichen Gedanken verweisen, welche er rundum Bitcoin hat. Ein paar Monate später (Ende 2021) wurde der gleichnamige YouTube-Kanal aktiviert und dient bis heute als Plattform wöchentlichen Bitcoin-Contents. Im Rahmen des YouTube-Projektes programmierte Danny die ersten Simulationen und erklärte diese in seinen Videos, was eine hohe Nachfrage und ein paar Iterationen weiter FixesTh.is als Resultat hatte."
             ],
             cites: []
-        }];
+        }
+    }
 
-        return [...items, ...items];
+    private getKenny(): ContactDescription {
+        return {
+            name: "Kenny",
+            description: "Kenneth N., geb. 13.09.1990",
+            imageSrc: "assets/team/kenny.jpg",
+            quote: "Bitcoin, there is no second best.",
+            paragraphs: [
+                "Ich folge derzeit meiner Passion, dem Programmieren. Primär im Backend Bereich tätig, entwickle ich Software für den Finanz Bereich - über Landesgrenzen hinweg wird diese Software von allen möglichen Unternehmen in verschiedensten Ländern verwendet. Seit 2011 arbeite ich somit in den tiefsten Tiefen des Fiat systems.",
+                "Dezember 2021, als der Kurs bei knapp $70k Stand, habe ich mir dann meine Finger verbrannt - an Bitcoin. Daraufhin wollte ich verstehen, was Bitcoin ist und wieso es so viel Faszination um das Thema gibt.",
+                "Nun schreibe ich zusätzlich Software für Bitcoin. Hoffentlich eines Tages ebenfalls über Landesgrenzen hinweg."
+            ],
+            cites: [
+                "Nun habe ich, dank Bitcoin, auch meine thematische Passion gefunden."
+            ]
+        }
+    }
+
+    private getSarah(): ContactDescription {
+        return {
+            name: "Sarah",
+            description: "Sarah K., geb. 1995",
+            imageSrc: "assets/team/sarah.png",
+            quote: "Do your own proof of work.",
+            paragraphs: [
+                "Sie arbeitet momentan in einem Start up als Product Owner eines digitalen Produktes in einer eher konservativen Branche. Als Product Owner hat sie ihre Vorliebe für das UI/UX Design entdeckt, da sie der Überzeugung ist, dass ein gutes User Interface und eine gute User Experience maßgeblich für den Produkterfolg verantwortlich ist. Im Rahmen Ihres Werdegangs hat sie ebenfalls zahlreiche Erfahrungen im Marketing, Service und im Vertrieb aufbauen können. Zu Hause ist sie allerdings momentan in der agilen Softwareentwicklung."
+            ],
+            cites: []
+        }
+    }
+
+    private getNico(): ContactDescription {
+        return {
+            name: "Nico",
+            description: "Nico D., geb. 1990",
+            imageSrc: "",
+            quote: "",
+            paragraphs: [
+            ],
+            cites: []
+        }
     }
 }
 
