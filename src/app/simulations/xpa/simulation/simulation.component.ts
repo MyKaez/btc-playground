@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { NotificationService } from 'src/app/shared/media/notification.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class SimulationComponent implements OnInit {
   attackingBlockchain: number[] = [];
   clearOnStart: boolean = true;
 
-  constructor(private notificationService: NotificationService) {
+  constructor(private layout: LayoutService, private notificationService: NotificationService) {
     this.inputs = new FormGroup({
       blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
       attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),
@@ -89,6 +90,7 @@ export class SimulationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
   }
 
   start() {
