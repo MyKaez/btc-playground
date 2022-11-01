@@ -13,7 +13,7 @@ export class AboutTheTeamComponent implements OnInit {
   constructor(private layout: LayoutService, private teamService: TeamService) { }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.Plane);
+    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
     this.contacts = this.teamService.getContactDescriptions();
   }
 }
