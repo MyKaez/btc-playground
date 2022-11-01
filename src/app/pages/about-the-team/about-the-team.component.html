@@ -2,7 +2,7 @@
 <div class="contacts alternate">
     <div *ngFor="let contact of contacts" class="contact">
         <div class="contact-header">
-            <div class="contact-title">                
+            <div class="contact-title">
                 <h4>{{contact.quote}}</h4>
                 <span class="contact-name">{{contact.name}}</span>
                 <span class="contact-description">{{contact.description}}</span>
@@ -15,6 +15,9 @@
         <div class="contact-body">
             <p *ngFor="let par of contact.paragraphs">{{par}}</p>
             <p *ngFor="let cite of contact.cites"><i>{{cite}}</i></p>
+            <p *ngFor="let sm of contact.socialMedia">
+                <a href="{{sm.url}}" target="_blank">{{sm.type}}</a>
+            </p>
         </div>
     </div>
 </div>
