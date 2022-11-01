@@ -21,7 +21,17 @@ export class TeamService {
                 "Aktuell mint er Fiat als Elektrotechnik-Ingenieur.",
                 "Außerhalb der „normalen Arbeit“ startete er im Jahr 2021 einen Podcast  „Orange Relationship“ - der Name soll hierbei auf die täglichen Gedanken verweisen, welche er rundum Bitcoin hat. Ein paar Monate später (Ende 2021) wurde der gleichnamige YouTube-Kanal aktiviert und dient bis heute als Plattform wöchentlichen Bitcoin-Contents. Im Rahmen des YouTube-Projektes programmierte Danny die ersten Simulationen und erklärte diese in seinen Videos, was eine hohe Nachfrage und ein paar Iterationen weiter FixesTh.is als Resultat hatte."
             ],
-            cites: []
+            cites: [],
+            socialMedia: [
+                {
+                    type: "twitter",
+                    url: "https://twitter.com/OrangeRelation"
+                },
+                {
+                    type: "youtube",
+                    url: "https://www.youtube.com/@OrangeRelationship"
+                }
+            ]
         }
     }
 
@@ -38,6 +48,12 @@ export class TeamService {
             ],
             cites: [
                 "Nun habe ich, dank Bitcoin, auch meine thematische Passion gefunden."
+            ],
+            socialMedia: [
+                {
+                    type: "twitter",
+                    url: "https://twitter.com/bitty_kn"
+                }
             ]
         }
     }
@@ -63,7 +79,13 @@ export class TeamService {
             quote: "",
             paragraphs: [
             ],
-            cites: []
+            cites: [],
+            socialMedia: [
+                {
+                    type: "twitter",
+                    url: "https://twitter.com/Pandabytez"
+                }
+            ]
         }
     }
 }
@@ -75,4 +97,10 @@ export interface ContactDescription {
     quote: string;
     cites: string[];
     paragraphs: string[];
+    socialMedia?: SocialMediaInfo[]
+}
+
+export interface SocialMediaInfo {
+    type: "twitter" | "github" | "youtube";
+    url: string;
 }
