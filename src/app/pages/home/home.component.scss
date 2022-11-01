@@ -1,6 +1,22 @@
 @import "/src/app/app.component.scss";
 
 .text {
+    //START Kenny
+
+    //TBD: pictures should follow certain pattern, in order to 
+    // not cut off content. this works on Kenny's machine for the first picture
+    margin-left: -5em;
+    margin-top: -5em;
+
+    // TBD: card for first page?
+    background-color: rgba(var(--footer-color), 0.85);
+    border: 2px solid $light-color;
+    border-radius: 0em 2em 0em 2em;
+    margin-bottom: $margin-large;
+    padding: 1em 1.3em;
+
+    //END Kenny
+
     .question {
         font-size: 0.7em;
         font-style: italic;
@@ -8,17 +24,17 @@
     }
 
     h1 {
-        font-size: 2em;
+        font-size: 1.6em;
         line-height: 1.2em;
     }
 
     h2 {
-        font-size: 2em;
+        font-size: 1.6em;
         line-height: 1.2em;
     }
 
     .explanation {
-        margin-top: 1.5em;
+        margin-top: 1.2em;
     }
 
     font-size: 2em;
@@ -28,16 +44,4 @@
     width: 40%;
     max-width: 30em;
     min-width: 20em;
-}
-
-.picture {
-    display: flex;
-    max-width: 600px;
-    margin-left: $margin-huge;
-
-    img {
-        width: 100%;
-        border: 2px solid $light-color;
-        border-radius: 1em;
-    }
 }

@@ -18,23 +18,24 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './shared/vid/vid.component';
-import { BlockSizeService, PowService,
+import {
+  BlockSizeService, PowService,
   SimulationCardComponent,
   BlocksizeComponent,
   PowSimulationComponent,
   PowCalculatorComponent,
   XpaComponent,
   XpaSimulationComponent,
-  RingOfFireComponent 
+  RingOfFireComponent
 } from './simulations';
 
-import {   
+import {
   HomeComponent,
-  AboutComponent, 
-  LayoutService, 
+  AboutComponent,
+  LayoutService,
   SupportUsComponent,
   AboutTheTeamComponent,
-  SimulationsComponent, 
+  SimulationsComponent,
   InfoComponent
 } from './pages';
 
@@ -44,6 +45,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NodeModelComponent } from 'src/prototypes/node-model/node-model.component';
 import { SocialBarComponent } from './meta';
 import { LanguageSelectorComponent, ThemeEditorComponent } from './shared/personal';
@@ -52,11 +54,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { ImageCarouselComponent } from './shared/media';
+import { SimulationService } from './pages/simulations/simulation.service';
+import { NotificationService } from './shared/media/notification.service';
 
 
 @NgModule({
   declarations: [
-    AppComponent,    
+    AppComponent,
     NodeModelComponent,
     ImageCarouselComponent,
     PowComponent,
@@ -79,7 +83,7 @@ import { ImageCarouselComponent } from './shared/media';
     AboutComponent,
     AboutTheTeamComponent,
     SupportUsComponent,
-    BlocksizeComponent    
+    BlocksizeComponent
   ],
   imports: [
     BrowserModule,
@@ -107,12 +111,15 @@ import { ImageCarouselComponent } from './shared/media';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatSnackBarModule,
     CarouselModule
   ],
   providers: [
     LayoutService,
     BlockSizeService,
-    PowService
+    PowService,
+    SimulationService,
+    NotificationService
   ],
   bootstrap: [AppComponent]
 })

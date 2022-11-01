@@ -3,13 +3,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { delay } from 'src/app/shared/delay';
 import { Column } from 'src/app/shared/helpers/interfaces';
+import { NotificationService } from 'src/app/shared/media/notification.service';
 import { PowHash } from './interfaces';
 import { PowService } from './pow.service';
 
 @Component({
   selector: 'app-pow-simulation',
   templateUrl: './simulation.component.html',
-  styleUrls: ['simulation.component.scss']
+  styleUrls: ['../../simulation.component.scss']
 })
 export class SimulationComponent implements OnInit {
   public readonly maxAmountOfHashesToShow = 200;
@@ -28,7 +29,7 @@ export class SimulationComponent implements OnInit {
   isCalculating: Subject<boolean> = new Subject();
   isProcessing: Subject<boolean> = new Subject();
 
-  constructor(private powService: PowService) {
+  constructor(private powService: PowService, private notificationService: NotificationService) {
     this.inputs = new FormGroup({
       hashRate: new FormControl(this.powService.hashRate, this.createHashRateValidators(50)),
       externalHashRate: new FormControl(this.powService.externalHashRate,
@@ -232,6 +233,7 @@ export class SimulationComponent implements OnInit {
           }
           if (this.stopOnFoundBlock && hash.isValid) {
             this.stop();
+            this.notificationService.display('Found hash!');
             break;
           }
           await delay(timeToWait);
