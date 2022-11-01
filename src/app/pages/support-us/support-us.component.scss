@@ -1,11 +1,51 @@
 @import "../../app.component.scss";
 
-.text {
-    max-width: 65%;
-    min-width: 350px;
+$content-width: 900px;
+$image-width: 420px;
+
+img {
+    width: $image-width;
+}
+
+.text-block {
+    a > img {
+        width: 32px;
+    }
 }
 
 .donate {
     width: 35%;
-    min-width: 350px;
+    min-width: $image-width;
+}
+
+.tiles {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 900px;
+
+    .text-block {
+        flex: 1 0 calc($content-width / 3);
+        margin-top: 3em;
+
+        &:first-child {
+            margin-top: 1em;
+        }
+
+        .block-heading {
+            display: flex;
+
+            >:not(:first-child) {
+                margin-left: $margin-large;
+            }
+        }
+    }
+
+    > img,
+    > .donate {
+        margin-top: 3em;
+    }
+
+    :nth-child(even) {        
+        margin-left: $margin-large;
+    }
 }
