@@ -45,6 +45,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NodeModelComponent } from 'src/prototypes/node-model/node-model.component';
 import { SocialBarComponent } from './meta';
 import { LanguageSelectorComponent, ThemeEditorComponent } from './shared/personal';
@@ -54,6 +55,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { ImageCarouselComponent } from './shared/media';
 import { SimulationService } from './pages/simulations/simulation.service';
+import { NotificationService } from './shared/media/notification.service';
 
 
 @NgModule({
@@ -109,13 +111,15 @@ import { SimulationService } from './pages/simulations/simulation.service';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatSnackBarModule,
     CarouselModule
   ],
   providers: [
     LayoutService,
     BlockSizeService,
     PowService,
-    SimulationService
+    SimulationService,
+    NotificationService
   ],
   bootstrap: [AppComponent]
 })
