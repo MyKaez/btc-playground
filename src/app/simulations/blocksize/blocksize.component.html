@@ -1,58 +1,58 @@
-<table>
-    <tr>
-        <th> Setting Name </th>
-        <th> Value </th>
-        <th> Beautified </th>
-    </tr>
-    <tr>
-        <td> Blockzeit</td>
-        <td>
-            <mat-form-field appearance="fill">
-                <mat-label><i>[in Sekunden]</i></mat-label>
-                <input matInput type="number" [(ngModel)]="blockTime" />
-            </mat-form-field>
-        </td>
-        <td> {{calculateTime(blockTime)}} </td>
-    </tr>
-    <tr>
-        <td> Blocksize </td>
-        <td>
-            <mat-form-field appearance="fill">
-                <mat-label><i>[in Bytes]</i></mat-label>
-                <input matInput type="number" [(ngModel)]="blockSize" />
-            </mat-form-field>
-        </td>
-        <td> {{calculateSize(blockSize)}} </td>
-    </tr>
-</table>
+<div class="content">
+    <div class="simulation-card">
+        <div class="simulation-items">
+            <div class="text">
+                <p>
+                    Blockzeit: {{calculateTime(blockTime)}}<br />
+                    <mat-form-field appearance="fill">
+                        <mat-label><i>[in Sekunden]</i></mat-label>
+                        <input matInput type="number" [(ngModel)]="blockTime" />
+                    </mat-form-field>
+                </p>
+                <p>
+                    Blocksize: {{calculateSize(blockSize)}}<br />
+                    <mat-form-field appearance="fill">
+                        <mat-label><i>[in Bytes]</i></mat-label>
+                        <input matInput type="number" [(ngModel)]="blockSize" />
+                    </mat-form-field>
+                </p>
+                <p>
+                    Speicherplatz: {{space}}<br />
+                    <mat-form-field appearance="fill">
+                        <mat-label><i>[in Bytes]</i></mat-label>
+                        <input matInput type="number" [(ngModel)]="spaceInBytes" />
+                    </mat-form-field>
+                </p>
+            </div>
 
-<hr />
+            <div class="simulation">
+                <div class="header">
+                    <!--<img src="assets/bitcoin-btc-logo.svg">-->
+                    <span>
+                        Blocksize Simulation
+                    </span>
+                </div>
+                <div class="data">
+                    <table>
+                        <tr>
+                            <th>Einheit</th>
+                            <th>Anzahl Blöcke</th>
+                            <th>Größe</th>
+                        </tr>
 
-<table>
-    <tr>
-        <th>Einheit</th>
-        <th>Anzahl Blöcke</th>
-        <th>Größe</th>
-    </tr>
+                        <tr *ngFor="let block of blocks">
+                            <td>{{block.interval}}</td>
+                            <td>{{block.amountOfBlocks}}</td>
+                            <td>{{block.blockSize}}</td>
+                        </tr>
+                    </table>
 
-    <tr *ngFor="let block of blocks">
-        <td>{{block.interval}}</td>
-        <td>{{block.amountOfBlocks}}</td>
-        <td>{{block.blockSize}}</td>
-    </tr>
-</table>
-
-<hr />
-
-<p>
-    Speicherplatz:<br />
-    <mat-form-field appearance="fill">
-        <mat-label><i>[in Bytes]</i></mat-label>
-        <input matInput type="number" [(ngModel)]="spaceInBytes" />
-    </mat-form-field>
-    {{space}}
-</p>
-
-<p>
-    Voll nach: {{outOfSpaceTime}}
-</p>
+                    <hr />
+                    <p>
+                        Voll nach: {{outOfSpaceTime}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

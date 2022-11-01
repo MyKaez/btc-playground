@@ -14,7 +14,6 @@ export class PowComponent implements OnInit {
   public selectedTabIndex = 1;
 
   constructor(private route: ActivatedRoute, private layout: LayoutService) {
-
   }
 
   ngOnInit(): void {
