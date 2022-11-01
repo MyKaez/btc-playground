@@ -28,26 +28,3 @@
             Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </span>
     </div>
 </div>
-<h3>Die Köpfe hinter FixesTh.is</h3>
-<div class="contacts alternate">
-    <div *ngFor="let contact of contacts" class="contact">
-        <div class="contact-header">
-            <div class="contact-title">
-                <h4>{{contact.quote}}</h4>
-                <span class="contact-name">{{contact.name}}</span>
-                <span class="contact-description">{{contact.description}}</span>
-            </div>
-            <div class="contact-image polygon">
-                <img [src]="contact.imageSrc">
-            </div>
-            <div class="pane"></div>
-        </div>
-        <div class="contact-body">
-            <p *ngFor="let par of contact.paragraphs">{{par}}</p>
-            <p *ngFor="let cite of contact.cites"><i>{{cite}}</i></p>
-            <p *ngFor="let socialMedia of contact.socialMedia">
-                <a href="{{socialMedia.url}}" target="_blank">{{socialMedia.type}}</a>
-            </p>
-        </div>
-    </div>
-</div>

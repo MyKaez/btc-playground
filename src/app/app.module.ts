@@ -56,7 +56,7 @@ import { YouTubePlayerModule } from '@angular/youtube-player';
 import { ImageCarouselComponent } from './shared/media';
 import { SimulationService } from './pages/simulations/simulation.service';
 import { NotificationService } from './shared/media/notification.service';
-import { TeamService } from './pages/about/team.service';
+import { TeamService } from './pages/about-the-team/team.service';
 
 
 @NgModule({
