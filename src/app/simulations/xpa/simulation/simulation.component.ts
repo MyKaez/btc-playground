@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from 'src/app/shared/media/notification.service';
 
 @Component({
   selector: 'app-xpa-simulation',
@@ -13,7 +14,7 @@ export class SimulationComponent implements OnInit {
   attackingBlockchain: number[] = [];
   clearOnStart: boolean = true;
 
-  constructor() {
+  constructor(private notificationService: NotificationService) {
     this.inputs = new FormGroup({
       blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
       attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),
@@ -115,6 +116,7 @@ export class SimulationComponent implements OnInit {
       if (this.blockchain.length > this.confirmations) {
         if ((this.blockchain.length - this.attackingBlockchain.length) >= this.cancelAttack) {
           this.isExecuting = false;
+          this.notificationService.display('Bitcoin hat gewonnen!');
         }
       }
       if (!this.isExecuting) {
@@ -127,6 +129,7 @@ export class SimulationComponent implements OnInit {
           this.addBlockIfNecessary();
         } else {
           this.isExecuting = false;
+          this.notificationService.display('Bitcoin hat gewonnen!');
         }
       } else {
         this.attackingBlockchain.push(this.attackingBlockchain.length);
@@ -134,6 +137,7 @@ export class SimulationComponent implements OnInit {
           this.addBlockIfNecessary();
         } else {
           this.isExecuting = false;
+          this.notificationService.display('Bitcoin hat verloren!');
         }
       }
     }, 400)
