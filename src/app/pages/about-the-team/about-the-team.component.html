@@ -1,1 +1,20 @@
-<p>about-the-team works!</p>
+<h2>Über das Team</h2>
+<div class="contacts alternate">
+    <div *ngFor="let contact of contacts" class="contact">
+        <div class="contact-header">
+            <div class="contact-title">                
+                <h4>{{contact.quote}}</h4>
+                <span class="contact-name">{{contact.name}}</span>
+                <span class="contact-description">{{contact.description}}</span>
+            </div>
+            <div class="contact-image polygon">
+                <img [src]="contact.imageSrc">
+            </div>
+            <div class="pane"></div>
+        </div>
+        <div class="contact-body">
+            <p *ngFor="let par of contact.paragraphs">{{par}}</p>
+            <p *ngFor="let cite of contact.cites"><i>{{cite}}</i></p>
+        </div>
+    </div>
+</div>

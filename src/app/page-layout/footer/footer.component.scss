@@ -36,4 +36,16 @@
             transition-property: color;
         }
     }
+
+    .footer-text {
+        display: flex;
+        align-items: center;
+
+        mat-icon {
+            color: var(--accent);
+            font-size: large;
+            line-height: unset;
+            margin-left: $margin-slim;
+        }
+    }
 }
