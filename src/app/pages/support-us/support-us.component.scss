@@ -16,6 +16,10 @@ img {
 .donate {
     width: 35%;
     min-width: $image-width;
+
+    iframe {
+        width: $image-width;
+    }
 }
 
 .tiles {
