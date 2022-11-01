@@ -15,7 +15,7 @@ export class TeamService {
         return {
             name: "Danny",
             description: "geb. 1989",
-            imageSrc: "assets/team/danny.png",
+            imageSrc: "assets/img/personal/danny.png",
             quote: "Bitcoin, there is no second best.",
             paragraphs: [
                 `Aktuell mint er Fiat als Elektrotechnik-Ingenieur.
@@ -40,7 +40,7 @@ export class TeamService {
         return {
             name: "Kenny",
             description: "Kenneth N., geb. 13.09.1990",
-            imageSrc: "assets/team/kenny.jpg",
+            imageSrc: "assets/img/personal/kenny.jpg",
             quote: "Bitcoin, there is no second best.",
             paragraphs: [
                 "Ich folge derzeit meiner Passion, dem Programmieren. Primär im Backend Bereich tätig, entwickle ich Software für den Finanz Bereich - über Landesgrenzen hinweg wird diese Software von allen möglichen Unternehmen in verschiedensten Ländern verwendet. Seit 2011 arbeite ich somit in den tiefsten Tiefen des Fiat systems.",
@@ -63,7 +63,7 @@ export class TeamService {
         return {
             name: "Sarah",
             description: "Sarah K., geb. 1995",
-            imageSrc: "assets/team/sarah.png",
+            imageSrc: "assets/img/personal/sarah.png",
             quote: "Do your own proof of work.",
             paragraphs: [
                 `Sie arbeitet momentan in einem Start up als Product Owner eines digitalen Produktes in einer eher konservativen Branche. Als Product Owner hat sie ihre Vorliebe für das UI/UX Design entdeckt, da sie der Überzeugung ist, dass ein gutes User Interface und eine gute User Experience maßgeblich für den Produkterfolg verantwortlich ist.`,
