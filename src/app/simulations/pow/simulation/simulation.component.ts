@@ -6,6 +6,7 @@ import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { Column } from 'src/app/shared/helpers/interfaces';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
+import { calculateTime } from 'src/app/shared/helpers/time';
 import { NotificationService } from 'src/app/shared/media/notification.service';
 import { PowHash } from './interfaces';
 import { PowService } from './pow.service';
@@ -76,12 +77,20 @@ export class SimulationComponent implements OnInit {
     this.inputs.patchValue({ 'hashRate': value });
   }
 
-  private set externalHashRate(value: number) {
-    this.inputs.patchValue({ 'externalHashRate': value });
+  private get blockTime() {
+    return this.inputs.get('blockTime')!.value;
+  }
+
+  private set blockTime(value: number) {
+    this.inputs.patchValue({ 'blockTime': value });
   }
 
   private get externalHashRate() {
     return this.inputs.get('externalHashRate')!.value;
+  }
+
+  private set externalHashRate(value: number) {
+    this.inputs.patchValue({ 'externalHashRate': value });
   }
 
   get currentExternalHashrate(): string | undefined {
@@ -92,6 +101,10 @@ export class SimulationComponent implements OnInit {
   get currentHashrate(): string | undefined {
     const x = calculateUnit(this.hashRate, UnitOfHash.hashes);
     return x.toText();
+  }
+
+  get currentBlockTime(): string | undefined {
+    return calculateTime(this.blockTime);
   }
 
   public get hashes() {
@@ -237,6 +250,10 @@ export class SimulationComponent implements OnInit {
     this.inputs.controls['hashRate'].addValidators(this.createHashRateValidators(this.hashRate));
     this.isCalculating.next(false);
     this.clear();
+  }
+
+  setBitcoinBlockTime() {
+    this.blockTime = BLOCK_DURATION_IN_SECONDS;
   }
 
   determineExternalHashRate() {
