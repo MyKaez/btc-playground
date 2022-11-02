@@ -54,6 +54,10 @@ export class TeamService {
                 {
                     type: "twitter",
                     url: "https://twitter.com/bitty_kn"
+                },
+                {
+                    type: "github",
+                    url: "https://github.com/MyKaez"
                 }
             ]
         }
@@ -92,6 +96,10 @@ export class TeamService {
                 {
                     type: "twitter",
                     url: "https://twitter.com/Pandabytez"
+                },
+                {
+                    type: "github",
+                    url: "https://github.com/Pandabyts"
                 }
             ]
         }
