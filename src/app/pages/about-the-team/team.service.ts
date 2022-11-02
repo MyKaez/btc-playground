@@ -15,7 +15,9 @@ export class TeamService {
         return {
             name: "Danny",
             description: "geb. 1989",
-            imageSrc: "assets/img/personal/danny.png",
+            images: [
+                new Image("assets/img/personal/danny.png")
+            ],
             quote: "Bitcoin, there is no second best.",
             paragraphs: [
                 `Aktuell mint er Fiat als Elektrotechnik-Ingenieur.
@@ -44,8 +46,10 @@ export class TeamService {
         return {
             name: "Kenny",
             description: "Kenneth N., geb. 13.09.1990",
-            imageSrc: "assets/img/personal/kenny.jpg",
-            imageLaserSrc: "assets/img/personal/kenny_laser.jpg",
+            images: [
+                new Image("assets/img/personal/kenny.jpg", 4500),
+                new Image("assets/img/personal/kenny_laser.jpg", 200)
+            ],
             quote: "Lieber Satoshis in der Wallet als Euros auf dem Konto.",
             paragraphs: [
                 "Ich folge derzeit meiner Passion, dem Programmieren. Primär im Backend Bereich tätig, entwickle ich Software für den Finanz Bereich - über Landesgrenzen hinweg wird diese Software von allen möglichen Unternehmen in verschiedensten Ländern verwendet. Seit 2011 arbeite ich somit in den tiefsten Tiefen des Fiat systems.",
@@ -71,7 +75,9 @@ export class TeamService {
         return {
             name: "Sarah",
             description: "Sarah K., geb. 1995",
-            imageSrc: "assets/img/personal/sarah.png",
+            images: [
+                new Image("assets/img/personal/sarah.png")
+            ],
             quote: "Do your own proof of work.",
             paragraphs: [
                 `Sie arbeitet momentan in einem Start up als Product Owner eines digitalen Produktes in einer eher konservativen Branche. Als Product Owner hat sie ihre Vorliebe für das UI/UX Design entdeckt, da sie der Überzeugung ist, dass ein gutes User Interface und eine gute User Experience maßgeblich für den Produkterfolg verantwortlich ist.`,
@@ -85,7 +91,9 @@ export class TeamService {
         return {
             name: "Nico",
             description: "Nico D., geb. 1991",
-            imageSrc: "assets/img/personal/missing.png",
+            images: [
+                new Image("assets/img/personal/missing.png")
+            ],
             quote: "Sind wir schon da?",
             paragraphs: [
                 `Just within the last hundred years, we humans, inhabitants of a
@@ -113,8 +121,7 @@ export class TeamService {
 export interface ContactDescription {
     name: string;
     description: string;
-    imageSrc: string;
-    imageLaserSrc?: string;
+    images: Image[];
     quote: string;
     cites: string[];
     paragraphs: string[];
@@ -124,4 +131,33 @@ export interface ContactDescription {
 export interface SocialMediaInfo {
     type: "twitter" | "github" | "youtube";
     url: string;
+}
+
+export class Image {
+    constructor(public srcFile: string, public displayDuration?: number) {
+    }
+}
+
+export class Display {
+    private index: number = 0;
+    constructor(public name: string, private images: Image[]) {
+        this.updateImage();
+    }
+
+    get activeImage(): Image {
+        return this.images[this.index];
+    }
+
+    updateImage() {
+        if (this.images.length === 1) {
+            return;
+        }
+        setTimeout(() => {
+            this.index++;
+            if (this.index > this.images.length - 1) {
+                this.index = 0;
+            }
+            this.updateImage();
+        }, this.activeImage.displayDuration ?? 5000);
+    }
 }

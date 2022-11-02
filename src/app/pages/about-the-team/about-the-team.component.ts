@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from '../layout-service';
-import { ContactDescription, TeamService } from './team.service';
+import { ContactDescription, Display, TeamService } from './team.service';
 
 @Component({
   selector: 'app-about-the-team',
@@ -9,21 +9,21 @@ import { ContactDescription, TeamService } from './team.service';
 })
 export class AboutTheTeamComponent implements OnInit {
   contacts: ContactDescription[] = [];
-  enableLaser: boolean = false;
+  displays: Display[] = [];
 
   constructor(private layout: LayoutService, private teamService: TeamService) { }
 
   ngOnInit(): void {
     this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
     this.contacts = this.teamService.getContactDescriptions();
-    this.adjustFlick();
+    this.displays = this.contacts.map(contact => new Display(contact.name, contact.images));
   }
 
-  adjustFlick() {
-    const timeout = this.enableLaser ? 200 : 4800;
-    setTimeout(() => {
-      this.enableLaser = !this.enableLaser;
-      this.adjustFlick();
-    }, timeout);
+  getImage(contact: ContactDescription): string {
+    const display = this.displays.find(dis => dis.name === contact.name);
+    if (display) {
+      return display.activeImage.srcFile;
+    }
+    return "";
   }
 }
