@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { delay } from 'src/app/shared/delay';
+import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
+import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { Column } from 'src/app/shared/helpers/interfaces';
 import { NotificationService } from 'src/app/shared/media/notification.service';
 import { PowHash } from './interfaces';
@@ -28,8 +30,11 @@ export class SimulationComponent implements OnInit {
   isExecuting: boolean = true;
   isCalculating: Subject<boolean> = new Subject();
   isProcessing: Subject<boolean> = new Subject();
+  bitcoinDifficulty?: number;
 
-  constructor(private powService: PowService, private notificationService: NotificationService) {
+  constructor(private powService: PowService,
+    private notificationService: NotificationService,
+    private btcService: BtcService) {
     this.inputs = new FormGroup({
       hashRate: new FormControl(this.powService.hashRate, this.createHashRateValidators(50)),
       externalHashRate: new FormControl(this.powService.externalHashRate,
@@ -69,6 +74,10 @@ export class SimulationComponent implements OnInit {
 
   private set hashRate(value: number) {
     this.inputs.patchValue({ 'hashRate': value });
+  }
+
+  private set externalHashRate(value: number) {
+    this.inputs.patchValue({ 'externalHashRate': value });
   }
 
   public get hashes() {
@@ -214,6 +223,13 @@ export class SimulationComponent implements OnInit {
     this.inputs.controls['hashRate'].addValidators(this.createHashRateValidators(this.hashRate));
     this.isCalculating.next(false);
     this.clear();
+  }
+
+  determineExternalHashRate() {
+    this.btcService.getLatestBlocks().subscribe(blocks => {
+      this.bitcoinDifficulty = blocks[0].difficulty;
+      this.externalHashRate = this.bitcoinDifficulty / BLOCK_DURATION_IN_SECONDS * this.powService.blockTime;
+    });
   }
 
   createJob(): Promise<string> {

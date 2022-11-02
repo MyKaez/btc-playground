@@ -12,7 +12,7 @@
                 </span>
                 <form [formGroup]="inputs">
                     <button mat-button (click)="determineHashRate()" [disabled]="isExecuting">
-                        Hashrate ermitteln
+                        Eigene Hashrate ermitteln
                     </button>
                     <mat-form-field appearance="fill">
                         <mat-label>Hashrate [Hashes pro Sekunde]</mat-label>
@@ -21,6 +21,10 @@
                             <span>{{getErrors('hashRate')}}</span>
                         </label>
                     </mat-form-field>
+                    <button mat-button (click)="determineExternalHashRate()" [disabled]="isExecuting">
+                        Aktuelle Hashrate ermmitteln
+                    </button>
+                    <span *ngIf="bitcoinDifficulty">Difficulty: {{bitcoinDifficulty}}</span>
                     <mat-form-field appearance="fill">
                         <mat-label>externe Hashrate [Hashes pro Sekunde]</mat-label>
                         <input matInput type="number" formControlName="externalHashRate" />
