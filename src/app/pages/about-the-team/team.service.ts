@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { ContactDescription } from "./types";
 
 @Injectable()
 export class TeamService {
@@ -16,7 +17,7 @@ export class TeamService {
             name: "Danny",
             description: "geb. 1989",
             images: [
-                new Image("assets/img/personal/danny.png")
+                { srcFile: "assets/img/personal/danny.png" }
             ],
             quote: "Bitcoin, there is no second best.",
             paragraphs: [
@@ -47,8 +48,8 @@ export class TeamService {
             name: "Kenny",
             description: "Kenneth N., geb. 13.09.1990",
             images: [
-                new Image("assets/img/personal/kenny.jpg", 4500),
-                new Image("assets/img/personal/kenny_laser.jpg", 200)
+                { srcFile: "assets/img/personal/kenny.jpg", displayDuration: 4500 },
+                { srcFile: "assets/img/personal/kenny_laser.jpg", displayDuration: 500 }
             ],
             quote: "Lieber Satoshis in der Wallet als Euros auf dem Konto.",
             paragraphs: [
@@ -76,7 +77,7 @@ export class TeamService {
             name: "Sarah",
             description: "Sarah K., geb. 1995",
             images: [
-                new Image("assets/img/personal/sarah.png")
+                { srcFile: "assets/img/personal/sarah.png" }
             ],
             quote: "Do your own proof of work.",
             paragraphs: [
@@ -92,7 +93,7 @@ export class TeamService {
             name: "Nico",
             description: "Nico D., geb. 1991",
             images: [
-                new Image("assets/img/personal/missing.png")
+                { srcFile: "assets/img/personal/missing.png" }
             ],
             quote: "Sind wir schon da?",
             paragraphs: [
@@ -115,49 +116,5 @@ export class TeamService {
                 }
             ]
         }
-    }
-}
-
-export interface ContactDescription {
-    name: string;
-    description: string;
-    images: Image[];
-    quote: string;
-    cites: string[];
-    paragraphs: string[];
-    socialMedia?: SocialMediaInfo[]
-}
-
-export interface SocialMediaInfo {
-    type: "twitter" | "github" | "youtube";
-    url: string;
-}
-
-export class Image {
-    constructor(public srcFile: string, public displayDuration?: number) {
-    }
-}
-
-export class Display {
-    private index: number = 0;
-    constructor(public name: string, private images: Image[]) {
-        this.updateImage();
-    }
-
-    get activeImage(): Image {
-        return this.images[this.index];
-    }
-
-    updateImage() {
-        if (this.images.length === 1) {
-            return;
-        }
-        setTimeout(() => {
-            this.index++;
-            if (this.index > this.images.length - 1) {
-                this.index = 0;
-            }
-            this.updateImage();
-        }, this.activeImage.displayDuration ?? 5000);
     }
 }
