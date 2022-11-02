@@ -5,6 +5,7 @@ import { delay } from 'src/app/shared/delay';
 import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { Column } from 'src/app/shared/helpers/interfaces';
+import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
 import { NotificationService } from 'src/app/shared/media/notification.service';
 import { PowHash } from './interfaces';
 import { PowService } from './pow.service';
@@ -30,7 +31,6 @@ export class SimulationComponent implements OnInit {
   isExecuting: boolean = true;
   isCalculating: Subject<boolean> = new Subject();
   isProcessing: Subject<boolean> = new Subject();
-  bitcoinDifficulty?: number;
 
   constructor(private powService: PowService,
     private notificationService: NotificationService,
@@ -78,6 +78,20 @@ export class SimulationComponent implements OnInit {
 
   private set externalHashRate(value: number) {
     this.inputs.patchValue({ 'externalHashRate': value });
+  }
+
+  private get externalHashRate() {
+    return this.inputs.get('externalHashRate')!.value;
+  }
+
+  get currentExternalHashrate(): string | undefined {
+    const x = calculateUnit(this.externalHashRate, UnitOfHash.hashes);
+    return x.toText();
+  }
+
+  get currentHashrate(): string | undefined {
+    const x = calculateUnit(this.hashRate, UnitOfHash.hashes);
+    return x.toText();
   }
 
   public get hashes() {
@@ -227,8 +241,9 @@ export class SimulationComponent implements OnInit {
 
   determineExternalHashRate() {
     this.btcService.getLatestBlocks().subscribe(blocks => {
-      this.bitcoinDifficulty = blocks[0].difficulty;
-      this.externalHashRate = this.bitcoinDifficulty / BLOCK_DURATION_IN_SECONDS * this.powService.blockTime;
+      // https://en.bitcoinwiki.org/wiki/Difficulty_in_Mining#:~:text=Average%20time%20of%20finding%20a,a%20miner%20finds%20per%20second.
+      const bitcoinDifficulty = blocks[0].difficulty;
+      this.externalHashRate = bitcoinDifficulty * (2 ** 32) / BLOCK_DURATION_IN_SECONDS;
     });
   }
 
