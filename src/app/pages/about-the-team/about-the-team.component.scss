@@ -54,6 +54,16 @@
                     margin-top: $margin-small;
                     color: #aaa;
                 }
+
+                .contact-social-media {
+                    margin-top: $margin-small;
+                    flex-direction: row;
+
+                    a {
+                        color: white;
+                        font-size: x-small;
+                    }
+                }
             }
 
             .contact-image {
