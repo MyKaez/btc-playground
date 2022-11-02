@@ -41,11 +41,10 @@ export class TeamService {
             name: "Kenny",
             description: "Kenneth N., geb. 13.09.1990",
             imageSrc: "assets/img/personal/kenny.jpg",
-            quote: "Bitcoin, there is no second best.",
+            quote: "Lieber Satoshis in der Wallet als Euros auf dem Konto.",
             paragraphs: [
                 "Ich folge derzeit meiner Passion, dem Programmieren. Primär im Backend Bereich tätig, entwickle ich Software für den Finanz Bereich - über Landesgrenzen hinweg wird diese Software von allen möglichen Unternehmen in verschiedensten Ländern verwendet. Seit 2011 arbeite ich somit in den tiefsten Tiefen des Fiat systems.",
-                "Dezember 2021, als der Kurs bei knapp $70k Stand, habe ich mir dann meine Finger verbrannt - an Bitcoin. Daraufhin wollte ich verstehen, was Bitcoin ist und wieso es so viel Faszination um das Thema gibt.",
-                "Nun schreibe ich zusätzlich Software für Bitcoin. Hoffentlich eines Tages ebenfalls über Landesgrenzen hinweg."
+                "Dezember 2021, als der Kurs bei knapp $70k Stand, habe ich mir dann meine Finger verbrannt - an Bitcoin. Daraufhin wollte ich verstehen, was Bitcoin ist und wieso es so viel Faszination um das Thema gibt."
             ],
             cites: [
                 "Nun habe ich, dank Bitcoin, auch meine thematische Passion gefunden."
