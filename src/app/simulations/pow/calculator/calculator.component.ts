@@ -6,7 +6,7 @@ import { ApiBlock, Block } from './interfaces';
 @Component({
   selector: 'app-pow-calculator',
   templateUrl: './calculator.component.html',
-  styleUrls: ['../../../app.component.scss']
+  styleUrls: ['./calculator.component.scss']
 })
 export class CalculatorComponent implements AfterViewInit {
   private readonly latBlocks: Block[] = [{

@@ -1,4 +1,4 @@
-<h2>Über uns</h2>
+<h2>Über das Projekt</h2>
 <div class="visions">
     <div class="vision">
         <div class="vision-head">
@@ -20,25 +20,5 @@
             <h4>Das ist der Weg</h4>
         </div>
         <span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </span>
-    </div>
-</div>
-<h3>Die Köpfe hinter FixesTh.is</h3>
-<div class="contacts alternate">
-    <div *ngFor="let contact of contacts" class="contact">
-        <div class="contact-header">
-            <div class="contact-title">                
-                <h4>{{contact.quote}}</h4>
-                <span class="contact-name">{{contact.name}}</span>
-                <span class="contact-description">{{contact.description}}</span>
-            </div>
-            <div class="contact-image polygon">
-                <img [src]="contact.imageSrc">
-            </div>
-            <div class="pane"></div>
-        </div>
-        <div class="contact-body">
-            <p *ngFor="let par of contact.paragraphs">{{par}}</p>
-            <p *ngFor="let cite of contact.cites"><i>{{cite}}</i></p>
-        </div>
     </div>
 </div>

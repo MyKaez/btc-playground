@@ -1,4 +1,4 @@
-<div class="items">
+<div class="simulation-items">
     <div class="text">
         <mat-expansion-panel expanded="false">
             <mat-expansion-panel-header>
@@ -124,12 +124,12 @@
             </span>
         </div>
         <div class="data">
-            <span>> {{header}}</span>
-            <span>> {{headerLine}}</span>
+            <span>&gt; {{header}}</span>
+            <span>&gt; {{headerLine}}</span>
             <span *ngFor="let hash of hashes">
                 &gt; <span *ngFor="let col of columns">{{columnValue(hash, col)}}</span>
             </span>
-            <span>> <span *ngIf="blink">...</span></span>
+            <span>&gt; <span *ngIf="blink">...</span></span>
         </div>
     </div>
 </div>

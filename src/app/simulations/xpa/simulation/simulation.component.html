@@ -1,4 +1,4 @@
-<div class="items">
+<div class="simulation-items">
     <div class="text">
         <mat-expansion-panel expanded="false">
             <mat-expansion-panel-header>
@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    <div class=" simulation">
+    <div class="simulation">
         <div class="header">
             <img src="assets/bitcoin-btc-logo.svg">
             <span>
@@ -91,8 +91,11 @@
         <div class="data">
             <p>
                 Bitcoin Blockchain<br />
-                &gt; <span *ngFor="let i of totalBlocks" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br/>
-                &gt; <span *ngFor="let i of blockchain" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
+                &gt; <span *ngFor="let i of totalBlocks"
+                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
+                        *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
+                &gt; <span *ngFor="let i of blockchain" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
+                        *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
                 &gt; Anzahl: ({{blockchain.length}}/{{blocksToComplete}})<br />
                 &gt; Forstschritt: {{progressBlockchain}}%<br />
                 &gt; Gewinnchance: {{probabilityBlockchain}}
@@ -101,8 +104,12 @@
             <p></p>
             <p>
                 Angreifende Blockchain<br />
-                &gt; <span *ngFor="let i of totalBlocks" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br/>
-                &gt; <span *ngFor="let i of attackingBlockchain" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
+                &gt; <span *ngFor="let i of totalBlocks"
+                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
+                        *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
+                &gt; <span *ngFor="let i of attackingBlockchain"
+                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
+                        *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
                 &gt; Anzahl: ({{attackingBlockchain.length}}/{{blocksToComplete}})<br />
                 &gt; Forstschritt: {{progressAttackingBlockchain}}%<br />
                 &gt; Gewinnchance: {{probabilityAttackingBlockchain}}

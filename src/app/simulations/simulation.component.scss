@@ -1,0 +1,67 @@
+@import "/src/app/app.component.scss";
+
+.simulation-items {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+
+    .text {
+        width: 28%;
+        height: 100%;
+
+        .parameters,
+        .calculations,
+        .options,
+        .actions {
+            display: flex;
+            flex-direction: column;
+            color: $light-color;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    .simulation {
+        height: 100%;
+        width: 70%;
+        border: 1px solid $light-color;
+        background-color: $light-color;
+        border-radius: 0.2em;
+        text-align: left;
+
+        .header {
+            height: 5%;
+            background-color: $light-color;
+            color: $dark-color;
+            display: flex;
+            flex-direction: row;
+            vertical-align: middle;
+            padding-top: 0px;
+            padding-bottom: 0px;
+
+            img {
+                height: 70%;
+            }
+        }
+
+        .data {
+            display: flex;
+            flex-direction: column;
+            color: $accent;
+            white-space: nowrap;
+            background-color: $dark-color;
+            overflow: scroll;
+            height: 94%;
+            font-family: $code-font;
+            padding-right: $margin-slim;
+            padding-left: $margin-slim;
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { calculateSize } from 'src/app/shared/helpers/size';
 import { calculateTime } from 'src/app/shared/helpers/time';
@@ -8,7 +8,8 @@ import { BlockData, Interval } from './simulation/types';
 @Component({
   selector: 'app-blocksize',
   templateUrl: './blocksize.component.html',
-  styleUrls: ['./blocksize.component.scss']
+  styleUrls: ['./blocksize.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class BlocksizeComponent implements OnInit {
   blocks: BlockData[];
@@ -18,9 +19,9 @@ export class BlocksizeComponent implements OnInit {
     private layout: LayoutService) {
     this.blocks = this.createBlocks();
   }
-  
+
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.Plane);
+    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
   }
 
   private createBlocks(): BlockData[] {

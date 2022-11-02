@@ -1,8 +1,5 @@
 <div class="items">
-    <app-simulation-card *ngFor="let sim of simulations"
-        (click)="sim.navigationLink && navigateTo(sim.navigationLink)"
-        [title]="sim.title"
-        [description]="sim.description"
-        [image-src]="sim.imageSrc"
-        [youtube-src]="sim.youtubeSrc"></app-simulation-card>
+    <app-simulation-card *ngFor="let sim of simulations" [title]="sim.title" [description]="sim.description"
+        [image-src]="sim.imageSrc" [youtube-src]="sim.youtubeSrc" [navigation-link]="sim.navigationLink">
+    </app-simulation-card>
 </div>
