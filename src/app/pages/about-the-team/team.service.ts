@@ -31,6 +31,10 @@ export class TeamService {
                 {
                     type: "youtube",
                     url: "https://www.youtube.com/@OrangeRelationship"
+                },
+                {
+                    type: "github",
+                    url: "https://github.com/DannyOrangeRelationship"
                 }
             ]
         }
