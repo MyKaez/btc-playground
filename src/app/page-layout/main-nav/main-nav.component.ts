@@ -32,6 +32,10 @@ export class MainNavComponent implements OnInit {
     this.navLinks = this.getNavLinks();
   }
 
+  get currentBlock(): number {
+    return this.latestBlocks.length > 0 ? this.latestBlocks[0].height : 0;
+  }
+
   ngOnInit(): void {
     setInterval(() => {
       this.btcService.getCurrentPrice().subscribe(price => this.currentPrice = price);

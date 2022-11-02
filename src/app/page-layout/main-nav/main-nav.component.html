@@ -27,8 +27,8 @@
           </div>
         </div>
         <div class="btc-live-data">
-          BTC: {{currentPrice?.price}} {{currentPrice?.currency}} <br />
-          Block Height: {{latestBlocks.length > 0 ? latestBlocks[0].height : 0}}
+          BTC Preis: {{currentPrice?.price}} {{currentPrice?.currency}} <br />
+          Blockzeit: <a href="https://mempool.space/block/{{currentBlock}}" target="_blank">{{currentBlock}}</a>
         </div>
       </mat-toolbar>
 
