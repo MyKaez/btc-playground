@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { LayoutService, ContentLayoutMode } from 'src/app/pages';
-import { BtcPrice, BtcService } from 'src/app/shared/helpers/btc.service';
+import { BtcBlock, BtcPrice, BtcService } from 'src/app/shared/helpers/btc.service';
 
 @Component({
   selector: 'app-main-nav',
@@ -21,6 +21,7 @@ export class MainNavComponent implements OnInit {
       shareReplay()
     );
   currentPrice?: BtcPrice;
+  latestBlocks: BtcBlock[] = [];
 
   hideImages = () => this.layout.currentLayoutMode !== ContentLayoutMode.ImageCarousel;
 
@@ -33,6 +34,7 @@ export class MainNavComponent implements OnInit {
 
   ngOnInit(): void {
     this.btcService.getCurrentPrice().subscribe(price => this.currentPrice = price);
+    this.btcService.getLatestBlocks().subscribe(blocks => this.latestBlocks = blocks)
   }
 
   public isLast(part: string): boolean {

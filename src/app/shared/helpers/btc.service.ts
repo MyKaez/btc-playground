@@ -19,10 +19,39 @@ export class BtcService {
             }))
         );
     }
+
+    getLatestBlocks(): Observable<BtcBlock[]> {
+        return this.http.get('https://mempool.space/api/v1/blocks/').pipe(
+            map(data => (<any[]>data)),
+            map(data => ([
+                {
+                    id: data[0]['id'],
+                    difficulty: data[0]['difficulty'],
+                    height: data[0]['height']
+                },
+                {
+                    id: data[1]['id'],
+                    difficulty: data[1]['difficulty'],
+                    height: data[1]['height']
+                },
+                {
+                    id: data[2]['id'],
+                    difficulty: data[2]['difficulty'],
+                    height: data[2]['height']
+                }
+            ]))
+        );
+    }
 }
 
 export interface BtcPrice {
     currency: string;
     price: number;
     previousPrice: number;
+}
+
+export interface BtcBlock {
+    id: string;
+    difficulty: number;
+    height: number;
 }
