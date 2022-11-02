@@ -41,6 +41,7 @@ export class TeamService {
             name: "Kenny",
             description: "Kenneth N., geb. 13.09.1990",
             imageSrc: "assets/img/personal/kenny.jpg",
+            imageLaserSrc: "assets/img/personal/kenny_laser.jpg",
             quote: "Lieber Satoshis in der Wallet als Euros auf dem Konto.",
             paragraphs: [
                 "Ich folge derzeit meiner Passion, dem Programmieren. Primär im Backend Bereich tätig, entwickle ich Software für den Finanz Bereich - über Landesgrenzen hinweg wird diese Software von allen möglichen Unternehmen in verschiedensten Ländern verwendet. Seit 2011 arbeite ich somit in den tiefsten Tiefen des Fiat systems.",
@@ -101,6 +102,7 @@ export interface ContactDescription {
     name: string;
     description: string;
     imageSrc: string;
+    imageLaserSrc?: string;
     quote: string;
     cites: string[];
     paragraphs: string[];

@@ -8,7 +8,8 @@
                 <span class="contact-description">{{contact.description}}</span>
             </div>
             <div class="contact-image polygon">
-                <img [src]="contact.imageSrc">
+                <img [src]="contact.imageSrc" *ngIf="!contact.imageLaserSrc || !enableLaser">
+                <img [src]="contact.imageLaserSrc" *ngIf="contact.imageLaserSrc && enableLaser">
             </div>
             <div class="pane"></div>
         </div>
