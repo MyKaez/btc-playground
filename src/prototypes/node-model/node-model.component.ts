@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
+import { Vector } from 'src/model/anim';
 import { StringHelper } from 'src/model/text';
 import { NodeCanvas, VisualizedNode, VisualizedNodeRelation, VisualizedPin } from "./";
 
@@ -10,6 +11,8 @@ import { NodeCanvas, VisualizedNode, VisualizedNodeRelation, VisualizedPin } fro
 })
 
 export class NodeModelComponent implements OnInit {    
+    @ViewChild('canvasToDraw', {static: false}) canvas?: ElementRef<HTMLCanvasElement>;
+    
     @Input("node-count")
     nodeCount = 3;
 
@@ -27,7 +30,14 @@ export class NodeModelComponent implements OnInit {
         this.nodeCanvas.updatePositions(true);
     }
 
-    ngOnInit() { }
+    ngOnInit() { 
+    }
+    
+    public context: CanvasRenderingContext2D | null | undefined;
+
+    ngAfterViewInit(): void {
+      this.context = this.canvas?.nativeElement.getContext('2d');
+    }
 
     public clickedPin(pin: VisualizedPin) {
         this.nodeCanvas.movePin(pin);
@@ -127,5 +137,57 @@ export class NodeModelComponent implements OnInit {
         });
 
         return canvas;
+    }
+
+    private mouseDown = false;
+    private arrowStart?: Vector;
+    onMouseUp(event: Event) {
+        this.mouseDown = false;
+        this.arrowStart = undefined;
+    }
+
+    onMouseMove($event: any) {
+        console.log("Moving mouse", $event.clientX);
+        if(!this.mouseDown) return;         
+        if(!this.arrowStart) {
+            this.arrowStart = new Vector($event.clientX, $event.clientY);
+            return;
+        }
+
+        let ctx = this.context!;
+        ctx.beginPath();
+        this.canvas_arrow(ctx, this.arrowStart.x, this.arrowStart.y, $event.x, $event.y);
+    }
+
+    onMouseDown($event: any) {
+        console.log("downing mouse", $event.clientX);
+        this.mouseDown = true;
+    }
+
+    renderArrow() {
+        let ctx = this.context;
+        if(!ctx) {
+            console.error("No context!");
+            return;
+        }
+
+        ctx.beginPath();
+        this.canvas_arrow(ctx, 10, 30, 200, 150);
+        this.canvas_arrow(ctx, 100, 200, 400, 50);
+        this.canvas_arrow(ctx, 200, 30, 10, 150);
+        this.canvas_arrow(ctx, 400, 200, 100, 50);
+        ctx.stroke();
+    }   
+
+    canvas_arrow(context: CanvasRenderingContext2D, fromx: number, fromy: number, tox: number, toy: number) {
+        var headlen = 10; // length of head in pixels
+        var dx = tox - fromx;
+        var dy = toy - fromy;
+        var angle = Math.atan2(dy, dx);
+        context.moveTo(fromx, fromy);
+        context.lineTo(tox, toy);
+        context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+        context.moveTo(tox, toy);
+        context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
     }
 }
