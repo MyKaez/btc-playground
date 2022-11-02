@@ -23,7 +23,6 @@ import {
   SimulationCardComponent,
   BlocksizeComponent,
   PowSimulationComponent,
-  PowCalculatorComponent,
   XpaComponent,
   XpaSimulationComponent,
   RingOfFireComponent
@@ -71,7 +70,6 @@ import { BtcService } from './shared/helpers/btc.service';
     SimulationCardComponent,
     SimulationsComponent,
     PowSimulationComponent,
-    PowCalculatorComponent,
     LogoComponent,
     RingOfFireComponent,
     MainNavComponent,
