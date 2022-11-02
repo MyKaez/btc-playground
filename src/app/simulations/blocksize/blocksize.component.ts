@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
-import { calculateSize } from 'src/app/shared/helpers/size';
+import { calculateUnit, UnitOfSize } from 'src/app/shared/helpers/size';
 import { calculateTime } from 'src/app/shared/helpers/time';
 import { BlockSizeService } from './simulation/blocksize.service';
 import { BlockData, Interval } from './simulation/types';
@@ -53,11 +53,11 @@ export class BlocksizeComponent implements OnInit {
   }
 
   get blockSize(): number {
-    return this.blocksizeService.size.bytes;
+    return this.blocksizeService.size.smallesUnits;
   }
 
   set blockSize(value: number) {
-    this.blocksizeService.size.bytes = value;
+    this.blocksizeService.size.smallesUnits = value;
     this.blocks = this.createBlocks();
   }
 
@@ -71,7 +71,7 @@ export class BlocksizeComponent implements OnInit {
   }
 
   calculateSize(size: number): string {
-    return calculateSize(size).toText();
+    return calculateUnit(size, UnitOfSize.bytes).toText();
   }
 
   calculateTime(seconds: number): string {

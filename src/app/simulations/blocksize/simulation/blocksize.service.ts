@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { BLOCK_DURATION_IN_SECONDS, BLOCK_SIZE_LIMIT_IN_BYTES } from "src/app/shared/helpers/block";
-import { calculateSize, Size } from "src/app/shared/helpers/size";
+import { calculateUnit, Unit, UnitOfSize } from "src/app/shared/helpers/size";
 import { Interval } from "./types";
 
 @Injectable()
 export class BlockSizeService {
     blockTimeInSeconds: number = BLOCK_DURATION_IN_SECONDS;
-    size: Size = calculateSize(BLOCK_SIZE_LIMIT_IN_BYTES);
+    size: Unit = calculateUnit(BLOCK_SIZE_LIMIT_IN_BYTES, UnitOfSize.bytes);
 
     blocksPer(amount: number, interval: Interval): number {
         if (interval.index > Interval.second.index) {
@@ -32,6 +32,6 @@ export class BlockSizeService {
     }
 
     blockSizeInBytesPer(amount: number, interval: Interval): number {
-        return this.blocksPer(amount, interval) * this.size.bytes;
+        return this.blocksPer(amount, interval) * this.size.smallesUnits;
     }
 }
