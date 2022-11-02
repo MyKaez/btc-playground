@@ -12,7 +12,7 @@
   .main {
     z-index: 8;
     display: flex;
-    flex-direction: column;  
+    flex-direction: column;
     overflow: auto;
     height: 100%;
     position: relative;
@@ -39,10 +39,24 @@
 .mat-toolbar {
   color: $light-color;
   background-color: rgba(var(--header-color), 0.75);
+
   /*border-bottom: 1px dashed $light-color;*/
 
   height: auto;
   min-height: $header-height;
+
+  display: flex;
+  justify-content: space-between;
+
+  .navigaton {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .btc-live-data {
+    font-size: small;
+    align-self: flex-end;
+  }
 
   a {
     color: $light-color;
@@ -56,20 +70,20 @@
 
     &:hover {
       &:not(.with-sub-nav) {
-        color: rgba(255,255,255,.4);
+        color: rgba(255, 255, 255, .4);
       }
 
       .sub-nav {
-          display: flex;
+        display: flex;
       }
     }
 
     &.active {
       border-bottom: 2px solid var(--accent);
-    } 
+    }
 
     .sub-nav {
-      display: none;    
+      display: none;
       position: absolute;
       flex-direction: column;
       justify-content: flex-start;
@@ -110,9 +124,9 @@
   justify-content: center;
   color: $light-color;
 
-  .content-area {   
+  .content-area {
     padding: $margin-huge;
-    max-width: $max-content-width; 
+    max-width: $max-content-width;
   }
 }
 

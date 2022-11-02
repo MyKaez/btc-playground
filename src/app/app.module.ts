@@ -57,6 +57,7 @@ import { ImageCarouselComponent } from './shared/media';
 import { SimulationService } from './pages/simulations/simulation.service';
 import { NotificationService } from './shared/media/notification.service';
 import { TeamService } from './pages/about-the-team/team.service';
+import { BtcService } from './shared/helpers/btc.service';
 
 
 @NgModule({
@@ -117,6 +118,7 @@ import { TeamService } from './pages/about-the-team/team.service';
   ],
   providers: [
     LayoutService,
+    BtcService,
     BlockSizeService,
     PowService,
     SimulationService,

@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { LayoutService, ContentLayoutMode } from 'src/app/pages';
+import { BtcPrice, BtcService } from 'src/app/shared/helpers/btc.service';
 
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.scss']
 })
-export class MainNavComponent {
+export class MainNavComponent implements OnInit {
   homeImages = HomeBackgroundImages;
   navLinks: NavLink[] = [];
   title: string = 'The Bitcoin Playground';
@@ -19,13 +20,19 @@ export class MainNavComponent {
       map(result => result.matches),
       shareReplay()
     );
+  currentPrice?: BtcPrice;
 
   hideImages = () => this.layout.currentLayoutMode !== ContentLayoutMode.ImageCarousel;
-  
-  constructor(private breakpointObserver: BreakpointObserver, 
+
+  constructor(private breakpointObserver: BreakpointObserver,
     private router: Router,
-    public layout: LayoutService) {
+    public layout: LayoutService,
+    private btcService: BtcService) {
     this.navLinks = this.getNavLinks();
+  }
+
+  ngOnInit(): void {
+    this.btcService.getCurrentPrice().subscribe(price => this.currentPrice = price);
   }
 
   public isLast(part: string): boolean {
@@ -40,10 +47,10 @@ export class MainNavComponent {
     return [{
       title: "Simulationen",
       href: "simulations"
-    },{
+    }, {
       title: "Info",
       href: "info"
-    },{
+    }, {
       title: "Über Uns",
       links: [{
         title: "Über das Team",
@@ -52,7 +59,7 @@ export class MainNavComponent {
         title: "Über das Projekt",
         href: "about"
       }]
-    },{
+    }, {
       title: "Unterstütze uns",
       href: "support"
     }];
