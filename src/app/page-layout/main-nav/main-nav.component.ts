@@ -33,8 +33,10 @@ export class MainNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.btcService.getCurrentPrice().subscribe(price => this.currentPrice = price);
-    this.btcService.getLatestBlocks().subscribe(blocks => this.latestBlocks = blocks)
+    setInterval(() => {
+      this.btcService.getCurrentPrice().subscribe(price => this.currentPrice = price);
+      this.btcService.getLatestBlocks().subscribe(blocks => this.latestBlocks = blocks);
+    }, 1000);
   }
 
   public isLast(part: string): boolean {
