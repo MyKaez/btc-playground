@@ -24,7 +24,6 @@ app-blocksize {
     height: 100%;
 }
 
-
 .content {
     display: flex;
     flex-grow: 1;
@@ -32,8 +31,8 @@ app-blocksize {
     flex-wrap: wrap;
 
     height: 100%;
-    color: var(--font-color);
     width: 100%;
+    color: var(--font-color);
 }
 
 .simulation-card {
