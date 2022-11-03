@@ -17,15 +17,17 @@ export class TeamService {
             name: "Danny",
             description: "geb. 1989",
             images: [
-                { srcFile: "assets/img/personal/danny.png" }
+                { srcFile: "assets/img/personal/danny.png", displayDuration: 4500 },
+                { srcFile: "assets/img/personal/danny_laser.jpg", displayDuration: 500 }
             ],
             quote: "Bitcoin, there is no second best.",
             paragraphs: [
-                `Aktuell mint er Fiat als Elektrotechnik-Ingenieur.
-                Außerhalb der „normalen Arbeit“ startete er im Jahr 2021 einen Podcast  „Orange Relationship“ - der Name soll hierbei auf die täglichen Gedanken verweisen, welche er rundum Bitcoin hat.`,
-                "Ein paar Monate später (Ende 2021) wurde der gleichnamige YouTube-Kanal aktiviert und dient bis heute als Plattform wöchentlichen Bitcoin-Contents. Im Rahmen des YouTube-Projektes programmierte Danny die ersten Simulationen und erklärte diese in seinen Videos, was eine hohe Nachfrage und ein paar Iterationen weiter FixesTh.is als Resultat hatte."
+                `Aktuell mine ich Fiat als Elektrotechnik-Ingenieur.
+                Außerhalb der „normalen Arbeit“ startete ich im Jahr 2021 einen Podcast  „Orange Relationship“ - der Name soll hierbei auf die täglichen Gedanken und Erkenntnisse verweisen, welche ich rundum Bitcoin haben darf. Ein paar Monate später (Ende 2021) aktivierte ich meinen gleichnamige YouTube-Kanal, dieser dient bis heute als Plattform wöchentlichen Bitcoin-Contents. Im Rahmen des YouTube-Projektes programmierte ich die ersten Simulationen und erklärte diese in meinen Videos, was eine hohe Nachfrage und ein paar Iterationen weiter FixesTh.is als Resultat hatte.`
             ],
-            cites: [],
+            cites: [
+                `Kurs gesagt: I'm just another Pleb.`
+            ],
             socialMedia: [
                 {
                     type: "twitter",
@@ -51,7 +53,7 @@ export class TeamService {
                 { srcFile: "assets/img/personal/kenny.jpg", displayDuration: 4500 },
                 { srcFile: "assets/img/personal/kenny_laser.jpg", displayDuration: 500 }
             ],
-            quote: "Lieber Satoshis in der Wallet als Euros auf dem Konto.",
+            quote: "Lieber Satoshis inner Wallet als Euros auf'm Konto.",
             paragraphs: [
                 "Ich folge derzeit meiner Passion, dem Programmieren. Primär im Backend Bereich tätig, entwickle ich Software für den Finanz Bereich - über Landesgrenzen hinweg wird diese Software von allen möglichen Unternehmen in verschiedensten Ländern verwendet. Seit 2011 arbeite ich somit in den tiefsten Tiefen des Fiat systems.",
                 "Dezember 2021, als der Kurs bei knapp $70k Stand, habe ich mir dann meine Finger verbrannt - an Bitcoin. Daraufhin wollte ich verstehen, was Bitcoin ist und wieso es so viel Faszination um das Thema gibt."
@@ -81,10 +83,16 @@ export class TeamService {
             ],
             quote: "Do your own proof of work.",
             paragraphs: [
-                `Sie arbeitet momentan in einem Start up als Product Owner eines digitalen Produktes in einer eher konservativen Branche. Als Product Owner hat sie ihre Vorliebe für das UI/UX Design entdeckt, da sie der Überzeugung ist, dass ein gutes User Interface und eine gute User Experience maßgeblich für den Produkterfolg verantwortlich ist.`,
-                `Im Rahmen Ihres Werdegangs hat sie ebenfalls zahlreiche Erfahrungen im Marketing, Service und im Vertrieb aufbauen können. Zu Hause ist sie allerdings momentan in der agilen Softwareentwicklung.`
+                `Ich arbeite momentan in einem Start up als Product Owner eines digitalen Produktes in einer eher konservativen Branche. Als Product Owner habe ich insbesondere meine Vorliebe für das UI/UX Design entdeckt, weil ich der festen Überzeugung bin, dass ein gutes User Interface und eine gute User Experience maßgeblich für den „Produkterfolg" verantwortlich sind. Ich habe bisher auch schon zahlreiche Erfahrungen im Marketing, Service und Vertrieb sammeln können. Zu Hause bin ich allerdings in der agilen Softwareentwicklung. :)`,
+                `Mit meinen Erfahrungen versuche ich in diesem Projekt so gut wie es geht zu unterstützen, lungere aber noch am Rande des Kaninchenbaus herum. Mal schauen, wann ich reinfalle. :)`
             ],
-            cites: []
+            cites: [],
+            socialMedia: [
+                {
+                    type: "twitter",
+                    url: "https://twitter.com/SarahRaymond__"
+                }
+            ]
         }
     }
 

@@ -3,7 +3,7 @@
     <div *ngFor="let contact of contacts" class="contact">
         <div class="contact-header">
             <div class="contact-title">
-                <h4>{{contact.quote}}</h4>
+                <h4>„{{contact.quote}}“</h4>
                 <span class="contact-name">{{contact.name}}</span>
                 <span class="contact-description">{{contact.description}}</span>
                 <span class="contact-social-media" *ngIf="contact.socialMedia && contact.socialMedia.length > 0">
