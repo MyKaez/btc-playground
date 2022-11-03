@@ -124,10 +124,12 @@
 .content-wrapper {
   justify-content: center;
   color: $light-color;
+  height: 85%;
 
   .content-area {
     padding: $margin-huge;
     max-width: $max-content-width;
+    height: 100%;
   }
 }
 
