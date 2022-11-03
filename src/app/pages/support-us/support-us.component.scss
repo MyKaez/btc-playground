@@ -8,7 +8,12 @@ img {
 }
 
 .text-block {
-    a > img {
+    background-color: rgba(var(--footer-color), 0.85);
+    border: 2px solid $light-color;
+    border-radius: 0em 2em 0em 2em;
+    padding: $margin-large;
+
+    a>img {
         width: 32px;
     }
 }
@@ -44,12 +49,19 @@ img {
         }
     }
 
-    > img,
-    > .donate {
+    >img {
+        background-color: rgba(var(--footer-color), 0.85);
+        border: 2px solid $light-color;
+        border-radius: 0em 2em 0em 2em;
+        padding: $margin-large;
+    }
+
+    >img,
+    >.donate {
         margin-top: 3em;
     }
 
-    :nth-child(even) {        
+    :nth-child(even) {
         margin-left: $margin-large;
     }
 }
