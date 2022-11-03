@@ -25,6 +25,7 @@ export class MainNavComponent implements OnInit {
 
   isCarousel = () => this.layout.currentLayoutMode == ContentLayoutMode.ImageCarousel;
   isLockImage = () => this.layout.currentLayoutMode == ContentLayoutMode.LockImage;
+  lockedImage = () => this.layout.lockedImage;
 
   constructor(private breakpointObserver: BreakpointObserver,
     private router: Router,
