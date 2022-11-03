@@ -17,6 +17,13 @@ body {
     background-color: var(--background-color);
 }
 
+app-xpa,
+app-pow,
+app-blocksize {
+    width: 100%;
+}
+
+
 .content {
     display: flex;
     flex-grow: 1;
