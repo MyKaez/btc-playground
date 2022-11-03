@@ -35,28 +35,34 @@
         border-radius: 0.2em;
         text-align: left;
 
-        .header {
+        .console-header {
             height: 4%;
             background-color: $light-color;
             color: $dark-color;
-            display: flex;
             flex-direction: row;
-            vertical-align: middle;
+            align-items: center;
+            justify-content: center;
+            padding-left: $margin-small;
 
             img {
                 height: 70%;
             }
+
+            span {
+                padding-left: $margin-huge;
+            }
         }
 
-        .data {
+        .console-data {
             overflow: auto;
             display: flex;
             flex-direction: column;
             color: $accent;
-            white-space: nowrap;
             background-color: $dark-color;
+            white-space: nowrap;
             overflow: scroll;
-            height: 94%;
+            padding: $margin-small;
+            height: 96%;
             font-family: $code-font;
         }
     }
