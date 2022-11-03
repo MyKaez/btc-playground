@@ -48,8 +48,10 @@
 
       <app-footer></app-footer>
     </div>
-    <div class="app-images" [class.hidden]="hideImages()">
-      <app-image-carousel [image-urls]="homeImages" [interval]="15000"></app-image-carousel>
+    <div class="app-images" [class.hidden]="!isCarousel() && !isLockImage()">
+      <img *ngIf="isLockImage()" src="assets/img/fixed-gift.jpg" alt="background" class="d-block w-100"
+        loading="lazy" />
+      <app-image-carousel *ngIf="isCarousel()" [image-urls]="homeImages" [interval]="15000"></app-image-carousel>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

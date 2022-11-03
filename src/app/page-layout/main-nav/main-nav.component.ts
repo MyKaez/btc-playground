@@ -23,7 +23,8 @@ export class MainNavComponent implements OnInit {
   currentPrice?: BtcPrice;
   latestBlocks: BtcBlock[] = [];
 
-  hideImages = () => this.layout.currentLayoutMode !== ContentLayoutMode.ImageCarousel;
+  isCarousel = () => this.layout.currentLayoutMode == ContentLayoutMode.ImageCarousel;
+  isLockImage = () => this.layout.currentLayoutMode == ContentLayoutMode.LockImage;
 
   constructor(private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -92,7 +93,6 @@ export class MainNavComponent implements OnInit {
     this.router.navigate(['/' + link]);
   }
 }
-
 
 export interface NavLink {
   title: string;

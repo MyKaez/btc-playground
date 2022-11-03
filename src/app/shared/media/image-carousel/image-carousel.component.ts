@@ -1,4 +1,6 @@
+import { _getFocusedElementPierceShadowDom } from '@angular/cdk/platform';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 
 @Component({
   selector: 'app-image-carousel',
@@ -15,16 +17,24 @@ export class ImageCarouselComponent implements OnInit {
 
   slides: Slide[] = [];
 
-  constructor() {
+  constructor(private layoutService: LayoutService) {
   }
 
   ngOnInit(): void {
-    this.slides = this.imageUrls.map(url => ({
+    if (this.layoutService.currentLayoutMode === ContentLayoutMode.ImageCarousel) {
+      this.slides = this.imageUrls.map(url => this.getSlide(url));
+    } else if (this.layoutService.currentLayoutMode === ContentLayoutMode.LockImage) {
+      this.slides = [this.getSlide(this.imageUrls[0])];
+    }
+  }
+
+  getSlide(url: string): any {
+    return {
       title: url.split("/")[1].split(".")[0],
       src: url
-    }));
+    };
   }
-  
+
   onItemChange($event: any): void {
     console.log('Carousel onItemChange', $event);
   }

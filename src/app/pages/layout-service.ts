@@ -11,5 +11,6 @@ export class LayoutService {
 
 export enum ContentLayoutMode {
     Plane,
-    ImageCarousel
+    ImageCarousel,
+    LockImage
 }
