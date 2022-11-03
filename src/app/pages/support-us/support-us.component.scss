@@ -1,4 +1,4 @@
-@import "../../app.component.scss";
+@import '/src/app/app.component.scss';
 
 $content-width: 900px;
 $image-width: 420px;
@@ -7,12 +7,7 @@ img {
     width: $image-width;
 }
 
-.text-block {
-    background-color: rgba(var(--footer-color), 0.85);
-    border: 2px solid $light-color;
-    border-radius: 0em 2em 0em 2em;
-    padding: $margin-large;
-
+.info-card {
     a>img {
         width: 32px;
     }
@@ -32,7 +27,7 @@ img {
     flex-wrap: wrap;
     max-width: 900px;
 
-    .text-block {
+    .info-card {
         flex: 1 0 calc($content-width / 3);
         margin-top: 3em;
 

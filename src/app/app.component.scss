@@ -36,13 +36,6 @@ app-blocksize {
 }
 
 .info-card {
-    /*
-    background-color: rgba(var(--footer-color), 0.85);
-    border: 2px solid $light-color;
-    border-radius: 0em 2em 0em 2em;
-    padding: $margin-large;
-*/
-    color: var(--font-color);
     background-color: rgba(var(--footer-color), 0.85);
     height: max-content;
     min-width: 20em;
@@ -50,68 +43,22 @@ app-blocksize {
     border-radius: 0em 2em 0em 2em;
     padding: $margin-large;
     margin: $margin-large;
-    /*
-    .contact-header {
+
+    .info-card-header {
         position: relative;
         display: flex;
         justify-content: space-between;
-        background-color: #1a1a1a;
-
-        >* {
-            z-index: 20;
-        }
-
-        .contact-title {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            align-items: center;
-
-            h4 {
-                font-style: italic;
-                font-weight: bold;
-                margin-top: $margin-large;
-            }
-
-            .contact-name {
-                margin-top: $margin-large;
-                font-size: x-large;
-            }
-
-            .contact-description {
-                margin-top: $margin-small;
-                color: #aaa;
-            }
-
-            .contact-social-media {
-                margin-top: $margin-small;
-                flex-direction: row;
-
-                a {
-                    color: white;
-                    font-size: x-small;
-                }
-            }
-        }
-
-        .contact-image {
-            width: 180px;
-            height: 160px;
-        }
-
-        .pane {
-            position: absolute;
-            display: block;
-            z-index: 1;
-            width: 140px;
-            height: 100%;
-            background-color: #323239;
-            top: 0;
-            right: -36px;
-            clip-path: polygon(75% 0%, 75% 50%, 75% 100%, 0% 100%, 43% 50%, 0% 0%);
-        }
+        color: $accent;
+        font-weight: bold;
+        font-size: 2em;
+        margin-bottom: $margin-small;
     }
 
+    .info-card-content {
+        color: var(--font-color);
+    }
+
+    /*
     .contact-body {
         display: flex;
         flex-direction: column;

@@ -1,6 +1,8 @@
 <div class="info-card">
-    <h2>{{title}}</h2>
-    <p>{{description}}</p>
-    <button mat-button (click)="navigateTo(navigationLink)" *ngIf="navigationLink"> Zur Simulation </button>
-    <youtube-player [videoId]="youtubeSrc" [width]="280" [height]="160"></youtube-player>
+    <div class="info-card-header">{{title}}</div>
+    <div class="info-card-content">
+        <p>{{description}}</p>
+        <button mat-button (click)="navigateTo(navigationLink)" *ngIf="navigationLink"> Zur Simulation </button>
+        <youtube-player [videoId]="youtubeSrc" [width]="280" [height]="160"></youtube-player>
+    </div>
 </div>
