@@ -125,6 +125,7 @@
   justify-content: center;
   color: $light-color;
   height: 85%;
+  overflow-y: auto;
 
   .content-area {
     padding: $margin-huge;
