@@ -3,14 +3,13 @@
 .simulation-items {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
     height: 100%;
     width: 100%;
-    overflow: hidden;
 
     .text {
         width: 28%;
         height: 100%;
+        overflow: auto;
 
         .parameters,
         .calculations,
@@ -37,14 +36,12 @@
         text-align: left;
 
         .header {
-            height: 5%;
+            height: 4%;
             background-color: $light-color;
             color: $dark-color;
             display: flex;
             flex-direction: row;
             vertical-align: middle;
-            padding-top: 0px;
-            padding-bottom: 0px;
 
             img {
                 height: 70%;
@@ -52,6 +49,7 @@
         }
 
         .data {
+            overflow: auto;
             display: flex;
             flex-direction: column;
             color: $accent;
@@ -60,8 +58,6 @@
             overflow: scroll;
             height: 94%;
             font-family: $code-font;
-            padding-right: $margin-slim;
-            padding-left: $margin-slim;
         }
     }
 }
