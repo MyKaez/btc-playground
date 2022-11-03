@@ -17,7 +17,7 @@ export class PowComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
+    this.layout.setLayoutMode(ContentLayoutMode.LockImage);
     this.initializeTabRoute();
   }
 

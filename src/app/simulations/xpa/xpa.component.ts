@@ -12,7 +12,7 @@ export class XpaComponent implements OnInit {
   constructor(private layout: LayoutService) { }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.Plane);
+    this.layout.setLayoutMode(ContentLayoutMode.LockImage);
   }
 
 }

@@ -17,6 +17,6 @@ export class SimulationsComponent {
   }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
+    this.layout.setLayoutMode(ContentLayoutMode.LockImage);
   }
 }
