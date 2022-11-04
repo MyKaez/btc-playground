@@ -17,7 +17,7 @@ export class TeamService {
             name: "Danny",
             description: "geb. 1989",
             images: [
-                { srcFile: "assets/img/personal/danny.png", displayDuration: 4500 },
+                { srcFile: "assets/img/personal/danny.jpg", displayDuration: 4500 },
                 { srcFile: "assets/img/personal/danny_laser.jpg", displayDuration: 500 }
             ],
             quote: "Bitcoin, there is no second best.",

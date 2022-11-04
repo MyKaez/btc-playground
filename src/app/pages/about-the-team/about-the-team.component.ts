@@ -27,4 +27,9 @@ export class AboutTheTeamComponent implements OnInit {
     }
     return "";
   }
+
+  openPicture(contact: ContactDescription) {
+    const pic = contact.images[0].srcFile;
+    window.open(pic, "_self");
+  }
 }
