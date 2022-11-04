@@ -57,6 +57,8 @@ import { SimulationService } from './pages/simulations/simulation.service';
 import { NotificationService } from './shared/media/notification.service';
 import { TeamService } from './pages/about-the-team/team.service';
 import { BtcService } from './shared/helpers/btc.service';
+import { BtcPayService } from './shared/helpers/btc-pay.service';
+import { DonationComponent } from './page-layout/donation/donation.component';
 
 
 @NgModule({
@@ -83,7 +85,8 @@ import { BtcService } from './shared/helpers/btc.service';
     AboutComponent,
     AboutTheTeamComponent,
     SupportUsComponent,
-    BlocksizeComponent
+    BlocksizeComponent,
+    DonationComponent
   ],
   imports: [
     BrowserModule,
@@ -117,6 +120,7 @@ import { BtcService } from './shared/helpers/btc.service';
   providers: [
     LayoutService,
     BtcService,
+    BtcPayService,
     BlockSizeService,
     PowService,
     SimulationService,

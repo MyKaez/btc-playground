@@ -1,0 +1,14 @@
+<mat-form-field appearance="fill">
+    <mat-label>Betrag</mat-label>
+    <input matInput type="number" [(ngModel)]="amount" required [step]="step" />
+</mat-form-field>
+<mat-form-field appearance="fill">
+    <mat-label required>Währung</mat-label>
+    <select matNativeControl [(ngModel)]="currency" (ngModelChange)="updateSettings(currency)" required>
+        <option>EUR</option>
+        <option>CHF</option>
+        <option>BTC</option>
+        <option>sats</option>
+    </select>
+</mat-form-field>
+<button mat-button [disabled]="!activated" (click)="donate()">Schubsen</button>

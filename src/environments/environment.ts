@@ -6,6 +6,12 @@ export const environment = {
   production: false
 };
 
+export class Config {
+  static readonly VOLTAGE_KEY: string = "api-key";
+  static readonly BTC_PAY_AUTH: string = "basic auth";
+  static readonly FIRE_REQUEST: boolean = false;
+}
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
