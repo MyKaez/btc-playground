@@ -5,6 +5,8 @@ import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { LayoutService, ContentLayoutMode } from 'src/app/pages';
 import { BtcBlock, BtcPrice, BtcService } from 'src/app/shared/helpers/btc.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DonationComponent } from '../donation/donation.component';
 
 @Component({
   selector: 'app-main-nav',
@@ -15,6 +17,7 @@ export class MainNavComponent implements OnInit {
   homeImages = HomeBackgroundImages;
   navLinks: NavLink[] = [];
   title: string = 'The Bitcoin Playground';
+  donationClass: string = 'donation';
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -30,7 +33,8 @@ export class MainNavComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
     private router: Router,
     public layout: LayoutService,
-    private btcService: BtcService) {
+    private btcService: BtcService,
+    private dialog: MatDialog) {
     this.navLinks = this.getNavLinks();
   }
 
@@ -43,14 +47,21 @@ export class MainNavComponent implements OnInit {
       this.btcService.getCurrentPrice().subscribe(price => this.currentPrice = price);
       this.btcService.getLatestBlocks().subscribe(blocks => this.latestBlocks = blocks);
     }, 1000);
+    setTimeout(() => {
+      this.donationClass += ' blink';
+    }, 10_000)
   }
 
-  public isLast(part: string): boolean {
+  isLast(part: string): boolean {
     return this.pathParts[this.pathParts.length - 1] == part;
   }
 
-  public get pathParts(): string[] {
+  get pathParts(): string[] {
     return this.router.url.split('/').filter(p => p && p !== '');
+  }
+
+  openDonation() {
+    this.dialog.open(DonationComponent);
   }
 
   private getNavLinks(): NavLink[] {

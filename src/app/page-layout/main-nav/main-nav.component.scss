@@ -59,6 +59,28 @@
     line-height: $margin-huge;
   }
 
+  .donation {}
+
+  .blink {
+    border: solid $light-color 2px;
+    background-color: var(--accent);
+    animation: blink-animation 3s steps(10, start) infinite;
+    -webkit-animation: blink-animation 4s steps(10, start) infinite;
+
+    @keyframes blink-animation {
+      to {
+        visibility: hidden;
+      }
+    }
+
+    @-webkit-keyframes blink-animation {
+      to {
+        visibility: hidden;
+      }
+    }
+  }
+
+
   a {
     color: $light-color;
     display: inline-block;

@@ -26,8 +26,8 @@
             </a>
           </div>
         </div>
-        <div class="donation">
-          <app-donation></app-donation>
+        <div [class]="donationClass">
+          <button mat-button (click)="openDonation()">Spenden</button>
         </div>
         <div class="btc-live-data">
           BTC Preis: {{currentPrice?.price}} {{currentPrice?.currency}} <br />
