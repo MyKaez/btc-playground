@@ -32,8 +32,9 @@ export class UnitOfSize {
     static readonly teraBytes = new UnitOfSize(4, 'terabytes');
     static readonly petaBytes = new UnitOfSize(5, 'petabytes');
     static readonly exaBytes = new UnitOfSize(6, 'exabytes');
+    static readonly zettaBytes = new UnitOfSize(7, 'zettabytes');
     static readonly units = [
-        this.bytes, this.kiloBytes, this.megaBytes, this.gigaBytes, this.teraBytes, this.petaBytes, this.exaBytes
+        this.bytes, this.kiloBytes, this.megaBytes, this.gigaBytes, this.teraBytes, this.petaBytes, this.exaBytes, this.zettaBytes
     ];
 }
 export class UnitOfHash {
@@ -46,7 +47,8 @@ export class UnitOfHash {
     static readonly teraHashes = new UnitOfHash(4, 'terahashes');
     static readonly petaHashes = new UnitOfHash(5, 'petahashes');
     static readonly exaHashes = new UnitOfHash(6, 'exahashes');
+    static readonly zettaHashes = new UnitOfHash(7, 'zettahashes');
     static readonly units = [
-        this.hashes, this.kiloHashes, this.megaHashes, this.gigaHashes, this.teraHashes, this.petaHashes, this.exaHashes
+        this.hashes, this.kiloHashes, this.megaHashes, this.gigaHashes, this.teraHashes, this.petaHashes, this.exaHashes, this.zettaHashes
     ];
 }
