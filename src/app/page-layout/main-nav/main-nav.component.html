@@ -26,8 +26,8 @@
             </a>
           </div>
         </div>
-        <div [class]="donationClass">
-          <button mat-button (click)="openDonation()">Spenden</button>
+        <div [class]="donationClass" (click)="openDonation()">
+          Spenden
         </div>
         <div class="btc-live-data">
           BTC Preis: {{currentPrice?.price}} {{currentPrice?.currency}} <br />
