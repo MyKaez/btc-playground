@@ -10,6 +10,10 @@
 //@import "~@coreui/coreui-pro/scss/coreui";
 @import "@coreui/coreui/dist/css/coreui.min.css";
 
+@function hexToRgb($colorHexValue) {
+  @return #{red($colorHexValue), green($colorHexValue), blue($colorHexValue)};
+}
+
 
 /* Color Theme Swatches in Hex */
 $fixesthis-test-1-hex: #373747;
@@ -128,6 +132,8 @@ $Simulator-theme: mat.define-dark-theme((color: (primary: $Simulator-primary,
 // desired: #21212a;
 
 $primary: mat.get-color-from-palette($Simulator-primary, 500);
+$primary-300: mat.get-color-from-palette($Simulator-primary, 300);
+$primary-700: mat.get-color-from-palette($Simulator-primary, 700);
 $accent: mat.get-color-from-palette($Simulator-accent, 500);
 $accent2: mat.get-color-from-palette($Simulator-accent, 100);
 $sugar: mat.get-color-from-palette($Simulator-sugar, 500);
@@ -169,14 +175,14 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 
-  --primary: #{$primary};
+  --primary: #{hexToRgb($primary)};
   --accent: #{$accent};
   --accent2: #{$accent2};
   --sugar: #{$sugar};
 
   --background-color: #{lighten($primary, 5%)};
-  --header-color: #{red(lighten($primary, 15%)), green(lighten($primary, 15%)), blue(lighten($primary, 15%))};
-  --footer-color: #{red(lighten($primary, 20%)), green(lighten($primary, 20%)), blue(lighten($primary, 20%))};
+  --header-color: #{hexToRgb(lighten($primary, 15%))};
+  --footer-color: #{hexToRgb(lighten($primary, 20%))};
   --font-color: #{$gray-70};
 
   background-color: var(--background-color);

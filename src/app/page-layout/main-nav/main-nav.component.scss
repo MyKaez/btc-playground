@@ -15,7 +15,8 @@
     flex-direction: column;
     overflow: auto;
     height: 100%;
-    position: relative;
+    position: relative;    
+    overflow-y: auto;
   }
 
   .app-images {
@@ -124,7 +125,7 @@
         transition-property: background-color;
 
         &:hover {
-          background-color: var(--primary);
+          background-color: rgb(var(--primary));
         }
       }
     }
@@ -147,8 +148,6 @@
 .content-wrapper {
   justify-content: center;
   color: $light-color;
-  height: 85%;
-  overflow-y: auto;
 
   .content-area {
     padding: $margin-huge;
