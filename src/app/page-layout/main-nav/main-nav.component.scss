@@ -87,7 +87,7 @@
   .donation {
     cursor: pointer;
     border-radius: $margin-slim;
-    padding: 0.1em 0.1em;
+    padding: $margin-slim $margin-large;
     font-size: small;
   }
 
