@@ -1,0 +1,30 @@
+:host {
+    display: block;
+
+    .conditional-image {
+        display: block;
+        display: flex;
+        height: 100%;
+        width: 100%;
+
+        >* {
+            display: block;
+            flex-grow: 1;
+            background-size: contain;
+        }
+
+        .click-image, .hover-image {
+            display: none;
+        }
+
+        &.clicked > *,
+        &:hover > * {
+            display: none;
+        }
+
+        &.clicked > .click-image,
+        &:hover > .hover-image {
+            display: block;
+        }
+    }
+}

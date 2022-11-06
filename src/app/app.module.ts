@@ -59,6 +59,7 @@ import { TeamService } from './pages/about-the-team/team.service';
 import { BtcService } from './shared/helpers/btc.service';
 import { BtcPayService } from './shared/helpers/btc-pay.service';
 import { DonationComponent } from './page-layout/donation/donation.component';
+import { ConditionalImageComponent } from './shared/media/conditional-image/conditional-image.component';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import { DonationComponent } from './page-layout/donation/donation.component';
     AboutTheTeamComponent,
     SupportUsComponent,
     BlocksizeComponent,
-    DonationComponent
+    DonationComponent,
+    ConditionalImageComponent
   ],
   imports: [
     BrowserModule,
