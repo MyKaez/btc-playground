@@ -181,8 +181,8 @@ body {
   --sugar: #{$sugar};
 
   --background-color: #{lighten($primary, 5%)};
-  --header-color: #{hexToRgb(lighten($primary, 15%))};
-  --footer-color: #{hexToRgb(lighten($primary, 20%))};
+  --header-color: #{hexToRgb($primary)};
+  --footer-color: #{hexToRgb($primary)};
   --font-color: #{$gray-70};
 
   background-color: var(--background-color);

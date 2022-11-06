@@ -143,7 +143,7 @@
         color: $light-color;
         display: inline-block;
         text-decoration: none;
-        background-color: rgb(var(--footer-color));
+        background-color: lighten($primary, 15%);
         padding: 8px 12px;
         transition-duration: .5s;
         transition-property: background-color;

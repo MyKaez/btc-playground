@@ -4,30 +4,62 @@
     width: 320px;
     padding: 0;
 
-    > * {
-        padding: $margin-large $margin-large 0 $margin-large;
-    }
-
-    .info-card-header {
-        font-size: 1em;
-
-        h2 {
-            margin: 0;
-        }
-    }
-
     .info-card-content {
+        display: flex;
         border-bottom: 1px solid $primary-300;
+
+        .info-card-text {
+            font-size: 1em;
+            padding: $margin-large;
+    
+            h2 {
+                color: var(--accent);
+            }
+        }
+
+        .simulation-button {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            height: 120px;
+            margin: 0 0 1px 1px;
+
+            span {
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                padding: $margin-small $margin-large;
+                background-color: rgba(var(--primary), .5);
+                bottom: 0;
+            }
+
+            &:hover {
+                margin: 0;
+                border-left: 1px solid $primary-300;
+                border-bottom: 1px solid $primary-300;
+
+                span {
+                    color: var(--accent);
+                }
+
+                ::ng-deep {
+                    .conditional-image > * {
+                        display: none;
+                    }
+
+                    .conditional-image > .hover-image {
+                        display: block;
+                    }
+                }
+            }
+        }
     }
 
     button {
         border: none;
         padding: 0;
     }
-}
-
-h2 {
-    color: var(--accent);
 }
 
 ::ng-deep 
@@ -44,7 +76,11 @@ h2 {
     }
 
     app-conditional-image {
-        width: 160px;
-        height: 160px;
+        width: 120px;
+        height: 120px;
+
+        .conditional-image > * {            
+            border-top-right-radius: 25%;
+        }
     }
 }
