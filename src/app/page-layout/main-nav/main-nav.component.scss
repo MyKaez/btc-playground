@@ -56,14 +56,38 @@
 
   .btc-live-data {
     font-size: small;
-    align-self: flex-end;
-    line-height: $margin-huge;
+    line-height: 1.5em;
+    width: 170px;
+
+    .data-label {
+      width: 60px; 
+      
+      &::after {
+        content: ":";
+      }
+    }
+
+    .data-value {
+      flex-grow: 1;
+      font-style: italic;
+      text-align: right;
+
+      a {        
+        text-decoration: none;
+        color: $light-color;
+      }
+    }
+
+    .data-currency {
+      min-width: 30px;
+      margin-left: $margin-small;
+    }
   }
 
   .donation {
     cursor: pointer;
     border-radius: $margin-slim;
-    padding: 0.1em 01em;
+    padding: 0.1em 0.1em;
     font-size: small;
   }
 
@@ -83,7 +107,7 @@
     }
   }
 
-  a {
+  .menu a {
     color: $light-color;
     display: inline-block;
     text-decoration: none;

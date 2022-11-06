@@ -243,6 +243,15 @@ h1, h2, h3 {
   }
 }
 
+.flex-table {
+  display: flex;
+  flex-direction: column;
+
+  > * {
+    display: flex;
+  }
+}
+
 .polygon {
   clip-path: polygon(25% 0%, 75% 0%, 100% 48%, 75% 100%, 25% 100%, 0% 50%);
 

@@ -29,9 +29,17 @@
         <div [class]="donationClass" (click)="openDonation()">
           Spenden
         </div>
-        <div class="btc-live-data">
-          BTC Preis: {{currentPrice?.price}} {{currentPrice?.currency}} <br />
-          Blockzeit: <a href="https://mempool.space/block/{{currentBlock}}" target="_blank">{{currentBlock}}</a>
+        <div class="btc-live-data flex-table">
+          <div>
+            <span class="data-label">BTC Preis</span>
+            <span class="data-value">{{currentPrice?.price}}</span>
+            <span class="data-currency">{{currentPrice?.currency}}</span>
+          </div>
+          <div>
+            <span class="data-label">Blockzeit</span>
+            <span class="data-value"><a href="https://mempool.space/block/{{currentBlock}}" target="_blank">{{currentBlock}}</a></span>
+            <span class="data-currency"></span>
+          </div>           
         </div>
       </mat-toolbar>
 
