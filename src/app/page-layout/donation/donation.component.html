@@ -1,17 +1,13 @@
 <div class="donation">
     <h2>FixesTh.is</h2>
-    <mat-form-field appearance="fill">
-        <mat-label>Betrag</mat-label>
-        <input matInput type="number" [(ngModel)]="amount" required [step]="step" />
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label required>Währung</mat-label>
-        <select matNativeControl [(ngModel)]="currency" (ngModelChange)="updateSettings(currency)" required>
-            <option>EUR</option>
-            <option>CHF</option>
-            <option value="BTC">&#8383;TC</option>
-            <option>sats</option>
-        </select>
-    </mat-form-field>
-    <button mat-button [disabled]="!activated" (click)="donate()">Spenden</button>
+    <div class="qr-codes">
+        <div class="lightning">
+
+            <button mat-button>Kopieren</button>
+        </div>
+        <div class="on-chain">
+
+            <button mat-button>Kopieren</button>
+        </div>
+    </div>
 </div>

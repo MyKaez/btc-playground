@@ -10,3 +10,21 @@ button {
     display: flex;
     flex-direction: column;
 }
+
+.qr-codes {
+    display: flex;
+    flex-direction: row;
+}
+
+.lightning {
+    height: 200px;
+    width: 200px;
+    background-color: yellow;
+    margin-right: $margin-huge;
+}
+
+.on-chain {
+    height: 200px;
+    width: 200px;
+    background-color: orange;
+}
