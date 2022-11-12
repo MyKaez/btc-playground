@@ -1,0 +1,30 @@
+<div class="video-explanation">
+  <app-vid [video]="video"></app-vid>
+</div>
+<div class="text-explanation">
+  <div class="section">
+    <p>
+      Die „klassische“ 51%-Attacke funktioniert wie folgt: Ein Angreifen nimmt sich den online zur Verfügung stehenden
+      Stand des Bitcoin-Netzwerkes und mint diesen offline (nicht sichtbar für die restlichen Netzwerkteilnehmer)
+      weiter. Die Annahme ist nun, dass dieser Angreifer über 51% der Hashrate verfügt und somit schneller bzw.
+      wahrscheinlicher den nächsten / die nächsten Blöcke findet als das restliche Netzwerk es tut (welches ja nur über
+      49% verfügt).
+    </p>
+    <p>
+      Ziel dieses Angriffes ist es nicht Bitcoin zu übernehmen, da es schlichtweg mit diesem Angriff nicht möglich ist,
+      aber durch das Durchführen eines solchen Angriffes ist der Angreifer in der Lage Bitcoin doppelt auszugeben
+      (Double-Spending) und Bitcoin insoweit zu kompromittieren, dass Bitcoin einen Angriff nicht Stand halten konnte
+      und damit sein Versprechen als angriffssicheres Netzwerk bricht.
+    </p>
+  </div>
+  <div class="section">
+    <p>
+      Die Simulation geht einen Schritt weiter, mit dieser lassen sich nicht nur die Hashrate des Angreifers nach
+      Belieben ändern, sondern auch strategische Überlegungen anstellen z.B. das der Angreifer erst dann den Angriff
+      startet, wenn er sich einen oder mehrere Blöcke Vorsprung erarbeitet hat. Auch würde ein Angreifer den Angriff
+      nach großem Rückstand abbrechen und später lieber erneut angreifen, anstatt dem Online-Stand „hinterherzulaufen“.
+      Des Weiteren ist ein Angreifer eventuell durch äußere Einflüsse gezwungen eine gewisse Bestätigungsanzahl an
+      Blöcken abzuwarten – auch dies lässt mittels der Simulation durchspielen.
+    </p>
+  </div>
+</div>

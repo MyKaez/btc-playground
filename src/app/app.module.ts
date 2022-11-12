@@ -5,7 +5,7 @@ import { CarouselModule } from '@coreui/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PowComponent } from './simulations/pow/pow.component';
+import { PowComponent } from './simulations';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -59,7 +59,8 @@ import { TeamService } from './pages/about-the-team/team.service';
 import { BtcService } from './shared/helpers/btc.service';
 import { BtcPayService } from './shared/helpers/btc-pay.service';
 import { DonationComponent } from './page-layout/donation/donation.component';
-import { DefinitionComponent } from './simulations/pow/definition/definition.component';
+import { PowDefinitionComponent } from './simulations/pow/definition/definition.component';
+import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.component';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import { DefinitionComponent } from './simulations/pow/definition/definition.com
     SupportUsComponent,
     BlocksizeComponent,
     DonationComponent,
-    DefinitionComponent
+    PowDefinitionComponent,
+    XpaDefinitionComponent
   ],
   imports: [
     BrowserModule,
