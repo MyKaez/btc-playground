@@ -13,15 +13,6 @@ img {
   }
 }
 
-.donate {
-  width: 35%;
-  min-width: $image-width;
-
-  iframe {
-    width: $image-width;
-  }
-}
-
 .tiles {
   display: flex;
   flex-wrap: wrap;
@@ -49,8 +40,7 @@ img {
     border-radius: 0 2em 0 2em;
   }
 
-  > img,
-  > .donate {
+  > img{
     margin-top: 3em;
   }
 
