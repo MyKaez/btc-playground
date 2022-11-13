@@ -187,8 +187,15 @@
 
   .content-area {
     padding: $margin-huge;
-    max-width: $max-content-width;
+    max-width: $max-content-width;    
     height: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    > * {
+      width: 100%;
+    }
   }
 }
 
