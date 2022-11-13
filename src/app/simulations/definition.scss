@@ -25,3 +25,13 @@ img {
   padding: $margin-large;
   margin: $margin-large;
 }
+
+.simulation-definition {
+  &.info-card {
+    margin: 0;    
+  }
+
+  ::ng-deep .video-explanation iframe {
+    border: 2px solid $primary-300;
+  } 
+}

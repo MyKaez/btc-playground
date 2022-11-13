@@ -12,10 +12,6 @@ export class PowDefinitionComponent implements OnInit {
 
   constructor() { }
 
-  get video(): string{
-    return `https://www.youtube.com/embed/${this.youtubeReference}`;
-  }
-
   ngOnInit(): void {
   }
 
