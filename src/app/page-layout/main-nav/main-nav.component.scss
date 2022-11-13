@@ -2,7 +2,7 @@
 
 @media only screen and (min-width: $small-screen-width) {
   .mat-toolbar {
-    position: fixed;    
+    position: fixed;
     z-index: 50;
   }
 
@@ -26,8 +26,7 @@
     flex-direction: column;
     overflow: auto;
     height: 100%;
-    position: relative;    
-    overflow-y: auto;
+    position: relative;
   }
 
   .app-images {
@@ -72,8 +71,8 @@
     width: 170px;
 
     .data-label {
-      width: 60px; 
-      
+      width: 60px;
+
       &::after {
         content: ":";
       }
@@ -84,7 +83,7 @@
       font-style: italic;
       text-align: right;
 
-      a {        
+      a {
         text-decoration: none;
         color: $light-color;
       }
@@ -110,12 +109,13 @@
   }
 
   @keyframes glow {
-    0% {}
+    0% {
+    }
 
     50% {
       background-color: var(--accent);
-      -webkit-box-shadow: 0px 0px 18px 9px rgba(var(--accent), 0.7);
-      box-shadow: 0px 0px 18px 9px rgba(var(--accent), 0.7);
+      -webkit-box-shadow: 0 0 18px 9px rgba(var(--accent), 0.7);
+      box-shadow: 0 0 18px 9px rgba(var(--accent), 0.7);
     }
   }
 
@@ -148,10 +148,10 @@
       position: absolute;
       flex-direction: column;
       justify-content: flex-start;
-      left: 0px;
+      left: 0;
       z-index: 100;
 
-      >* {
+      > * {
         color: $light-color;
         display: inline-block;
         text-decoration: none;
@@ -190,6 +190,10 @@
     max-width: $max-content-width;
     height: 100%;
   }
+}
+
+.content-simulation {
+  height: 85%;
 }
 
 /* ensure top level divs growing */

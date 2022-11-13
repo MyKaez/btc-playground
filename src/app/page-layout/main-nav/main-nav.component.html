@@ -39,7 +39,7 @@
             <span class="data-label">Blockzeit</span>
             <span class="data-value"><a href="https://mempool.space/block/{{currentBlock}}" target="_blank">{{currentBlock}}</a></span>
             <span class="data-currency"></span>
-          </div>           
+          </div>
         </div>
       </mat-toolbar>
 
@@ -51,7 +51,7 @@
         </span>
       </div>
 
-      <div class=" content-wrapper">
+      <div [class]="contentWrapperClass">
         <div class="content-area">
           <ng-content></ng-content>
         </div>

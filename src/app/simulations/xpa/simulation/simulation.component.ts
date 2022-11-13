@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NotificationService } from 'src/app/shared/media/notification.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {NotificationService} from 'src/app/shared/media/notification.service';
+import {ContentLayoutMode, LayoutService} from "../../../pages";
 
 @Component({
   selector: 'app-xpa-simulation',
   templateUrl: './simulation.component.html',
   styleUrls: ['./simulation.component.scss']
 })
-export class SimulationComponent implements OnInit {
+export class SimulationComponent implements OnInit, OnDestroy {
   isExecuting: boolean = false;
   inputs: FormGroup;
   blockchain: number[] = [];
   attackingBlockchain: number[] = [];
   clearOnStart: boolean = true;
 
-  constructor(private notificationService: NotificationService) {
+  constructor(private notificationService: NotificationService,
+              private layout: LayoutService) {
     this.inputs = new FormGroup({
       blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
       attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),
@@ -34,6 +36,15 @@ export class SimulationComponent implements OnInit {
         }
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.layout.setLayoutMode(ContentLayoutMode.LockImage);
+    this.layout.isSimulation(true);
+  }
+
+  ngOnDestroy(): void {
+    this.layout.isSimulation(false);
   }
 
   get totalAmountBlocks() {
@@ -86,9 +97,6 @@ export class SimulationComponent implements OnInit {
       numbers.push(i);
     }
     return numbers;
-  }
-
-  ngOnInit(): void {
   }
 
   start() {
