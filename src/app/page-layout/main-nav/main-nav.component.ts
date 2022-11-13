@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { LayoutService, ContentLayoutMode } from 'src/app/pages';
 import { BtcBlock, BtcPrice, BtcService } from 'src/app/shared/helpers/btc.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DonationComponent } from '../donation/donation.component';
+import { DonationComponent } from '../../shared/donation/donation.component';
 
 @Component({
   selector: 'app-main-nav',
@@ -116,4 +116,4 @@ const HomeBackgroundImages: string[] = [
   "./assets/img/fixed-crystals.png",
   "./assets/img/fixed-cascade.png",
   "./assets/img/fixed-connected.png"
-] 
+]
