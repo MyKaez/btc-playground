@@ -90,6 +90,7 @@ import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.
     SupportUsComponent,
     BlocksizeComponent,
     DonationComponent,
+    ConditionalImageComponent,
     PowDefinitionComponent,
     XpaDefinitionComponent
   ],
