@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./social-bar.component.scss']
 })
 export class SocialBarComponent implements OnInit {
-  socialLinks: ImageLink[] = [];
+  socialLinks: SocialIcon[] = [];
 
   constructor() { }
 
@@ -14,29 +14,33 @@ export class SocialBarComponent implements OnInit {
     this.socialLinks = this.getSocialLinks();
   }
 
-  private getSocialLinks(): ImageLink[] {
+  private getSocialLinks(): SocialIcon[] {
     return [{
+      iconName: "test",
       href: "https://twitter.com/bitty_kn",
-      src: "assets/twitter_white.svg",
+      imageSrc: "assets/twitter_white.svg",
       alt: "bitty_kn"
     }, {
-
+      iconName: "test",
       href: "https://github.com/MyKaez/btc-playground",
-      src: "assets/GitHub-Mark-Light-64px.png"
+      imageSrc: "assets/GitHub-Mark-Light-64px.png"
     }, {
+      iconName: "test",
       href: "https://www.youtube.com/channel/UC08NXXwbdkZRWSwFOYRSrDA",
-      src: "https://cdn.cdnlogo.com/logos/y/57/youtube-icon.svg",
+      imageSrc: "https://cdn.cdnlogo.com/logos/y/57/youtube-icon.svg",
       alt: "Orange Relationship Youtube Channel"
     },{
+      iconName: "test",
       href:'https://drive.google.com/drive/folders/1dvoWCAcgsuv3Xf7AADXFmh7qoFdWTgI2',
-      src: 'https://www.iconninja.com/files/562/581/211/logo-brand-network-social-gdrive-icon.svg',
+      imageSrc: 'https://www.iconninja.com/files/562/581/211/logo-brand-network-social-gdrive-icon.svg',
       alt: 'Nico`s GDrive'
     }]
   }
 }
 
-export interface ImageLink {
-  src: string;
+export interface SocialIcon {
   href: string;
+  iconName: string;
+  imageSrc?: string;
   alt?: string;
 }
