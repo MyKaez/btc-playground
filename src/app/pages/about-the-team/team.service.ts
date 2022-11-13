@@ -105,7 +105,7 @@ export class TeamService {
             ],
             quote: "Sind wir schon da?",
             paragraphs: [
-                `Hi, ich bin Nico und verliere mich gerne stundenlang in der Webentwicklung, entwerfe Farbschemen und bringe Elemente der Oberfläche zum Leben. Das habe ich gut 10 Jahre bei einem IT Dienstleister in der SharePoint- und Office-Entwicklung geübt, mich mit dem Wechsel in die Forschung jedoch anderen Aufgaben gewidmet. So war es vor Allem die Möglichkeit wieder zu coden, die mich in dieses spannende Projekt gezogen hat, da ich mich bei BitCoin noch auf der Spitze des Eisbergs bewege.`,
+                `Hi, ich bin Nico und verliere mich gerne stundenlang in der Webentwicklung, entwerfe Farbschemen und bringe Elemente der Oberfläche zum Leben. Das habe ich gut 10 Jahre bei einem IT Dienstleister in der SharePoint- und Office-Entwicklung geübt, mich mit dem Wechsel in die Forschung jedoch anderen Aufgaben gewidmet. So war es vor Allem die Möglichkeit wieder zu coden, die mich in dieses spannende Projekt gezogen hat, da ich mich bei Bitcoin noch auf der Spitze des Eisbergs bewege.`,
                 `Außerhalb der Arbeit verbringe ich viel Zeit mit meinen Hunden, meinen Gitarren oder zocke die neuesten Indies.`,
             ],
             cites: ["Praise the sun \\[T]/"],
