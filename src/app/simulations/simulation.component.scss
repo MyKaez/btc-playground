@@ -1,73 +1,74 @@
 @import "/src/app/app.component.scss";
 
 .simulation-items {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+
+  a {
+    color: white;
+  }
+
+  .text {
+    width: 28%;
     height: 100%;
-    width: 100%;
+    overflow: auto;
 
-    a {
-        color: white;
+    .parameters,
+    .calculations,
+    .options,
+    .actions {
+      display: flex;
+      flex-direction: column;
+      color: $light-color;
     }
 
-    .text {
-        width: 28%;
-        height: 100%;
-        overflow: auto;
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
 
-        .parameters,
-        .calculations,
-        .options,
-        .actions {
-            display: flex;
-            flex-direction: column;
-            color: $light-color;
-        }
+  .simulation {
+    height: 100%;
+    width: 70%;
+    border: 1px solid $light-color;
+    background-color: $light-color;
+    border-radius: 0 2em 0 0;
+    text-align: left;
 
-        form {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
+    .console-header {
+      height: 4%;
+      background-color: $light-color;
+      color: $dark-color;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: start;
+      padding-left: $margin-small;
+      border-radius: 0 2em 0 0;
+
+      img {
+        height: 70%;
+      }
+
+      span {
+        padding-left: $margin-huge;
+      }
     }
 
-    .simulation {
-        height: 100%;
-        width: 70%;
-        border: 1px solid $light-color;
-        background-color: $light-color;
-        border-radius: 0.2em;
-        text-align: left;
-
-        .console-header {
-            height: 4%;
-            background-color: $light-color;
-            color: $dark-color;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            padding-left: $margin-small;
-
-            img {
-                height: 70%;
-            }
-
-            span {
-                padding-left: $margin-huge;
-            }
-        }
-
-        .console-data {
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            color: $accent;
-            background-color: $dark-color;
-            white-space: nowrap;
-            overflow: scroll;
-            padding: $margin-small;
-            height: 96%;
-            font-family: $code-font;
-        }
+    .console-data {
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      color: $accent;
+      background-color: $dark-color;
+      white-space: nowrap;
+      padding: $margin-small;
+      height: 96%;
+      font-family: $code-font;
     }
+  }
 }
