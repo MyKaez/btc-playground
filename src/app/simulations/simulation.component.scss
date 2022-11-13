@@ -11,9 +11,12 @@
   }
 
   .text {
-    width: 28%;
-    height: 100%;
     overflow: auto;
+
+    &.info-card {
+      width: auto;
+      height: auto;
+    }
 
     .parameters,
     .calculations,
