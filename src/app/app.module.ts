@@ -59,6 +59,7 @@ import { TeamService } from './pages/about-the-team/team.service';
 import { BtcService } from './shared/helpers/btc.service';
 import { BtcPayService } from './shared/helpers/btc-pay.service';
 import { DonationComponent } from './shared/donation/donation.component';
+import { ConditionalImageComponent } from './shared/media/conditional-image/conditional-image.component';
 import { PowDefinitionComponent } from './simulations/pow/definition/definition.component';
 import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.component';
 

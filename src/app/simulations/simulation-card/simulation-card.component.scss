@@ -1,19 +1,97 @@
 @import "/src/app/app.component.scss";
 
+$simulation-image-background-color: black;
+$simulation-text-height: 60px;
+
 .info-card {
     width: 320px;
+    padding: 0;
+
+    .info-card-content {
+        display: flex;
+        border-bottom: 1px solid $primary-300;
+
+        .info-card-text {
+            font-size: 1em;
+            padding: $margin-large;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+    
+            h2,h3,h4 {
+                color: var(--accent);
+                font-size: x-large;
+            }
+
+            p {
+                margin-bottom: 0;
+                max-height: $simulation-text-height;
+                height: $simulation-text-height;
+            }
+        }
+
+        .simulation-button {
+            position: relative;
+            cursor: pointer;
+            border-left: 1px solid $primary-300;
+            border-top-right-radius: 25%;
+            background-color: $simulation-image-background-color;
+
+            span {
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                padding: $margin-small $margin-large;
+                background-color: rgba(var(--primary), .5);
+                bottom: 0;
+            }
+
+            &:hover {
+                margin-left: 0;
+
+                span {
+                    color: var(--accent);
+                }
+
+                ::ng-deep {
+                    .conditional-image > * {
+                        display: none;
+                    }
+
+                    .conditional-image > .hover-image {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+    button {
+        border: none;
+        padding: 0;
+    }
 }
 
-button {
-    padding: 1em;
-}
+::ng-deep 
+    {
+        youtube-player {
+        padding: 0 !important;
 
-img {
-    width: 100%;
-    border: 2px solid $light-color;
-    border-radius: 1em;
-}
+        iframe {
+            width: 100%;
+            height: 180px;
+            border-bottom-left-radius: 2em;
+            display: block;
+        }
+    }
 
-h2 {
-    color: var(--accent);
+    app-conditional-image {
+        width: 120px;
+        height: 120px;
+
+        .conditional-image > * {            
+            border-top-right-radius: 25%;
+        }
+    }
 }

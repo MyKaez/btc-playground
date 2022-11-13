@@ -105,22 +105,18 @@ export class TeamService {
             ],
             quote: "Sind wir schon da?",
             paragraphs: [
-                `Just within the last hundred years, we humans, inhabitants of a
-          small planet orbiting this unexceptional star, have learned where
-          the galaxies are, what they’re made of, and how they got to be
-          that way.`,
-                `But with new instruments on Earth and in space, we’ve begun to
-          glimpse how much we still don’t know about the cosmos.`
+                `Hi, ich bin Nico und verliere mich gerne stundenlang in der Webentwicklung, entwerfe Farbschemen und bringe Elemente der Oberfläche zum Leben. Das habe ich gut 10 Jahre bei einem IT Dienstleister in der SharePoint- und Office-Entwicklung geübt, mich mit dem Wechsel in die Forschung jedoch anderen Aufgaben gewidmet. So war es vor Allem die Möglichkeit wieder zu coden, die mich in dieses spannende Projekt gezogen hat, da ich mich bei BitCoin noch auf der Spitze des Eisbergs bewege.`,
+                `Außerhalb der Arbeit verbringe ich viel Zeit mit meinen Hunden, meinen Gitarren oder zocke die neuesten Indies.`,
             ],
-            cites: ["Dinge zu bewegen macht einfach Spaß"],
+            cites: ["Praise the sun \\[T]/"],
             socialMedia: [
-                {
-                    type: "twitter",
-                    url: "https://twitter.com/Pandabytez"
-                },
                 {
                     type: "github",
                     url: "https://github.com/Pandabyts"
+                },
+                {
+                    type: "youtube",
+                    url: "https://www.youtube.com/channel/UCw5iTWFHKTl7HiRYqzRQFPQ"
                 }
             ]
         }

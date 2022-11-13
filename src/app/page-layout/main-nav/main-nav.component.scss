@@ -1,5 +1,16 @@
 @import "/src/styles.scss";
 
+@media only screen and (min-width: $small-screen-width) {
+  .mat-toolbar {
+    position: fixed;    
+    z-index: 50;
+  }
+
+  .content-wrapper {
+    margin-top: $header-height;
+  }
+}
+
 .sidenav-container {
   height: 100%;
   width: 100%;
@@ -15,7 +26,8 @@
     flex-direction: column;
     overflow: auto;
     height: 100%;
-    position: relative;
+    position: relative;    
+    overflow-y: auto;
   }
 
   .app-images {
@@ -41,28 +53,53 @@
   background-color: rgba(var(--header-color), 0.75);
 
   /*border-bottom: 1px dashed $light-color;*/
-
-  height: auto;
+  padding: 0;
+  padding-right: $margin-large;
+  height: $header-height;
   min-height: $header-height;
 
   display: flex;
   justify-content: space-between;
 
-  .navigaton {
+  .navigation {
     display: flex;
     flex-direction: row;
   }
 
   .btc-live-data {
     font-size: small;
-    align-self: flex-end;
-    line-height: $margin-huge;
+    line-height: 1.5em;
+    width: 170px;
+
+    .data-label {
+      width: 60px; 
+      
+      &::after {
+        content: ":";
+      }
+    }
+
+    .data-value {
+      flex-grow: 1;
+      font-style: italic;
+      text-align: right;
+
+      a {        
+        text-decoration: none;
+        color: $light-color;
+      }
+    }
+
+    .data-currency {
+      min-width: 30px;
+      margin-left: $margin-small;
+    }
   }
 
   .donation {
     cursor: pointer;
     border-radius: $margin-slim;
-    padding: 0.1em 01em;
+    padding: $margin-slim $margin-large;
     font-size: small;
   }
 
@@ -82,7 +119,7 @@
     }
   }
 
-  a {
+  .menu a {
     color: $light-color;
     display: inline-block;
     text-decoration: none;
@@ -118,13 +155,13 @@
         color: $light-color;
         display: inline-block;
         text-decoration: none;
-        background-color: rgb(var(--footer-color));
+        background-color: lighten($primary, 15%);
         padding: 8px 12px;
         transition-duration: .5s;
         transition-property: background-color;
 
         &:hover {
-          background-color: var(--primary);
+          background-color: rgb(var(--primary));
         }
       }
     }
@@ -147,8 +184,6 @@
 .content-wrapper {
   justify-content: center;
   color: $light-color;
-  height: 85%;
-  overflow-y: auto;
 
   .content-area {
     padding: $margin-huge;

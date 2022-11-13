@@ -1,4 +1,50 @@
+@import "/src/styles.scss";
+
+:host {
+    display: flex;
+    height: 100%;
+}
+
 .logo {
+    display: flex;
+    height: 100%;
+    padding: $margin-small 0;
+    cursor: pointer;
+    background: linear-gradient(120deg, var(--accent) 0%, var(--accent) 20%, #283593 85%, #283593 100%);
+    align-items: center;
+
+    a {
+        display: flex;
+        align-items: center;
+        padding: 0 $margin-large 0 $margin-large;
+
+        img {
+            height: 30px;
+            margin-right: $margin-large;
+        }
+
+        span {
+            display: block;
+            font-size: medium;
+            font-style: italic;
+            transition-property: color;
+            transition-duration: .5s;
+        }
+    }
+
+    &:hover a span {        
+        color: $primary-300;
+    }
+}
+
+.polygon.slash-up-right {
+    width: 60px;
+    height: 100%;
+    clip-path: polygon(0% 0%, 100% 0, 0% 100%);
+    background: linear-gradient(110deg, #283593 0%, #283593 5%, rgba(var(--header-color), .75) 100%);
+}
+
+.logo-old {
     margin-right: 2em;
     cursor: pointer;
 
