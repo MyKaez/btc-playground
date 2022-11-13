@@ -8,12 +8,12 @@
   <mat-sidenav-content>
     <div class="main">
       <mat-toolbar>
-        <div class="navigaton">
+        <app-logo [ngClass]="{hidden: (isHandset$ |async)}"></app-logo>
+        <div class="navigation">
           <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
             *ngIf="isHandset$ | async">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
-          <app-logo [ngClass]="{hidden: (isHandset$ |async)}"></app-logo>
           <div class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
             <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href" [routerLinkActive]="['active']"
               [class.with-sub-nav]="link.links">

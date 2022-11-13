@@ -1,5 +1,15 @@
 @import "/src/styles.scss";
 
+@media only screen and (min-width: $small-screen-width) {
+  .mat-toolbar {
+    position: fixed;    
+  }
+
+  .content-wrapper {
+    margin-top: $header-height;
+  }
+}
+
 .sidenav-container {
   height: 100%;
   width: 100%;
@@ -42,14 +52,15 @@
   background-color: rgba(var(--header-color), 0.75);
 
   /*border-bottom: 1px dashed $light-color;*/
-
-  height: auto;
+  padding: 0;
+  padding-right: $margin-large;
+  height: $header-height;
   min-height: $header-height;
 
   display: flex;
   justify-content: space-between;
 
-  .navigaton {
+  .navigation {
     display: flex;
     flex-direction: row;
   }
