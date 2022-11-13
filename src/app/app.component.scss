@@ -40,7 +40,7 @@ app-blocksize {
     height: max-content;
     min-width: 20em;
     border: 2px solid $primary-300;
-    border-radius: 0em 2em 0em 2em;
+    border-radius: 0 2em 0 2em;
     padding: $margin-large;
     margin: $margin-large;
 
@@ -116,9 +116,12 @@ button {
 .mat-expansion-panel-header {
     color: $light-color;
     background: 0;
-    box-shadow: 2px 0px 0px 0px $light-color inset !important;
-    -webkit-box-shadow: 2px 0px 0px 0px $light-color inset !important;
-    -moz-box-shadow: 2px 0px 0px 0px $light-color inset !important;
+  -webkit-box-shadow: 2px 0 0 0 $light-color inset !important;
+    -moz-box-shadow: 2px 0 0 0 $light-color inset !important;
+}
+
+.mat-expansion-panel-header {
+  box-shadow: 2px 0 0 0 $light-color inset !important;
 }
 
 .mat-expansion-panel-header-title {
@@ -129,9 +132,12 @@ button {
     color: $light-color;
     background: 0;
     margin-top: 1em;
-    box-shadow: 2px 0px 0px 0px $light-color inset !important;
-    -webkit-box-shadow: 2px 0px 0px 0px $light-color inset !important;
-    -moz-box-shadow: 2px 0px 0px 0px $light-color inset !important;
+    box-shadow: 2px 0 0 0 $light-color inset !important;
+  -moz-box-shadow: 2px 0 0 0 $light-color inset !important;
+}
+
+.mat-expansion-panel {
+  -webkit-box-shadow: 2px 0 0 0 $light-color inset !important;
 }
 
 mat-label {
