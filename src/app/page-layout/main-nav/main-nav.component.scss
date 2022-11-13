@@ -3,6 +3,7 @@
 @media only screen and (min-width: $small-screen-width) {
   .mat-toolbar {
     position: fixed;    
+    z-index: 50;
   }
 
   .content-wrapper {
