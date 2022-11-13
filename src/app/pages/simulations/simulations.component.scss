@@ -1,1 +1,22 @@
 @import "/src/app/app.component.scss";
+
+::ng-deep app-simulation-card:last-child .info-card {
+    height: 313px;
+    border: 2px dashed var(--font-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .info-card-content {
+        border-bottom: none !important;
+
+        h3 {
+            text-align: center;
+            color: var(--font-color) !important;
+        }
+    }
+
+    p, youtube-player {
+        display: none;
+    }
+}
