@@ -4,59 +4,47 @@ $content-width: 900px;
 $image-width: 420px;
 
 img {
-    width: $image-width;
+  width: $image-width;
 }
 
 .info-card {
-    a>img {
-        width: 32px;
-    }
-}
-
-.donate {
-    width: 35%;
-    min-width: $image-width;
-
-    iframe {
-        width: $image-width;
-    }
+  a > img {
+    width: 32px;
+  }
 }
 
 .tiles {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
 
-    .info-card {
-        flex: 1 0 calc($content-width / 3);
-        margin-top: 3em;
+  .info-card {
+    flex: 1 0 calc($content-width / 3);
+    margin-top: 3em;
 
-        &:first-child {
-            margin-top: 1em;
-        }
-
-        .block-heading {
-            display: flex;
-
-            >:not(:first-child) {
-                margin-left: $margin-large;
-            }
-        }
+    &:first-child {
+      margin-top: 1em;
     }
 
-    >img {
-        background-color: rgba(var(--footer-color), 0.85);
-        border: 2px solid $light-color;
-        border-radius: 0em 2em 0em 2em;
-        padding: $margin-large;
-    }
+    .block-heading {
+      display: flex;
 
-    >img,
-    >.donate {
-        margin-top: 3em;
-    }
-
-    :nth-child(even) {
+      > :not(:first-child) {
         margin-left: $margin-large;
+      }
     }
+  }
+
+  > img {
+    border: 2px solid $light-color;
+    border-radius: 0 2em 0 2em;
+  }
+
+  > img{
+    margin-top: 3em;
+  }
+
+  :nth-child(even) {
+    margin-left: $margin-large;
+  }
 }

@@ -5,7 +5,7 @@ import { CarouselModule } from '@coreui/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PowComponent } from './simulations/pow/pow.component';
+import { PowComponent } from './simulations';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -60,6 +60,8 @@ import { BtcService } from './shared/helpers/btc.service';
 import { BtcPayService } from './shared/helpers/btc-pay.service';
 import { DonationComponent } from './page-layout/donation/donation.component';
 import { ConditionalImageComponent } from './shared/media/conditional-image/conditional-image.component';
+import { PowDefinitionComponent } from './simulations/pow/definition/definition.component';
+import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.component';
 
 
 @NgModule({
@@ -88,7 +90,9 @@ import { ConditionalImageComponent } from './shared/media/conditional-image/cond
     SupportUsComponent,
     BlocksizeComponent,
     DonationComponent,
-    ConditionalImageComponent
+    ConditionalImageComponent,
+    PowDefinitionComponent,
+    XpaDefinitionComponent
   ],
   imports: [
     BrowserModule,
