@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { WebHelper } from 'src/model/web';
+import {Component, Input, OnInit} from '@angular/core';
+import {WebHelper} from 'src/model/web';
 
 @Component({
   selector: 'app-conditional-image',
@@ -18,7 +18,8 @@ export class ConditionalImageComponent implements OnInit {
 
   isClicked = false;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

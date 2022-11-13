@@ -52,7 +52,7 @@ export class DonationComponent implements OnInit {
   }
 
   copyLightningAddress(): void {
-    let payload = 'lndhub://77050:b1fd0e0c6c84e1cf0306b30475f1e0fcfe858c0f24733bbb90de6d9f75b33a8a@https://lntxbot.com';
+    let payload = 'LNURL1DP68GURN8GHJ7MRWW3UXYMM59E3K7MF09EMK2MRV944KUMMHDCHKCMN4WFK8QTM5WAJKUAREDAHX2MTFD3KXJMMWNZ32PN';
     this.copyData(payload);
   }
 

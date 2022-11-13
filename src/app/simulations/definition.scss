@@ -13,6 +13,15 @@
   margin-top: $margin-huge;
 }
 
-.section{
+.section {
   margin-top: $margin-huge;
+}
+
+img {
+  width: 80%;
+  background-color: rgba($accent, 0.85);
+  border: 2px solid $light-color;
+  border-radius: 0 2em 0 2em;
+  padding: $margin-large;
+  margin: $margin-large;
 }

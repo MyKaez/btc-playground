@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { delay } from 'src/app/shared/delay';
-import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
-import { BtcService } from 'src/app/shared/helpers/btc.service';
-import { Column } from 'src/app/shared/helpers/interfaces';
-import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
-import { calculateTime } from 'src/app/shared/helpers/time';
-import { NotificationService } from 'src/app/shared/media/notification.service';
-import { PowHash } from './interfaces';
-import { PowService } from './pow.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {delay} from 'src/app/shared/delay';
+import {BLOCK_DURATION_IN_SECONDS} from 'src/app/shared/helpers/block';
+import {BtcService} from 'src/app/shared/helpers/btc.service';
+import {Column} from 'src/app/shared/helpers/interfaces';
+import {calculateUnit, UnitOfHash} from 'src/app/shared/helpers/size';
+import {calculateTime} from 'src/app/shared/helpers/time';
+import {NotificationService} from 'src/app/shared/media/notification.service';
+import {PowHash} from './interfaces';
+import {PowService} from './pow.service';
+import {ContentLayoutMode, LayoutService} from "../../../pages";
 
 @Component({
   selector: 'app-pow-simulation',
   templateUrl: './simulation.component.html',
   styleUrls: ['../../simulation.component.scss']
 })
-export class SimulationComponent implements OnInit {
+export class SimulationComponent implements OnInit, OnDestroy {
   public readonly maxAmountOfHashesToShow = 200;
   public readonly minAmountOfHashesToShow = 1;
   private readonly separator = ' | ';
@@ -34,8 +35,9 @@ export class SimulationComponent implements OnInit {
   isProcessing: Subject<boolean> = new Subject();
 
   constructor(private powService: PowService,
-    private notificationService: NotificationService,
-    private btcService: BtcService) {
+              private notificationService: NotificationService,
+              private btcService: BtcService,
+              private layout: LayoutService) {
     this.inputs = new FormGroup({
       hashRate: new FormControl(this.powService.hashRate, this.createHashRateValidators(50)),
       externalHashRate: new FormControl(this.powService.externalHashRate,
@@ -50,6 +52,16 @@ export class SimulationComponent implements OnInit {
     this.isCalculating.subscribe(value => this.toggleAccessibility(value));
     this.isProcessing.next(false);
     this.isCalculating.next(false);
+  }
+
+  async ngOnInit() {
+    await this.executeBlink();
+    this.layout.setLayoutMode(ContentLayoutMode.LockImage);
+    this.layout.isSimulation(true);
+  }
+
+  ngOnDestroy(): void {
+    this.layout.isSimulation(false);
   }
 
   private toggleAccessibility(value: boolean): void {
@@ -74,7 +86,7 @@ export class SimulationComponent implements OnInit {
   }
 
   private set hashRate(value: number) {
-    this.inputs.patchValue({ 'hashRate': value });
+    this.inputs.patchValue({'hashRate': value});
   }
 
   private get blockTime() {
@@ -82,7 +94,7 @@ export class SimulationComponent implements OnInit {
   }
 
   private set blockTime(value: number) {
-    this.inputs.patchValue({ 'blockTime': value });
+    this.inputs.patchValue({'blockTime': value});
   }
 
   private get externalHashRate() {
@@ -90,7 +102,7 @@ export class SimulationComponent implements OnInit {
   }
 
   private set externalHashRate(value: number) {
-    this.inputs.patchValue({ 'externalHashRate': value });
+    this.inputs.patchValue({'externalHashRate': value});
   }
 
   get currentExternalHashrate(): string | undefined {
@@ -158,8 +170,8 @@ export class SimulationComponent implements OnInit {
 
   public get headerLine(): string {
     const length = this.columns
-      .map(c => c.length + this.separator.length)
-      .reduce((prev, cur,) => prev + cur)
+        .map(c => c.length + this.separator.length)
+        .reduce((prev, cur,) => prev + cur)
       - this.separator.length;
     return ''.padEnd(length, '-');
   }
@@ -195,10 +207,6 @@ export class SimulationComponent implements OnInit {
       val += ' | ';
     }
     return val;
-  }
-
-  async ngOnInit() {
-    await this.executeBlink();
   }
 
   async executeBlink() {

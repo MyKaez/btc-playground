@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { LayoutService, ContentLayoutMode } from 'src/app/pages';
-import { BtcBlock, BtcPrice, BtcService } from 'src/app/shared/helpers/btc.service';
-import { MatDialog } from '@angular/material/dialog';
-import { DonationComponent } from '../donation/donation.component';
+import {Component, OnInit} from '@angular/core';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Observable} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
+import {Router} from '@angular/router';
+import {LayoutService, ContentLayoutMode} from 'src/app/pages';
+import {BtcBlock, BtcPrice, BtcService} from 'src/app/shared/helpers/btc.service';
+import {MatDialog} from '@angular/material/dialog';
+import {DonationComponent} from '../../shared/donation/donation.component';
 
 @Component({
   selector: 'app-main-nav',
@@ -31,10 +31,10 @@ export class MainNavComponent implements OnInit {
   lockedImage = () => this.layout.lockedImage;
 
   constructor(private breakpointObserver: BreakpointObserver,
-    private router: Router,
-    public layout: LayoutService,
-    private btcService: BtcService,
-    private dialog: MatDialog) {
+              private router: Router,
+              public layout: LayoutService,
+              private btcService: BtcService,
+              private dialog: MatDialog) {
     this.navLinks = this.getNavLinks();
   }
 
@@ -50,6 +50,10 @@ export class MainNavComponent implements OnInit {
     setTimeout(() => {
       this.donationClass += ' blink';
     }, 10_000)
+  }
+
+  get contentWrapperClass() {
+    return this.layout.getWrapperClass();
   }
 
   isLast(part: string): boolean {
@@ -101,8 +105,8 @@ export class MainNavComponent implements OnInit {
     return fullPath;
   }
 
-  navigateTo(link: string): void {
-    this.router.navigate(['/' + link]);
+  navigateTo(link: string): Promise<boolean> {
+    return this.router.navigate(['/' + link]);
   }
 }
 
@@ -116,4 +120,4 @@ const HomeBackgroundImages: string[] = [
   "./assets/img/fixed-crystals.png",
   "./assets/img/fixed-cascade.png",
   "./assets/img/fixed-connected.png"
-] 
+]
