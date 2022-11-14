@@ -2,28 +2,30 @@
 
 .visions {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-between;        
+
+    >*:not(:first-child) {
+        border-top: 1px solid $primary-300;
+    }
 
     .vision {
         display: flex;
-        flex-direction: column;
-        background-color: rgba(50, 50, 57, .7);
+        justify-content: space-between;
+        align-items: center;
         padding: $margin-large;
-
-        .vision-head {
-            display: flex;
-
-            :not(:last-child) {
-                margin-right: $margin-small;
-            }
-
-            .mat-icon {
-                color: $accent2;
-            }
+        
+        .mat-icon {
+            width: 48px;
         }
 
-        &:not(:last-child) {
-            margin-right: $margin-huge;
+        h4 {
+            min-width: 180px;
+            margin-bottom: 0;
+        }
+
+        >*:not(:first-child) {
+            margin-left: $margin-large;
         }
     }
 }
