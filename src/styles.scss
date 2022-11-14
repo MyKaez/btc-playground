@@ -85,10 +85,10 @@ $fixes-sugar-palette: (
  300: lighten($fixes-sugar-color, 15),
  400: lighten($fixes-sugar-color, 5),
  500: $fixes-sugar-color,
- 600: darken($fixes-sugar-color, 1),
- 700: darken($fixes-sugar-color, 2),
- 800: darken($fixes-sugar-color, 3),
- 900: darken($fixes-sugar-color, 5),
+ 600: darken($fixes-sugar-color, 15),
+ 700: darken($fixes-sugar-color, 25),
+ 800: darken($fixes-sugar-color, 35),
+ 900: darken($fixes-sugar-color, 50),
  contrast: (
     50: lighten($fixes-sugar-contrast, 35),
     100: lighten($fixes-sugar-contrast, 25),
@@ -137,6 +137,8 @@ $primary-700: mat.get-color-from-palette($Simulator-primary, 700);
 $accent: mat.get-color-from-palette($Simulator-accent, 500);
 $accent2: mat.get-color-from-palette($Simulator-accent, 100);
 $sugar: mat.get-color-from-palette($Simulator-sugar, 500);
+$sugar-300: mat.get-color-from-palette($Simulator-sugar, 300);
+$sugar-700: mat.get-color-from-palette($Simulator-sugar, 700);
 
 $dark-color: #1d1000;
 $light-color: white;

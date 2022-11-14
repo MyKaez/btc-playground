@@ -201,6 +201,40 @@
 
 .content-simulation {
   height: 85%;
+
+  ::ng-deep .mat-tab-header {   
+    border-bottom: 2px solid $sugar; 
+
+    .mat-tab-label {
+      padding: 0 !important;
+      padding-top: 1px !important;
+
+      &.mat-tab-label-active .mat-tab-label-content {
+        background-color: $sugar-700;
+
+        span {
+          color: white;
+        }
+      }
+
+      .mat-tab-label-content {
+        border: 2px solid $sugar;        
+        background-color: rgba(var(--header-color), 0.75);
+      }
+
+      &:not(:first-child) .mat-tab-label-content {
+        border-left: none;
+      }
+
+      &:first-child .mat-tab-label-content {
+        border-top-left-radius: 10px;
+      }
+
+      &:last-child .mat-tab-label-content {
+        border-top-right-radius: 10px;
+      }
+    }
+  }
 } 
 
 /* ensure top level divs growing */
