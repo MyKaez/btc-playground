@@ -34,6 +34,8 @@ img {
   .video-explanation {
     display: flex;
     justify-content: center;
+    border-bottom: 2px solid $primary-300;
+    padding-bottom: 1rem;
 
     ::ng-deep iframe {
       border: 2px solid $primary-300;
