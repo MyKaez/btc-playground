@@ -222,6 +222,10 @@
         background-color: rgba(var(--header-color), 0.75);
       }
 
+      &:hover:not(.mat-tab-label-active) .mat-tab-label-content {
+        background-color: $sugar;
+      }
+
       &:not(:first-child) .mat-tab-label-content {
         border-left: none;
       }

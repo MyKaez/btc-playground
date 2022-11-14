@@ -308,3 +308,10 @@ h1, h2, h3 {
     margin-left: 4px;
   }
 }
+
+.mat-button-base:not(.mat-icon-button) {
+  background-color: $sugar-700;
+  border-color: $sugar;
+  padding: $margin-small;
+  color: $gray-70;
+}
