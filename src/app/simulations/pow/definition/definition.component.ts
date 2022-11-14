@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { WebHelper } from 'src/model/web';
 
 @Component({
   selector: 'app-pow-definition',
@@ -12,7 +13,8 @@ export class PowDefinitionComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    WebHelper.ensureYoutubeIframe();
   }
 
 }
