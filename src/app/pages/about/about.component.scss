@@ -1,4 +1,4 @@
-@import "/src/styles.scss";
+@import '/src/app/app.component.scss';
 
 .visions {
     display: flex;
@@ -16,12 +16,13 @@
         padding: $margin-large;
         
         .mat-icon {
-            width: 48px;
+            min-width: 34px;
         }
 
         h4 {
             min-width: 180px;
             margin-bottom: 0;
+            font-size: large;
         }
 
         >*:not(:first-child) {
