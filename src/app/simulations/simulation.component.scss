@@ -26,6 +26,16 @@
       display: flex;
       flex-direction: column;
       color: $light-color;
+
+      .formula {
+        text-align: center;
+        font-size: medium;
+      }
+
+      .small {
+        margin-top: $margin-large;
+        font-size: small;
+      }
     }
 
     form {

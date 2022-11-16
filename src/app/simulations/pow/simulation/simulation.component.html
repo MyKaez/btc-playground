@@ -1,145 +1,152 @@
 <div class="simulation-items">
-    <div class="text info-card">
-        <mat-expansion-panel expanded="false">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <h2>Input</h2>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="parameters">
-                <span>
-                    Auftrittswahrscheinlichkeit: 1 / (Hashrate im Netzwerk * Blockzeit)
-                </span>
-                <form [formGroup]="inputs">
-                    <button mat-button (click)="determineHashRate()" [disabled]="isExecuting">
-                        Eigene Hashrate ermitteln
-                    </button>
-                    {{currentHashrate}}
-                    <mat-form-field appearance="fill">
-                        <mat-label>Hashrate [Hashes pro Sekunde]</mat-label>
-                        <input matInput type="number" formControlName="hashRate" />
-                        <label *ngIf="!isExecuting && !inputs.controls['hashRate'].valid">
-                            <span>{{getErrors('hashRate')}}</span>
-                        </label>
-                    </mat-form-field>
-                    <hr />
-                    <button mat-button (click)="determineExternalHashRate()" [disabled]="isExecuting">
-                        Bitcoin Hashrate ermmitteln
-                    </button>
-                    {{currentExternalHashrate}}
-                    <mat-form-field appearance="fill">
-                        <mat-label>externe Hashrate [Hashes pro Sekunde]</mat-label>
-                        <input matInput type="number" formControlName="externalHashRate" />
-                        <label *ngIf="!isExecuting && !inputs.controls['externalHashRate'].valid">
-                            <span>{{getErrors('externalHashRate')}}</span>
-                        </label>
-                    </mat-form-field>
-                    <button mat-button (click)="setBitcoinBlockTime()" [disabled]="isExecuting">
-                        Bitcoin Blockzeit setzen
-                    </button>
-                    {{currentBlockTime}}
-                    <mat-form-field appearance="fill">
-                        <mat-label>Blockzeit [in Sekunden]</mat-label>
-                        <input matInput type="number" formControlName="blockTime" />
-                        <label *ngIf="!isExecuting && !inputs.controls['blockTime'].valid">
-                            <span>{{getErrors('blockTime')}}</span>
-                        </label>
-                    </mat-form-field>
-                </form>
-            </div>
-            <mat-expansion-panel expanded="false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h3>Berechungen</h3>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="calculations">
-                    <p>
-                        <mat-label>Wahrscheinlichkeit [für richtigen Block]</mat-label><br />
-                        <span> = {{probability}}</span>
-                    </p>
-                    <p>
-                        <mat-label>Anzahl Blöcke [zu finden - nach Wahrscheinlichkeit]</mat-label><br />
-                        <span> = {{expectedAmountOfBlocks}}</span>
-                    </p>
-                    <p>
-                        <mat-label>Anzahl HashRates [zu finden - nach Wahrscheinlichkeit]</mat-label><br />
-                        <span> = {{expectedAmountOfHashrates}}</span>
-                    </p>
-                    <p>
-                        <mat-label>Erwartete Hash Präfixe</mat-label><br />
-                        <span> = {{expectedPrefixes}}</span>
-                    </p>
-                    <p>
-                        <mat-label>Hexadezimale Formel</mat-label><br />
-                        <span> = {{hexaDecimalFormula}}</span>
-                    </p>
-                    <p>
-                        <mat-label>Erwartete Zeit bis zu gefundenem Hash</mat-label><br />
-                        <span> = {{expectedDuration}}</span>
-                    </p>
-                </div>
-            </mat-expansion-panel>
-        </mat-expansion-panel>
+  <div class="text info-card">
+    <mat-expansion-panel expanded="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h2>Input</h2>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="parameters">
+        <form [formGroup]="inputs">
+          <button mat-button (click)="determineHashRate()" [disabled]="isExecuting">
+            Eigene Hashrate ermitteln
+          </button>
+          {{currentHashRate}}
+          <mat-form-field appearance="fill">
+            <mat-label>Hashrate [Hashes pro Sekunde]</mat-label>
+            <input matInput type="number" formControlName="hashRate"/>
+            <label *ngIf="!isExecuting && !inputs.controls['hashRate'].valid">
+              <span>{{getErrors('hashRate')}}</span>
+            </label>
+          </mat-form-field>
+          <hr/>
+          <button mat-button (click)="determineExternalHashRate()" [disabled]="isExecuting">
+            Bitcoin Hashrate ermmitteln
+          </button>
+          {{currentExternalHashRate}}
+          <mat-form-field appearance="fill">
+            <mat-label>externe Hashrate [Hashes pro Sekunde]</mat-label>
+            <input matInput type="number" formControlName="externalHashRate"/>
+            <label *ngIf="!isExecuting && !inputs.controls['externalHashRate'].valid">
+              <span>{{getErrors('externalHashRate')}}</span>
+            </label>
+          </mat-form-field>
+          <button mat-button (click)="setBitcoinBlockTime()" [disabled]="isExecuting">
+            Bitcoin Blockzeit setzen
+          </button>
+          {{currentBlockTime}}
+          <mat-form-field appearance="fill">
+            <mat-label>Blockzeit [in Sekunden]</mat-label>
+            <input matInput type="number" formControlName="blockTime"/>
+            <label *ngIf="!isExecuting && !inputs.controls['blockTime'].valid">
+              <span>{{getErrors('blockTime')}}</span>
+            </label>
+          </mat-form-field>
+        </form>
+      </div>
+      <mat-expansion-panel expanded="false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>Berechungen</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="calculations">
+        <span class="formula">
+          Auftrittswahrscheinlichkeit: <br/>
+          1 / (Hashrate * Blockzeit)
+        </span>
+          <span class="formula small">
+          Auftrittswahrscheinlichkeit: <br/>
+          1 / ({{overallHashRate}} * {{blockTime}})
+        </span>
+          <hr/>
+          <p>
+            <mat-label>Wahrscheinlichkeit [pro Block]</mat-label>
+            <br/>
+            <span> = {{probability*100}}%</span>
+          </p>
+          <p>
+            <mat-label>Anzahl Blöcke [zu finden - nach Wahrscheinlichkeit]</mat-label>
+            <br/>
+            <span> = {{expectedAmountOfBlocks}}</span>
+          </p>
+          <p>
+            <mat-label>Erwartete Hash Präfixe</mat-label>
+            <br/>
+            <span> = {{expectedPrefixes}}</span>
+          </p>
+          <p>
+            <mat-label>Hexadezimale Formel</mat-label>
+            <br/>
+            <span> = {{hexaDecimalFormula}}</span>
+          </p>
+          <p>
+            <mat-label>Durchschnittsdauer bis zu gefundenem Hash</mat-label>
+            <br/>
+            <span> = {{expectedDuration}}</span>
+          </p>
+        </div>
+      </mat-expansion-panel>
+    </mat-expansion-panel>
 
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <h2>Optionen</h2>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="options">
-                <mat-form-field apperance="fill">
-                    <mat-label>Anzahl angezeigter Hashes</mat-label>
-                    <input type="number" matInput [(ngModel)]="amountHashesToShow" [min]="minAmountOfHashesToShow"
-                        step="1" [max]="maxAmountOfHashesToShow">
-                </mat-form-field>
-                <mat-checkbox [(ngModel)]="stopOnFoundBlock">
-                    Stoppen bei gefundenem Block
-                </mat-checkbox>
-                <mat-checkbox [(ngModel)]="clearOnStart">
-                    Clear bei Start
-                </mat-checkbox>
-            </div>
-        </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h2>Optionen</h2>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="options">
+        <mat-form-field apperance="fill">
+          <mat-label>Anzahl angezeigter Hashes</mat-label>
+          <input type="number" matInput [(ngModel)]="amountHashesToShow" [min]="minAmountOfHashesToShow"
+                 step="1" [max]="maxAmountOfHashesToShow">
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="stopOnFoundBlock">
+          Stoppen bei gefundenem Block
+        </mat-checkbox>
+        <mat-checkbox [(ngModel)]="clearOnStart">
+          Clear bei Start
+        </mat-checkbox>
+      </div>
+    </mat-expansion-panel>
 
-        <div class="actions">
-            <button mat-button (click)="start()" [disabled]="isExecuting">Start</button>
-            <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
-            <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
-            <span *ngIf="hashNo > 0">
-                Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br />
-                Ausgeführte eigene Hashraten: {{executedHashrates}}<br />
-                Anzahl eigener Hashes: {{hashNo}}<br />
+    <div class="actions">
+      <button mat-button (click)="start()" [disabled]="isExecuting">Start</button>
+      <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
+      <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
+      <span *ngIf="hashCount > 0">
+                Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br/>
+                Dauer: {{executionTime}}<br/>
+                Anzahl eigener Hashes: {{hashCount}}<br/>
             </span>
-            <div *ngIf="isExecuting">
-                <mat-progress-bar [mode]="'indeterminate'">
-                </mat-progress-bar>
-            </div>
-            <div *ngIf="!isExecuting">
+      <div *ngIf="isExecuting">
+        <mat-progress-bar [mode]="'indeterminate'">
+        </mat-progress-bar>
+      </div>
+      <div *ngIf="!isExecuting">
                 <span>
                     Bereit für Simulation.
                 </span>
-                <mat-progress-bar [mode]="'determinate'">
-                </mat-progress-bar>
-            </div>
-        </div>
+        <mat-progress-bar [mode]="'determinate'">
+        </mat-progress-bar>
+      </div>
     </div>
+  </div>
 
-    <div class="simulation">
-        <div class="console-header">
-            <img src="assets/bitcoin-btc-logo.svg">
-            <span>
-                Proof of Work Simulation
-            </span>
-        </div>
-        <div class="console-data">
-            <span>&gt; {{header}}</span>
-            <span>&gt; {{headerLine}}</span>
-            <span *ngFor="let hash of hashes">
+  <div class="simulation">
+    <div class="console-header">
+      <img src="assets/bitcoin-btc-logo.svg">
+      <span>
+        Proof of Work Simulation
+      </span>
+    </div>
+    <div class="console-data">
+      <span>&gt; {{header}}</span>
+      <span>&gt; {{headerLine}}</span>
+      <span *ngFor="let hash of hashes">
                 &gt; <span *ngFor="let col of columns">{{columnValue(hash, col)}}</span>
             </span>
-            <span>&gt; <span *ngIf="blink">...</span></span>
-        </div>
+      <span>&gt; <span *ngIf="blink">...</span></span>
     </div>
+  </div>
 </div>

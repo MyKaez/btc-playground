@@ -23,10 +23,10 @@ export class SimulationComponent implements OnInit, OnDestroy {
   private readonly separator = ' | ';
 
   private cachedHashes: PowHash[] = [];
+  private executedCycles: number = 0;
 
   inputs: FormGroup;
-  hashNo: number = 0;
-  executedHashrates: number = 0;
+  hashCount: number = 0;
   stopOnFoundBlock: boolean = true;
   clearOnStart: boolean = true;
   blink: boolean = true;
@@ -39,7 +39,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
               private btcService: BtcService,
               private layout: LayoutService) {
     this.inputs = new FormGroup({
-      hashRate: new FormControl(this.powService.hashRate, this.createHashRateValidators(50)),
+      hashRate: new FormControl(this.powService.hashRate, this.createHashRateValidators(150)),
       externalHashRate: new FormControl(this.powService.externalHashRate,
         [Validators.required, Validators.min(0)]),
       blockTime: new FormControl(this.powService.blockTime,
@@ -81,6 +81,14 @@ export class SimulationComponent implements OnInit, OnDestroy {
     return JSON.stringify(this.inputs.controls[control].errors);
   }
 
+  public get executionTime(): string{
+    return calculateTime(this.executedCycles);
+  }
+
+  public get overallHashRate(): number {
+    return this.hashRate + this.externalHashRate;
+  }
+
   private get hashRate(): number {
     return this.inputs.get('hashRate')!.value;
   }
@@ -89,7 +97,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
     this.inputs.patchValue({'hashRate': value});
   }
 
-  private get blockTime() {
+  public get blockTime() {
     return this.inputs.get('blockTime')!.value;
   }
 
@@ -105,12 +113,12 @@ export class SimulationComponent implements OnInit, OnDestroy {
     this.inputs.patchValue({'externalHashRate': value});
   }
 
-  get currentExternalHashrate(): string | undefined {
+  get currentExternalHashRate(): string | undefined {
     const x = calculateUnit(this.externalHashRate, UnitOfHash.hashes);
     return x.toText();
   }
 
-  get currentHashrate(): string | undefined {
+  get currentHashRate(): string | undefined {
     const x = calculateUnit(this.hashRate, UnitOfHash.hashes);
     return x.toText();
   }
@@ -143,7 +151,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
     return this.powService.expectedAmountOfBlocks;
   }
 
-  public get expectedAmountOfHashrates(): number {
+  public get expectedAmountOfCycles(): number {
     return this.powService.expectedAmountOfHashrates;
   }
 
@@ -184,13 +192,13 @@ export class SimulationComponent implements OnInit, OnDestroy {
         mapFunc: c => c.id
       },
       {
-        name: 'Is Valid',
-        length: 'Is Valid'.length,
+        name: 'Valide',
+        length: 'Valide'.length,
         mapFunc: c => c.isValid
       },
       {
-        name: 'Hashrate',
-        length: 'Hashrate'.length,
+        name: 'Sekunde',
+        length: 'Sekunde'.length,
         mapFunc: c => c.hashRate
       },
       {
@@ -243,7 +251,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
       start.setSeconds(start.getSeconds() + 1);
       while (start.getTime() > new Date().getTime()) {
         const hash = this.powService.createHash(
-          validationInput[0], validationInput[1], this.executedHashrates, ++this.hashNo);
+          validationInput[0], validationInput[1], this.executedCycles, ++this.hashCount);
         if (this.cachedHashes.unshift(hash) > this.maxAmountOfHashesToShow) {
           this.cachedHashes.pop();
         }
@@ -277,13 +285,13 @@ export class SimulationComponent implements OnInit, OnDestroy {
       const timeToWait = 1000 / this.hashRate;
       const validationInput = this.powService.validationInput;
       while (this.isExecuting) {
-        this.executedHashrates++;
+        this.executedCycles++;
         for (let i = 0; i < this.hashRate; i++) {
           if (!this.isExecuting) {
             break;
           }
           const hash = this.powService.createHash(
-            validationInput[0], validationInput[1], this.executedHashrates, ++this.hashNo);
+            validationInput[0], validationInput[1], this.executedCycles, ++this.hashCount);
           if (this.cachedHashes.unshift(hash) > this.maxAmountOfHashesToShow) {
             this.cachedHashes.pop();
           }
@@ -308,7 +316,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
       return;
     }
     this.cachedHashes = [];
-    this.executedHashrates = 0;
-    this.hashNo = 0;
+    this.executedCycles = 0;
+    this.hashCount = 0;
   }
 }
