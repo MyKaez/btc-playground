@@ -10,7 +10,7 @@
     height: 100%;
     padding: $margin-small 0;
     cursor: pointer;
-    background: linear-gradient(120deg, var(--accent) 0%, var(--accent) 20%, #283593 85%, #283593 100%);
+    background: linear-gradient(120deg, var(--accent) 0%, var(--accent) 20%, $sugar 65%, $sugar 100%);
     align-items: center;
 
     a {
@@ -41,7 +41,7 @@
     width: 60px;
     height: 100%;
     clip-path: polygon(0% 0%, 100% 0, 0% 100%);
-    background: linear-gradient(110deg, #283593 0%, #283593 5%, rgba(var(--header-color), .75) 100%);
+    background: linear-gradient(110deg, $sugar 0%, $sugar 20%, $sugar-700 50%, rgba(var(--header-color), .75) 100%);
 }
 
 .logo-old {
