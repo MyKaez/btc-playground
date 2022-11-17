@@ -85,7 +85,7 @@ export class MainNavComponent implements OnInit {
         href: "about"
       }]
     }, {
-      title: "Unterstütze uns",
+      title: "Unterstütze Uns",
       href: "support"
     }];
   }

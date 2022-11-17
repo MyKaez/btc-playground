@@ -1,9 +1,12 @@
 @import '/src/app/app.component.scss';
 
+$content-width: 900px;
+
 .visions {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;        
+    justify-content: space-between;     
+    max-width: $content-width;   
 
     >*:not(:first-child) {
         border-top: 1px solid $primary-300;
@@ -23,6 +26,10 @@
             min-width: 180px;
             margin-bottom: 0;
             font-size: large;
+        }
+
+        span {
+            font-size: larger;
         }
 
         >*:not(:first-child) {

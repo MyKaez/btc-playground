@@ -13,6 +13,39 @@
         h3 {
             text-align: center;
             color: var(--font-color) !important;
+
+            position: absolute;
+            top: 140px;
+            left: 75px;
+
+            transition-property: top;
+            transition-duration: .5s;
+        }
+
+        mat-icon {
+            color: var(--font-color) !important;
+            display: inline-block !important;
+            position: absolute;
+            top: 160px;
+            left: 137px;
+
+            width: 48px;
+            height: 48px;
+
+            opacity: 0;
+            transition-property: opacity;
+            transition-duration: 1s;
+            font-size: xxx-large;
+        }
+    }
+
+    &:hover {
+        h3 {                
+            top: 110px;
+        }
+
+        mat-icon {
+            opacity: 1;
         }
     }
 

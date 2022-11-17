@@ -4,6 +4,7 @@ $simulation-image-background-color: black;
 $simulation-text-height: 60px;
 
 .info-card {
+    position: relative;
     width: 320px;
     padding: 0;
 
@@ -28,6 +29,10 @@ $simulation-text-height: 60px;
                 margin-bottom: 0;
                 max-height: $simulation-text-height;
                 height: $simulation-text-height;
+            }
+
+            mat-icon {
+                display: none;
             }
         }
 

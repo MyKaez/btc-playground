@@ -334,3 +334,8 @@ h1, h2, h3 {
   padding: $margin-small;
   color: $gray-70;
 }
+
+a img:hover {
+  -webkit-box-shadow: 11px -9px 10px 0px $sugar-900, 16px -14px 10px 0px $sugar-700, 20px -17px 10px 0px $sugar, 24px -19px 10px 0px $accent; 
+  box-shadow: 11px -9px 10px 0px $sugar-900, 16px -14px 10px 0px $sugar-700, 20px -17px 10px 0px $sugar, 24px -19px 10px 0px $accent;  
+}
