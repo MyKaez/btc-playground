@@ -335,7 +335,16 @@ h1, h2, h3 {
   color: $gray-70;
 }
 
-a img:hover {
-  -webkit-box-shadow: 11px -9px 10px 0px $sugar-900, 16px -14px 10px 0px $sugar-700, 20px -17px 10px 0px $sugar, 24px -19px 10px 0px $accent; 
-  box-shadow: 11px -9px 10px 0px $sugar-900, 16px -14px 10px 0px $sugar-700, 20px -17px 10px 0px $sugar, 24px -19px 10px 0px $accent;  
+.fixed-footer,
+.support-tile-header {
+  /*a img:hover {
+    -webkit-box-shadow: 11px -9px 10px 0px $sugar-900, 16px -14px 10px 0px $sugar-700, 20px -17px 10px 0px $sugar, 24px -19px 10px 0px $accent; 
+    box-shadow: 11px -9px 10px 0px $sugar-900, 16px -14px 10px 0px $sugar-700, 20px -17px 10px 0px $sugar, 24px -19px 10px 0px $accent;  
+  }*/
+
+  a img:hover {
+    -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0); 
+    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+  }
+
 }
