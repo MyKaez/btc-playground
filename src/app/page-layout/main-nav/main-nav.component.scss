@@ -104,18 +104,28 @@
 
   .blink {
     animation-name: glow;
-    animation-duration: 5s;
+    animation-duration: 15s;
     animation-iteration-count: infinite;
+    animation-timing-function: linear;
   }
 
   @keyframes glow {
-    0% {
+    43% {      
+      background-color: rgba(0,0,0,0);
+      -webkit-box-shadow: none;
+      box-shadow: none;
     }
 
     50% {
       background-color: var(--accent);
       -webkit-box-shadow: 0 0 18px 9px rgba(var(--accent), 0.7);
       box-shadow: 0 0 18px 9px rgba(var(--accent), 0.7);
+    }    
+
+    56% {      
+      background-color: rgba(0,0,0,0);
+      -webkit-box-shadow: none;
+      box-shadow: none;
     }
   }
 

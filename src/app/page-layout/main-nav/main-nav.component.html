@@ -26,19 +26,21 @@
             </a>
           </div>
         </div>
-        <div [class]="donationClass" (click)="openDonation()">
-          Spenden
-        </div>
-        <div class="btc-live-data flex-table">
-          <div>
-            <span class="data-label">BTC Preis</span>
-            <span class="data-value">{{currentPrice?.price}}</span>
-            <span class="data-currency">{{currentPrice?.currency}}</span>
+        <div class="far-navigation flex-container">
+          <div class="donation blink" (click)="openDonation()">
+            Spenden
           </div>
-          <div>
-            <span class="data-label">Blockzeit</span>
-            <span class="data-value"><a href="https://mempool.space/block/{{currentBlock}}" target="_blank">{{currentBlock}}</a></span>
-            <span class="data-currency"></span>
+          <div class="btc-live-data flex-table">
+            <div>
+              <span class="data-label">BTC Preis</span>
+              <span class="data-value">{{currentPrice?.price}}</span>
+              <span class="data-currency">{{currentPrice?.currency}}</span>
+            </div>
+            <div>
+              <span class="data-label">Blockzeit</span>
+              <span class="data-value"><a href="https://mempool.space/block/{{currentBlock}}" target="_blank">{{currentBlock}}</a></span>
+              <span class="data-currency"></span>
+            </div>
           </div>
         </div>
       </mat-toolbar>
