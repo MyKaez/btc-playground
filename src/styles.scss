@@ -33,8 +33,8 @@ $fixes-primary-palette: (
  500: $fixes-primary-color,
  600: darken($fixes-primary-color, 5),
  700: darken($fixes-primary-color, 10),
- 800: darken($fixes-primary-color, 15),
- 900: darken($fixes-primary-color, 20),
+ 800: darken($fixes-primary-color, 12),
+ 900: darken($fixes-primary-color, 14),
  contrast: (
     50: lighten($fixes-primary-contrast, 35),
     100: lighten($fixes-primary-contrast, 25),
@@ -87,8 +87,8 @@ $fixes-sugar-palette: (
  500: $fixes-sugar-color,
  600: darken($fixes-sugar-color, 15),
  700: darken($fixes-sugar-color, 25),
- 800: darken($fixes-sugar-color, 35),
- 900: darken($fixes-sugar-color, 50),
+ 800: darken($fixes-sugar-color, 28),
+ 900: darken($fixes-sugar-color, 32),
  contrast: (
     50: lighten($fixes-sugar-contrast, 35),
     100: lighten($fixes-sugar-contrast, 25),
@@ -135,6 +135,7 @@ $primary: mat.get-color-from-palette($Simulator-primary, 500);
 $primary-100: mat.get-color-from-palette($Simulator-primary, 100);
 $primary-300: mat.get-color-from-palette($Simulator-primary, 300);
 $primary-700: mat.get-color-from-palette($Simulator-primary, 700);
+$primary-800: mat.get-color-from-palette($Simulator-primary, 800);
 $primary-900: mat.get-color-from-palette($Simulator-primary, 900);
 
 $accent: mat.get-color-from-palette($Simulator-accent, 500);
