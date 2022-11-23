@@ -73,9 +73,6 @@ export class MainNavComponent implements OnInit {
       title: "Simulationen",
       href: "simulations"
     }, {
-      title: "Info",
-      href: "info"
-    }, {
       title: "Über Uns",
       links: [{
         title: "Über das Team",
