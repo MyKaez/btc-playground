@@ -33,6 +33,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
   isExecuting: boolean = true;
   isCalculating: Subject<boolean> = new Subject();
   isProcessing: Subject<boolean> = new Subject();
+  amountOfHashChars: number = 26;
 
   constructor(private powService: PowService,
               private notificationService: NotificationService,
@@ -81,7 +82,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
     return JSON.stringify(this.inputs.controls[control].errors);
   }
 
-  public get executionTime(): string{
+  public get executionTime(): string {
     return calculateTime(this.executedCycles);
   }
 
@@ -97,11 +98,11 @@ export class SimulationComponent implements OnInit, OnDestroy {
     this.inputs.patchValue({'hashRate': value});
   }
 
-  public get blockTime() {
+  get blockTime() {
     return this.inputs.get('blockTime')!.value;
   }
 
-  private set blockTime(value: number) {
+  set blockTime(value: number) {
     this.inputs.patchValue({'blockTime': value});
   }
 
@@ -170,7 +171,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
   public get header(): string {
     let header = '';
     for (let c of this.columns) {
-      header += c.name.padEnd(c.length, ' ') + this.separator;
+      header += c.name.padEnd(c.length, '.') + this.separator;
     }
     header = header.substring(0, header.length - this.separator.length);
     return header;
@@ -180,7 +181,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
     const length = this.columns
         .map(c => c.length + this.separator.length)
         .reduce((prev, cur,) => prev + cur)
-      - this.separator.length;
+       - 1;
     return ''.padEnd(length, '-');
   }
 
@@ -188,7 +189,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
     return [
       {
         name: 'Hash',
-        length: 64,
+        length: this.amountOfHashChars,
         mapFunc: c => c.id
       },
       {
@@ -292,6 +293,8 @@ export class SimulationComponent implements OnInit, OnDestroy {
           }
           const hash = this.powService.createHash(
             validationInput[0], validationInput[1], this.executedCycles, ++this.hashCount);
+          const suffix = '[...]';
+          hash.id = hash.id.substring(0, this.amountOfHashChars - suffix.length) + suffix;
           if (this.cachedHashes.unshift(hash) > this.maxAmountOfHashesToShow) {
             this.cachedHashes.pop();
           }
