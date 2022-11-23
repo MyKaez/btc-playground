@@ -5,54 +5,69 @@
 **/
 html,
 body {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .app {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  //background: linear-gradient(120deg, $accent 0%, $primary 65%, $primary 100%);
-  background-color: var(--background-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    //background: linear-gradient(120deg, $accent 0%, $primary 65%, $primary 100%);
+    background-color: var(--background-color);
 }
 
 app-xpa,
 app-pow,
 app-blocksize {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .content {
-  display: flex;
-  flex-grow: 1;
-  align-items: center;
-  flex-wrap: wrap;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    flex-wrap: wrap;
 
-  height: 100%;
-  width: 100%;
-  color: var(--font-color);
+    height: 100%;
+    width: 100%;
+    color: var(--font-color);
 }
 
 .info-card {
-  background-color: rgba(var(--primary), 0.9);
-  height: max-content;
-  min-width: 20em;
-  border: 2px solid $primary-300;
-  border-radius: 0 2em 0 2em;
-  padding: $margin-large;
-  margin: $margin-large;
+    background-color: rgba(var(--primary), 0.9);
+    border: 2px solid $primary-300;
+    border-radius: 0 2em 0 2em;
+    padding: $margin-large;
+    margin: $margin-large;
 
-  .info-card-header {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    color: $accent;
-    font-weight: bold;
-    font-size: 2em;
-    margin-bottom: $margin-small;
-  }
+    &.page-card {
+        padding: $margin-huge;
+        width: 100%;
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+        }
+
+        > h2, > h3 {
+            margin-bottom: $margin-huge;
+        }
+    }
+
+    .info-card-header {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        color: $accent;
+        font-weight: bold;
+        font-size: 2em;
+        margin-bottom: $margin-small;
+    }
 
   .info-card-content {
     color: var(--font-color);
@@ -142,4 +157,15 @@ button {
 
 mat-label {
   color: $light-color;
+}
+
+::ng-deep {
+    .cdk-overlay-dark-backdrop {
+        background-color:  rgba(0,0,0,.7);
+    }
+
+    .mat-dialog-container {
+        background-color: rgba($primary-700,0.99);
+        border: 2px solid $primary-100;
+    }
 }

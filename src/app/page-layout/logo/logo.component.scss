@@ -10,7 +10,7 @@
     height: 100%;
     padding: $margin-small 0;
     cursor: pointer;
-    background: linear-gradient(120deg, var(--accent) 0%, var(--accent) 20%, #283593 85%, #283593 100%);
+    background: linear-gradient(115deg, $accent 0%, $sugar-300 50%, $sugar-700 90%, $sugar-700 100%);
     align-items: center;
 
     a {
@@ -25,10 +25,9 @@
 
         span {
             display: block;
-            font-size: medium;
-            font-style: italic;
             transition-property: color;
             transition-duration: .5s;
+            font-family: Bitcoin;
         }
     }
 
@@ -41,7 +40,7 @@
     width: 60px;
     height: 100%;
     clip-path: polygon(0% 0%, 100% 0, 0% 100%);
-    background: linear-gradient(110deg, #283593 0%, #283593 5%, rgba(var(--header-color), .75) 100%);
+    background: linear-gradient(110deg, $sugar-700 0%, $sugar-700 20%, $sugar-900 50%, rgba(var(--header-color), .75) 100%);
 }
 
 .logo-old {

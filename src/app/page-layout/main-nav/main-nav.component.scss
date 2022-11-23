@@ -104,18 +104,28 @@
 
   .blink {
     animation-name: glow;
-    animation-duration: 5s;
+    animation-duration: 15s;
     animation-iteration-count: infinite;
+    animation-timing-function: linear;
   }
 
   @keyframes glow {
-    0% {
+    43% {      
+      background-color: rgba(0,0,0,0);
+      -webkit-box-shadow: none;
+      box-shadow: none;
     }
 
     50% {
       background-color: var(--accent);
       -webkit-box-shadow: 0 0 18px 9px rgba(var(--accent), 0.7);
       box-shadow: 0 0 18px 9px rgba(var(--accent), 0.7);
+    }    
+
+    56% {      
+      background-color: rgba(0,0,0,0);
+      -webkit-box-shadow: none;
+      box-shadow: none;
     }
   }
 
@@ -123,7 +133,7 @@
     color: $light-color;
     display: inline-block;
     text-decoration: none;
-    margin: 0 $margin-huge;
+    margin: 0 $margin-ultra;
     padding: 2px 0;
     cursor: pointer;
     transition-duration: .5s;
@@ -187,14 +197,59 @@
 
   .content-area {
     padding: $margin-huge;
-    max-width: $max-content-width;
+    max-width: $max-content-width;    
     height: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    > * {
+      width: 100%;
+    }
   }
 }
 
 .content-simulation {
   height: 85%;
-}
+
+  ::ng-deep .mat-tab-header {   
+    border-bottom: 2px solid $sugar; 
+
+    .mat-tab-label {
+      padding: 0 !important;
+      padding-top: 1px !important;
+
+      &.mat-tab-label-active .mat-tab-label-content {
+        background-color: $sugar-700;
+
+        span {
+          color: white;
+        }
+      }
+
+      .mat-tab-label-content {
+        border: 2px solid $sugar;        
+        background-color: rgba(var(--header-color), 0.75);
+      }
+
+      &:hover:not(.mat-tab-label-active) .mat-tab-label-content {
+        background-color: $sugar;
+      }
+
+      &:not(:first-child) .mat-tab-label-content {
+        border-left: none;
+      }
+
+      &:first-child .mat-tab-label-content {
+        border-top-left-radius: 10px;
+      }
+
+      &:last-child .mat-tab-label-content {
+        border-top-right-radius: 10px;
+      }
+    }
+  }
+} 
 
 /* ensure top level divs growing */
 .content-wrapper,

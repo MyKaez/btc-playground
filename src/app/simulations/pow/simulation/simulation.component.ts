@@ -170,7 +170,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
   public get header(): string {
     let header = '';
     for (let c of this.columns) {
-      header += c.name.padEnd(c.length, '.') + this.separator;
+      header += c.name.padEnd(c.length, ' ') + this.separator;
     }
     header = header.substring(0, header.length - this.separator.length);
     return header;

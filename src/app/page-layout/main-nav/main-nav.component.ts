@@ -17,7 +17,6 @@ export class MainNavComponent implements OnInit {
   homeImages = HomeBackgroundImages;
   navLinks: NavLink[] = [];
   title: string = 'The Bitcoin Playground';
-  donationClass: string = 'donation';
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -47,9 +46,6 @@ export class MainNavComponent implements OnInit {
       this.btcService.getCurrentPrice().subscribe(price => this.currentPrice = price);
       this.btcService.getLatestBlocks().subscribe(blocks => this.latestBlocks = blocks);
     }, 1000);
-    setTimeout(() => {
-      this.donationClass += ' blink';
-    }, 10_000)
   }
 
   get contentWrapperClass() {
@@ -82,7 +78,7 @@ export class MainNavComponent implements OnInit {
         href: "about"
       }]
     }, {
-      title: "Unterstütze uns",
+      title: "Unterstütze Uns",
       href: "support"
     }];
   }

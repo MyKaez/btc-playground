@@ -2,7 +2,7 @@
 
 .simulation-items {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   height: 100%;
   width: 100%;
 
@@ -11,9 +11,13 @@
   }
 
   .text {
-    width: 28%;
-    height: 100%;
     overflow: auto;
+
+    &.info-card {
+      width: auto;
+      height: auto;
+      margin: 0;    
+    }
 
     .parameters,
     .calculations,
@@ -44,15 +48,16 @@
   .simulation {
     height: 100%;
     width: 70%;
-    border: 1px solid $light-color;
-    background-color: $light-color;
+    border: 1px solid $primary-300;
     border-radius: 0 2em 0 0;
     text-align: left;
+    margin-left: $margin-large;
 
     .console-header {
       height: 4%;
-      background-color: $light-color;
-      color: $dark-color;
+      background-color: rgba(var(--header-color), 0.9);      
+      border-bottom: 1px solid $primary-300;
+      color: white;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -74,7 +79,7 @@
       display: flex;
       flex-direction: column;
       color: $accent;
-      background-color: $dark-color;
+      background-color: $primary-700;
       white-space: nowrap;
       padding: $margin-small;
       height: 96%;

@@ -1,29 +1,39 @@
-@import "/src/styles.scss";
+@import '/src/app/app.component.scss';
+
+$content-width: 900px;
 
 .visions {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-between;     
+    max-width: $content-width;   
+
+    >*:not(:first-child) {
+        border-top: 1px solid $primary-300;
+    }
 
     .vision {
         display: flex;
-        flex-direction: column;
-        background-color: rgba(50, 50, 57, .7);
+        justify-content: space-between;
+        align-items: center;
         padding: $margin-large;
-
-        .vision-head {
-            display: flex;
-
-            :not(:last-child) {
-                margin-right: $margin-small;
-            }
-
-            .mat-icon {
-                color: $accent2;
-            }
+        
+        .mat-icon {
+            min-width: 34px;
         }
 
-        &:not(:last-child) {
-            margin-right: $margin-huge;
+        h4 {
+            min-width: 180px;
+            margin-bottom: 0;
+            font-size: large;
+        }
+
+        span {
+            font-size: larger;
+        }
+
+        >*:not(:first-child) {
+            margin-left: $margin-large;
         }
     }
 }

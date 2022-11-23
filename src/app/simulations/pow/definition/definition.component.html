@@ -1,151 +1,153 @@
-<div class="video-explanation">
-  <app-vid [video]="video"></app-vid>
-</div>
-<div class="text-explanation">
-  <span class="reason">Unsicheres zentrales System? Proof of Work fixes this...</span>
-  <div class="groundwork">
-    <mat-expansion-panel expanded="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <h2>Die Grundlagen</h2>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <p>
-        Um Proof of Work und damit die nachfolgende Simulation richtig verstehen zu können, benötigst du drei Grundlagen
-        über Wahrscheinlichkeitsrechnung:
-      </p>
-      <ul>
-        <li>Auftrittswahrscheinlichkeit</li>
-        <li>Entropie</li>
-        <li>Berechnung</li>
-      </ul>
-      <div class="section">
-        <h3>1. Grundlage: Auftrittswahrscheinlichkeit</h3>
-        <p>
-          Nimm dir (gerne auch einfach nur gedanklich) einen Würfel zur Hand.
-        </p>
-        <p>
-          Lässt es sich, noch bevor du den Würfel geworfen hast, vorhersagen welche Zahl die Augen zeigen werden?
-          Natürlich nicht (klammern wir einmal den Determinismus á la "wir kennen alle Variablen" aus), was sich aber
-          sagen lässt ist, dass wir erwarten (Erwartungswert), dass jede Zahl mit einer Wahrscheinlichkeit von
-        </p>
-        <img src="assets/img/simulations/pow/formula-01.png">
-        <p>
-          auftaucht.
-        </p>
-      </div>
-
-      <div class="section">
-        <h3>2. Grundlage: Entropie</h3>
-        <p>
-          Nehmen wir an du hast nun den Würfel einmal geworfen und die oben liegende Fläche zeigt eine "3". Häufig wird
-          an dieser Stelle die falsche Schlussfolgerung gezogen, dass es viel wahrscheinlicher ist bei einem zweiten
-          Wurf die Zahlen "1", "2", "4", "5" oder "6" (also nicht die "3") auf dem Würfel erscheinen zu sehen, aber das
-          ist isoliert auf den nächsten Wurf betrachtet falsch, da dieser immer gesondert zu betrachten ist oder über
-          eine unendliche Anzahl an Würfen gemittelt werden muss.
-        </p>
-      </div>
-
-      <div class="section">
-        <h3>3. Grundlage: Berechnung</h3>
-        <p>
-          Bei der Wahrscheinlichkeitsrechnung musst du immer abgeschlossene Szenarien definieren, somit hat bei der
-          Frage: "Wie hoch ist die Wahrscheinlichkeit, dass ich eine "3" Würfel?" Vergangenes oder Zukünftiges keine
-          Relevanz für die Beantwortung, währenddessen bei der Frage "Wie hoch ist Wahrscheinlichkeit dreimal infolge
-          eine "3" zu würfeln?" nicht jeder Wurf einzeln betrachtet werden darf, sondern die Gesamtheit der drei:
-        </p>
-        <img src="assets/img/simulations/pow/formula-02.png">
-      </div>
-    </mat-expansion-panel>
+<div class="info-card simulation-definition">
+  <div class="video-explanation">  
+    <youtube-player [videoId]="youtubeReference"></youtube-player>
   </div>
-  <div class="definition">
-    <mat-expansion-panel expanded="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <h2>Definition</h2>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="section">
-        <h3>1. Ein sechzehn flächiger Würfel</h3>
+  <div class="text-explanation">
+    <span class="reason">Unsicheres zentrales System? Proof of Work fixes this...</span>
+    <div class="groundwork">
+      <mat-expansion-panel expanded="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h2>Die Grundlagen</h2>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
         <p>
-          Betrachten wir uns nun einen Bitcoin-Hash, genauer den SHA256 der von Bitcoin verwendete Hashing-Algorithmus
-          und schauen wir uns zunächst nur die erste Stelle an.
+          Um Proof of Work und damit die nachfolgende Simulation richtig verstehen zu können, benötigst du drei Grundlagen
+          über Wahrscheinlichkeitsrechnung:
         </p>
-        <img src="assets/img/simulations/pow/formula-03.png">
-        <p>
-          Okay, soweit so gut, anders als eben hat unser Würfel keine sechs Flächen und damit sechs mögliche Zahlen,
-          sondern sechzehn mögliche Kombinationen. Verlasse also nun bitte die Vorstellung von einem Würfel mit sechs
-          Flächen und stelle dir einen mit sechzehn Flächen vor.
-        </p>
-        <p>
-          Auf jeder Fläche befindet sich einer der folgenden Werte:
-        </p>
-        <img src="assets/img/simulations/pow/formula-04.png">
-        <p>
-          also jene Werte einer sogenannten Hexadezimalen-Zahl, die Zahlenbasis des SHA256-Hashing-Algorithmusses.
-          Unsere Eintrittswahrschlichkeit, dass eine bestimmte Zahl (0 bis 9) oder ein bestimmter Buchstabe (A bis F)
-          auftaucht ist:
-        </p>
-        <img src="assets/img/simulations/pow/formula-05.png">
-        <p>
-          und daraus resultierend leitet sich der Erwartungswert entsprechend ab:
-        </p>
-        <img src="assets/img/simulations/pow/formula-06.png">
-        <p>
-          Wenn also die erste Stelle eine "0" bzw. die Fläche des Würfels nach einem Wurf die Zahl "0" zeigen soll, dann
-          liegt die Eintrittswahrscheinlichkeit für das Auftreten der "0" bei 6,25% oder in der Würfel-Metapher
-          gesprochen: Im Mittel muss 16-mal (Erwartungswert) gewürfelt werden, damit die oben liegende Fläche eine „0“
-          zeigt.
-        </p>
-      </div>
-      <div class="section">
-        <h3>2. Zwei sechzehn flächige Würfel</h3>
-        <p>
-          Wenn wir jetzt zur Betrachtung die zweite Stelle hinzunehmen und definieren, dass diese, neben der ersten,
-          auch ein "0" sein muss, dann haben wir jetzt nicht mehr nur einen Würfel mit sechzehn Flächen, sondern zwei
-          dieser Würfel.
-        </p>
-        <img src="assets/img/simulations/pow/formula-07.png">
-        <p>
-          Um in der bildlichen Darstellung zu bleiben, musst du nun einen Wurf mit den zwei sechzehn flächigen Würfeln
-          machen, mit dem Ziel, dass beide Würfel gleichzeitig die Zahl "0" zeigen.
-        </p>
-        <p>
-          So berechnest du die Eintrittswahrscheinlichkeit:
-        </p>
-        <img src="assets/img/simulations/pow/formula-08.png">
-        <p>
-          im Mittel musst du also 256-mal würfeln:
-        </p>
-        <img src="assets/img/simulations/pow/formula-09.png">
-        <p>
-          um einen gültigen Wurf zu haben, was bedeutet, dass die obenliegenden Flächen beider Würfel eine "0" zeigen.
-        </p>
-        <p>
-          Der Zähler (oberer Wert im Bruch) zeigt immer die zulässigen Kombinationen (wie eben für die „0“ eine
-          zulässige
-          Kombination galt), während der Nenner (unterer Wert im Bruch) die möglichen Kombinationen darstellt.
-        </p>
-        <p>
-          Würden wir also sagen, dass wenn wir zwei Würfel gleichzeitig werfen der erste aber zwangsweise eine „0“
-          zeigen muss, während für den zweiten Würfel neben der „0“ auch eine „1“, „2“, „3“ und „4“ zulässig ist, dann
-          ist die Eintrittswahrscheinlichkeit höher, dass der zweite Würfel eine gültige Zahl zeigt. Die
-          Eintrittswahrscheinlichkeit für eine zulässige Kombination beider Würfel ist folglich:
-        </p>
-        <img src="assets/img/simulations/pow/formula-10.png">
-      </div>
-      <div class="section">
-        <h3>3. Viele sechzehn flächige Würfel</h3>
-        <p>
-          Wenn wir die Wahrscheinlichkeit für eine zulässige Kombination verringern wollen und im Umkehrschluss die
-          Schwierigkeit (die Difficulty) erhöhen wollen, dann haben wir zwei Möglichkeiten, die in der Kombination in
-          Bitcoin verwendet wird.
-        </p>
-        <p>
-          Wir setzen den Zähler auf den kleinsten möglichen Wert von „1“ und wir fügen unserer Betrachtung weitere
-          Stellen (Würfel) hinzu.
-        </p>
-      </div>
-    </mat-expansion-panel>
+        <ul>
+          <li>Auftrittswahrscheinlichkeit</li>
+          <li>Entropie</li>
+          <li>Berechnung</li>
+        </ul>
+        <div class="section">
+          <h3>1. Grundlage: Auftrittswahrscheinlichkeit</h3>
+          <p>
+            Nimm dir (gerne auch einfach nur gedanklich) einen Würfel zur Hand.
+          </p>
+          <p>
+            Lässt es sich, noch bevor du den Würfel geworfen hast, vorhersagen welche Zahl die Augen zeigen werden?
+            Natürlich nicht (klammern wir einmal den Determinismus á la "wir kennen alle Variablen" aus), was sich aber
+            sagen lässt ist, dass wir erwarten (Erwartungswert), dass jede Zahl mit einer Wahrscheinlichkeit von
+          </p>
+          <img src="assets/img/simulations/pow/formula-01.png">
+          <p>
+            auftaucht.
+          </p>
+        </div>
+
+        <div class="section">
+          <h3>2. Grundlage: Entropie</h3>
+          <p>
+            Nehmen wir an du hast nun den Würfel einmal geworfen und die oben liegende Fläche zeigt eine "3". Häufig wird
+            an dieser Stelle die falsche Schlussfolgerung gezogen, dass es viel wahrscheinlicher ist bei einem zweiten
+            Wurf die Zahlen "1", "2", "4", "5" oder "6" (also nicht die "3") auf dem Würfel erscheinen zu sehen, aber das
+            ist isoliert auf den nächsten Wurf betrachtet falsch, da dieser immer gesondert zu betrachten ist oder über
+            eine unendliche Anzahl an Würfen gemittelt werden muss.
+          </p>
+        </div>
+
+        <div class="section">
+          <h3>3. Grundlage: Berechnung</h3>
+          <p>
+            Bei der Wahrscheinlichkeitsrechnung musst du immer abgeschlossene Szenarien definieren, somit hat bei der
+            Frage: "Wie hoch ist die Wahrscheinlichkeit, dass ich eine "3" Würfel?" Vergangenes oder Zukünftiges keine
+            Relevanz für die Beantwortung, währenddessen bei der Frage "Wie hoch ist Wahrscheinlichkeit dreimal infolge
+            eine "3" zu würfeln?" nicht jeder Wurf einzeln betrachtet werden darf, sondern die Gesamtheit der drei:
+          </p>
+          <img src="assets/img/simulations/pow/formula-02.png">
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div class="definition">
+      <mat-expansion-panel expanded="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h2>Definition</h2>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="section">
+          <h3>1. Ein sechzehn flächiger Würfel</h3>
+          <p>
+            Betrachten wir uns nun einen Bitcoin-Hash, genauer den SHA256 der von Bitcoin verwendete Hashing-Algorithmus
+            und schauen wir uns zunächst nur die erste Stelle an.
+          </p>
+          <img src="assets/img/simulations/pow/formula-03.png">
+          <p>
+            Okay, soweit so gut, anders als eben hat unser Würfel keine sechs Flächen und damit sechs mögliche Zahlen,
+            sondern sechzehn mögliche Kombinationen. Verlasse also nun bitte die Vorstellung von einem Würfel mit sechs
+            Flächen und stelle dir einen mit sechzehn Flächen vor.
+          </p>
+          <p>
+            Auf jeder Fläche befindet sich einer der folgenden Werte:
+          </p>
+          <img src="assets/img/simulations/pow/formula-04.png">
+          <p>
+            also jene Werte einer sogenannten Hexadezimalen-Zahl, die Zahlenbasis des SHA256-Hashing-Algorithmusses.
+            Unsere Eintrittswahrschlichkeit, dass eine bestimmte Zahl (0 bis 9) oder ein bestimmter Buchstabe (A bis F)
+            auftaucht ist:
+          </p>
+          <img src="assets/img/simulations/pow/formula-05.png">
+          <p>
+            und daraus resultierend leitet sich der Erwartungswert entsprechend ab:
+          </p>
+          <img src="assets/img/simulations/pow/formula-06.png">
+          <p>
+            Wenn also die erste Stelle eine "0" bzw. die Fläche des Würfels nach einem Wurf die Zahl "0" zeigen soll, dann
+            liegt die Eintrittswahrscheinlichkeit für das Auftreten der "0" bei 6,25% oder in der Würfel-Metapher
+            gesprochen: Im Mittel muss 16-mal (Erwartungswert) gewürfelt werden, damit die oben liegende Fläche eine „0“
+            zeigt.
+          </p>
+        </div>
+        <div class="section">
+          <h3>2. Zwei sechzehn flächige Würfel</h3>
+          <p>
+            Wenn wir jetzt zur Betrachtung die zweite Stelle hinzunehmen und definieren, dass diese, neben der ersten,
+            auch ein "0" sein muss, dann haben wir jetzt nicht mehr nur einen Würfel mit sechzehn Flächen, sondern zwei
+            dieser Würfel.
+          </p>
+          <img src="assets/img/simulations/pow/formula-07.png">
+          <p>
+            Um in der bildlichen Darstellung zu bleiben, musst du nun einen Wurf mit den zwei sechzehn flächigen Würfeln
+            machen, mit dem Ziel, dass beide Würfel gleichzeitig die Zahl "0" zeigen.
+          </p>
+          <p>
+            So berechnest du die Eintrittswahrscheinlichkeit:
+          </p>
+          <img src="assets/img/simulations/pow/formula-08.png">
+          <p>
+            im Mittel musst du also 256-mal würfeln:
+          </p>
+          <img src="assets/img/simulations/pow/formula-09.png">
+          <p>
+            um einen gültigen Wurf zu haben, was bedeutet, dass die obenliegenden Flächen beider Würfel eine "0" zeigen.
+          </p>
+          <p>
+            Der Zähler (oberer Wert im Bruch) zeigt immer die zulässigen Kombinationen (wie eben für die „0“ eine
+            zulässige
+            Kombination galt), während der Nenner (unterer Wert im Bruch) die möglichen Kombinationen darstellt.
+          </p>
+          <p>
+            Würden wir also sagen, dass wenn wir zwei Würfel gleichzeitig werfen der erste aber zwangsweise eine „0“
+            zeigen muss, während für den zweiten Würfel neben der „0“ auch eine „1“, „2“, „3“ und „4“ zulässig ist, dann
+            ist die Eintrittswahrscheinlichkeit höher, dass der zweite Würfel eine gültige Zahl zeigt. Die
+            Eintrittswahrscheinlichkeit für eine zulässige Kombination beider Würfel ist folglich:
+          </p>
+          <img src="assets/img/simulations/pow/formula-10.png">
+        </div>
+        <div class="section">
+          <h3>3. Viele sechzehn flächige Würfel</h3>
+          <p>
+            Wenn wir die Wahrscheinlichkeit für eine zulässige Kombination verringern wollen und im Umkehrschluss die
+            Schwierigkeit (die Difficulty) erhöhen wollen, dann haben wir zwei Möglichkeiten, die in der Kombination in
+            Bitcoin verwendet wird.
+          </p>
+          <p>
+            Wir setzen den Zähler auf den kleinsten möglichen Wert von „1“ und wir fügen unserer Betrachtung weitere
+            Stellen (Würfel) hinzu.
+          </p>
+        </div>
+      </mat-expansion-panel>
+    </div>
   </div>
 </div>

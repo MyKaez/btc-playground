@@ -33,8 +33,8 @@ $fixes-primary-palette: (
  500: $fixes-primary-color,
  600: darken($fixes-primary-color, 5),
  700: darken($fixes-primary-color, 10),
- 800: darken($fixes-primary-color, 15),
- 900: darken($fixes-primary-color, 20),
+ 800: darken($fixes-primary-color, 12),
+ 900: darken($fixes-primary-color, 14),
  contrast: (
     50: lighten($fixes-primary-contrast, 35),
     100: lighten($fixes-primary-contrast, 25),
@@ -76,7 +76,7 @@ $fixes-accent-palette: (
  )
 );
 
-$fixes-sugar-color: #493BAE;
+$fixes-sugar-color: #2B4487;
 $fixes-sugar-contrast: #AACD55;
 $fixes-sugar-palette: (
  50: lighten($fixes-sugar-color, 50),
@@ -85,10 +85,10 @@ $fixes-sugar-palette: (
  300: lighten($fixes-sugar-color, 15),
  400: lighten($fixes-sugar-color, 5),
  500: $fixes-sugar-color,
- 600: darken($fixes-sugar-color, 1),
- 700: darken($fixes-sugar-color, 2),
- 800: darken($fixes-sugar-color, 3),
- 900: darken($fixes-sugar-color, 5),
+ 600: darken($fixes-sugar-color, 15),
+ 700: darken($fixes-sugar-color, 25),
+ 800: darken($fixes-sugar-color, 28),
+ 900: darken($fixes-sugar-color, 32),
  contrast: (
     50: lighten($fixes-sugar-contrast, 35),
     100: lighten($fixes-sugar-contrast, 25),
@@ -132,11 +132,23 @@ $Simulator-theme: mat.define-dark-theme((color: (primary: $Simulator-primary,
 // desired: #21212a;
 
 $primary: mat.get-color-from-palette($Simulator-primary, 500);
+$primary-100: mat.get-color-from-palette($Simulator-primary, 100);
 $primary-300: mat.get-color-from-palette($Simulator-primary, 300);
 $primary-700: mat.get-color-from-palette($Simulator-primary, 700);
+$primary-800: mat.get-color-from-palette($Simulator-primary, 800);
+$primary-900: mat.get-color-from-palette($Simulator-primary, 900);
+
 $accent: mat.get-color-from-palette($Simulator-accent, 500);
-$accent2: mat.get-color-from-palette($Simulator-accent, 100);
+$accent-100: mat.get-color-from-palette($Simulator-accent, 100);
+$accent-300: mat.get-color-from-palette($Simulator-accent, 300);
+$accent-700: mat.get-color-from-palette($Simulator-accent, 700);
+$accent-900: mat.get-color-from-palette($Simulator-accent, 900);
+
 $sugar: mat.get-color-from-palette($Simulator-sugar, 500);
+$sugar-100: mat.get-color-from-palette($Simulator-sugar, 100);
+$sugar-300: mat.get-color-from-palette($Simulator-sugar, 300);
+$sugar-700: mat.get-color-from-palette($Simulator-sugar, 700);
+$sugar-900: mat.get-color-from-palette($Simulator-sugar, 900);
 
 $dark-color: #1d1000;
 $light-color: white;
@@ -163,10 +175,22 @@ $min-content-width: 200px;
 $small-screen-width: 900px; 
 
 /* spaces */
-$margin-slim: .25em;
-$margin-small: .5em;
-$margin-large: 1em;
-$margin-huge: 2em;
+$margin-slim: .25rem;
+$margin-small: .5rem;
+$margin-large: 1rem;
+$margin-huge: 2rem;
+$margin-ultra: 4rem;
+
+/* fonts */
+@font-face {
+  font-family: "Bitcoin";
+  src: url("./assets/fonts/Ubuntu-BoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Starjedi";
+  src: url("./assets/fonts/Starjedi.ttf") format("truetype");
+}
 
 html,
 body {
@@ -179,7 +203,6 @@ body {
 
   --primary: #{hexToRgb($primary)};
   --accent: #{$accent};
-  --accent2: #{$accent2};
   --sugar: #{$sugar};
 
   --background-color: #{lighten($primary, 5%)};
@@ -234,14 +257,16 @@ h1, h2, h3 {
 
 /* ### shared component styles ### */
 
-.container {
+.flex-container {
   display: flex;
   flex-wrap: wrap;
-  padding: $margin-large;
 
-  :not(:first-child) {
+  > :not(:first-child) {
     margin-left: $margin-large;
-    margin-bottom: $margin-large;
+  }
+
+  &.huge-gaps > :not(:first-child) {
+    margin-left: $margin-huge;
   }
 }
 
@@ -304,4 +329,25 @@ h1, h2, h3 {
     margin-top: 2px;
     margin-left: 4px;
   }
+}
+
+.mat-button-base:not(.mat-icon-button) {
+  background-color: $sugar-700;
+  border-color: $sugar;
+  padding: $margin-small;
+  color: $gray-70;
+}
+
+.fixed-footer,
+.support-tile-header {
+  /*a img:hover {
+    -webkit-box-shadow: 11px -9px 10px 0px $sugar-900, 16px -14px 10px 0px $sugar-700, 20px -17px 10px 0px $sugar, 24px -19px 10px 0px $accent; 
+    box-shadow: 11px -9px 10px 0px $sugar-900, 16px -14px 10px 0px $sugar-700, 20px -17px 10px 0px $sugar, 24px -19px 10px 0px $accent;  
+  }*/
+
+  a img:hover {
+    -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0); 
+    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+  }
+
 }

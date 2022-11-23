@@ -2,6 +2,7 @@
 
 $content-width: 900px;
 $image-width: 420px;
+$max-text-width: 500px;
 
 img {
   width: $image-width;
@@ -13,38 +14,52 @@ img {
   }
 }
 
-.tiles {
+.support-tiles {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  max-width: 900px;
+  max-width: $content-width;
 
-  .info-card {
-    flex: 1 0 calc($content-width / 3);
-    margin-top: 3em;
+  >*:not(:first-child) {
+    margin-top: $margin-huge;
+  }
+  
+  .support-tile-span {
+    display: flex;
+    justify-content: space-between;
 
-    &:first-child {
-      margin-top: 1em;
-    }
+    &:nth-child(even) { 
+      .support-tile {
+        margin-left: $margin-huge;
+        order: 2;
+      }
 
-    .block-heading {
-      display: flex;
-
-      > :not(:first-child) {
-        margin-left: $margin-large;
+      .support-tile-image {        
+        margin-left: 0;
       }
     }
-  }
 
-  > img {
-    border: 2px solid $light-color;
-    border-radius: 0 2em 0 2em;
-  }
+    .support-tile-image {
+      margin-left: $margin-huge;
 
-  > img{
-    margin-top: 3em;
-  }
+      > img {        
+        border: 2px solid $primary-300;
+        border-radius: 0 2em 0 2em;
+      }
+    }
 
-  :nth-child(even) {
-    margin-left: $margin-large;
+    .support-tile {
+      max-width: $max-text-width;
+      padding-top: $margin-huge;
+
+      .support-tile-header {
+        display: flex;
+        margin-bottom: $margin-small;
+
+        a {
+          margin-left: $margin-large;
+        }
+      }
+    }
   }
 }
