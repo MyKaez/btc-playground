@@ -83,14 +83,6 @@ export class SimulationComponent implements OnInit, OnDestroy {
     return this.attackingBlockchain.length / this.blocksToComplete * 100;
   }
 
-  get probabilityBlockchain(): string {
-    return 'Formel?!';
-  }
-
-  get probabilityAttackingBlockchain(): string {
-    return 'Formel?!';
-  }
-
   get totalBlocks(): number[] {
     let numbers = [];
     for (let i = 0; i < this.blocksToComplete; i++) {
