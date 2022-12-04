@@ -41,7 +41,9 @@
 
 .sidenav {
   width: 200px;
-  background-color: unset;
+  background-color: $primary-700;
+  background: linear-gradient(45deg, $primary-700, $sugar-700);
+  border-right: 1px solid $primary-300;
 }
 
 .hidden {
