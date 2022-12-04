@@ -14,7 +14,7 @@
 .sidenav-container {
   height: 100%;
   width: 100%;
-  background-color: transparent !important;
+  background-color: unset !important;
 }
 
 .mat-sidenav-content {
@@ -41,6 +41,7 @@
 
 .sidenav {
   width: 200px;
+  background-color: unset;
 }
 
 .hidden {
