@@ -128,54 +128,86 @@
       box-shadow: none;
     }
   }
+}
 
-  .menu a {
-    color: $light-color;
-    display: inline-block;
-    text-decoration: none;
+a.nav-link {
+  color: $light-color;
+  display: inline-block;
+  text-decoration: none;
+  padding: 2px 0;
+  cursor: pointer;
+  transition-duration: .5s;
+  transition-property: color;
+
+  &.nav-link-top {
     margin: 0 $margin-ultra;
-    padding: 2px 0;
-    cursor: pointer;
-    transition-duration: .5s;
-    transition-property: color;
 
     &:hover {
       &:not(.with-sub-nav) {
         color: rgba(255, 255, 255, .4);
       }
-
+  
       .sub-nav {
         display: flex;
       }
     }
 
-    &.active {
-      border-bottom: 2px solid var(--accent);
-    }
-
     .sub-nav {
-      display: none;
       position: absolute;
-      flex-direction: column;
-      justify-content: flex-start;
       left: -35px;
       z-index: 100;
-
-      > * {
-        color: $light-color;
-        display: inline-block;
-        text-decoration: none;
-        background-color: lighten($primary, 15%);
-        padding: 8px 12px;
-        transition-duration: .5s;
-        transition-property: background-color;
-        margin: 0;
-
+  
+      > * {  
         &:hover {
           background-color: rgb(var(--primary));
         }
       }
     }
+  }
+
+  &.nav-link-side {
+    height: auto;
+    min-height: 48px;
+
+    ::ng-deep .mat-list-item-content {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  &.active {
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .nav-link-text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    >*:not(:first-child) {
+      margin-left: $margin-large;
+    }
+  }
+
+  .sub-nav {
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    > * {
+      color: $light-color;
+      display: inline-block;
+      text-decoration: none;
+      background-color: lighten($primary, 15%);
+      padding: 8px 12px;
+      transition-duration: .5s;
+      transition-property: background-color;
+      margin: 0;
+    }
+  }
+
+  &.expanded .sub-nav {
+    display: flex;
   }
 }
 

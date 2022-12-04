@@ -1,21 +1,37 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container">  
   <mat-sidenav #drawer class="sidenav" [ngClass]="{hidden: !(isHandset$ |async)}" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false">
     <mat-nav-list>
+      <a mat-list-item *ngFor="let link of navLinks" class="nav-link nav-link-side" [routerLink]="link.href" [routerLinkActive]="['active']" (click)="toggleNavigationEntry(link)"
+        [class.with-sub-nav]="link.links" [class.expanded]="link.isExpanded">
+        <div class="nav-link-text">
+          <span>{{link.title}}</span>
+          <mat-icon class="nav-icon" *ngIf="link.links && link.isExpanded">expand_less</mat-icon>
+          <mat-icon class="nav-icon"*ngIf="link.links && !link.isExpanded">expand_more</mat-icon>
+        </div>
+
+        <div class="sub-nav" *ngIf="link.links">
+          <a mat-list-item *ngFor="let sub of link.links" [routerLink]="sub.href" [routerLinkActive]="['active']">
+            {{sub.title}}
+          </a>
+        </div>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <div class="main">
       <mat-toolbar>
         <app-logo [ngClass]="{hidden: (isHandset$ |async)}"></app-logo>
+
         <div class="navigation">
           <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
             *ngIf="isHandset$ | async">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
           <div class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
-            <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href" [routerLinkActive]="['active']"
+            <a class="nav-link nav-link-top" mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href" [routerLinkActive]="['active']"
               [class.with-sub-nav]="link.links">
               <span>{{link.title}}</span>
               <div class="sub-nav" *ngIf="link.links">
@@ -26,6 +42,7 @@
             </a>
           </div>
         </div>
+
         <div class="far-navigation flex-container">
           <div class="donation blink" (click)="openDonation()">
             Spenden
