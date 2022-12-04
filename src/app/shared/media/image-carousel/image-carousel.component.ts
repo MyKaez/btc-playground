@@ -5,8 +5,7 @@ import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 @Component({
   selector: 'app-image-carousel',
   templateUrl: './image-carousel.component.html',
-  styleUrls: ['./image-carousel.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./image-carousel.component.scss']
 })
 export class ImageCarouselComponent implements OnInit {
   @Input("image-urls")
