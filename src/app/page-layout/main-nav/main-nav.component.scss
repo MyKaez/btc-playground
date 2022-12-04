@@ -158,7 +158,7 @@
       position: absolute;
       flex-direction: column;
       justify-content: flex-start;
-      left: 0;
+      left: -35px;
       z-index: 100;
 
       > * {
@@ -169,6 +169,7 @@
         padding: 8px 12px;
         transition-duration: .5s;
         transition-property: background-color;
+        margin: 0;
 
         &:hover {
           background-color: rgb(var(--primary));
