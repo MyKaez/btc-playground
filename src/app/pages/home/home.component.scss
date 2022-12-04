@@ -1,55 +1,59 @@
 @import "/src/app/app.component.scss";
 
-.content {  
-  width: 1200px;
+
+@media only screen and (min-width: $max-content-width) {
+  .content {  
+    width: 1200px;
+  }
+
+  .text {
+    //START Kenny
+  
+    //TBD: pictures should follow certain pattern, in order to
+    // not cut off content. this works on Kenny's machine for the first picture
+    //margin-left: -5em;
+    //margin-top: -5em;
+  
+    // TBD: card for first page?
+    background-color: rgba(var(--primary), 0.9);
+    border: 2px solid $primary-300;
+    border-radius: 0 2em 0 2em;
+    margin-bottom: $margin-large;
+    padding: 1em 1.3em;
+  
+    //END Kenny
+  
+    .question {
+      font-size: 0.7em;
+      font-style: italic;
+      margin-bottom: 1.5em;
+    }
+  
+    h1 {
+      font-size: 1.6em;
+      line-height: 1.2em;
+    }
+  
+    h2 {
+      font-size: 1.6em;
+      line-height: 1.2em;
+    }
+  
+    a {
+      color: white;
+    }
+  
+    .explanation {
+      margin-top: 1.2em;
+    }
+  
+    font-size: 2em;
+    line-height: 1.2em;
+    min-width: 10em;
+  }
 }
 
-.text {
-  //START Kenny
-
-  //TBD: pictures should follow certain pattern, in order to
-  // not cut off content. this works on Kenny's machine for the first picture
-  //margin-left: -5em;
-  //margin-top: -5em;
-
-  // TBD: card for first page?
-  background-color: rgba(var(--primary), 0.9);
-  border: 2px solid $primary-300;
-  border-radius: 0 2em 0 2em;
-  margin-bottom: $margin-large;
-  padding: 1em 1.3em;
-
-  //END Kenny
-
-  .question {
-    font-size: 0.7em;
-    font-style: italic;
-    margin-bottom: 1.5em;
-  }
-
-  h1 {
-    font-size: 1.6em;
-    line-height: 1.2em;
-  }
-
-  h2 {
-    font-size: 1.6em;
-    line-height: 1.2em;
-  }
-
-  a {
-    color: white;
-  }
-
-  .explanation {
-    margin-top: 1.2em;
-  }
-
-  font-size: 2em;
-  line-height: 1.2em;
-
+.text {  
   text-align: left;
-  width: 40%;
-  max-width: 30em;
-  min-width: 20em;
+  max-width: 19em;
 }

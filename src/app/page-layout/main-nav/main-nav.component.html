@@ -2,7 +2,8 @@
   <mat-sidenav #drawer class="sidenav" [ngClass]="{hidden: !(isHandset$ |async)}" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false">
-    <mat-nav-list>
+    <mat-nav-list>      
+      <app-logo></app-logo>
       <a mat-list-item *ngFor="let link of navLinks" class="nav-link nav-link-side" [routerLink]="link.href" [routerLinkActive]="['active']" (click)="toggleNavigationEntry(link)"
         [class.with-sub-nav]="link.links" [class.expanded]="link.isExpanded">
         <div class="nav-link-text">

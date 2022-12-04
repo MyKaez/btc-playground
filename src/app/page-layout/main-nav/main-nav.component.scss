@@ -43,7 +43,7 @@
   width: 200px;
   background-color: $primary-700;
   background: linear-gradient(45deg, $primary-700, $sugar-700);
-  border-right: 1px solid $primary-300;
+  border-right: 1px solid $primary-100;
 }
 
 .hidden {
@@ -133,6 +133,10 @@
   }
 }
 
+mat-nav-list {
+  padding-top: 0;
+}
+
 a.nav-link {
   color: $light-color;
   display: inline-block;
@@ -170,7 +174,7 @@ a.nav-link {
 
   &.nav-link-side {
     height: auto;
-    min-height: 48px;
+    padding: $margin-large 0;
 
     ::ng-deep .mat-list-item-content {
       flex-direction: column;
@@ -233,7 +237,7 @@ a.nav-link {
 
   .content-area {
     padding: $margin-huge;
-    max-width: $max-content-width;    
+    max-width: 98vw;    
     height: 100%;
 
     display: flex;
@@ -242,6 +246,17 @@ a.nav-link {
     > * {
       width: 100%;
     }
+  }
+
+  ::ng-deep .content {
+    max-width: 98vw;
+  }
+}
+
+@media only screen and (min-width: $max-content-width) {
+  .content-area,
+  ::ng-deep .content {
+    max-width: $max-content-width !important;
   }
 }
 
