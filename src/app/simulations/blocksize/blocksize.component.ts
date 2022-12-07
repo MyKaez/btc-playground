@@ -4,6 +4,7 @@ import {calculateUnit, UnitOfSize} from 'src/app/shared/helpers/size';
 import {calculateTime} from 'src/app/shared/helpers/time';
 import {BlockSizeService} from './simulation/blocksize.service';
 import {BlockData, Interval} from './simulation/types';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-blocksize',
@@ -14,10 +15,12 @@ import {BlockData, Interval} from './simulation/types';
 export class BlocksizeComponent implements OnInit, OnDestroy {
   blocks: BlockData[];
   spaceInBytes: number = 1_000_000_000_000;
+  isHandset$: Observable<boolean>;
 
   constructor(private blockSizeService: BlockSizeService,
               private layout: LayoutService) {
     this.blocks = this.createBlocks();
+    this.isHandset$ = layout.isHandset;
   }
 
   ngOnInit(): void {
