@@ -1,4 +1,4 @@
-<div class="simulation-items">
+<div [class]="(isHandset$ | async) ? 'simulation-items-handset': 'simulation-items'">
   <div class="text info-card">
     <mat-expansion-panel expanded="false">
       <mat-expansion-panel-header>

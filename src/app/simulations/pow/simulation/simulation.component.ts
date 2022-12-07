@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {delay} from 'src/app/shared/delay';
 import {BLOCK_DURATION_IN_SECONDS} from 'src/app/shared/helpers/block';
 import {BtcService} from 'src/app/shared/helpers/btc.service';
@@ -34,6 +34,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
   isCalculating: Subject<boolean> = new Subject();
   isProcessing: Subject<boolean> = new Subject();
   amountOfHashChars: number = 26;
+  isHandset$: Observable<boolean>;
 
   constructor(private powService: PowService,
               private notificationService: NotificationService,
@@ -53,6 +54,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
     this.isCalculating.subscribe(value => this.toggleAccessibility(value));
     this.isProcessing.next(false);
     this.isCalculating.next(false);
+    this.isHandset$ = layout.isHandset;
   }
 
   async ngOnInit() {
@@ -181,7 +183,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
     const length = this.columns
         .map(c => c.length + this.separator.length)
         .reduce((prev, cur,) => prev + cur)
-       - 1;
+      - 1;
     return ''.padEnd(length, '-');
   }
 

@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from 'src/app/shared/media/notification.service';
 import {ContentLayoutMode, LayoutService} from "../../../pages";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-xpa-simulation',
@@ -14,6 +15,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
   blockchain: number[] = [];
   attackingBlockchain: number[] = [];
   clearOnStart: boolean = true;
+  isHandset$: Observable<boolean>;
 
   constructor(private notificationService: NotificationService,
               private layout: LayoutService) {
@@ -36,6 +38,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
         }
       }
     });
+    this.isHandset$ = layout.isHandset;
   }
 
   ngOnInit(): void {
