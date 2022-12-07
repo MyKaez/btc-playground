@@ -48,6 +48,8 @@ export class SimulationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.layout.isSimulation(false);
+    this.stop();
+    this.clear();
   }
 
   get totalAmountBlocks() {
