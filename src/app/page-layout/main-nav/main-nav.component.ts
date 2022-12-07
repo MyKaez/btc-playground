@@ -98,8 +98,12 @@ export class MainNavComponent implements OnInit {
     return fullPath;
   }
 
-  navigateTo(link: string): Promise<boolean> {
-    return this.router.navigate(['/' + link]);
+  navigateTo(url: string): Promise<boolean> {
+    return this.router.navigate(['/' + url]);
+  }
+
+  toggleNavigationEntry(link: NavLink) {
+    link.isExpanded = !link.isExpanded;
   }
 }
 
@@ -107,6 +111,7 @@ export interface NavLink {
   title: string;
   href?: string;
   links?: NavLink[];
+  isExpanded?: boolean;
 }
 
 const HomeBackgroundImages: string[] = [

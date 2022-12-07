@@ -1,9 +1,18 @@
-/*.image-carousel {
+:host {
+    display: block;
     height: 100%;
-    width: 100%;
+}
 
-    * {        
+::ng-deep {
+    .carousel,
+    .carousel-inner,
+    .carousel-inner>div,
+    .carousel-item,
+    img {
         height: 100%;
-        width: 100%;
     }
-}*/
+
+    img {
+        object-fit: cover;
+    }
+}

@@ -210,7 +210,8 @@ body {
   --footer-color: #{hexToRgb($primary)};
   --font-color: #{$gray-70};
 
-  background-color: var(--background-color);
+  background-color: $primary-700;
+  background: linear-gradient(45deg, $primary-700, $sugar-700);
 }
 
 table {
