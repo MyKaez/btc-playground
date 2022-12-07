@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Observable} from 'rxjs';
-import {map, shareReplay} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {LayoutService, ContentLayoutMode} from 'src/app/pages';
 import {BtcBlock, BtcPrice, BtcService} from 'src/app/shared/helpers/btc.service';
@@ -17,11 +15,7 @@ export class MainNavComponent implements OnInit {
   homeImages = HomeBackgroundImages;
   navLinks: NavLink[] = [];
   title: string = 'The Bitcoin Playground';
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  isHandset$: Observable<boolean>;
   currentPrice?: BtcPrice;
   latestBlocks: BtcBlock[] = [];
 
@@ -29,12 +23,12 @@ export class MainNavComponent implements OnInit {
   isLockImage = () => this.layout.currentLayoutMode == ContentLayoutMode.LockImage;
   lockedImage = () => this.layout.lockedImage;
 
-  constructor(private breakpointObserver: BreakpointObserver,
-              private router: Router,
+  constructor(private router: Router,
               public layout: LayoutService,
               private btcService: BtcService,
               private dialog: MatDialog) {
     this.navLinks = this.getNavLinks();
+    this.isHandset$ = layout.isHandset;
   }
 
   get currentBlock(): number {
