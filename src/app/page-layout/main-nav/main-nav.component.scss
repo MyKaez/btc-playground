@@ -238,7 +238,7 @@ a.nav-link {
   color: $light-color;
 
   .content-area {
-    padding: $margin-huge;
+    padding: $margin-large $margin-small;
     max-width: 98vw;    
     height: 100%;
 
@@ -256,6 +256,10 @@ a.nav-link {
 }
 
 @media only screen and (min-width: $max-content-width) {
+  .content-area {
+    padding: $margin-huge !important;
+  }
+
   .content-area,
   ::ng-deep .content {
     max-width: $max-content-width !important;

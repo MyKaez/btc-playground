@@ -5,7 +5,6 @@
 }
 
 .contacts {
-    margin-top: $margin-huge;
     display: flex;
     flex-direction: column;
 
@@ -13,7 +12,7 @@
         display: flex;
         flex-direction: column;
         max-width: 800px;
-        min-width: 600px;
+        min-width: 400px;
 
         >* {
             padding: $margin-large;
@@ -27,6 +26,7 @@
             position: relative;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             background-color: #1a1a1a;
 
             >* {
@@ -43,6 +43,7 @@
                     font-style: italic;
                     font-weight: bold;
                     margin-top: $margin-large;
+                    text-align: center;
                 }
 
                 .contact-name {
@@ -89,7 +90,8 @@
         .contact-body {
             display: flex;
             flex-direction: column;
-            background-color: rgba(50, 50, 57, .7);
+            background-color: rgba(50, 50, 57, .9);
+            border-top: 1px solid $primary-300;
 
             .contact-image {
                 margin-right: $margin-large;
