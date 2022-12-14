@@ -165,6 +165,12 @@ a.nav-link {
       z-index: 100;
   
       > * {  
+        background-color: lighten($primary, 15%);
+        padding: $margin-small $margin-large;
+        transition-duration: .5s;
+        transition-property: background-color;
+        margin: 0;
+
         &:hover {
           background-color: rgb(var(--primary));
         }
@@ -179,6 +185,7 @@ a.nav-link {
     ::ng-deep .mat-list-item-content {
       flex-direction: column;
       align-items: flex-start;
+      justify-content: center;
     }
   }
 
@@ -205,11 +212,6 @@ a.nav-link {
       color: $light-color;
       display: inline-block;
       text-decoration: none;
-      background-color: lighten($primary, 15%);
-      padding: 8px 12px;
-      transition-duration: .5s;
-      transition-property: background-color;
-      margin: 0;
     }
   }
 

@@ -31,8 +31,8 @@
         }
     }
 
-    &:hover a span {        
-        color: $primary-300;
+    &:hover {        
+        background: linear-gradient(115deg, $accent 0%, $sugar-700 60%, $sugar-700 100%);
     }
 }
 
