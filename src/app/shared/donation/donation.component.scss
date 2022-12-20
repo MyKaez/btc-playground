@@ -1,5 +1,7 @@
 @import '../../app.component';
 
+$imageSize: 300px;
+
 button {
   border: 2px solid $light-color;
   border-radius: 2em;
@@ -18,13 +20,20 @@ img {
 .qr-codes {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.lightning {
-  width: 300px;
+.lightning,
+.on-chain {
   margin: $margin-huge;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   img {
+    width: $imageSize;
+    height: $imageSize;
     border: 4px solid yellow;
   }
 
@@ -33,15 +42,9 @@ img {
   }
 }
 
-.on-chain {
-  width: 300px;
-  margin: $margin-huge;
 
-  img {
-    border: 4px solid orange;
-  }
-
-  button {
-    margin-top: $margin-large;
+@media only screen and (min-width: $max-content-width) {
+  .qr-codes {
+    flex-wrap: nowrap !important;
   }
 }
