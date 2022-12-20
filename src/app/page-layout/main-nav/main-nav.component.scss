@@ -182,6 +182,10 @@ a.nav-link {
     height: auto;
     padding: $margin-large 0;
 
+    .sub-nav {
+      margin-top: $margin-large; 
+    }
+
     ::ng-deep .mat-list-item-content {
       flex-direction: column;
       align-items: flex-start;
