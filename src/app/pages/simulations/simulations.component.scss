@@ -53,3 +53,11 @@
         display: none;
     }
 }
+
+.items {
+    justify-content: center;
+
+    @media only screen and (min-width: $max-content-width) {
+        justify-content: space-between;        
+    }
+}

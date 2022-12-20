@@ -14,9 +14,21 @@ $content-width: 900px;
 
     .vision {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
-        padding: $margin-large;
+        padding: $margin-large 0;
+        flex-wrap: wrap;
+
+        @media only screen and (min-width: $max-content-width) {
+            flex-wrap: nowrap;       
+            justify-content: space-between; 
+            padding: $margin-large;    
+
+            >*:not(:first-child) {
+                margin-left: $margin-large;
+                margin-top: 0;
+            }
+        }
         
         .mat-icon {
             min-width: 34px;
@@ -26,14 +38,12 @@ $content-width: 900px;
             min-width: 180px;
             margin-bottom: 0;
             font-size: large;
+            margin-left: $margin-large;
         }
 
         span {
             font-size: larger;
-        }
-
-        >*:not(:first-child) {
-            margin-left: $margin-large;
+            margin-top: $margin-small;
         }
     }
 }
