@@ -29,7 +29,8 @@ const routes: Routes = [
   { path: 'simulations/blocksize', component: BlocksizeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'team', component: AboutTheTeamComponent },
-  { path: 'support', component: SupportUsComponent }
+  { path: 'support', component: SupportUsComponent },
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
