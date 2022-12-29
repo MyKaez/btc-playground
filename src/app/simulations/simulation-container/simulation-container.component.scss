@@ -1,0 +1,158 @@
+@import "/src/styles.scss";
+
+.simulation-container {
+    .text-explanation {
+        margin-top: $margin-huge;
+    }
+
+    .reason {
+        font-style: italic;
+        padding-left: $margin-huge;
+    }
+
+    .groundwork {
+        margin-top: $margin-huge;
+    }
+
+    .section {
+        margin-top: $margin-huge;
+    }
+
+    img {
+        width: 80%;
+        background-color: rgba($accent, 0.85);
+        border: 2px solid $light-color;
+        border-radius: 0 2em 0 2em;
+        padding: $margin-large;
+        margin: $margin-large;
+    }
+
+    .simulation-definition {
+        &.info-card {
+            margin: 0;
+        }
+
+        .video-explanation {
+            display: flex;
+            justify-content: center;
+            border-bottom: 2px solid $primary-300;
+            padding-bottom: 1rem;
+
+            ::ng-deep iframe {
+                border: 2px solid $primary-300;
+                width: 560px;
+                height: 315px;
+            }
+        }
+    }
+
+    .simulation-items-handset {
+        display: grid;
+        padding: $margin-huge;
+
+        .text {}
+
+        .simulation {
+            margin-top: $margin-small;
+            width: 100%;
+            height: 60%;
+        }
+    }
+
+    .simulation-items {
+        display: flex;
+        justify-content: space-evenly;
+
+        .text {
+            overflow: auto;
+        }
+
+        .simulation {
+            width: 70%;
+            height: 100%;
+            margin-left: $margin-large;
+        }
+    }
+
+    .simulation-items,
+    .simulation-items-handset {
+        height: 100%;
+        width: 100%;
+
+        a {
+            color: white;
+        }
+
+        .text {
+            &.info-card {
+                width: auto;
+                height: auto;
+                margin: 0;
+            }
+
+            .parameters,
+            .calculations,
+            .options,
+            .actions {
+                display: flex;
+                flex-direction: column;
+                color: $light-color;
+
+                .formula {
+                    text-align: center;
+                    font-size: medium;
+                }
+
+                .small {
+                    margin-top: $margin-large;
+                    font-size: small;
+                }
+            }
+
+            form {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        .simulation {
+            border: 1px solid $primary-300;
+            border-radius: 0 2em 0 0;
+            text-align: left;
+
+            .console-header {
+                height: 4%;
+                background-color: rgba(var(--header-color), 0.9);
+                border-bottom: 1px solid $primary-300;
+                color: white;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: start;
+                padding-left: $margin-small;
+                border-radius: 0 2em 0 0;
+
+                img {
+                    height: 70%;
+                }
+
+                span {
+                    padding-left: $margin-huge;
+                }
+            }
+
+            .console-data {
+                overflow: auto;
+                display: flex;
+                flex-direction: column;
+                color: $accent;
+                background-color: $primary-700;
+                white-space: nowrap;
+                padding: $margin-small;
+                height: 96%;
+                font-family: $code-font;
+            }
+        }
+    }
+}

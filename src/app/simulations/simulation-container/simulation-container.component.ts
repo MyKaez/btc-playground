@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Observable } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
@@ -6,7 +6,8 @@ import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 @Component({
   selector: 'app-simulation-container',
   templateUrl: './simulation-container.component.html',
-  styleUrls: ['./simulation-container.component.scss']
+  styleUrls: ['./simulation-container.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SimulationContainerComponent implements OnInit {
   @Input("simulation-body") simulationBody?: TemplateRef<any>;
