@@ -19,6 +19,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './shared/vid/vid.component';
 import {
+  SimulationContainerComponent,
   BlockSizeService, PowService,
   SimulationCardComponent,
   BlocksizeComponent,
@@ -92,7 +93,8 @@ import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.
     DonationComponent,
     ConditionalImageComponent,
     PowDefinitionComponent,
-    XpaDefinitionComponent
+    XpaDefinitionComponent,
+    SimulationContainerComponent
   ],
   imports: [
     BrowserModule,
