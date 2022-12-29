@@ -8,14 +8,14 @@ import {Column} from 'src/app/shared/helpers/interfaces';
 import {calculateUnit, UnitOfHash} from 'src/app/shared/helpers/size';
 import {calculateTime} from 'src/app/shared/helpers/time';
 import {NotificationService} from 'src/app/shared/media/notification.service';
-import {PowHash} from './interfaces';
+import {PowHash} from './pow-interfaces';
 import {PowService} from './pow.service';
 import {ContentLayoutMode, LayoutService} from "../../../pages";
 
 @Component({
   selector: 'app-pow-simulation',
-  templateUrl: './simulation.component.html',
-  styleUrls: ['../../simulation.component.scss']
+  templateUrl: './pow-simulation.component.html',
+  styleUrls: ['../../pow-simulation.component.scss']
 })
 export class SimulationComponent implements OnInit, OnDestroy {
   public readonly maxAmountOfHashesToShow = 200;

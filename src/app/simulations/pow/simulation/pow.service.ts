@@ -1,4 +1,4 @@
-import {PowHash} from "./interfaces";
+import {PowHash} from "./pow-interfaces";
 import {createBlockId} from "../../../shared/helpers/block";
 import {
   calculateDifficulty,

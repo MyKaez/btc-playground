@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DefinitionComponent } from './definition.component';
+import { DefinitionComponent } from './pow-definition.component';
 
 describe('DefinitionComponent', () => {
   let component: DefinitionComponent;
