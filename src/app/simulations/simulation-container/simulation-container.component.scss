@@ -3,28 +3,28 @@
 .simulation-container {
     .text-explanation {
         margin-top: $margin-huge;
-    }
 
-    .reason {
-        font-style: italic;
-        padding-left: $margin-huge;
-    }
-
-    .groundwork {
-        margin-top: $margin-huge;
-    }
-
-    .section {
-        margin-top: $margin-huge;
-    }
-
-    img {
-        width: 80%;
-        background-color: rgba($accent, 0.85);
-        border: 2px solid $light-color;
-        border-radius: 0 2em 0 2em;
-        padding: $margin-large;
-        margin: $margin-large;
+        .reason {
+            font-style: italic;
+            padding-left: $margin-huge;
+        }
+    
+        .groundwork {
+            margin-top: $margin-huge;
+        }
+    
+        .section {
+            margin-top: $margin-huge;
+        }
+    
+        img {
+            width: 80%;
+            background-color: rgba($accent, 0.85);
+            border: 2px solid $light-color;
+            border-radius: 0 2em 0 2em;
+            padding: $margin-large;
+            margin: $margin-large;
+        }
     }
 
     .simulation-definition {
@@ -38,11 +38,19 @@
             border-bottom: 2px solid $primary-300;
             padding-bottom: 1rem;
 
-            ::ng-deep iframe {
+            iframe {
                 border: 2px solid $primary-300;
                 width: 560px;
                 height: 315px;
+                border-bottom-left-radius: 2em;
             }
+        }
+    }
+
+    .simulation-controls {
+        h2 {
+            font-size: 2rem;
+            margin-bottom: $margin-small;
         }
     }
 
@@ -154,5 +162,12 @@
                 font-family: $code-font;
             }
         }
+    }
+
+    button {        
+        border: 2px solid $light-color;
+        margin: 0.5em;
+        border-radius: 2em;
+        line-height: inherit;
     }
 }

@@ -23,7 +23,6 @@ import {
   BlockSizeService, PowService,
   SimulationCardComponent,
   BlocksizeComponent,
-  PowSimulationComponent,
   XpaComponent,
   XpaSimulationComponent,
   RingOfFireComponent
@@ -75,7 +74,6 @@ import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.
     HomeComponent,
     SimulationCardComponent,
     SimulationsComponent,
-    PowSimulationComponent,
     LogoComponent,
     RingOfFireComponent,
     MainNavComponent,

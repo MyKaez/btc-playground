@@ -126,7 +126,7 @@ button {
 
 .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
-  background-color: $light-color;
+  background-color: $light-color !important;
 }
 
 .mat-tab-label {
@@ -136,7 +136,7 @@ button {
 
 .mat-expansion-panel-header {
   color: $light-color;
-  background: 0;
+  background: 0 !important;
   -webkit-box-shadow: 1px 0 0 0 #434355 inset !important;
   -moz-box-shadow: 1px 0 0 0 #434355 inset !important;
 }
@@ -151,8 +151,8 @@ button {
 
 .mat-expansion-panel {
   color: $light-color;
-  background: 0;
-  margin-top: 1em;
+  background: 0 !important;
+  margin-top: 1em !important;
   box-shadow: 1px 0 0 0 #434355 inset !important;
   -moz-box-shadow: 1px 0 0 0 #434355 inset !important;
 }

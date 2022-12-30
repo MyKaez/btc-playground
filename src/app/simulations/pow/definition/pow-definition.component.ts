@@ -3,8 +3,7 @@ import { WebHelper } from 'src/model/web';
 
 @Component({
   selector: 'app-pow-definition',
-  templateUrl: './pow-definition.component.html',
-  styleUrls: ['../../definition.scss']
+  templateUrl: './pow-definition.component.html'
 })
 export class PowDefinitionComponent implements OnInit {
 

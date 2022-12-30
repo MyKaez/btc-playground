@@ -21,7 +21,7 @@
                 <span class="mat-tab-label">Simulation</span>
             </ng-template>
             <div [class]="(isHandset$ | async) ? 'simulation-items-handset': 'simulation-items'">
-                <div *ngIf="simulationControls" class="text info-card">
+                <div *ngIf="simulationControls" class="text info-card simulation-controls">
                     <ng-container  [ngTemplateOutlet]="simulationControls"></ng-container>
                 </div>
 
