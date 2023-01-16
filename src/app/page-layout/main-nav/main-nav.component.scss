@@ -1,5 +1,7 @@
 @import "/src/styles.scss";
 
+$width-which-allows-large-navigation: 1400px;
+
 @media only screen and (min-width: $small-screen-width) {
   .mat-toolbar {
     position: fixed;
@@ -147,7 +149,11 @@ a.nav-link {
   transition-property: color;
 
   &.nav-link-top {
-    margin: 0 $margin-ultra;
+    margin: 0 $margin-large;
+    
+    @media only screen and (min-width: $width-which-allows-large-navigation) {
+      margin: 0 $margin-ultra;
+    }
 
     &:hover {
       &:not(.with-sub-nav) {
