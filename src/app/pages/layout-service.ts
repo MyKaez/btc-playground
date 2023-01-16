@@ -7,8 +7,8 @@ import {Observable} from "rxjs";
 export class LayoutService {
   currentLayoutMode = ContentLayoutMode.ImageCarousel;
   lockedImage: string = "assets/img/fixed-crystals.png";
-  contentWrapperClass: string = 'content-wrapper';
   isHandset: Observable<boolean>;
+  isSimulation = false;
 
   constructor(private breakpointObserver: BreakpointObserver) {
     this.isHandset = breakpointObserver.observe(Breakpoints.Handset)
@@ -22,17 +22,6 @@ export class LayoutService {
     this.currentLayoutMode = mode;
   }
 
-  isSimulation(simulation: boolean): void {
-    if (simulation) {
-      this.contentWrapperClass = 'content-wrapper content-simulation';
-    } else {
-      this.contentWrapperClass = 'content-wrapper';
-    }
-  }
-
-  getWrapperClass(): string {
-    return this.contentWrapperClass;
-  }
 }
 
 export enum ContentLayoutMode {

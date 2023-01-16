@@ -25,11 +25,11 @@ export class BlocksizeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.layout.setLayoutMode(ContentLayoutMode.LockImage);
-    this.layout.isSimulation(true);
+    this.layout.isSimulation = true;
   }
 
   ngOnDestroy(): void {
-    this.layout.isSimulation(false);
+    this.layout.isSimulation = false;
   }
 
   private createBlocks(): BlockData[] {

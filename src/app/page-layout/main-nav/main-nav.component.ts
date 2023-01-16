@@ -42,10 +42,6 @@ export class MainNavComponent implements OnInit {
     }, 1000);
   }
 
-  get contentWrapperClass() {
-    return this.layout.getWrapperClass();
-  }
-
   isLast(part: string): boolean {
     return this.pathParts[this.pathParts.length - 1] == part;
   }

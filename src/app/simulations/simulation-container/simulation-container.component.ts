@@ -25,11 +25,11 @@ export class SimulationContainerComponent implements OnInit {
 
   ngOnInit() {
     if(this.contentLayoutMode != null) this.layout.setLayoutMode(this.contentLayoutMode);
-    this.layout.isSimulation(true);
+    this.layout.isSimulation = true;
   }
 
   ngOnDestroy(): void {
-    this.layout.isSimulation(false);
+    this.layout.isSimulation = false;
   }
 
   onTabChanged(event: MatTabChangeEvent) {

@@ -271,7 +271,9 @@ a.nav-link {
 }
 
 .content-simulation {
-  height: 85%;
+  .content-wrapper {
+    height: 85%;
+  }
 
   ::ng-deep .mat-tab-header {   
     border-bottom: 2px solid $sugar; 
