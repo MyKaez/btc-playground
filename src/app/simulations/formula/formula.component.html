@@ -1,0 +1,68 @@
+<app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
+    [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" [video-id]="'E2ee5ewEddE'">
+</app-simulation-container>
+
+<ng-template #simulation>
+    <div class="console-header">
+        <img src="assets/bitcoin-btc-logo.svg">
+        <span>
+            Bitcoin Formel
+        </span>
+    </div>
+    <div class="console-data">
+
+        <span *ngIf="halvings$ | async as halvings">
+            <span *ngFor="let halving of halvings">
+                {{halving.number}}: {{halving.coinsPerBlock.toFixed(8)}} - {{halving.coinsPerHalving}} -
+                {{halving.totalCoins}}<br />
+            </span>
+            ---------------------------------------------<br />
+            Total Amount of Bitcoin: {{getData(halvings)}}
+        </span>
+
+
+    </div>
+</ng-template>
+
+<ng-template #controls>
+
+    <div class="parameters">
+        <h3>Input</h3>
+        <img src="https://en.bitcoin.it/w/images/en/a/a1/SupplyFormula.gif"><br />
+
+        <form [formGroup]="formGroup">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Halvings</mat-label>
+                <input matInput type="number" formControlName="halvingCount" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Blöcke <i>[pro Halving]</i></mat-label>
+                <input matInput type="number" formControlName="blockCount" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Bitcoin <i>[pro Block]</i></mat-label>
+                <input matInput type="number" formControlName="coinCount" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Sats <i>[pro Bitcoin]</i></mat-label>
+                <input matInput type="number" formControlName="satCount" />
+            </mat-form-field>
+
+        </form>
+
+        code: <a
+            href="https://github.com/bitcoin/bitcoin/blob/54f812d9d29893c690ae06b84aaeab128186aa36/src/chainparams.cpp#L66"
+            target="_blank">link to the code</a><br />
+        wiki: <a href="https://en.bitcoin.it/w/index.php?title=Controlled_supply&oldid=67473" target="_blank">link to
+            the wiki</a><br />
+    </div>
+
+</ng-template>
+
+<ng-template #definition>
+    Noch keine Deifintion vorhanden!
+</ng-template>

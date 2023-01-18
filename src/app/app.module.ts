@@ -62,6 +62,7 @@ import { DonationComponent } from './shared/donation/donation.component';
 import { ConditionalImageComponent } from './shared/media/conditional-image/conditional-image.component';
 import { PowDefinitionComponent } from './simulations/pow/definition/pow-definition.component';
 import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.component';
+import { FormulaComponent } from './simulations/formula/formula.component';
 
 
 @NgModule({
@@ -92,7 +93,8 @@ import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.
     ConditionalImageComponent,
     PowDefinitionComponent,
     XpaDefinitionComponent,
-    SimulationContainerComponent
+    SimulationContainerComponent,
+    FormulaComponent
   ],
   imports: [
     BrowserModule,

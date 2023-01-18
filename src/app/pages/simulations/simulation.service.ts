@@ -27,6 +27,12 @@ export class SimulationService {
             imageSrc: "assets/Miner_seite2.png",
             youtubeSrc: "88PSUCvErPA",
             navigationLink: "simulations/rof"
+        }, {
+            title: "Die Bitcoin Formel",
+            description: "Wie funktioniert Bitcoin?",
+            imageSrc: "assets/Miner_seite2.png",
+            youtubeSrc: "",
+            navigationLink: "simulations/formula"
         }];
     }
 }

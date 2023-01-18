@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import {   
+import {
   HomeComponent,
-  AboutComponent, 
+  AboutComponent,
   InfoComponent,
   SupportUsComponent,
   AboutTheTeamComponent,
   SimulationsComponent
 } from './pages';
 
-import { 
+import {
   BlocksizeComponent,
   XpaComponent,
   RingOfFireComponent,
   PowComponent
 } from './simulations';
+import { FormulaComponent } from './simulations/formula/formula.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'simulations/xpa', component: XpaComponent },
   { path: 'simulations/rof', component: RingOfFireComponent },
   { path: 'simulations/blocksize', component: BlocksizeComponent },
+  { path: 'simulations/formula', component: FormulaComponent },
   { path: 'about', component: AboutComponent },
   { path: 'team', component: AboutTheTeamComponent },
   { path: 'support', component: SupportUsComponent },

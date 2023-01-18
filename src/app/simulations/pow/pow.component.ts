@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Observable, Subject} from 'rxjs';
-import {delay} from 'src/app/shared/delay';
-import {BLOCK_DURATION_IN_SECONDS} from 'src/app/shared/helpers/block';
-import {BtcService} from 'src/app/shared/helpers/btc.service';
-import {Column} from 'src/app/shared/helpers/interfaces';
-import {calculateUnit, UnitOfHash} from 'src/app/shared/helpers/size';
-import {calculateTime} from 'src/app/shared/helpers/time';
-import {NotificationService} from 'src/app/shared/media/notification.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
+import { delay } from 'src/app/shared/delay';
+import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
+import { BtcService } from 'src/app/shared/helpers/btc.service';
+import { Column } from 'src/app/shared/helpers/interfaces';
+import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
+import { calculateTime } from 'src/app/shared/helpers/time';
+import { NotificationService } from 'src/app/shared/media/notification.service';
 import { PowHash } from './simulation/pow-interfaces';
 import { PowService } from './simulation/pow.service';
 
@@ -18,7 +18,8 @@ import { PowService } from './simulation/pow.service';
   styleUrls: ['./pow.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class PowComponent implements OnInit {public readonly maxAmountOfHashesToShow = 200;
+export class PowComponent implements OnInit {
+    public readonly maxAmountOfHashesToShow = 200;
   public readonly minAmountOfHashesToShow = 1;
   private readonly separator = ' | ';
 
@@ -38,9 +39,9 @@ export class PowComponent implements OnInit {public readonly maxAmountOfHashesTo
   contentLayoutMode = ContentLayoutMode.LockImage;
 
   constructor(private powService: PowService,
-              private notificationService: NotificationService,
-              private btcService: BtcService,
-              private layout: LayoutService) {
+    private notificationService: NotificationService,
+    private btcService: BtcService,
+    layout: LayoutService) {
     this.inputs = new FormGroup({
       hashRate: new FormControl(this.powService.hashRate, this.createHashRateValidators(150)),
       externalHashRate: new FormControl(this.powService.externalHashRate,
@@ -56,7 +57,7 @@ export class PowComponent implements OnInit {public readonly maxAmountOfHashesTo
     this.isProcessing.next(false);
     this.isCalculating.next(false);
     this.isHandset$ = layout.isHandset;
-  }  
+  }
 
   async ngOnInit() {
     await this.executeBlink();
@@ -97,7 +98,7 @@ export class PowComponent implements OnInit {public readonly maxAmountOfHashesTo
   }
 
   private set hashRate(value: number) {
-    this.inputs.patchValue({'hashRate': value});
+    this.inputs.patchValue({ 'hashRate': value });
   }
 
   get blockTime() {
@@ -105,7 +106,7 @@ export class PowComponent implements OnInit {public readonly maxAmountOfHashesTo
   }
 
   set blockTime(value: number) {
-    this.inputs.patchValue({'blockTime': value});
+    this.inputs.patchValue({ 'blockTime': value });
   }
 
   private get externalHashRate() {
@@ -113,7 +114,7 @@ export class PowComponent implements OnInit {public readonly maxAmountOfHashesTo
   }
 
   private set externalHashRate(value: number) {
-    this.inputs.patchValue({'externalHashRate': value});
+    this.inputs.patchValue({ 'externalHashRate': value });
   }
 
   get currentExternalHashRate(): string | undefined {
@@ -181,8 +182,8 @@ export class PowComponent implements OnInit {public readonly maxAmountOfHashesTo
 
   public get headerLine(): string {
     const length = this.columns
-        .map(c => c.length + this.separator.length)
-        .reduce((prev, cur,) => prev + cur)
+      .map(c => c.length + this.separator.length)
+      .reduce((prev, cur,) => prev + cur)
       - 1;
     return ''.padEnd(length, '-');
   }
