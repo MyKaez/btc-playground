@@ -1,4 +1,6 @@
-<mat-sidenav-container class="sidenav-container" [ngClass]="{'content-simulation': layout.isSimulation}">  
+<mat-sidenav-container class="sidenav-container" [ngClass]="
+  {'content-simulation': layout.isSimulation,
+   'handset-layout': (isHandset$ | async)}">  
   <mat-sidenav #drawer class="sidenav" [ngClass]="{hidden: !(isHandset$ |async)}" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false">

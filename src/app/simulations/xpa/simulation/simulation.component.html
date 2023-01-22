@@ -82,36 +82,35 @@
     </div>
 
     <div class="simulation">
-        <div class="console-header">
-            <img src="assets/bitcoin-btc-logo.svg">
-            <span>
-                51% Attacke Simulation
-            </span>
-        </div>
-        <div class="console-data">
-            <p>
-                Bitcoin Blockchain<br />
-                &gt; <span *ngFor="let i of totalBlocks"
-                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
-                        *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
-                &gt; <span *ngFor="let i of blockchain" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
-                        *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
-                &gt; Anzahl: ({{blockchain.length}}/{{blocksToComplete}})<br />
-                &gt; Fortschritt: {{progressBlockchain}}%<br />
-            </p>
-            <p></p>
-            <p></p>
-            <p>
-                Angreifende Blockchain<br />
-                &gt; <span *ngFor="let i of totalBlocks"
-                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
-                        *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
-                &gt; <span *ngFor="let i of attackingBlockchain"
-                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
-                        *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
-                &gt; Anzahl: ({{attackingBlockchain.length}}/{{blocksToComplete}})<br />
-                &gt; Fortschritt: {{progressAttackingBlockchain}}%<br />
-            </p>
-        </div>
+        <div class="simulation-console">
+            <div class="console-header">
+                <img src="assets/bitcoin-btc-logo.svg">
+                <span>
+                    51% Attacke Simulation
+                </span>
+            </div>
+            <div class="console-data">
+                <p>
+                    Bitcoin Blockchain<br />
+                    &gt; <span *ngFor="let i of totalBlocks" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
+                            *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
+                    &gt; <span *ngFor="let i of blockchain" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
+                            *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
+                    &gt; Anzahl: ({{blockchain.length}}/{{blocksToComplete}})<br />
+                    &gt; Fortschritt: {{progressBlockchain}}%<br />
+                </p>
+                <p></p>
+                <p></p>
+                <p>
+                    Angreifende Blockchain<br />
+                    &gt; <span *ngFor="let i of totalBlocks" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
+                            *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
+                    &gt; <span *ngFor="let i of attackingBlockchain" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
+                            *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
+                    &gt; Anzahl: ({{attackingBlockchain.length}}/{{blocksToComplete}})<br />
+                    &gt; Fortschritt: {{progressAttackingBlockchain}}%<br />
+                </p>
+            </div>
+        </div>        
     </div>
 </div>

@@ -28,31 +28,33 @@
     </div>
 
     <div class="simulation">
-      <div class="console-header">
-        <img src="assets/bitcoin-btc-logo.svg">
-        <span>
-                Blocksize Simulation
-            </span>
-      </div>
-      <div class="console-data">
-        <table>
-          <tr>
-            <th>Einheit</th>
-            <th>Anzahl Blöcke</th>
-            <th>Größe</th>
-          </tr>
+      <div class="simulation-console">
+        <div class="console-header">
+          <img src="assets/bitcoin-btc-logo.svg">
+          <span>
+            Blocksize Simulation
+          </span>
+        </div>
+        <div class="console-data">
+          <table>
+            <tr>
+              <th>Einheit</th>
+              <th>Anzahl Blöcke</th>
+              <th>Größe</th>
+            </tr>
 
-          <tr *ngFor="let block of blocks">
-            <td>{{block.interval}}</td>
-            <td>{{block.amountOfBlocks}}</td>
-            <td>{{block.blockSize}}</td>
-          </tr>
-        </table>
+            <tr *ngFor="let block of blocks">
+              <td>{{block.interval}}</td>
+              <td>{{block.amountOfBlocks}}</td>
+              <td>{{block.blockSize}}</td>
+            </tr>
+          </table>
 
-        <hr/>
-        <p>
-          Voll nach: {{outOfSpaceTime}}
-        </p>
+          <hr />
+          <p>
+            Voll nach: {{outOfSpaceTime}}
+          </p>
+        </div>
       </div>
     </div>
   </div>

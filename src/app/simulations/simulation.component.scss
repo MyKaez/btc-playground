@@ -11,6 +11,12 @@
     margin-top: $margin-small;
     width: 100%;
     height: 60%;
+
+    >.actions {
+      >:not(button) {
+        display: none;
+      }
+    }
   }
 }
 
@@ -71,41 +77,43 @@
   }
 
   .simulation {
-    border: 1px solid $primary-300;
-    border-radius: 0 2em 0 0;
-    text-align: left;
-
-    .console-header {
-      height: 4%;
-      background-color: rgba(var(--header-color), 0.9);
-      border-bottom: 1px solid $primary-300;
-      color: white;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: start;
-      padding-left: $margin-small;
+    .simulation-console {
+      border: 1px solid $primary-300;
       border-radius: 0 2em 0 0;
+      text-align: left;height: 100%;
 
-      img {
-        height: 70%;
+      .console-header {
+        height: 4%;
+        background-color: rgba(var(--header-color), 0.9);
+        border-bottom: 1px solid $primary-300;
+        color: white;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        padding-left: $margin-small;
+        border-radius: 0 2em 0 0;
+
+        img {
+          height: 16px;
+        }
+
+        span {
+          padding-left: $margin-huge;
+        }
       }
 
-      span {
-        padding-left: $margin-huge;
+      .console-data {
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        color: $accent;
+        background-color: $primary-700;
+        white-space: nowrap;
+        padding: $margin-small;
+        height: 96%;
+        font-family: $code-font;
       }
-    }
-
-    .console-data {
-      overflow: auto;
-      display: flex;
-      flex-direction: column;
-      color: $accent;
-      background-color: $primary-700;
-      white-space: nowrap;
-      padding: $margin-small;
-      height: 96%;
-      font-family: $code-font;
     }
   }
 }
