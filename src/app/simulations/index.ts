@@ -1,4 +1,5 @@
 export * from "./simulation-card/simulation-card.component";
+export * from "./simulation.service";
 export * from "./pow/simulation/pow.service";
 export * from "./pow/pow.component";
 export { SimulationComponent as XpaSimulationComponent } from "./xpa/simulation/simulation.component";

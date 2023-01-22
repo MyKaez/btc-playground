@@ -318,6 +318,18 @@ a.nav-link {
       }
     }
   }
+
+  &.handset-layout {
+    ::ng-deep .mat-tab-header {
+      position: fixed;
+      top: 0px;
+      left: 55px;
+    }
+
+    .btc-live-data {
+      display: none;
+    }
+  }
 } 
 
 /* ensure top level divs growing */

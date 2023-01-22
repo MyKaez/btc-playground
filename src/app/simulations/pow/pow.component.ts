@@ -11,6 +11,7 @@ import { calculateTime } from 'src/app/shared/helpers/time';
 import { NotificationService } from 'src/app/shared/media/notification.service';
 import { PowHash } from './simulation/pow-interfaces';
 import { PowService } from './simulation/pow.service';
+import { SimulationService } from '../simulation.service';
 
 @Component({
   selector: 'app-pow',
@@ -41,6 +42,7 @@ export class PowComponent implements OnInit {
   constructor(private powService: PowService,
     private notificationService: NotificationService,
     private btcService: BtcService,
+    private simulationService: SimulationService,
     layout: LayoutService) {
     this.inputs = new FormGroup({
       hashRate: new FormControl(this.powService.hashRate, this.createHashRateValidators(150)),
@@ -231,14 +233,14 @@ export class PowComponent implements OnInit {
   }
 
   async start() {
-    if (this.isExecuting) {
-      return;
-    }
-    if (this.clearOnStart) {
-      this.clear();
-    }
+    if (this.isExecuting) return;
+    if (this.clearOnStart) this.clear();
+
     this.isProcessing.next(true);
-    await this.createJob();
+    let loadCreateJob = this.createJob();
+    this.simulationService.updateStartSimulation(true);
+
+    await loadCreateJob;
   }
 
   async determineHashRate() {
