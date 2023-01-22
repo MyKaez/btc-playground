@@ -43,7 +43,7 @@ export class FormulaComponent implements AfterViewInit {
             coinsPerBlock: coinsPerBlock,
             coinsPerHalving: coinsPerHalving,
             totalCoins: data.length == 0
-              ? 0
+              ? coinsPerHalving
               : data.map(d => d.coinsPerHalving).reduce((prev, cur) => prev + cur) + coinsPerHalving
           }
           data.push(halving);
