@@ -1,7 +1,10 @@
 import { Injectable } from "@angular/core";
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SimulationService {
+    readonly onStartSimulation = new Observable<boolean>();
+
     getSimulations(): Simulation[] {
         return [{
             title: "Blocksize",

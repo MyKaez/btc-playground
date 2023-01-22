@@ -19,6 +19,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './shared/vid/vid.component';
 import {
+  SimulationService,
   SimulationContainerComponent,
   BlockSizeService, PowService,
   SimulationCardComponent,
@@ -53,7 +54,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { ImageCarouselComponent } from './shared/media';
-import { SimulationService } from './pages/simulations/simulation.service';
 import { NotificationService } from './shared/media/notification.service';
 import { TeamService } from './pages/about-the-team/team.service';
 import { BtcService } from './shared/helpers/btc.service';

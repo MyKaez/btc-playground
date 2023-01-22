@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Simulation } from 'src/app/pages/simulations/simulation.service';
+import { Simulation } from 'src/app/simulations/simulation.service';
 import { WebHelper } from 'src/model/web';
 
 @Component({

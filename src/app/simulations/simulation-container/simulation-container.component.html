@@ -21,8 +21,8 @@
                 <span class="mat-tab-label">Simulation</span>
             </ng-template>
             <div [class]="(isHandset$ | async) ? 'simulation-items-handset': 'simulation-items'">
-                <div *ngIf="simulationControls" class="text info-card simulation-controls">
-                    <ng-container  [ngTemplateOutlet]="simulationControls"></ng-container>
+                <div *ngIf="simulationControls && !(isHandset$ | async)" class="text info-card simulation-controls">
+                    <ng-container [ngTemplateOutlet]="simulationControls"></ng-container>
                 </div>
 
                 <div *ngIf="simulationBody" class="simulation">
@@ -30,8 +30,16 @@
                 </div>
             </div>
         </mat-tab>
+        
+        <mat-tab *ngIf="simulationControls && (isHandset$ | async)">
+            <ng-template mat-tab-label>
+                <span class="mat-tab-label">Optionen</span>
+            </ng-template>
+            <div class="simulation-items-handset">
+                <div class="text info-card simulation-controls">
+                    <ng-container [ngTemplateOutlet]="simulationControls"></ng-container>
+                </div>
+            </div>
+        </mat-tab>
     </mat-tab-group>
 </div>
-
-
-  
