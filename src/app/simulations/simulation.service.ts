@@ -1,9 +1,14 @@
 import { Injectable } from "@angular/core";
-import { Observable } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 
 @Injectable()
 export class SimulationService {
-    readonly onStartSimulation = new Observable<boolean>();
+    private startSimulationSubscriber: Subscriber<boolean> | undefined;
+    readonly listeningToStartSimulation = new Observable<boolean>(subscriber => this.startSimulationSubscriber = subscriber );
+    updateStartSimulation(isStarted: boolean) {
+        if(!this.startSimulationSubscriber) return;
+        this.startSimulationSubscriber.next(isStarted);
+    }
 
     getSimulations(): Simulation[] {
         return [{
