@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { LayoutService, ContentLayoutMode } from '../';
 
 @Component({
@@ -12,5 +13,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
+  }
+
+  get presentationMode(): boolean {
+    return environment.presentationMode;
   }
 }
