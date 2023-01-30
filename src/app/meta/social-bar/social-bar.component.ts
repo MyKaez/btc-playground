@@ -26,7 +26,7 @@ export class SocialBarComponent implements OnInit {
       iconName: "test",
       href: "https://github.com/MyKaez/btc-playground",
       imageSrc: "assets/GitHub-Mark-Light-64px.png",
-      enable: true
+      enable: !environment.presentationMode
     }, {
       iconName: "test",
       href: "https://www.youtube.com/channel/UC08NXXwbdkZRWSwFOYRSrDA",
