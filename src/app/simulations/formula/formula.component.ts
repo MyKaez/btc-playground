@@ -34,7 +34,7 @@ export class FormulaComponent implements AfterViewInit {
     .pipe(
       map(formGroup => {
         const data: Halving[] = [];
-        for (let i = 0; i < (formGroup.halvingCount ?? 0); i++) {
+        for (let i = 0; i <= (formGroup.halvingCount ?? 0); i++) {
           const satCount = (formGroup.satCount ?? 0);
           const coinsPerBlock = Math.floor((formGroup.coinCount ?? 0) / Math.pow(2, i) * (satCount)) / satCount;
           const coinsPerHalving = coinsPerBlock * (formGroup.blockCount ?? 0);
