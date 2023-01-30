@@ -14,6 +14,9 @@
   @return #{red($colorHexValue), green($colorHexValue), blue($colorHexValue)};
 }
 
+.presentation-mode>* {
+  pointer-events: none;
+}
 
 /* Color Theme Swatches in Hex */
 $fixesthis-test-1-hex: #373747;
@@ -25,18 +28,17 @@ $fixesthis-test-5-hex: #F25D07;
 $fixes-primary-color: #21212a;
 $fixes-primary-contrast: #cce;
 $fixes-primary-palette: (
- 50: lighten($fixes-primary-color, 50),
- 100: lighten($fixes-primary-color, 35),
- 200: lighten($fixes-primary-color, 25),
- 300: lighten($fixes-primary-color, 15),
- 400: lighten($fixes-primary-color, 5),
- 500: $fixes-primary-color,
- 600: darken($fixes-primary-color, 5),
- 700: darken($fixes-primary-color, 10),
- 800: darken($fixes-primary-color, 12),
- 900: darken($fixes-primary-color, 14),
- contrast: (
-    50: lighten($fixes-primary-contrast, 35),
+  50: lighten($fixes-primary-color, 50),
+  100: lighten($fixes-primary-color, 35),
+  200: lighten($fixes-primary-color, 25),
+  300: lighten($fixes-primary-color, 15),
+  400: lighten($fixes-primary-color, 5),
+  500: $fixes-primary-color,
+  600: darken($fixes-primary-color, 5),
+  700: darken($fixes-primary-color, 10),
+  800: darken($fixes-primary-color, 12),
+  900: darken($fixes-primary-color, 14),
+  contrast: (50: lighten($fixes-primary-contrast, 35),
     100: lighten($fixes-primary-contrast, 25),
     200: lighten($fixes-primary-contrast, 15),
     300: lighten($fixes-primary-contrast, 10),
@@ -45,25 +47,23 @@ $fixes-primary-palette: (
     600: darken($fixes-primary-contrast, 15),
     700: darken($fixes-primary-contrast, 25),
     800: darken($fixes-primary-contrast, 35),
-    900: darken($fixes-primary-contrast, 50)
- )
+    900: darken($fixes-primary-contrast, 50))
 );
 
 $fixes-accent-color: #F25D07;
 $fixes-accent-contrast: #032222;
 $fixes-accent-palette: (
- 50: lighten($fixes-accent-color, 50),
- 100: lighten($fixes-accent-color, 35),
- 200: lighten($fixes-accent-color, 25),
- 300: lighten($fixes-accent-color, 15),
- 400: lighten($fixes-accent-color, 5),
- 500: $fixes-accent-color,
- 600: darken($fixes-accent-color, 1),
- 700: darken($fixes-accent-color, 2),
- 800: darken($fixes-accent-color, 3),
- 900: darken($fixes-accent-color, 5),
- contrast: (
-    50: lighten($fixes-accent-contrast, 35),
+  50: lighten($fixes-accent-color, 50),
+  100: lighten($fixes-accent-color, 35),
+  200: lighten($fixes-accent-color, 25),
+  300: lighten($fixes-accent-color, 15),
+  400: lighten($fixes-accent-color, 5),
+  500: $fixes-accent-color,
+  600: darken($fixes-accent-color, 1),
+  700: darken($fixes-accent-color, 2),
+  800: darken($fixes-accent-color, 3),
+  900: darken($fixes-accent-color, 5),
+  contrast: (50: lighten($fixes-accent-contrast, 35),
     100: lighten($fixes-accent-contrast, 25),
     200: lighten($fixes-accent-contrast, 15),
     300: lighten($fixes-accent-contrast, 10),
@@ -72,25 +72,23 @@ $fixes-accent-palette: (
     600: darken($fixes-accent-contrast, 15),
     700: darken($fixes-accent-contrast, 25),
     800: darken($fixes-accent-contrast, 35),
-    900: darken($fixes-accent-contrast, 50)
- )
+    900: darken($fixes-accent-contrast, 50))
 );
 
 $fixes-sugar-color: #2B4487;
 $fixes-sugar-contrast: #AACD55;
 $fixes-sugar-palette: (
- 50: lighten($fixes-sugar-color, 50),
- 100: lighten($fixes-sugar-color, 35),
- 200: lighten($fixes-sugar-color, 25),
- 300: lighten($fixes-sugar-color, 15),
- 400: lighten($fixes-sugar-color, 5),
- 500: $fixes-sugar-color,
- 600: darken($fixes-sugar-color, 15),
- 700: darken($fixes-sugar-color, 25),
- 800: darken($fixes-sugar-color, 28),
- 900: darken($fixes-sugar-color, 32),
- contrast: (
-    50: lighten($fixes-sugar-contrast, 35),
+  50: lighten($fixes-sugar-color, 50),
+  100: lighten($fixes-sugar-color, 35),
+  200: lighten($fixes-sugar-color, 25),
+  300: lighten($fixes-sugar-color, 15),
+  400: lighten($fixes-sugar-color, 5),
+  500: $fixes-sugar-color,
+  600: darken($fixes-sugar-color, 15),
+  700: darken($fixes-sugar-color, 25),
+  800: darken($fixes-sugar-color, 28),
+  900: darken($fixes-sugar-color, 32),
+  contrast: (50: lighten($fixes-sugar-contrast, 35),
     100: lighten($fixes-sugar-contrast, 25),
     200: lighten($fixes-sugar-contrast, 15),
     300: lighten($fixes-sugar-contrast, 10),
@@ -99,8 +97,7 @@ $fixes-sugar-palette: (
     600: darken($fixes-sugar-contrast, 15),
     700: darken($fixes-sugar-contrast, 25),
     800: darken($fixes-sugar-contrast, 35),
-    900: darken($fixes-sugar-contrast, 50)
- )
+    900: darken($fixes-sugar-contrast, 50))
 );
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
@@ -116,9 +113,9 @@ $Simulator-warn: mat.define-palette(mat.$red-palette);
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
 $Simulator-theme: mat.define-dark-theme((color: (primary: $Simulator-primary,
-  accent: $Simulator-accent,
-  warn: $Simulator-warn,
-)));
+        accent: $Simulator-accent,
+        warn: $Simulator-warn,
+      )));
 
 
 
@@ -172,7 +169,7 @@ $code-font: 'Courier New', Courier, monospace;
 $header-height: 50px;
 $max-content-width: 1200px;
 $min-content-width: 200px;
-$small-screen-width: 900px; 
+$small-screen-width: 900px;
 
 /* spaces */
 $margin-slim: .25rem;
@@ -225,7 +222,7 @@ table {
 
 .flex-row {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
 }
 
 .flex-column {
@@ -233,25 +230,66 @@ table {
   flex-direction: column;
 }
 
-.justify-start { justify-content: flex-start; }
-.justify-center { justify-content: center; }
-.justify-end { justify-content: flex-end; }
-.justify-between { justify-content: space-between; }
-.justify-around { justify-content: space-around; }
-.justify-evenly { justify-content: space-evenly; }
+.justify-start {
+  justify-content: flex-start;
+}
 
-.align-start { align-items: flex-start; }
-.align-center { align-items: center; }
-.align-end { align-items: flex-end; }
-.align-between { align-items: space-between; }
-.align-around { align-items: space-around; }
-.align-evenly { align-items: space-evenly; }
+.justify-center {
+  justify-content: center;
+}
 
-.hidden { display: none; }
-.transparent { opacity: 0; }
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.align-between {
+  align-items: space-between;
+}
+
+.align-around {
+  align-items: space-around;
+}
+
+.align-evenly {
+  align-items: space-evenly;
+}
+
+.hidden {
+  display: none;
+}
+
+.transparent {
+  opacity: 0;
+}
 
 /* global theme applyment */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: var(--accent);
 }
 
@@ -266,7 +304,7 @@ h1, h2, h3 {
     margin-left: $margin-large;
   }
 
-  &.huge-gaps > :not(:first-child) {
+  &.huge-gaps> :not(:first-child) {
     margin-left: $margin-huge;
   }
 }
@@ -275,7 +313,7 @@ h1, h2, h3 {
   display: flex;
   flex-direction: column;
 
-  > * {
+  >* {
     display: flex;
   }
 }
@@ -290,12 +328,12 @@ h1, h2, h3 {
   }
 }
 
-.mat-form-field.inconspicuous { 
+.mat-form-field.inconspicuous {
   .mat-form-field-wrapper {
     padding: 0;
   }
 
- .mat-form-field-flex {
+  .mat-form-field-flex {
     padding: 0;
     background-color: unset;
   }
@@ -320,7 +358,7 @@ h1, h2, h3 {
     }
   }
 
-  .mat-select-value-text, 
+  .mat-select-value-text,
   .mat-select-arrow {
     color: var(--font-color);
   }
@@ -347,8 +385,8 @@ h1, h2, h3 {
   }*/
 
   a img:hover {
-    -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0); 
-    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+    -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
   }
 
 }

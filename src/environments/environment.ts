@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  presentationMode: false
+  presentationMode: true
 };
 
 export class Config {
