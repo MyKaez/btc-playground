@@ -9,7 +9,7 @@
     "test": "ng test",
     "publish-prod": "ng build --base-href / && gulp apply-timestamp-to-script-references && gulp publish-prod",
     "publish-fancy": "ng build --base-href /btc-fancy/ && gulp apply-timestamp-to-script-references && gulp publish-fancy",
-    "publish-playground": "ng build --base-href /btc-playground/ && gulp apply-timestamp-to-script-references && gulp publish-play"
+    "publish-playground": "ng build --base-href /btc-playground/ && gulp apply-timestamp-to-script-references && gulp publish-playground"
   },
   "private": true,
   "dependencies": {
