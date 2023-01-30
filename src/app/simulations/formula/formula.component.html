@@ -3,7 +3,7 @@
 </app-simulation-container>
 
 <ng-template #simulation>
-    <ng-container *ngIf="(isHandset$ | async)">
+    <ng-container *ngIf="isHandset$ | async">
     </ng-container>
     <div class="simulation-console">
         <div class="console-header">
