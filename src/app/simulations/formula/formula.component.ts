@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { map, Observable } from 'rxjs';
-import { ContentLayoutMode } from 'src/app/pages';
+import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 
 interface Halving {
   number: number;
@@ -30,6 +30,10 @@ export class FormulaComponent implements AfterViewInit {
     satCount: this.satCount
   });
 
+  constructor(layout: LayoutService) {
+    this.isHandset$ = layout.isHandset;
+  }
+
   halvings$: Observable<Halving[]> = this.formGroup.valueChanges
     .pipe(
       map(formGroup => {
@@ -51,7 +55,7 @@ export class FormulaComponent implements AfterViewInit {
         return data;
       })
     );
-
+  isHandset$: Observable<boolean>;
 
   ngAfterViewInit(): void {
     this.formGroup.setValue({

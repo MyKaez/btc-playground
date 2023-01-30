@@ -3,24 +3,25 @@
 </app-simulation-container>
 
 <ng-template #simulation>
-    <div class="console-header">
-        <img src="assets/bitcoin-btc-logo.svg">
-        <span>
-            Bitcoin Formel
-        </span>
-    </div>
-    <div class="console-data">
-
-        <span *ngIf="halvings$ | async as halvings">
-            <span *ngFor="let halving of halvings">
-                {{halving.number}}: {{halving.coinsPerBlock.toFixed(8)}} - {{halving.coinsPerHalving}} -
-                {{halving.totalCoins}}<br />
+    <ng-container *ngIf="(isHandset$ | async)">
+    </ng-container>
+    <div class="simulation-console">
+        <div class="console-header">
+            <img src="assets/bitcoin-btc-logo.svg">
+            <span>
+                Bitcoin Formel
             </span>
-            ---------------------------------------------<br />
-            Total Amount of Bitcoin: {{getData(halvings)}}
-        </span>
-
-
+        </div>
+        <div class="console-data">
+            <span *ngIf="halvings$ | async as halvings">
+                <span *ngFor="let halving of halvings">
+                    {{halving.number}}: {{halving.coinsPerBlock.toFixed(8)}} - {{halving.coinsPerHalving}} -
+                    {{halving.totalCoins}}<br />
+                </span>
+                ---------------------------------------------<br />
+                Total Amount of Bitcoin: {{getData(halvings)}}
+            </span>
+        </div>
     </div>
 </ng-template>
 
