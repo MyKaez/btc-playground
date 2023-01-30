@@ -1,17 +1,18 @@
 <mat-sidenav-container class="sidenav-container" [ngClass]="
   {'content-simulation': layout.isSimulation,
-   'handset-layout': (isHandset$ | async)}">  
+   'handset-layout': (isHandset$ | async)}">
   <mat-sidenav #drawer class="sidenav" [ngClass]="{hidden: !(isHandset$ |async)}" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false">
-    <mat-nav-list>      
+    <mat-nav-list>
       <app-logo></app-logo>
-      <a mat-list-item *ngFor="let link of navLinks" class="nav-link nav-link-side" [routerLink]="link.href" [routerLinkActive]="['active']" (click)="toggleNavigationEntry(link)"
-        [class.with-sub-nav]="link.links" [class.expanded]="link.isExpanded">
+      <a mat-list-item *ngFor="let link of navLinks" class="nav-link nav-link-side" [routerLink]="link.href"
+        [routerLinkActive]="['active']" (click)="toggleNavigationEntry(link)" [class.with-sub-nav]="link.links"
+        [class.expanded]="link.isExpanded">
         <div class="nav-link-text">
           <span>{{link.title}}</span>
           <mat-icon class="nav-icon" *ngIf="link.links && link.isExpanded">expand_less</mat-icon>
-          <mat-icon class="nav-icon"*ngIf="link.links && !link.isExpanded">expand_more</mat-icon>
+          <mat-icon class="nav-icon" *ngIf="link.links && !link.isExpanded">expand_more</mat-icon>
         </div>
 
         <div class="sub-nav" *ngIf="link.links">
@@ -34,8 +35,8 @@
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
           <div class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
-            <a class="nav-link nav-link-top" mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href" [routerLinkActive]="['active']"
-              [class.with-sub-nav]="link.links">
+            <a class="nav-link nav-link-top" mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href"
+              [routerLinkActive]="['active']" [class.with-sub-nav]="link.links">
               <span>{{link.title}}</span>
               <div class="sub-nav" *ngIf="link.links">
                 <a mat-list-item *ngFor="let sub of link.links" [routerLink]="sub.href" [routerLinkActive]="['active']">
@@ -46,7 +47,7 @@
           </div>
         </div>
 
-        <div class="far-navigation flex-container">
+        <div class="far-navigation flex-container" [hidden]="presentationMode">
           <div class="donation blink" (click)="openDonation()">
             Spenden
           </div>
@@ -58,7 +59,8 @@
             </div>
             <div>
               <span class="data-label">Blockzeit</span>
-              <span class="data-value"><a href="https://mempool.space/block/{{currentBlock}}" target="_blank">{{currentBlock}}</a></span>
+              <span class="data-value"><a href="https://mempool.space/block/{{currentBlock}}"
+                  target="_blank">{{currentBlock}}</a></span>
               <span class="data-currency"></span>
             </div>
           </div>

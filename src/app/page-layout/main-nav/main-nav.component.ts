@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
-import {LayoutService, ContentLayoutMode} from 'src/app/pages';
-import {BtcBlock, BtcPrice, BtcService} from 'src/app/shared/helpers/btc.service';
-import {MatDialog} from '@angular/material/dialog';
-import {DonationComponent} from '../../shared/donation/donation.component';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { LayoutService, ContentLayoutMode } from 'src/app/pages';
+import { BtcBlock, BtcPrice, BtcService } from 'src/app/shared/helpers/btc.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DonationComponent } from '../../shared/donation/donation.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-main-nav',
@@ -24,11 +25,15 @@ export class MainNavComponent implements OnInit {
   lockedImage = () => this.layout.lockedImage;
 
   constructor(private router: Router,
-              public layout: LayoutService,
-              private btcService: BtcService,
-              private dialog: MatDialog) {
+    public layout: LayoutService,
+    private btcService: BtcService,
+    private dialog: MatDialog) {
     this.navLinks = this.getNavLinks();
     this.isHandset$ = layout.isHandset;
+  }
+
+  get presentationMode(): boolean {
+    return environment.presentationMode;
   }
 
   get currentBlock(): number {
