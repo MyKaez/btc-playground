@@ -78,9 +78,8 @@ $simulation-text-height: 60px;
     }
 }
 
-::ng-deep 
-    {
-        youtube-player {
+::ng-deep {
+    youtube-player {
         padding: 0 !important;
 
         iframe {

@@ -13,6 +13,6 @@ export class AppContextService {
     }
 
     setup() {
-        console.log(`%c Loaded app at version ${this.appVersion} in environment ${this.buildEnvironment}`, "background: linear-gradient(45deg, #0b0b0d, #0c1326); padding: .5rem 1rem");
+        console.log(`%c Loaded FixesTh.is at version ${this.appVersion} in environment ${this.buildEnvironment}`, "background: linear-gradient(45deg, #0b0b0d, #0c1326); padding: .5rem 1rem");
     }
 }

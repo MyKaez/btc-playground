@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     presentationMode: false,
-    environmentName: "environment"
+    environmentName: "dev"
 };
 
 export class Config {
