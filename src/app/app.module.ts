@@ -63,6 +63,7 @@ import { ConditionalImageComponent } from './shared/media/conditional-image/cond
 import { PowDefinitionComponent } from './simulations/pow/definition/pow-definition.component';
 import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.component';
 import { FormulaComponent } from './simulations/formula/formula.component';
+import { AppContextService } from './core';
 
 
 @NgModule({
@@ -126,6 +127,7 @@ import { FormulaComponent } from './simulations/formula/formula.component';
     CarouselModule
   ],
   providers: [
+    AppContextService,
     LayoutService,
     BtcService,
     BtcPayService,
@@ -137,4 +139,8 @@ import { FormulaComponent } from './simulations/formula/formula.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(appContext: AppContextService) {
+    appContext.setup();
+  }
+}

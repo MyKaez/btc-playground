@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  presentationMode: true
+  presentationMode: true,
+  environmentName: "prod"
 };
 
 export class Config {
