@@ -13,12 +13,13 @@ $simulation-text-height: 60px;
         border-bottom: 1px solid $primary-300;
 
         .info-card-text {
-            font-size: 1em;
-            padding: $margin-large;
-            flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
+            height: 130px;
+            font-size: 1em;
+            padding: $margin-large;
+            flex-grow: 1;
     
             h2,h3,h4 {
                 color: var(--accent);
@@ -81,13 +82,14 @@ $simulation-text-height: 60px;
 ::ng-deep {
     youtube-player {
         padding: 0 !important;
+    }
 
-        iframe {
-            width: 100%;
-            height: 180px;
-            border-bottom-left-radius: 2em;
-            display: block;
-        }
+    youtube-player iframe,
+    .info-card-media img {
+        width: 100%;
+        height: 180px;
+        border-bottom-left-radius: 2em;
+        display: block;
     }
 
     app-conditional-image {

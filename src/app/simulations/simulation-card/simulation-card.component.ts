@@ -24,6 +24,8 @@ export class SimulationCardComponent implements OnInit, Simulation {
   @Input("navigation-link")
   navigationLink = DefaultSimulationCardProps.navigationLink;
 
+  defaultImage = "./assets/img/simulations/nebulae purple.jpg";
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {

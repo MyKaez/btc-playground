@@ -109,7 +109,7 @@ export interface NavLink {
   isExpanded?: boolean;
 }
 
-const HomeBackgroundImages: string[] = [
+export const HomeBackgroundImages: string[] = [
   "./assets/img/fixed-crystals.png",
   "./assets/img/fixed-cascade.png",
   "./assets/img/fixed-connected.png"
