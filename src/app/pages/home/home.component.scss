@@ -1,5 +1,10 @@
 @import "/src/app/app.component.scss";
 
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 @media only screen and (min-width: $max-content-width) {
   .content {
