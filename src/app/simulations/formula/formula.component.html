@@ -13,10 +13,11 @@
             </span>
         </div>
         <div class="console-data">
+            {{header}}<br />
+            {{headerLine}}
             <span *ngIf="halvings$ | async as halvings">
                 <span *ngFor="let halving of halvings">
-                    {{halving.number}}: {{halving.coinsPerBlock.toFixed(8)}} - {{halving.coinsPerHalving}} -
-                    {{halving.totalCoins}}<br />
+                    {{getString(halving)}}<br />
                 </span>
                 ---------------------------------------------<br />
                 Total Amount of Bitcoin: {{getData(halvings)}}
