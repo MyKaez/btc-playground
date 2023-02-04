@@ -12,5 +12,8 @@
             <span>Zur Simulation</span>
         </div>
     </div>
-    <youtube-player [videoId]="youtubeSrc"></youtube-player>
+    <div class="info-card-media">
+        <youtube-player *ngIf="youtubeSrc" [videoId]="youtubeSrc"></youtube-player>
+        <img *ngIf="!youtubeSrc" [src]="defaultImage" />
+    </div>
 </div>

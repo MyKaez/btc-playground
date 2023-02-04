@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  presentationMode: true
+  presentationMode: true,
+  environmentName: "default"
 };
 
 export class Config {

@@ -1,6 +1,7 @@
 import { _getFocusedElementPierceShadowDom } from '@angular/cdk/platform';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
+import { deprecate } from 'util';
 
 @Component({
   selector: 'app-image-carousel',
@@ -34,6 +35,10 @@ export class ImageCarouselComponent implements OnInit {
     };
   }
 
+  /**
+   * @deprecated this method had as testing purpose and will be left alive for future references
+   * @description add to c-carousel as: (itemChange)="onItemChange($event)"
+   */
   onItemChange($event: any): void {
     console.log('Carousel onItemChange', $event);
   }
