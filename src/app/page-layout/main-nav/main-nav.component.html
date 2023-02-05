@@ -1,9 +1,9 @@
 <mat-sidenav-container class="sidenav-container" [ngClass]="
   {'content-simulation': layout.isSimulation,
    'handset-layout': (isHandset$ | async)}">
-  <mat-sidenav #drawer class="sidenav" [ngClass]="{hidden: !(isHandset$ |async)}" fixedInViewport
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false">
+  <mat-sidenav #drawer class="sidenav" [ngClass]="{hidden: !(layout.isSmallScreen$ |async)}" fixedInViewport
+    [attr.role]="(layout.isSmallScreen$ | async) ? 'dialog' : 'navigation'" [mode]="(layout.isSmallScreen$ | async) ? 'over' : 'side'"
+    [opened]="(layout.isSmallScreen$ | async) === false">
     <mat-nav-list>
       <app-logo></app-logo>
       <a mat-list-item *ngFor="let link of navLinks" class="nav-link nav-link-side" [routerLink]="link.href"
@@ -27,14 +27,14 @@
   <mat-sidenav-content>
     <div class="main">
       <mat-toolbar>
-        <app-logo [ngClass]="{hidden: (isHandset$ |async)}"></app-logo>
+        <app-logo [ngClass]="{hidden: (layout.isSmallScreen$ | async)}"></app-logo>
 
         <div class="navigation">
           <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
             *ngIf="isHandset$ | async">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
-          <div class="menu" [ngClass]="{hidden: (isHandset$ |async)}">
+          <div class="menu" [ngClass]="{hidden: (layout.isSmallScreen$ | async)}">
             <a class="nav-link nav-link-top" mat-list-item *ngFor="let link of navLinks" [routerLink]="link.href"
               [routerLinkActive]="['active']" [class.with-sub-nav]="link.links">
               <span>{{link.title}}</span>
