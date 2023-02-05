@@ -10,7 +10,7 @@ $simulation-text-height: 60px;
 
     .info-card-content {
         display: flex;
-        border-bottom: 1px solid $primary-300;
+        border-bottom: 2px solid $primary-300;
 
         .info-card-text {
             display: flex;
@@ -40,7 +40,7 @@ $simulation-text-height: 60px;
         .simulation-button {
             position: relative;
             cursor: pointer;
-            border-left: 1px solid $primary-300;
+            border-left: 2px solid $primary-300;
             border-top-right-radius: 25%;
             background-color: $simulation-image-background-color;
 
