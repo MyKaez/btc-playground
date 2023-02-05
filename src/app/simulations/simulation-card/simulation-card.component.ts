@@ -19,7 +19,7 @@ export class SimulationCardComponent implements OnInit, Simulation {
   imageSrc = DefaultSimulationCardProps.imageSrc;
 
   @Input("youtube-src")
-  youtubeSrc = DefaultSimulationCardProps.youtubeSrc;
+  youtubeSrc = "";
 
   @Input("navigation-link")
   navigationLink = DefaultSimulationCardProps.navigationLink;

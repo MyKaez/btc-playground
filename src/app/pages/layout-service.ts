@@ -5,9 +5,13 @@ import {Observable} from "rxjs";
 
 @Injectable()
 export class LayoutService {
+  readonly maxSmallScreenWidthPx = 999;
+
   currentLayoutMode = ContentLayoutMode.ImageCarousel;
   lockedImage: string = "assets/img/fixed-crystals.png";
   isHandset: Observable<boolean>;
+  /** Updates if screen width is adjusted and below defined small screen width */
+  isSmallScreen$: Observable<boolean>;
   isSimulation = false;
 
   constructor(private breakpointObserver: BreakpointObserver) {
@@ -16,12 +20,17 @@ export class LayoutService {
         map(result => result.matches),
         shareReplay()
       );
+
+    this.isSmallScreen$ = breakpointObserver.observe([
+      `(max-width: ${this.maxSmallScreenWidthPx}px)`
+    ]).pipe(
+      map(result => result.matches)
+    );
   }
 
   setLayoutMode(mode: ContentLayoutMode) {
     this.currentLayoutMode = mode;
   }
-
 }
 
 export enum ContentLayoutMode {
