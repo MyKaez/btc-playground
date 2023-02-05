@@ -16,20 +16,26 @@
             <table>
                 <tr>
                     <th *ngFor="let column of displayedColumns">
-                        <span *ngIf="column !== displayedColumns[0]">| </span> {{column}}
+                        <span *ngIf="column !== displayedColumns[0]"> | </span> <span> {{column.text}} </span>
                     </th>
+                </tr>
+
+                <tr>
+                    <td *ngFor="let column of displayedColumns">
+                        <span *ngIf="column !== displayedColumns[0]">|-</span>{{getSeparatorLine(halvings, column)}}
+                    </td>
                 </tr>
 
                 <tr *ngFor="let halving of halvings">
                     <td *ngFor="let column of displayedColumns">
-                        <span *ngIf="column !== displayedColumns[0]">| </span>
-                        {{getValue(halving, column)}}
+                        <span *ngIf="column !== displayedColumns[0]"> | </span> {{getValue(halving, column.prop)}}
                     </td>
                 </tr>
 
             </table>
 
-            ---------------------------------------------<br />
+            <hr />
+
             Total Amount of Bitcoin: {{getData(halvings)}}
         </div>
     </div>

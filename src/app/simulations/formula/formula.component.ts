@@ -16,7 +16,12 @@ interface Halving {
   styleUrls: ['./formula.component.scss']
 })
 export class FormulaComponent implements AfterViewInit {
-  readonly displayedColumns = ['number', 'coinsPerBlock', 'coinsPerHalving', 'totalCoins '];
+  readonly displayedColumns = [
+    { prop: 'number', text: 'Nr.' },
+    { prop: 'coinsPerBlock', text: 'Coins pro Block' },
+    { prop: 'coinsPerHalving', text: 'Coins pro Halving' },
+    { prop: 'totalCoins', text: 'Gesamtanzahl Coins' },
+  ];
 
   contentLayoutMode = ContentLayoutMode.LockImage;
 
@@ -67,10 +72,22 @@ export class FormulaComponent implements AfterViewInit {
     });
   }
 
-  getValue(halving: any, column: string) {
-    return halving[column];
+  getSeparatorLine(halvings: Halving[], column: { prop: string, text: string }): string {
+    const max = halvings.map(halving => {
+      const valueLength = this.getValue(halving, column.prop).length;
+      const longerValue = valueLength > column.text.length ? valueLength : column.text.length;
+      return longerValue + 1;
+    }).reduce((prev, cur) => cur > prev ? cur : prev, 0);
+    return ''.padStart(max, '-');
   }
 
+  getValue(halving: any, column: string): string {
+    const fixed = ['coinsPerBlock', 'coinsPerHalving', 'totalCoins'];
+    if (fixed.includes(column)) {
+      return Number.parseFloat(halving[column]).toFixed(8);
+    }
+    return halving[column];
+  }
 
   getData(halvings: Halving[]) {
     return halvings[halvings.length - 1].totalCoins;
