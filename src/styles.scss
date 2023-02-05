@@ -385,8 +385,7 @@ h3 {
   }*/
 
   a img:hover {
-    -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
-    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+    -webkit-box-shadow: 0px 1px 9px 3px #fff, inset 0px 0px 9px 0px #fff;
+    box-shadow: 0px 1px 9px 3px #fff, inset 0px 0px 9px 0px #fff;
   }
-
 }
