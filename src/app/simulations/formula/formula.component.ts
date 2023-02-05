@@ -16,8 +16,12 @@ interface Halving {
   styleUrls: ['./formula.component.scss']
 })
 export class FormulaComponent implements AfterViewInit {
-  readonly separator: string = '|';
-  readonly columns = ['Nr', 'Coins pro Block', 'Coins im Halving', 'Gesamtanzahl Coins '];
+  readonly displayedColumns = [
+    { prop: 'number', text: 'Nr.' },
+    { prop: 'coinsPerBlock', text: 'Coins pro Block' },
+    { prop: 'coinsPerHalving', text: 'Coins pro Halving' },
+    { prop: 'totalCoins', text: 'Gesamtanzahl Coins' },
+  ];
 
   contentLayoutMode = ContentLayoutMode.LockImage;
 
@@ -68,37 +72,25 @@ export class FormulaComponent implements AfterViewInit {
     });
   }
 
-  public get header(): string {
-    let header = '';
-    for (let c of this.columns) {
-      header += ' ' + c.padEnd(c.length, '.') + ' ' + this.separator;
+  getSeparatorLine(halvings: Halving[], column: { prop: string, text: string }): string {
+    const max = halvings.map(halving => {
+      const valueLength = this.getValue(halving, column.prop).length;
+      const longerValue = valueLength > column.text.length ? valueLength : column.text.length;
+      return longerValue + 1;
+    }).reduce((prev, cur) => cur > prev ? cur : prev, 0);
+    return ''.padStart(max, '-');
+  }
+
+  getValue(halving: any, column: string): string {
+    const fixed = ['coinsPerBlock', 'coinsPerHalving', 'totalCoins'];
+    if (fixed.includes(column)) {
+      return Number.parseFloat(halving[column]).toFixed(8);
     }
-    header = header.substring(0, header.length - this.separator.length);
-    return header;
-  }
-
-  public get headerLine(): string {
-    const length = this.columns
-      .map(c => c.length + this.separator.length)
-      .reduce((prev, cur,) => prev + cur)
-      - 1;
-    return ''.padEnd(length, '-');
-  }
-
-  getString(halving: Halving) {
-    const addStartPadding = (val: string) => val.split('.')[0].length == 1 ? '0' + val : val;
-    const num = addStartPadding(halving.number.toString());
-    const blockCoins = addStartPadding(halving.coinsPerBlock.toFixed(8));
-    const halvingCoins = halving.coinsPerHalving.toFixed(8);
-    const totalCoins = halving.totalCoins.toFixed(8);
-    return `${num} | ${blockCoins} | ${halvingCoins} | ${totalCoins}`;
+    return halving[column];
   }
 
   getData(halvings: Halving[]) {
     return halvings[halvings.length - 1].totalCoins;
   }
-}
-function keys<T>() {
-  throw new Error('Function not implemented.');
 }
 
