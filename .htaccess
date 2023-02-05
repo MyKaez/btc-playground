@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+RewriteRule ^btc-playground/(.*)$ btc-playground/index.html [L,QSA] 
+RewriteRule ^btc-fancy/(.*)$ btc-fancy/index.html [L,QSA] 
+
+RewriteRule ^.*$ index.html [L,QSA] 
