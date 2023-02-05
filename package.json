@@ -4,11 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build -c=production --output-path dist && ng build -c=development --output-path dist && ng build -c=development --output-path dist",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "publish-ftp": "ng build --base-href /btc-playground/ && gulp apply-timestamp-to-script-references && gulp publish-ftp",
-    "publish-fancy-ftp": "ng build --base-href /btc-fancy/ && gulp apply-timestamp-to-script-references && gulp publish-fancy-ftp"
+    "publish-prod": "ng build -c=production --base-href / && gulp apply-timestamp-to-script-references && gulp publish-prod",
+    "publish-fancy": "ng build -c=development  --base-href /btc-fancy/ && gulp apply-timestamp-to-script-references && gulp publish-fancy",
+    "publish-playground": "ng build -c=development --base-href /btc-playground/ && gulp apply-timestamp-to-script-references && gulp publish-playground"
   },
   "private": true,
   "dependencies": {

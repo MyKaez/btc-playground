@@ -16,6 +16,8 @@ interface Halving {
   styleUrls: ['./formula.component.scss']
 })
 export class FormulaComponent implements AfterViewInit {
+  readonly separator: string = '|';
+  readonly columns = ['Nr', 'Coins pro Block', 'Coins im Halving', 'Gesamtanzahl Coins '];
 
   contentLayoutMode = ContentLayoutMode.LockImage;
 
@@ -43,7 +45,7 @@ export class FormulaComponent implements AfterViewInit {
           const coinsPerBlock = Math.floor((formGroup.coinCount ?? 0) / Math.pow(2, i) * (satCount)) / satCount;
           const coinsPerHalving = coinsPerBlock * (formGroup.blockCount ?? 0);
           const halving: Halving = {
-            number: i + 1,
+            number: i,
             coinsPerBlock: coinsPerBlock,
             coinsPerHalving: coinsPerHalving,
             totalCoins: data.length == 0
@@ -66,7 +68,37 @@ export class FormulaComponent implements AfterViewInit {
     });
   }
 
+  public get header(): string {
+    let header = '';
+    for (let c of this.columns) {
+      header += ' ' + c.padEnd(c.length, '.') + ' ' + this.separator;
+    }
+    header = header.substring(0, header.length - this.separator.length);
+    return header;
+  }
+
+  public get headerLine(): string {
+    const length = this.columns
+      .map(c => c.length + this.separator.length)
+      .reduce((prev, cur,) => prev + cur)
+      - 1;
+    return ''.padEnd(length, '-');
+  }
+
+  getString(halving: Halving) {
+    const addStartPadding = (val: string) => val.split('.')[0].length == 1 ? '0' + val : val;
+    const num = addStartPadding(halving.number.toString());
+    const blockCoins = addStartPadding(halving.coinsPerBlock.toFixed(8));
+    const halvingCoins = halving.coinsPerHalving.toFixed(8);
+    const totalCoins = halving.totalCoins.toFixed(8);
+    return `${num} | ${blockCoins} | ${halvingCoins} | ${totalCoins}`;
+  }
+
   getData(halvings: Halving[]) {
     return halvings[halvings.length - 1].totalCoins;
   }
 }
+function keys<T>() {
+  throw new Error('Function not implemented.');
+}
+

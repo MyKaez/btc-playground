@@ -12,25 +12,37 @@ function getFtpConnection(ftpConfig) {
       });
 }
 
-const filesToPublish = ["./dist/**/*"];
-const remoteLocation = "fixesth.is/btc-fancy";
-/** Publishes the dist folder to fancy folder on ftp server - config required! */
-gulp.task('publish-fancy-ftp', function () {
+/** Publishes the dist folder to prod folder on ftp server - config required! */
+const prodFilesToPublish = ["./dist/**/*"];
+const prodLocation = "fixesth.is";
+gulp.task('publish-prod', function () {
       const ftpConfig = require("./.config/private/ftp-deployment.json");
       var conn = getFtpConnection(ftpConfig);
-      return gulp.src(filesToPublish, { base: './dist', buffer: false })
-            .pipe(conn.newer(remoteLocation))
-            .pipe(conn.dest(remoteLocation));
+      return gulp.src(prodFilesToPublish, { base: './dist', buffer: false })
+            .pipe(conn.newer(prodLocation))
+            .pipe(conn.dest(prodLocation));
+});
+
+/** Publishes the dist folder to fancy folder on ftp server - config required! */
+const fancyFilesToPublish = ["./dist/**/*"];
+const fancyLocation = "fixesth.is/btc-fancy";
+gulp.task('publish-fancy', function () {
+      const ftpConfig = require("./.config/private/ftp-deployment.json");
+      var conn = getFtpConnection(ftpConfig);
+      return gulp.src(fancyFilesToPublish, { base: './dist', buffer: false })
+            .pipe(conn.newer(fancyLocation))
+            .pipe(conn.dest(fancyLocation));
 });
 
 /** Publishes the dist folder to prod folder on ftp server - config required! */
-const prodRemoteLocation = "fixesth.is/btc-playground";
-gulp.task('publish-ftp', function () {
+const playgroundFilesToPublish = ["./dist/**/*"];
+const playLocation = "fixesth.is/btc-playground";
+gulp.task('publish-playground', function () {
       const ftpConfig = require("./.config/private/ftp-deployment.json");
       var conn = getFtpConnection(ftpConfig);
-      return gulp.src(filesToPublish, { base: './dist', buffer: false })
-            .pipe(conn.newer(prodRemoteLocation))
-            .pipe(conn.dest(prodRemoteLocation));
+      return gulp.src(playgroundFilesToPublish, { base: './dist', buffer: false })
+            .pipe(conn.newer(playLocation))
+            .pipe(conn.dest(playLocation));
 });
 
 const matchSourcesHtml = /<link rel="stylesheet" href="styles\.css(.|\n|\r)*<\/body>/gi;
