@@ -12,16 +12,25 @@
                 Bitcoin Formel
             </span>
         </div>
-        <div class="console-data">
-            {{header}}<br />
-            {{headerLine}}
-            <span *ngIf="halvings$ | async as halvings">
-                <span *ngFor="let halving of halvings">
-                    {{getString(halving)}}<br />
-                </span>
-                ---------------------------------------------<br />
-                Total Amount of Bitcoin: {{getData(halvings)}}
-            </span>
+        <div class="console-data" *ngIf="halvings$ | async as halvings">
+            <table>
+                <tr>
+                    <th *ngFor="let column of displayedColumns">
+                        <span *ngIf="column !== displayedColumns[0]">| </span> {{column}}
+                    </th>
+                </tr>
+
+                <tr *ngFor="let halving of halvings">
+                    <td *ngFor="let column of displayedColumns">
+                        <span *ngIf="column !== displayedColumns[0]">| </span>
+                        {{getValue(halving, column)}}
+                    </td>
+                </tr>
+
+            </table>
+
+            ---------------------------------------------<br />
+            Total Amount of Bitcoin: {{getData(halvings)}}
         </div>
     </div>
 </ng-template>
