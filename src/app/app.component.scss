@@ -123,6 +123,9 @@ button {
 /***
     Angular materials
 **/
+.mat-drawer-content {
+  overflow: unset !important;
+}
 
 .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {

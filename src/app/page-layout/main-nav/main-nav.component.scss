@@ -8,8 +8,9 @@ $width-which-allows-large-navigation: 1400px;
     z-index: 50;
   }
 
-  .content-wrapper {
+  .main {
     margin-top: $header-height;
+    padding-bottom: $header-height;
   }
 }
 
@@ -61,6 +62,7 @@ $width-which-allows-large-navigation: 1400px;
   padding-right: $margin-large;
   height: $header-height;
   min-height: $header-height;
+  top: 0;
 
   display: flex;
   justify-content: space-between;

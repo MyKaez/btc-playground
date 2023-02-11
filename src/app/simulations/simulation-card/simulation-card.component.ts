@@ -16,10 +16,10 @@ export class SimulationCardComponent implements OnInit, Simulation {
   description = DefaultSimulationCardProps.description;
 
   @Input("image-src")
-  imageSrc = DefaultSimulationCardProps.imageSrc;
+  imageSrc? = DefaultSimulationCardProps.imageSrc;
 
   @Input("youtube-src")
-  youtubeSrc = "";
+  youtubeSrc?: string;
 
   @Input("navigation-link")
   navigationLink = DefaultSimulationCardProps.navigationLink;
@@ -42,5 +42,4 @@ export const DefaultSimulationCardProps: Simulation = {
   description: "Every card needs some little description",
   imageSrc: "https://www.innovationnewsnetwork.com/wp-content/uploads/2021/07/iStockPitris-831501722-696x392.jpg",
   youtubeSrc: "dQw4w9WgXcQ", // To Rick
-  navigationLink: ""
 }
