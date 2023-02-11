@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
-import {map, shareReplay} from "rxjs/operators";
+import {map, share, shareReplay} from "rxjs/operators";
 import {Observable} from "rxjs";
 
 @Injectable()
@@ -24,7 +24,8 @@ export class LayoutService {
     this.isSmallScreen$ = breakpointObserver.observe([
       `(max-width: ${this.maxSmallScreenWidthPx}px)`
     ]).pipe(
-      map(result => result.matches)
+      map(result => result.matches),
+      shareReplay(1)
     );
   }
 
