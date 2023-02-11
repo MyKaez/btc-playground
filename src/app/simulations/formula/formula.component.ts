@@ -93,4 +93,3 @@ export class FormulaComponent implements AfterViewInit {
     return halvings[halvings.length - 1].totalCoins;
   }
 }
-

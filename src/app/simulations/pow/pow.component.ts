@@ -1,17 +1,14 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { delay } from 'src/app/shared/delay';
-import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
+import { FormControl, } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, map, merge, Observable, of, shareReplay, tap } from 'rxjs';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
-import { Column } from 'src/app/shared/helpers/interfaces';
+import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
-import { calculateTime } from 'src/app/shared/helpers/time';
-import { NotificationService } from 'src/app/shared/media/notification.service';
 import { PowHash } from './simulation/pow-interfaces';
 import { PowService } from './simulation/pow.service';
-import { SimulationService } from '../simulation.service';
+import { calculateTime } from 'src/app/shared/helpers/time';
+import { delay } from 'src/app/shared/delay';
 
 @Component({
   selector: 'app-pow',
@@ -19,314 +16,167 @@ import { SimulationService } from '../simulation.service';
   styleUrls: ['./pow.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class PowComponent implements OnInit {
+export class PowComponent implements AfterViewInit {
   static readonly title = "Proof of Work";
+  static readonly maxAmountOfHashesToShow = 200;
+  static readonly minAmountOfHashesToShow = 1;
 
-  public readonly maxAmountOfHashesToShow = 200;
-  public readonly minAmountOfHashesToShow = 1;
-  private readonly separator = ' | ';
-
-  private cachedHashes: PowHash[] = [];
-  private executedCycles: number = 0;
-
-  inputs: FormGroup;
-  hashCount: number = 0;
-  stopOnFoundBlock: boolean = true;
-  clearOnStart: boolean = true;
-  blink: boolean = true;
-  isExecuting: boolean = true;
-  isCalculating: Subject<boolean> = new Subject();
-  isProcessing: Subject<boolean> = new Subject();
-  amountOfHashChars: number = 26;
-  isHandset$: Observable<boolean>;
+  displayedColumns: { prop: string, text: string }[] = [
+    { prop: 'no', text: 'Nr.' },
+    { prop: 'hash', text: 'Hash' },
+    { prop: 'cycle', text: 'Zyklus' },
+    { prop: 'isValid', text: 'Valide' }
+  ]
+  hashRate = new FormControl<number>(0);
+  externalHashRate = new FormControl<number>(0);
+  blockTime = new FormControl<number>(0);
+  hashes: PowHash[] = [];
   contentLayoutMode = ContentLayoutMode.LockImage;
+  isExecuting = false;
 
-  constructor(private powService: PowService,
-    private notificationService: NotificationService,
-    private btcService: BtcService,
-    private simulationService: SimulationService,
-    layout: LayoutService) {
-    this.inputs = new FormGroup({
-      hashRate: new FormControl(this.powService.hashRate, this.createHashRateValidators(150)),
-      externalHashRate: new FormControl(this.powService.externalHashRate,
-        [Validators.required, Validators.min(0)]),
-      blockTime: new FormControl(this.powService.blockTime,
-        [Validators.required, Validators.min(1), Validators.max(3600)])
-    });
-    this.inputs.get('hashRate')!.valueChanges.subscribe(val => this.powService.hashRate = val);
-    this.inputs.get('externalHashRate')!.valueChanges.subscribe(val => this.powService.externalHashRate = val);
-    this.inputs.get('blockTime')!.valueChanges.subscribe(val => this.powService.blockTime = val);
-    this.isProcessing.subscribe(value => this.toggleAccessibility(value));
-    this.isCalculating.subscribe(value => this.toggleAccessibility(value));
-    this.isProcessing.next(false);
-    this.isCalculating.next(false);
+  constructor(layout: LayoutService, private btcService: BtcService, private powService: PowService) {
     this.isHandset$ = layout.isHandset;
   }
 
-  async ngOnInit() {
-    await this.executeBlink();
-  }
-
-  ngOnDestroy(): void {
-    this.stop();
-    this.clear();
-  }
-
-  private toggleAccessibility(value: boolean): void {
-    if (value) {
-      this.inputs.disable();
-    } else {
-      this.inputs.enable();
-    }
-    this.isExecuting = value;
-  }
-
-  private createHashRateValidators(maxHashRate: number) {
-    return [Validators.required, Validators.min(1), Validators.max(maxHashRate)];
-  }
-
-  getErrors(control: string) {
-    return JSON.stringify(this.inputs.controls[control].errors);
-  }
-
-  public get executionTime(): string {
-    return calculateTime(this.executedCycles);
-  }
-
-  public get overallHashRate(): number {
-    return this.hashRate + this.externalHashRate;
-  }
-
-  private get hashRate(): number {
-    return this.inputs.get('hashRate')!.value;
-  }
-
-  private set hashRate(value: number) {
-    this.inputs.patchValue({ 'hashRate': value });
-  }
-
-  get blockTime() {
-    return this.inputs.get('blockTime')!.value;
-  }
-
-  set blockTime(value: number) {
-    this.inputs.patchValue({ 'blockTime': value });
-  }
-
-  private get externalHashRate() {
-    return this.inputs.get('externalHashRate')!.value;
-  }
-
-  private set externalHashRate(value: number) {
-    this.inputs.patchValue({ 'externalHashRate': value });
-  }
-
-  get currentExternalHashRate(): string | undefined {
-    const x = calculateUnit(this.externalHashRate, UnitOfHash.hashes);
-    return x.toText();
-  }
-
-  get currentHashRate(): string | undefined {
-    const x = calculateUnit(this.hashRate, UnitOfHash.hashes);
-    return x.toText();
-  }
-
-  get currentBlockTime(): string | undefined {
-    return calculateTime(this.blockTime);
-  }
-
-  public get hashes() {
-    return this.cachedHashes.filter((_, index) => index < this.amountHashesToShow);
-  }
-
-  public get amountHashesToShow(): Number {
-    return Number.parseInt(localStorage.getItem('sim_pow_amountHashesToShow') ?? '16');
-  }
-
-  public set amountHashesToShow(value: Number) {
-    localStorage.setItem('sim_pow_amountHashesToShow', value.toString());
-  }
-
-  public get displayedColumns(): string[] {
-    return ['id', 'isValid', 'serialNo', 'hashRate'];
-  }
-
-  public get probability(): number {
-    return this.powService.probability;
-  }
-
-  public get expectedAmountOfBlocks(): number {
-    return this.powService.expectedAmountOfBlocks;
-  }
-
-  public get expectedAmountOfCycles(): number {
-    return this.powService.expectedAmountOfHashrates;
-  }
-
-  public get expectedPrefixes(): string {
-    return this.powService.expectedPrefixes;
-  }
-
-  public get hexaDecimalFormula(): string {
-    return this.powService.hexaDecimalFormula;
-  }
-
-  public get expectedDuration(): string {
-    return this.powService.expectedDuration;
-  }
-
-  public get header(): string {
-    let header = '';
-    for (let c of this.columns) {
-      header += c.name.padEnd(c.length, '.') + this.separator;
-    }
-    header = header.substring(0, header.length - this.separator.length);
-    return header;
-  }
-
-  public get headerLine(): string {
-    const length = this.columns
-      .map(c => c.length + this.separator.length)
-      .reduce((prev, cur,) => prev + cur)
-      - 1;
-    return ''.padEnd(length, '-');
-  }
-
-  public get columns(): Column<PowHash>[] {
-    return [
-      {
-        name: 'Hash',
-        length: this.amountOfHashChars,
-        mapFunc: c => c.id
-      },
-      {
-        name: 'Valide',
-        length: 'Valide'.length,
-        mapFunc: c => c.isValid
-      },
-      {
-        name: 'Sekunde',
-        length: 'Sekunde'.length,
-        mapFunc: c => c.hashRate
-      },
-      {
-        name: 'HashNr',
-        length: 'HashNr'.length,
-        mapFunc: c => c.serialNo
+  isHandset$: Observable<boolean>;
+  hashRateChanges$ = this.hashRate.valueChanges.pipe(
+    debounceTime(400),
+    distinctUntilChanged(),
+    shareReplay(1)
+  );
+  externalHashRateChanges$ = this.externalHashRate.valueChanges.pipe(
+    debounceTime(400),
+    distinctUntilChanged(),
+    shareReplay(1)
+  );
+  currentExternalHashRate$ = this.externalHashRateChanges$.pipe(
+    map(hashRate => this.getSize(hashRate))
+  )
+  currentHashRate$ = this.hashRateChanges$.pipe(
+    map(hashRate => this.getSize(hashRate))
+  )
+  totalHashRate$ = merge(this.hashRateChanges$, this.externalHashRateChanges$).pipe(
+    map(_ => (this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0)),
+    map(hashRate => this.getSize(hashRate)),
+    shareReplay(1)
+  );
+  probability$ = merge(this.totalHashRate$, this.blockTime.valueChanges).pipe(
+    map(_ => 1 / (((this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0)) * (this.blockTime.value ?? 0))),
+    shareReplay(1)
+  );
+  difficulty$ = this.probability$.pipe(
+    map(probability => 1 / probability)
+  );
+  currentBlockTime$ = this.blockTime.valueChanges.pipe(
+    map(time => calculateTime(time ?? 0)),
+    shareReplay(1)
+  );
+  expectedPrefix$ = this.probability$.pipe(
+    map(probability => {
+      const res: string[] = [];
+      let x = '';
+      for (let i = 0; i < this.powService.calculateLeadingZeros(probability); i++) {
+        x += '0';
       }
-    ];
+      for (let i = 0; i < probability; i++) {
+        res.push(x + i.toString(16));
+      }
+      if (res.length === 1) {
+        return res[0];
+      }
+      return res[0] + '-' + res[res.length - 1];
+    })
+  );
+
+  ngAfterViewInit(): void {
+    this.hashRate.setValue(50);
+    this.externalHashRate.setValue(0);
+    this.blockTime.setValue(10);
   }
 
-  columnValue(hash: PowHash, col: Column<PowHash>): string {
-    let val = col.mapFunc(hash).toString().padEnd(col.length, '.');
-    if (this.columns.findIndex(c => c.name === col.name) + 1 != this.columns.length) {
-      val += ' | ';
-    }
-    return val;
+  getSize(hashRate: number | null): string {
+    const size = calculateUnit(hashRate ?? 0, UnitOfHash.hashes);
+    return `${size.value.toFixed(2)} ${size.unit.text}`;
   }
 
-  async executeBlink() {
-    if (this.isExecuting) {
-      this.blink = true;
-    } else {
-      this.blink = !this.blink;
-    }
-    setTimeout(async () => await this.executeBlink(), this.blink ? 1000 : 500);
+  getValue(hash: any, prop: string) {
+    return hash[prop];
   }
 
-  async start() {
-    if (this.isExecuting) return;
-    if (this.clearOnStart) this.clear();
-
-    this.isProcessing.next(true);
-    let loadCreateJob = this.createJob();
-    this.simulationService.updateStartSimulation(true);
-
-    await loadCreateJob;
-  }
-
-  async determineHashRate() {
-    this.isCalculating.next(true);
-    this.clear();
+  async determineHashRate(probability: number) {
     let overallHashRate = 0;
     const determineRounds = 5;
-    const validationInput = this.powService.validationInput;
     for (let i = 0; i < determineRounds; i++) {
-      if (!this.isExecuting) {
-        break;
-      }
       const start = new Date();
       start.setSeconds(start.getSeconds() + 1);
       while (start.getTime() > new Date().getTime()) {
-        const hash = this.powService.createHash(
-          validationInput[0], validationInput[1], this.executedCycles, ++this.hashCount);
-        if (this.cachedHashes.unshift(hash) > this.maxAmountOfHashesToShow) {
-          this.cachedHashes.pop();
+        const hash = this.powService.createHash(probability, i, this.hashes.length);
+        hash.hash = hash.hash.substring(0, 15) + '[...]';
+        if (this.hashes.unshift(hash) > PowComponent.maxAmountOfHashesToShow) {
+          this.hashes.pop();
         }
         await delay(1);
       }
-      this.hashRate = Math.round(this.cachedHashes.length * 0.75);
-      overallHashRate += this.hashRate;
-      this.cachedHashes = [];
+      this.hashRate.setValue(Math.round(this.hashes.length * 0.75));
+      overallHashRate += this.hashRate.value ?? 0;
+      this.hashes = [];
     }
-    this.hashRate = Math.round(overallHashRate / determineRounds);
-    this.inputs.controls['hashRate'].clearValidators();
-    this.inputs.controls['hashRate'].addValidators(this.createHashRateValidators(this.hashRate));
-    this.isCalculating.next(false);
-    this.clear();
+    this.hashRate.setValue(Math.round(overallHashRate / determineRounds))
   }
 
   setBitcoinBlockTime() {
-    this.blockTime = BLOCK_DURATION_IN_SECONDS;
+    this.blockTime.setValue(BLOCK_DURATION_IN_SECONDS);
   }
 
   determineExternalHashRate() {
     this.btcService.getLatestBlocks().subscribe(blocks => {
       // https://en.bitcoinwiki.org/wiki/Difficulty_in_Mining#:~:text=Average%20time%20of%20finding%20a,a%20miner%20finds%20per%20second.
       const bitcoinDifficulty = blocks[0].difficulty;
-      this.externalHashRate = bitcoinDifficulty * (2 ** 32) / BLOCK_DURATION_IN_SECONDS;
+      this.externalHashRate.setValue(bitcoinDifficulty * (2 ** 32) / BLOCK_DURATION_IN_SECONDS);
     });
   }
 
-  createJob(): Promise<string> {
+  async start(probability: number) {
+    this.isExecuting = true;
+    this.hashes = [];
+    let loadCreateJob = this.createJob(probability);
+    //this.simulationService.updateStartSimulation(true);
+    const hash = await loadCreateJob;
+    if (hash.isValid) {
+      alert('Fround hash: ' + hash.hash);
+    }
+  }
+
+  createJob(probability: number): Promise<PowHash> {
     return new Promise(async resolve => {
-      const timeToWait = 1000 / this.hashRate;
-      const validationInput = this.powService.validationInput;
+      const hashRate = this.hashRate.value!;
+      const timeToWait = 1000 / hashRate;
+      let executedCycles = 0;
+      let hashCount = 0;
+      let hash!: PowHash;
       while (this.isExecuting) {
-        this.executedCycles++;
-        for (let i = 0; i < this.hashRate; i++) {
+        executedCycles++;
+        for (let i = 0; i < hashRate; i++) {
           if (!this.isExecuting) {
             break;
           }
-          const hash = this.powService.createHash(
-            validationInput[0], validationInput[1], this.executedCycles, ++this.hashCount);
-          const suffix = '[...]';
-          hash.id = hash.id.substring(0, this.amountOfHashChars - suffix.length) + suffix;
-          if (this.cachedHashes.unshift(hash) > this.maxAmountOfHashesToShow) {
-            this.cachedHashes.pop();
+          hash = this.powService.createHash(probability, executedCycles, ++hashCount);
+          hash.hash = hash.hash.substring(0, 15) + '[...]';
+          if (this.hashes.unshift(hash) > PowComponent.maxAmountOfHashesToShow) {
+            this.hashes.pop();
           }
-          if (this.stopOnFoundBlock && hash.isValid) {
+          if (hash.isValid) {
             this.stop();
-            this.notificationService.display('Found hash!');
             break;
           }
           await delay(timeToWait);
         }
       }
-      resolve('done');
+      resolve(hash);
     });
   }
 
-  stop(): void {
-    this.isProcessing.next(false);
-  }
-
-  clear(): void {
-    if (this.isExecuting) {
-      return;
-    }
-    this.cachedHashes = [];
-    this.executedCycles = 0;
-    this.hashCount = 0;
+  stop() {
+    this.isExecuting = false;
   }
 }

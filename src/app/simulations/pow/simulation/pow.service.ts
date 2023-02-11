@@ -1,13 +1,13 @@
-import {PowHash} from "./pow-interfaces";
-import {createBlockId} from "../../../shared/helpers/block";
+import { PowHash } from "./pow-interfaces";
+import { BLOCK_ID_LENGTH, createBlockId } from "../../../shared/helpers/block";
 import {
   calculateDifficulty,
   calculateHashDetails,
   calculateHexaDecimalFormula,
   calculateProbability
 } from "../../../shared/hash.methods";
-import {Injectable} from "@angular/core";
-import {calculateTime} from "src/app/shared/helpers/time";
+import { Injectable } from "@angular/core";
+import { calculateTime } from "src/app/shared/helpers/time";
 
 @Injectable()
 export class PowService {
@@ -82,16 +82,29 @@ export class PowService {
     return Number.parseInt(hex) < probability;
   }
 
-  createHash(leadingZeros: number, probability: number, executedHashrates: number, blockNo: number): PowHash {
+  createHash(probability: number, cycle: number, no: number): PowHash {
+    const leadingZeros = this.calculateLeadingZeros(probability);
     const id = createBlockId();
     return {
-      id: id,
-      hashRate: executedHashrates,
+      hash: id,
+      cycle: cycle,
       difficulty: this.probability,
-      serialNo: blockNo,
+      no: no,
       isValid: this.probability === 1
         ? true
         : this.validate(id, leadingZeros, probability)
     };
+  }
+
+  calculateLeadingZeros(probability: number) {
+    let leadingZeros = 0;
+    for (let i = 0; i < BLOCK_ID_LENGTH; i++) {
+      probability = probability * 16;
+      if (probability >= 1) {
+        break;
+      }
+      leadingZeros++;
+    }
+    return leadingZeros;
   }
 }

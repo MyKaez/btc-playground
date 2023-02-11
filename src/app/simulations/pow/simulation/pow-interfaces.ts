@@ -1,7 +1,7 @@
 export interface PowHash {
-  id: string;
+  hash: string;
+  no: number;
   isValid: boolean;
-  hashRate: number;
-  serialNo: number;
+  cycle: number;
   difficulty: number;
 }
