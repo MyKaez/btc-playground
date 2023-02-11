@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   presentationMode: false,
-  environmentName: "default"
+  environmentName: "default",
+  simulations: undefined
 };
 
 export class Config {

@@ -1,7 +1,10 @@
+import { PowComponent } from "src/app/simulations";
+
 export const environment = {
   production: true,
   presentationMode: true,
-  environmentName: "prod"
+  environmentName: "prod",
+  simulations: [PowComponent.title]
 };
 
 export class Config {

@@ -1,23 +1,25 @@
 import { Injectable } from "@angular/core";
 import { Observable, Subscriber } from 'rxjs';
+import { environment } from "src/environments/environment";
+import { PowComponent } from "./pow/pow.component";
 
 @Injectable()
 export class SimulationService {
     private startSimulationSubscriber: Subscriber<boolean> | undefined;
-    readonly listeningToStartSimulation = new Observable<boolean>(subscriber => this.startSimulationSubscriber = subscriber );
+    readonly listeningToStartSimulation = new Observable<boolean>(subscriber => this.startSimulationSubscriber = subscriber);
     updateStartSimulation(isStarted: boolean) {
-        if(!this.startSimulationSubscriber) return;
+        if (!this.startSimulationSubscriber) return;
         this.startSimulationSubscriber.next(isStarted);
     }
 
     getSimulations(): Simulation[] {
-        return [{
+        const simulations = [{
             title: "Blocksize",
             description: "Wie entwickelt sich die Blockchain Größe?",
             youtubeSrc: "Act1XIKj1w0",
             navigationLink: "simulations/blocksize"
         }, {
-            title: "Proof of Work",
+            title: PowComponent.title,
             description: "Fixes this... Determinismus / Vorhersehbarkeit",
             youtubeSrc: "MRNSudh565Y",
             navigationLink: "simulations/pow"
@@ -37,6 +39,11 @@ export class SimulationService {
             imageSrc: "assets/img/fixed-above.png",
             navigationLink: "simulations/formula"
         }];
+        if (!environment.simulations) {
+            return simulations;
+        }
+        const activated = <string[]>environment.simulations;
+        return simulations.filter(s => activated.includes(s.title))
     }
 }
 

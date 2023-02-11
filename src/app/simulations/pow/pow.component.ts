@@ -20,7 +20,9 @@ import { SimulationService } from '../simulation.service';
   encapsulation: ViewEncapsulation.None
 })
 export class PowComponent implements OnInit {
-    public readonly maxAmountOfHashesToShow = 200;
+  static readonly title = "Proof of Work";
+
+  public readonly maxAmountOfHashesToShow = 200;
   public readonly minAmountOfHashesToShow = 1;
   private readonly separator = ' | ';
 
