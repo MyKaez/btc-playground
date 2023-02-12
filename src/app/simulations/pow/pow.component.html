@@ -13,7 +13,6 @@
         Proof of Work Simulation
       </span>
     </div>
-    <!--<div class="console-data" *ngIf="hashes$ | async as hashes">-->
     <div class="console-data">
       <table>
         <tr>
@@ -57,7 +56,7 @@
       </button>
       <mat-form-field appearance="fill">
         <mat-label>Hashrate [Hashes pro Sekunde]</mat-label>
-        <input matInput type="number" [formControl]="hashRate" />
+        <input matInput type="number" [formControl]="hashRate" [readonly]="isExecuting" />
         <!--label *ngIf="!isExecuting && !inputs.controls['hashRate'].valid">
           <span>{{getErrors('hashRate')}}</span>
         </label-->
@@ -70,7 +69,7 @@
       </button>
       <mat-form-field appearance="fill">
         <mat-label>externe Hashrate [Hashes pro Sekunde]</mat-label>
-        <input matInput type="number" [formControl]="externalHashRate" />
+        <input matInput type="number" [formControl]="externalHashRate" [readonly]="isExecuting" />
         <!--label *ngIf="!isExecuting && !inputs.controls['externalHashRate'].valid">
           <span>{{getErrors('externalHashRate')}}</span>
         </label-->
@@ -112,7 +111,7 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Wahrscheinlichkeit [pro Block]</mat-label>
-          <input matInput type="text" value="1 / (Hashrate * Blockzeit)" />
+          <input matInput type="text" value="1 / (Hashrate * Blockzeit)" readonly="true" />
           <mat-hint>
             1 / (
             <span *ngIf="totalHashRate$ | async as hr">{{hr}}</span>
@@ -127,23 +126,23 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Erwartungswert [Anzahl Blöcke]</mat-label>
-          <input matInput type="text" value="Hashrate * Blockzeit" />
+          <input matInput type="text" value="Hashrate * Blockzeit" readonly="true" />
           <mat-hint><span *ngIf="difficulty$ | async as difficulty">{{difficulty}}</span></mat-hint>
         </mat-form-field>
 
         <mat-form-field appearance="fill" *ngIf="expectedDuration$ | async as expectedDuration">
           <mat-label>Erwartete Dauer</mat-label>
-          <input matInput type="text" [value]="expectedDuration" />
+          <input matInput type="text" [value]="expectedDuration" readonly="true" />
         </mat-form-field>
 
         <mat-form-field appearance="fill" *ngIf="expectedPrefix$ | async as expectedPrefix">
           <mat-label>Erwartete Hash Präfixe</mat-label>
-          <input matInput type="text" [value]="expectedPrefix" />
+          <input matInput type="text" [value]="expectedPrefix" readonly="true" />
         </mat-form-field>
 
         <mat-form-field appearance="fill" *ngIf="hexaDecimalFormula$ | async as hexaDecimalFormula">
           <mat-label>Hexadezimal Formel</mat-label>
-          <input matInput type="text" [value]="hexaDecimalFormula" />
+          <input matInput type="text" [value]="hexaDecimalFormula" readonly="true" />
         </mat-form-field>
 
       </div>
@@ -157,19 +156,16 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class=" options">
-      <!--
       <mat-form-field apperance="fill">
         <mat-label>Anzahl angezeigter Hashes</mat-label>
-        <input type="number" matInput [(ngModel)]="amountHashesToShow" [min]="minAmountOfHashesToShow" step="1"
-          [max]="maxAmountOfHashesToShow">
+        <input type="number" matInput [formControl]="amountOfHashes" step="1">
       </mat-form-field>
-      <mat-checkbox [(ngModel)]="stopOnFoundBlock">
+      <mat-checkbox [formControl]="stopOnFoundBlock">
         Stoppen bei gefundenem Block
       </mat-checkbox>
-      <mat-checkbox [(ngModel)]="clearOnStart">
+      <mat-checkbox [formControl]="clearOnStart">
         Clear bei Start
       </mat-checkbox>
-      -->
     </div>
   </mat-expansion-panel>
 
@@ -181,16 +177,11 @@
   <div class="actions" *ngIf="probability$ | async as probability">
     <button mat-button (click)="start(probability)" [disabled]="isExecuting">Start</button>
     <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
-    <!--
     <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
     <span *ngIf="hashCount > 0">
       Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br />
-      Dauer: {{executionTime}}<br />
-      Anzahl eigener Hashes: {{hashCount}}<br />
     </span>
-    -->
     <div *ngIf="isExecuting">
-      <span>Simulation läuft...</span>
       <mat-progress-bar [mode]="'indeterminate'">
       </mat-progress-bar>
     </div>

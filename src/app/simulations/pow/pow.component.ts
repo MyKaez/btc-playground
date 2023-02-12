@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
-import { FormControl, } from '@angular/forms';
+import { FormControl, Validators, } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map, merge, Observable, of, shareReplay, tap } from 'rxjs';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
@@ -9,6 +9,7 @@ import { PowHash } from './simulation/pow-interfaces';
 import { PowService } from './simulation/pow.service';
 import { calculateTime } from 'src/app/shared/helpers/time';
 import { delay } from 'src/app/shared/delay';
+import { SimulationService } from '../simulation.service';
 
 @Component({
   selector: 'app-pow',
@@ -20,6 +21,7 @@ export class PowComponent implements AfterViewInit {
   static readonly title = "Proof of Work";
   static readonly maxAmountOfHashesToShow = 200;
   static readonly minAmountOfHashesToShow = 1;
+  static readonly defaultAmountOfHashesToShow = 20;
 
   displayedColumns: { prop: string, text: string }[] = [
     { prop: 'no', text: 'Nr.' },
@@ -30,15 +32,23 @@ export class PowComponent implements AfterViewInit {
   hashRate = new FormControl<number>(0);
   externalHashRate = new FormControl<number>(0);
   blockTime = new FormControl<number>(0);
+  amountOfHashes = new FormControl(
+    PowComponent.defaultAmountOfHashesToShow,
+    [Validators.min(PowComponent.minAmountOfHashesToShow), Validators.max(PowComponent.maxAmountOfHashesToShow)]);
+  stopOnFoundBlock = new FormControl<boolean>(true);
+  clearOnStart = new FormControl<boolean>(true);
+
   hashes: PowHash[] = [];
   contentLayoutMode = ContentLayoutMode.LockImage;
   isExecuting = false;
+  hashCount = 0;
+  executedCycles = 0;
 
   get totalHashRate(): number {
     return (this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0);
   }
 
-  constructor(layout: LayoutService, private btcService: BtcService, private powService: PowService) {
+  constructor(layout: LayoutService, private btcService: BtcService, private powService: PowService, private simulationService: SimulationService) {
     this.isHandset$ = layout.isHandset;
   }
 
@@ -104,11 +114,7 @@ export class PowComponent implements AfterViewInit {
       const start = new Date();
       start.setSeconds(start.getSeconds() + 1);
       while (start.getTime() > new Date().getTime()) {
-        const hash = this.powService.createHash(probability, i, this.hashes.length);
-        hash.hash = hash.hash.substring(0, 15) + '[...]';
-        if (this.hashes.unshift(hash) > PowComponent.maxAmountOfHashesToShow) {
-          this.hashes.pop();
-        }
+        this.createHash(probability, i, this.hashes.length);
         await delay(1);
       }
       this.hashRate.setValue(Math.round(this.hashes.length * 0.75));
@@ -132,9 +138,11 @@ export class PowComponent implements AfterViewInit {
 
   async start(probability: number) {
     this.isExecuting = true;
-    this.hashes = [];
+    if (this.clearOnStart.value) {
+      this.clear();
+    }
     let loadCreateJob = this.createJob(probability);
-    //this.simulationService.updateStartSimulation(true);
+    this.simulationService.updateStartSimulation(true);
     const hash = await loadCreateJob;
     if (hash.isValid) {
       alert('Fround hash: ' + hash.hash);
@@ -145,21 +153,12 @@ export class PowComponent implements AfterViewInit {
     return new Promise(async resolve => {
       const hashRate = this.hashRate.value!;
       const timeToWait = 1000 / hashRate;
-      let executedCycles = 0;
-      let hashCount = 0;
       let hash!: PowHash;
       while (this.isExecuting) {
-        executedCycles++;
+        this.executedCycles++;
         for (let i = 0; i < hashRate; i++) {
-          if (!this.isExecuting) {
-            break;
-          }
-          hash = this.powService.createHash(probability, executedCycles, ++hashCount);
-          hash.hash = hash.hash.substring(0, 15) + '[...]';
-          if (this.hashes.unshift(hash) > PowComponent.maxAmountOfHashesToShow) {
-            this.hashes.pop();
-          }
-          if (hash.isValid) {
+          hash = this.createHash(probability, this.executedCycles, ++this.hashCount);
+          if ((hash.isValid || !this.isExecuting) && this.stopOnFoundBlock.value) {
             this.stop();
             break;
           }
@@ -168,6 +167,22 @@ export class PowComponent implements AfterViewInit {
       }
       resolve(hash);
     });
+  }
+
+  createHash(probability: number, executedCycles: number, hashCount: number): PowHash {
+    const hash = this.powService.createHash(probability, executedCycles, hashCount);
+    hash.hash = hash.hash.substring(0, 20) + '[...]';
+    let pops = this.hashes.unshift(hash) - (this.amountOfHashes.value ?? 0);
+    for (let i = 0; i < pops; i++) {
+      this.hashes.pop();
+    }
+    return hash;
+  }
+
+  clear() {
+    this.executedCycles = 0;
+    this.hashCount = 0;
+    this.hashes = [];
   }
 
   stop() {
