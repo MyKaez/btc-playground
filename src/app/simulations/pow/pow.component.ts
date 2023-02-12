@@ -58,12 +58,8 @@ export class PowComponent implements AfterViewInit {
     distinctUntilChanged(),
     shareReplay(1)
   );
-  currentExternalHashRate$ = this.externalHashRateChanges$.pipe(
-    map(hashRate => this.getSize(hashRate))
-  );
-  currentHashRate$ = this.hashRateChanges$.pipe(
-    map(hashRate => this.getSize(hashRate))
-  );
+  currentHashRate$ = this.hashRateChanges$.pipe(map(hashRate => this.getSize(hashRate)));
+  currentExternalHashRate$ = this.externalHashRateChanges$.pipe(map(hashRate => this.getSize(hashRate)));
   totalHashRate$ = merge(this.hashRateChanges$, this.externalHashRateChanges$).pipe(
     map(_ => this.getSize(this.totalHashRate)),
     shareReplay(1)
@@ -72,25 +68,19 @@ export class PowComponent implements AfterViewInit {
     map(_ => 1 / (((this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0)) * (this.blockTime.value ?? 0))),
     shareReplay(1)
   );
-  difficulty$ = this.probability$.pipe(
-    map(probability => 1 / probability)
-  );
+  difficulty$ = this.probability$.pipe(map(probability => 1 / probability));
   currentBlockTime$ = this.blockTime.valueChanges.pipe(
     map(time => calculateTime(time ?? 0)),
     shareReplay(1)
   );
-  expectedPrefix$ = this.probability$.pipe(
-    map(probability => this.powService.expectedPrefix(probability))
-  );
+  expectedPrefix$ = this.probability$.pipe(map(probability => this.powService.expectedPrefix(probability)));
   expectedDuration$ = merge(this.hashRateChanges$, this.externalHashRateChanges$, this.blockTimeChanges$).pipe(
     map(_ => {
       let time = this.totalHashRate * (this.blockTime.value ?? 0) / (this.hashRate.value ?? 0);
       return calculateTime(time)
     })
   );
-  hexaDecimalFormula$ = this.probability$.pipe(
-    map(probability => this.powService.hexaDecimalFormula(probability))
-  );
+  hexaDecimalFormula$ = this.probability$.pipe(map(probability => this.powService.hexaDecimalFormula(probability)));
 
   ngAfterViewInit(): void {
     this.hashRate.setValue(50);
