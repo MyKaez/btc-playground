@@ -8,15 +8,15 @@
             font-style: italic;
             padding-left: $margin-huge;
         }
-    
+
         .groundwork {
             margin-top: $margin-huge;
         }
-    
+
         .section {
             margin-top: $margin-huge;
         }
-    
+
         img {
             width: 80%;
             background-color: rgba($accent, 0.85);
@@ -130,11 +130,14 @@
             .simulation-console {
                 border: 1px solid $primary-300;
                 border-radius: 0 2em 0 0;
+                background-color: $primary-700;
                 text-align: left;
                 height: 100%;
+                display: flex;
+                flex-direction: column;
 
                 .console-header {
-                    height: 4%;
+                    height: 2em;
                     background-color: rgba(var(--header-color), 0.9);
                     border-bottom: 1px solid $primary-300;
                     color: white;
@@ -162,14 +165,13 @@
                     background-color: $primary-700;
                     white-space: nowrap;
                     padding: $margin-small;
-                    height: 96%;
                     font-family: $code-font;
                 }
             }
         }
     }
 
-    button {        
+    button {
         border: 2px solid $light-color;
         margin: 0.5em;
         border-radius: 2em;
