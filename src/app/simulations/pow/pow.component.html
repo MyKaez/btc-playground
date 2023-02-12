@@ -50,8 +50,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="parameters">
-      <button *ngIf="probability$ | async as probability" mat-button (click)="determineHashRate(probability)"
-        [disabled]="isExecuting">
+      <button mat-button (click)="determineHashRate()" [disabled]="isExecuting">
         Eigene Hashrate ermitteln
       </button>
       <mat-form-field appearance="fill">
@@ -175,7 +174,7 @@
 
 <ng-template #actions>
   <div class="actions" *ngIf="probability$ | async as probability">
-    <button mat-button (click)="start(probability)" [disabled]="isExecuting">Start</button>
+    <button mat-button (click)="start(probability)" [disabled]="isExecuting || formGroup.invalid">Start</button>
     <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
     <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
     <span *ngIf="hashCount > 0">

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
-import { FormControl, Validators, } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map, merge, Observable, of, shareReplay, tap } from 'rxjs';
+import { FormControl, FormGroup, Validators, } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, filter, map, merge, Observable, of, shareReplay, tap } from 'rxjs';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
@@ -19,8 +19,6 @@ import { SimulationService } from '../simulation.service';
 })
 export class PowComponent implements AfterViewInit {
   static readonly title = "Proof of Work";
-  static readonly maxAmountOfHashesToShow = 200;
-  static readonly minAmountOfHashesToShow = 1;
   static readonly defaultAmountOfHashesToShow = 20;
 
   displayedColumns: { prop: string, text: string }[] = [
@@ -29,14 +27,17 @@ export class PowComponent implements AfterViewInit {
     { prop: 'cycle', text: 'Zyklus' },
     { prop: 'isValid', text: 'Valide' }
   ]
-  hashRate = new FormControl<number>(0);
-  externalHashRate = new FormControl<number>(0);
-  blockTime = new FormControl<number>(0);
-  amountOfHashes = new FormControl(
-    PowComponent.defaultAmountOfHashesToShow,
-    [Validators.min(PowComponent.minAmountOfHashesToShow), Validators.max(PowComponent.maxAmountOfHashesToShow)]);
+  hashRate = new FormControl<number>(0, [Validators.min(1), Validators.max(50)]);
+  externalHashRate = new FormControl<number>(0, [Validators.min(0)]);
+  blockTime = new FormControl<number>(0, [Validators.min(1)]);
+  amountOfHashes = new FormControl(PowComponent.defaultAmountOfHashesToShow, [Validators.min(1), Validators.max(200)]);
   stopOnFoundBlock = new FormControl<boolean>(true);
   clearOnStart = new FormControl<boolean>(true);
+  formGroup = new FormGroup({
+    hashRate: this.hashRate,
+    externalHashRate: this.externalHashRate,
+    blockTime: this.blockTime
+  });
 
   hashes: PowHash[] = [];
   contentLayoutMode = ContentLayoutMode.LockImage;
@@ -56,17 +57,20 @@ export class PowComponent implements AfterViewInit {
   hashRateChanges$ = this.hashRate.valueChanges.pipe(
     debounceTime(400),
     distinctUntilChanged(),
-    shareReplay(1)
+    shareReplay(1),
+    filter(_ => this.hashRate.valid)
   );
   externalHashRateChanges$ = this.externalHashRate.valueChanges.pipe(
     debounceTime(400),
     distinctUntilChanged(),
-    shareReplay(1)
+    shareReplay(1),
+    filter(_ => this.hashRate.valid)
   );
   blockTimeChanges$ = this.blockTime.valueChanges.pipe(
     debounceTime(400),
     distinctUntilChanged(),
-    shareReplay(1)
+    shareReplay(1),
+    filter(_ => this.hashRate.valid)
   );
   currentHashRate$ = this.hashRateChanges$.pipe(map(hashRate => this.getSize(hashRate)));
   currentExternalHashRate$ = this.externalHashRateChanges$.pipe(map(hashRate => this.getSize(hashRate)));
@@ -107,21 +111,25 @@ export class PowComponent implements AfterViewInit {
     return hash[prop];
   }
 
-  async determineHashRate(probability: number) {
+  async determineHashRate() {
+    this.isExecuting = true;
     let overallHashRate = 0;
     const determineRounds = 5;
     for (let i = 0; i < determineRounds; i++) {
       const start = new Date();
       start.setSeconds(start.getSeconds() + 1);
       while (start.getTime() > new Date().getTime()) {
-        this.createHash(probability, i, this.hashes.length);
+        overallHashRate++;
+        this.createHash(0, i, overallHashRate++);
         await delay(1);
       }
-      this.hashRate.setValue(Math.round(this.hashes.length * 0.75));
-      overallHashRate += this.hashRate.value ?? 0;
       this.hashes = [];
     }
-    this.hashRate.setValue(Math.round(overallHashRate / determineRounds))
+    const allowedHashRate = Math.round(Math.round(overallHashRate * 0.75) / determineRounds);
+    this.hashRate.clearValidators();
+    this.hashRate.addValidators([Validators.min(1), Validators.max(allowedHashRate)]);
+    this.hashRate.setValue(allowedHashRate)
+    this.isExecuting = false;
   }
 
   setBitcoinBlockTime() {
