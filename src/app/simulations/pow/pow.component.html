@@ -20,16 +20,6 @@
             <span *ngIf="column !== displayedColumns[0]"> | </span> <span> {{column.text}} </span>
           </th>
         </tr>
-        <!--
-        <tr>
-
-          <td *ngFor="let column of displayedColumns">
-            <span *ngIf="column !== displayedColumns[0]">|-</span>{{getSeparatorLine(hashes,column)}}
-          </td>
-        </tr>
-      -->
-
-
         <tr *ngFor="let hash of hashes">
           <td *ngFor="let column of displayedColumns">
             <span *ngIf="column !== displayedColumns[0]"> | </span> {{getValue(hash, column.prop)}}
