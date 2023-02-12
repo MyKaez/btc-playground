@@ -131,24 +131,21 @@
           <mat-hint><span *ngIf="difficulty$ | async as difficulty">{{difficulty}}</span></mat-hint>
         </mat-form-field>
 
+        <mat-form-field appearance="fill" *ngIf="expectedDuration$ | async as expectedDuration">
+          <mat-label>Erwartete Dauer</mat-label>
+          <input matInput type="text" [value]="expectedDuration" />
+        </mat-form-field>
 
         <mat-form-field appearance="fill" *ngIf="expectedPrefix$ | async as expectedPrefix">
           <mat-label>Erwartete Hash Präfixe</mat-label>
           <input matInput type="text" [value]="expectedPrefix" />
         </mat-form-field>
-        <!--
 
-        <p>
-          <mat-label>Hexadezimale Formel</mat-label>
-          <br />
-          <span> = {{hexaDecimalFormula}}</span>
-        </p>
-        <p>
-          <mat-label>Durchschnittsdauer bis zu gefundenem Hash</mat-label>
-          <br />
-          <span> = {{expectedDuration}}</span>
-        </p>
-        -->
+        <mat-form-field appearance="fill" *ngIf="hexaDecimalFormula$ | async as hexaDecimalFormula">
+          <mat-label>Hexadezimal Formel</mat-label>
+          <input matInput type="text" [value]="hexaDecimalFormula" />
+        </mat-form-field>
+
       </div>
     </mat-expansion-panel>
   </mat-expansion-panel>

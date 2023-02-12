@@ -34,6 +34,10 @@ export class PowComponent implements AfterViewInit {
   contentLayoutMode = ContentLayoutMode.LockImage;
   isExecuting = false;
 
+  get totalHashRate(): number {
+    return (this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0);
+  }
+
   constructor(layout: LayoutService, private btcService: BtcService, private powService: PowService) {
     this.isHandset$ = layout.isHandset;
   }
@@ -49,18 +53,22 @@ export class PowComponent implements AfterViewInit {
     distinctUntilChanged(),
     shareReplay(1)
   );
-  currentExternalHashRate$ = this.externalHashRateChanges$.pipe(
-    map(hashRate => this.getSize(hashRate))
-  )
-  currentHashRate$ = this.hashRateChanges$.pipe(
-    map(hashRate => this.getSize(hashRate))
-  )
-  totalHashRate$ = merge(this.hashRateChanges$, this.externalHashRateChanges$).pipe(
-    map(_ => (this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0)),
-    map(hashRate => this.getSize(hashRate)),
+  blockTimeChanges$ = this.blockTime.valueChanges.pipe(
+    debounceTime(400),
+    distinctUntilChanged(),
     shareReplay(1)
   );
-  probability$ = merge(this.totalHashRate$, this.blockTime.valueChanges).pipe(
+  currentExternalHashRate$ = this.externalHashRateChanges$.pipe(
+    map(hashRate => this.getSize(hashRate))
+  );
+  currentHashRate$ = this.hashRateChanges$.pipe(
+    map(hashRate => this.getSize(hashRate))
+  );
+  totalHashRate$ = merge(this.hashRateChanges$, this.externalHashRateChanges$).pipe(
+    map(_ => this.getSize(this.totalHashRate)),
+    shareReplay(1)
+  );
+  probability$ = merge(this.totalHashRate$, this.blockTimeChanges$).pipe(
     map(_ => 1 / (((this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0)) * (this.blockTime.value ?? 0))),
     shareReplay(1)
   );
@@ -72,20 +80,16 @@ export class PowComponent implements AfterViewInit {
     shareReplay(1)
   );
   expectedPrefix$ = this.probability$.pipe(
-    map(probability => {
-      const res: string[] = [];
-      let x = '';
-      for (let i = 0; i < this.powService.calculateLeadingZeros(probability); i++) {
-        x += '0';
-      }
-      for (let i = 0; i < probability; i++) {
-        res.push(x + i.toString(16));
-      }
-      if (res.length === 1) {
-        return res[0];
-      }
-      return res[0] + '-' + res[res.length - 1];
+    map(probability => this.powService.expectedPrefix(probability))
+  );
+  expectedDuration$ = merge(this.hashRateChanges$, this.externalHashRateChanges$, this.blockTimeChanges$).pipe(
+    map(_ => {
+      let time = this.totalHashRate * (this.blockTime.value ?? 0) / (this.hashRate.value ?? 0);
+      return calculateTime(time)
     })
+  );
+  hexaDecimalFormula$ = this.probability$.pipe(
+    map(probability => this.powService.hexaDecimalFormula(probability))
   );
 
   ngAfterViewInit(): void {
