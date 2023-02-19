@@ -39,8 +39,10 @@ img {
 
     ::ng-deep iframe {
       border: 2px solid $primary-300;
-      width: 560px;
-      height: 315px;
+      max-width: 560px;
+      max-height: 315px;
+      height: 40vw;
+      width: 80vw;
     } 
   }
 }

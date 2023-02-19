@@ -47,9 +47,11 @@
             padding-bottom: 1rem;
 
             iframe {
-                border: 2px solid $primary-300;
-                width: 560px;
-                height: 315px;
+                border: 2px solid $primary-300;    
+                max-width: 560px;
+                max-height: 315px;
+                height: 40vw;
+                width: 80vw;
                 border-bottom-left-radius: 2em;
             }
         }
