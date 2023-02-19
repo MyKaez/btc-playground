@@ -49,7 +49,7 @@ export class PowComponent implements AfterViewInit {
     return (this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0);
   }
 
-  constructor(layout: LayoutService, private btcService: BtcService, private powService: PowService, private simulationService: SimulationService) {
+  constructor(public layout: LayoutService, private btcService: BtcService, private powService: PowService, private simulationService: SimulationService) {
     this.isHandset$ = layout.isHandset;
   }
 

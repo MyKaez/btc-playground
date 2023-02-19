@@ -18,7 +18,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
   isHandset$: Observable<boolean>;
 
   constructor(private notificationService: NotificationService,
-              private layout: LayoutService) {
+              public layout: LayoutService) {
     this.inputs = new FormGroup({
       blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
       attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),

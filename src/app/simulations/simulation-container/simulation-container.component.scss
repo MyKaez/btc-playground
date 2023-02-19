@@ -1,6 +1,14 @@
 @import "/src/styles.scss";
 
 .simulation-container {
+    .mat-tab-group {
+      height: 100%;
+
+      .mat-tab-body-wrapper {
+        flex-grow: 1;
+      }
+    }
+
     .text-explanation {
         margin-top: $margin-huge;
 
@@ -161,12 +169,12 @@
                     overflow: auto;
                     display: flex;
                     flex-direction: column;
+                    flex-grow: 1;
                     color: $accent;
                     background-color: $primary-700;
                     white-space: nowrap;
                     padding: $margin-small;
                     font-family: $code-font;
-                    min-height: 30em;
                 }
             }
         }

@@ -10,7 +10,7 @@ import { ThemeEditorComponent } from 'src/app/shared/personal';
 })
 export class FooterComponent implements OnInit {
   get isShown(): boolean {
-    return !this.layout.isHandset || !this.layout.isSimulation
+    return !this.layout.isSmallScreen$ || !this.layout.isSimulation
   }
 
   constructor(public dialog: MatDialog, public layout: LayoutService) { }

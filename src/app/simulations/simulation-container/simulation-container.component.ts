@@ -21,7 +21,7 @@ export class SimulationContainerComponent implements OnInit {
   private startSimulationListener?: Subscription;
   selectedTabIndex = 1;
 
-  constructor(private layout: LayoutService, private simulationService: SimulationService) { 
+  constructor(public layout: LayoutService, private simulationService: SimulationService) { 
     this.isHandset$ = layout.isHandset;
   }
 

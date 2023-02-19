@@ -1,6 +1,6 @@
 <mat-sidenav-container class="sidenav-container" [ngClass]="
   {'content-simulation': layout.isSimulation,
-   'handset-layout': (isHandset$ | async)}">
+   'handset-layout': (layout.isSmallScreen$ | async)}">
   <mat-sidenav #drawer class="sidenav" [ngClass]="{hidden: !(layout.isSmallScreen$ |async)}" fixedInViewport
     [attr.role]="(layout.isSmallScreen$ | async) ? 'dialog' : 'navigation'" [mode]="(layout.isSmallScreen$ | async) ? 'over' : 'side'"
     [opened]="(layout.isSmallScreen$ | async) === false">
@@ -31,7 +31,7 @@
 
         <div class="navigation">
           <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
-            *ngIf="isHandset$ | async">
+            *ngIf="layout.isSmallScreen$ | async">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
           <div class="menu" [ngClass]="{hidden: (layout.isSmallScreen$ | async)}">
