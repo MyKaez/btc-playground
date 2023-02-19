@@ -11,6 +11,12 @@
 
     .text-explanation {
         margin-top: $margin-huge;
+        
+        .mat-expansion-panel {
+            h1, h2, h3 {
+                margin-bottom: $margin-slim;
+            }
+        }
 
         .reason {
             font-style: italic;
@@ -22,16 +28,26 @@
         }
 
         .section {
-            margin-top: $margin-huge;
+            margin-top: $margin-large;
+
+            &:first-child {
+                margin-top: $margin-small;
+            }
+
+            :last-child {
+                margin-bottom: 0;
+            }
         }
 
         img {
-            width: 80%;
+            display: block;
+            width: 100%;
+            max-width: 800px;
             background-color: rgba($accent, 0.85);
             border: 2px solid $light-color;
             border-radius: 0 2em 0 2em;
-            padding: $margin-large;
-            margin: $margin-large;
+            padding: $margin-small $margin-large;
+            margin: 0 auto $margin-small auto;
         }
     }
 

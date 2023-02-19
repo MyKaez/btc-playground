@@ -6,6 +6,7 @@ $width-which-allows-large-navigation: 1400px;
   .mat-toolbar {
     position: fixed;
     z-index: 50;
+    padding-right: $margin-large;
   }
 
   .main {
@@ -59,7 +60,6 @@ $width-which-allows-large-navigation: 1400px;
 
   /*border-bottom: 1px dashed $light-color;*/
   padding: 0;
-  padding-right: $margin-large;
   height: $header-height;
   min-height: $header-height;
   top: 0;
