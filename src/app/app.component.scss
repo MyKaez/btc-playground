@@ -34,11 +34,15 @@ app-blocksize {
     color: var(--font-color);
 }
 
+.container-card {
+  border: 2px solid $primary-300;
+  border-radius: 0 2em 0 2em;
+  padding: $margin-large;
+}
+
 .info-card {
+    @extend .container-card;
     background-color: rgba(var(--primary), 0.9);
-    border: 2px solid $primary-300;
-    border-radius: 0 2em 0 2em;
-    padding: $margin-large;
     margin: $margin-large;
 
     &.page-card {
