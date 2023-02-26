@@ -110,7 +110,5 @@ export interface NavLink {
 }
 
 export const HomeBackgroundImages: string[] = [
-  "./assets/img/fixed-crystals.png",
-  "./assets/img/fixed-cascade.png",
-  "./assets/img/fixed-connected.png"
+  "./assets/img/wallpapers/fixed-crystals.png"
 ]
