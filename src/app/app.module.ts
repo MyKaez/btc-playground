@@ -25,7 +25,6 @@ import {
   SimulationCardComponent,
   BlocksizeComponent,
   XpaComponent,
-  XpaSimulationComponent,
   RingOfFireComponent
 } from './simulations';
 
@@ -81,7 +80,6 @@ import { AppContextService } from './core';
     MainNavComponent,
     FooterComponent,
     XpaComponent,
-    XpaSimulationComponent,
     InfoComponent,
     SocialBarComponent,
     LanguageSelectorComponent,

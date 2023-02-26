@@ -26,7 +26,6 @@ export class BlocksizeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.LockImage);
   }
 
   ngOnDestroy(): void {

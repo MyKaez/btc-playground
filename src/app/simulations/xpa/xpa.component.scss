@@ -1,6 +1,10 @@
-@import "/src/app/app.component.scss";
+@import "/src/styles.scss";
 
 .mat-tab-body-wrapper {
     height: 100%;
     margin-top: $margin-large;
+}
+
+.non-confirm {
+    color: $accent-300;
 }
