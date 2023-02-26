@@ -8,7 +8,7 @@ export class LayoutService {
   readonly maxSmallScreenWidthPx = 999;
 
   currentLayoutMode = ContentLayoutMode.ImageCarousel;
-  lockedImage: string = "assets/img/fixed-crystals.png";
+  lockedImage: string = "assets/img/wallpapers/fixed-smooth-wireframe.png";
   isHandset: Observable<boolean>;
   /** Updates if screen width is adjusted and below defined small screen width */
   isSmallScreen$: Observable<boolean>;
