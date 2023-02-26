@@ -16,6 +16,8 @@ export class BlocksizeComponent implements OnInit, OnDestroy {
   blocks: BlockData[];
   spaceInBytes: number = 1_000_000_000_000;
   isHandset$: Observable<boolean>;
+  
+  contentLayoutMode = ContentLayoutMode.LockImage;
 
   constructor(private blockSizeService: BlockSizeService,
               private layout: LayoutService) {
@@ -25,11 +27,9 @@ export class BlocksizeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.layout.setLayoutMode(ContentLayoutMode.LockImage);
-    this.layout.isSimulation = true;
   }
 
   ngOnDestroy(): void {
-    this.layout.isSimulation = false;
   }
 
   private createBlocks(): BlockData[] {

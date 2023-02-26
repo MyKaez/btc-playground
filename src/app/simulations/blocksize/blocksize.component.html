@@ -1,61 +1,73 @@
-<div class="content">
-  <div [class]="(isHandset$ | async) ? 'simulation-items-handset': 'simulation-items'">
-    <div class="text info-card">
-      <p>
-        Blockzeit: {{calculateTime(blockTime)}}<br/>
-        <mat-form-field appearance="fill">
-          <mat-label><i>[in Sekunden]</i></mat-label>
-          <input matInput type="number" [(ngModel)]="blockTime"/>
-        </mat-form-field>
-      </p>
-      <p>
-        Blocksize: {{calculateSize(blockSize)}}<br/>
-        <mat-form-field appearance="fill">
-          <mat-label><i>[in Bytes]</i></mat-label>
-          <input matInput type="number" [(ngModel)]="blockSize"/>
-        </mat-form-field>
-      </p>
-      <p>
-        Speicherplatz: {{space}}<br/>
-        <mat-form-field appearance="fill">
-          <mat-label><i>[in Bytes]</i></mat-label>
-          <input matInput type="number" [(ngModel)]="spaceInBytes"/>
-        </mat-form-field>
-      </p>
-      <a href="https://jlopp.github.io/bitcoin-transaction-size-calculator/" target="_blank">
-        bitcoin transaction size calculator
-      </a>
+<app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
+    [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" [video-id]="'E2ee5ewEddE'">
+</app-simulation-container>
+
+<ng-template #simulation>
+    <ng-container *ngIf="isHandset$ | async">
+    </ng-container>
+    <div class="simulation-console">
+        <div class="simulation-console">
+          <div class="console-header">
+            <img src="assets/bitcoin-btc-logo.svg">
+            <span>
+              Blocksize Simulation
+            </span>
+          </div>
+          <div class="console-data">
+            <table>
+              <tr>
+                <th>Einheit</th>
+                <th>Anzahl Blöcke</th>
+                <th>Größe</th>
+              </tr>
+  
+              <tr *ngFor="let block of blocks">
+                <td>{{block.interval}}</td>
+                <td>{{block.amountOfBlocks}}</td>
+                <td>{{block.blockSize}}</td>
+              </tr>
+            </table>
+  
+            <hr />
+            <p>
+              Voll nach: {{outOfSpaceTime}}
+            </p>
+          </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #controls>
+    <div class="parameters">
+        <h3>Input</h3>        
+        <p>
+          Blockzeit: {{calculateTime(blockTime)}}<br/>
+          <mat-form-field appearance="fill">
+            <mat-label><i>[in Sekunden]</i></mat-label>
+            <input matInput type="number" [(ngModel)]="blockTime"/>
+          </mat-form-field>
+        </p>
+        <p>
+          Blocksize: {{calculateSize(blockSize)}}<br/>
+          <mat-form-field appearance="fill">
+            <mat-label><i>[in Bytes]</i></mat-label>
+            <input matInput type="number" [(ngModel)]="blockSize"/>
+          </mat-form-field>
+        </p>
+        <p>
+          Speicherplatz: {{space}}<br/>
+          <mat-form-field appearance="fill">
+            <mat-label><i>[in Bytes]</i></mat-label>
+            <input matInput type="number" [(ngModel)]="spaceInBytes"/>
+          </mat-form-field>
+        </p>
+        <a href="https://jlopp.github.io/bitcoin-transaction-size-calculator/" target="_blank">
+          bitcoin transaction size calculator
+        </a>
     </div>
 
-    <div class="simulation">
-      <div class="simulation-console">
-        <div class="console-header">
-          <img src="assets/bitcoin-btc-logo.svg">
-          <span>
-            Blocksize Simulation
-          </span>
-        </div>
-        <div class="console-data">
-          <table>
-            <tr>
-              <th>Einheit</th>
-              <th>Anzahl Blöcke</th>
-              <th>Größe</th>
-            </tr>
+</ng-template>
 
-            <tr *ngFor="let block of blocks">
-              <td>{{block.interval}}</td>
-              <td>{{block.amountOfBlocks}}</td>
-              <td>{{block.blockSize}}</td>
-            </tr>
-          </table>
-
-          <hr />
-          <p>
-            Voll nach: {{outOfSpaceTime}}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<ng-template #definition>
+    Noch keine Deifintion vorhanden!
+</ng-template>
