@@ -15,7 +15,7 @@ export class AboutTheTeamComponent implements OnInit {
   constructor(private layout: LayoutService, private teamService: TeamService) { }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.LockImage);
+    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
     this.contacts = this.teamService.getContactDescriptions();
     this.displays = this.contacts.map(contact => Display.create(contact));
   }

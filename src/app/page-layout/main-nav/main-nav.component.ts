@@ -20,9 +20,9 @@ export class MainNavComponent implements OnInit {
   currentPrice?: BtcPrice;
   latestBlocks: BtcBlock[] = [];
 
-  isCarousel = () => this.layout.currentLayoutMode == ContentLayoutMode.ImageCarousel;
-  isLockImage = () => this.layout.currentLayoutMode == ContentLayoutMode.LockImage;
-  lockedImage = () => this.layout.lockedImage;
+  isCarousel = () => this.layout.currentBackgroundImages?.length > 1;
+  isLockImage = () => this.layout.currentBackgroundImages?.length === 1;
+  currentBackgroundImages = () => this.layout.currentBackgroundImages;
 
   constructor(private router: Router,
     public layout: LayoutService,

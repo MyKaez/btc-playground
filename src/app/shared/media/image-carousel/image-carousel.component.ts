@@ -17,15 +17,11 @@ export class ImageCarouselComponent implements OnInit {
 
   slides: Slide[] = [];
 
-  constructor(private layoutService: LayoutService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    if (this.layoutService.currentLayoutMode === ContentLayoutMode.ImageCarousel) {
-      this.slides = this.imageUrls.map(url => this.getSlide(url));
-    } else if (this.layoutService.currentLayoutMode === ContentLayoutMode.LockImage) {
-      this.slides = [this.getSlide(this.imageUrls[0])];
-    }
+    this.slides = this.imageUrls.map(url => this.getSlide(url));
   }
 
   getSlide(url: string): any {

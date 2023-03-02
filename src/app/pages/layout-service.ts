@@ -7,8 +7,27 @@ import { Observable } from "rxjs";
 export class LayoutService {
   readonly maxSmallScreenWidthPx = 999;
 
+  imageSets = {
+    fancy: [
+      "assets/img/wallpapers/fixed-crystals.png",
+      "assets/img/wallpapers/fixed-cascade.png"
+    ],
+    calm: [
+      "assets/img/wallpapers/fixed-smooth-blur.png",
+      "assets/img/wallpapers/fixed-smooth-net.png",
+      "assets/img/wallpapers/fixed-smooth-nodes.png",
+      "assets/img/wallpapers/fixed-smooth-prisma.png",
+      "assets/img/wallpapers/fixed-smooth-wireframe.png"
+    ],
+    simple: [      
+      "assets/img/wallpapers/fixed-smooth-wireframe.png",
+      "assets/img/wallpapers/fixed-smooth-nodes.png"
+    ]
+  };
+  
   currentLayoutMode = ContentLayoutMode.ImageCarousel;
-  lockedImage: string = "assets/img/wallpapers/fixed-smooth-wireframe.png";
+  currentBackgroundImages = this.imageSets.fancy;
+
   isHandset$: Observable<boolean>;
   /** Updates if screen width is adjusted and below defined small screen width */
   isSmallScreen$: Observable<boolean>;
@@ -29,13 +48,40 @@ export class LayoutService {
     );
   }
 
-  setLayoutMode(mode: ContentLayoutMode) {
+  setLayoutMode(mode: ContentLayoutMode, backgroundImageOptions?: ContentLayoutBackgroundImageOptions) {
     this.currentLayoutMode = mode;
+    backgroundImageOptions = backgroundImageOptions || this.defaultOptions[mode];
+
+    if(backgroundImageOptions.imageMode != null) this.currentBackgroundImages = this.imageSets[backgroundImageOptions.imageMode];
+    if(backgroundImageOptions.imageUrls) this.currentBackgroundImages = backgroundImageOptions.imageUrls;
+
+    let maxImageCount = Number.MAX_SAFE_INTEGER;
+    if(mode == ContentLayoutMode.LockImage) maxImageCount = 1;
+    else if (mode == ContentLayoutMode.Plane) maxImageCount = 0;
+
+    this.currentBackgroundImages = this.currentBackgroundImages.slice(0, maxImageCount);
   }
+  
+  defaultOptions: Record<ContentLayoutMode, ContentLayoutBackgroundImageOptions> = {
+    [ContentLayoutMode.Plane]: {},
+    [ContentLayoutMode.ImageCarousel]: {imageMode: ContentLayoutImageMode.Calm},
+    [ContentLayoutMode.LockImage]: {imageMode: ContentLayoutImageMode.Calm}
+  };
 }
 
 export enum ContentLayoutMode {
   Plane,
   ImageCarousel,
   LockImage
+}
+
+export enum ContentLayoutImageMode {
+  Fancy = "fancy",
+  Calm = "calm",
+  Simple = "simple"
+}
+
+export interface ContentLayoutBackgroundImageOptions {
+  imageMode?: ContentLayoutImageMode;
+  imageUrls?: string[];
 }
