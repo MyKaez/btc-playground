@@ -3,6 +3,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Observable, Subscription } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { SimulationService } from '../simulation.service';
+import { SimulationHelper } from './simulation-helper';
 
 @Component({
   selector: 'app-simulation-container',
@@ -42,5 +43,22 @@ export class SimulationContainerComponent implements OnInit {
 
   onTabChanged(event: MatTabChangeEvent) {
     this.selectedTabIndex = event.index;
+  }
+
+  helper(): SimulationHelper {
+    return {
+      before: () => this.toSimulation(this),
+      after: () => this.toOptions(this)
+    }
+  }
+
+  toSimulation(container: SimulationContainerComponent): void {
+    console.log('switch to simulation!');
+    container.selectedTabIndex = 1;
+  }
+
+  toOptions(container: SimulationContainerComponent): void {
+    console.log('switch to options!');
+    container.selectedTabIndex = 2;
   }
 }

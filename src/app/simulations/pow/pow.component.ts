@@ -10,6 +10,7 @@ import { PowService } from './simulation/pow.service';
 import { calculateTime } from 'src/app/shared/helpers/time';
 import { delay } from 'src/app/shared/delay';
 import { SimulationService } from '../simulation.service';
+import { SimulationHelper } from '../simulation-container/simulation-helper';
 
 @Component({
   selector: 'app-pow',
@@ -112,9 +113,9 @@ export class PowComponent implements AfterViewInit {
     return hash[prop];
   }
 
-  async determineHashRate() {
+  async determineHashRate(helper: SimulationHelper) {
+    helper.before();
     this.isExecuting = true;
-    this.isHandset$
     let overallHashRate = 0;
     const determineRounds = 5;
     for (let i = 0; i < determineRounds; i++) {
@@ -132,6 +133,7 @@ export class PowComponent implements AfterViewInit {
     this.hashRate.addValidators([Validators.min(1), Validators.max(allowedHashRate)]);
     this.hashRate.setValue(allowedHashRate)
     this.isExecuting = false;
+    helper.after();
   }
 
   setBitcoinBlockTime() {

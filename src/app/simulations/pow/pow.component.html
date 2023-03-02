@@ -1,6 +1,6 @@
 <app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
-  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode"
-  [video-id]="'E2ee5ewEddE'"></app-simulation-container>
+  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" [video-id]="'E2ee5ewEddE'"
+  #container></app-simulation-container>
 
 <ng-template #simulation>
   <ng-container *ngIf="(layout.isSmallScreen$ | async)">
@@ -40,7 +40,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="parameters">
-      <button mat-button (click)="determineHashRate()" [disabled]="isExecuting">
+      <button mat-button (click)="determineHashRate(container.helper())" [disabled]="isExecuting">
         Eigene Hashrate ermitteln
       </button>
       <mat-form-field appearance="fill">
