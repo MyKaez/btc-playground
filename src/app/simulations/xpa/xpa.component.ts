@@ -40,7 +40,7 @@ export class XpaComponent {
         }
       }
     });
-    this.isHandset$ = layout.isHandset;
+    this.isHandset$ = layout.isHandset$;
   }
 
   ngOnDestroy(): void {

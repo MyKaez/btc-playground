@@ -1,10 +1,10 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {ContentLayoutMode, LayoutService} from 'src/app/pages';
-import {calculateUnit, UnitOfSize} from 'src/app/shared/helpers/size';
-import {calculateTime} from 'src/app/shared/helpers/time';
-import {BlockSizeService} from './simulation/blocksize.service';
-import {BlockData, Interval} from './simulation/types';
-import {Observable} from "rxjs";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ContentLayoutMode, LayoutService } from 'src/app/pages';
+import { calculateUnit, UnitOfSize } from 'src/app/shared/helpers/size';
+import { calculateTime } from 'src/app/shared/helpers/time';
+import { BlockSizeService } from './simulation/blocksize.service';
+import { BlockData, Interval } from './simulation/types';
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-blocksize',
@@ -16,13 +16,13 @@ export class BlocksizeComponent implements OnInit, OnDestroy {
   blocks: BlockData[];
   spaceInBytes: number = 1_000_000_000_000;
   isHandset$: Observable<boolean>;
-  
+
   contentLayoutMode = ContentLayoutMode.LockImage;
 
   constructor(private blockSizeService: BlockSizeService,
-              private layout: LayoutService) {
+    private layout: LayoutService) {
     this.blocks = this.createBlocks();
-    this.isHandset$ = layout.isHandset;
+    this.isHandset$ = layout.isHandset$;
   }
 
   ngOnInit(): void {

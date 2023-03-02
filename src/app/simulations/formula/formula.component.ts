@@ -37,7 +37,7 @@ export class FormulaComponent implements AfterViewInit {
   });
 
   constructor(layout: LayoutService) {
-    this.isHandset$ = layout.isHandset;
+    this.isHandset$ = layout.isHandset$;
   }
 
   halvings$: Observable<Halving[]> = this.formGroup.valueChanges

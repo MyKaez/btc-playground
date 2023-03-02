@@ -50,7 +50,7 @@ export class PowComponent implements AfterViewInit {
   }
 
   constructor(public layout: LayoutService, private btcService: BtcService, private powService: PowService, private simulationService: SimulationService) {
-    this.isHandset$ = layout.isHandset;
+    this.isHandset$ = layout.isHandset$;
   }
 
   isHandset$: Observable<boolean>;
@@ -114,6 +114,7 @@ export class PowComponent implements AfterViewInit {
 
   async determineHashRate() {
     this.isExecuting = true;
+    this.isHandset$
     let overallHashRate = 0;
     const determineRounds = 5;
     for (let i = 0; i < determineRounds; i++) {
