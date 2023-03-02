@@ -69,6 +69,10 @@
 
       <hr />
 
+      <h3 *ngIf="incorrectHashRate$ | async as msg">
+        {{msg}}
+      </h3>
+
       <mat-form-field appearance="fill" *ngIf="totalHashRate$ | async as totalHashRate">
         <mat-label>gesamte Hashrate [Hashes pro Sekunde]</mat-label>
         <input matInput type="text" value="{{totalHashRate}}" readonly="true" />

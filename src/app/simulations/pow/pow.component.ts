@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { FormControl, FormGroup, Validators, } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, map, merge, Observable, of, shareReplay, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, merge, Observable, shareReplay } from 'rxjs';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
@@ -58,19 +58,16 @@ export class PowComponent implements AfterViewInit {
     debounceTime(400),
     distinctUntilChanged(),
     shareReplay(1),
-    filter(_ => this.hashRate.valid)
   );
   externalHashRateChanges$ = this.externalHashRate.valueChanges.pipe(
     debounceTime(400),
     distinctUntilChanged(),
     shareReplay(1),
-    filter(_ => this.hashRate.valid)
   );
   blockTimeChanges$ = this.blockTime.valueChanges.pipe(
     debounceTime(400),
     distinctUntilChanged(),
     shareReplay(1),
-    filter(_ => this.hashRate.valid)
   );
   currentHashRate$ = this.hashRateChanges$.pipe(map(hashRate => this.getSize(hashRate)));
   currentExternalHashRate$ = this.externalHashRateChanges$.pipe(map(hashRate => this.getSize(hashRate)));
@@ -78,8 +75,12 @@ export class PowComponent implements AfterViewInit {
     map(_ => this.getSize(this.totalHashRate)),
     shareReplay(1)
   );
+  incorrectHashRate$ = this.totalHashRate$.pipe(
+    map(_ => this.totalHashRate > 0 ? '' : 'HashRate muss größer 0 sein')
+  );
   probability$ = merge(this.totalHashRate$, this.blockTimeChanges$).pipe(
-    map(_ => 1 / (((this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0)) * (this.blockTime.value ?? 0))),
+    filter(_ => this.totalHashRate > 0),
+    map(_ => 1 / this.totalHashRate * (this.blockTime.value ?? 0)),
     shareReplay(1)
   );
   difficulty$ = this.probability$.pipe(map(probability => 1 / probability));
