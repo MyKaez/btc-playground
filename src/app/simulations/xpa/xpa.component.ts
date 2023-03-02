@@ -10,16 +10,15 @@ import { NotificationService } from 'src/app/shared/media/notification.service';
   styleUrls: ['./xpa.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class XpaComponent implements OnInit {
+export class XpaComponent {
   isExecuting: boolean = false;
   inputs: FormGroup;
   blockchain: number[] = [];
   attackingBlockchain: number[] = [];
   clearOnStart: boolean = true;
   isHandset$: Observable<boolean>;
-  
-  contentLayoutMode = ContentLayoutMode.LockImage;
 
+  contentLayoutMode = ContentLayoutMode.LockImage;
 
   constructor(private notificationService: NotificationService, public layout: LayoutService) {
     this.inputs = new FormGroup({
@@ -44,15 +43,12 @@ export class XpaComponent implements OnInit {
     this.isHandset$ = layout.isHandset;
   }
 
-  ngOnInit(): void {
-  }
-
   ngOnDestroy(): void {
     this.layout.isSimulation = false;
     this.stop();
     this.clear();
   }
-  
+
   get totalAmountBlocks() {
     return this.blockchain.length + this.attackingBlockchain.length;
   }
@@ -118,35 +114,49 @@ export class XpaComponent implements OnInit {
   }
 
   addBlockIfNecessary(): void {
+    if (this.blockchain.length > this.confirmations) {
+      if ((this.blockchain.length - this.attackingBlockchain.length) > this.cancelAttack) {
+        this.isExecuting = false;
+        this.notificationService.display('Bitcoin hat gewonnen!');
+      }
+    }
+    if (!this.isExecuting) {
+      return;
+    }
     setTimeout(() => {
-      if (this.blockchain.length > this.confirmations) {
-        if ((this.blockchain.length - this.attackingBlockchain.length) >= this.cancelAttack) {
-          this.isExecuting = false;
-          this.notificationService.display('Bitcoin hat gewonnen!');
-        }
-      }
-      if (!this.isExecuting) {
-        return;
-      }
+      let addBlock = false;
       let random = Math.random() * 100;
-      if (random > this.attackingPower) {
+      let attacking = this.attackingPower;
+
+      console.log(`random: ${random}, attacking: ${attacking}`);
+
+      if (random > attacking) {
         this.blockchain.push(this.blockchain.length);
         if (this.blockchain.length < this.blocksToComplete) {
-          this.addBlockIfNecessary();
+          addBlock = true;
         } else {
           this.isExecuting = false;
           this.notificationService.display('Bitcoin hat gewonnen!');
         }
-      } else {
+      }
+
+      random = Math.random() * 100;
+      let defending = 100 - attacking;
+
+      console.log(`random: ${random}, defending: ${defending}`);
+
+      if (random > defending) {
         this.attackingBlockchain.push(this.attackingBlockchain.length);
         if (this.attackingBlockchain.length < this.blocksToComplete) {
-          this.addBlockIfNecessary();
+          addBlock = true;
         } else {
           this.isExecuting = false;
           this.notificationService.display('Bitcoin hat verloren!');
         }
       }
-    }, 400)
+
+      this.addBlockIfNecessary();
+    }, 400);
   }
 
   getErrors(control: string) {
