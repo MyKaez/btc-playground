@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { WebHelper } from 'src/model/web';
 
 @Component({
   selector: 'app-xpa-definition',
@@ -8,14 +7,10 @@ import { WebHelper } from 'src/model/web';
 })
 export class XpaDefinitionComponent implements OnInit {
 
-  @Input()
-  youtubeReference: string = '';
-
   constructor() {
   }
 
   ngOnInit(): void {
-    WebHelper.ensureYoutubeIframe();
-  }
 
+  }
 }

@@ -3,6 +3,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Observable, Subscription } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { SimulationService } from '../simulation.service';
+import { SimulationHelper } from './simulation-helper';
 
 @Component({
   selector: 'app-simulation-container',
@@ -15,25 +16,25 @@ export class SimulationContainerComponent implements OnInit {
   @Input("simulation-controls") simulationControls?: TemplateRef<any>;
   @Input("simulation-definition") simulationDefinition?: TemplateRef<any>;
   @Input("video-id") videoId?: string;
-  @Input("content-layout-mode") contentLayoutMode?: ContentLayoutMode;  
-  
+  @Input("content-layout-mode") contentLayoutMode?: ContentLayoutMode;
+
   isHandset$: Observable<boolean>;
   private startSimulationListener?: Subscription;
   selectedTabIndex = 1;
 
-  constructor(public layout: LayoutService, private simulationService: SimulationService) { 
-    this.isHandset$ = layout.isHandset;
+  constructor(public layout: LayoutService, private simulationService: SimulationService) {
+    this.isHandset$ = layout.isHandset$;
   }
 
   ngOnInit() {
-    if(this.contentLayoutMode != null) this.layout.setLayoutMode(this.contentLayoutMode);
+    if (this.contentLayoutMode != null) this.layout.setLayoutMode(this.contentLayoutMode);
     this.layout.isSimulation = true;
-    this.startSimulationListener = this.simulationService.listeningToStartSimulation.subscribe({ next: isStarted => this.onStartedSimulation(isStarted)});
+    this.startSimulationListener = this.simulationService.listeningToStartSimulation.subscribe({ next: isStarted => this.onStartedSimulation(isStarted) });
   }
 
   ngOnDestroy(): void {
     this.layout.isSimulation = false;
-    if(this.startSimulationListener) this.startSimulationListener.unsubscribe();
+    if (this.startSimulationListener) this.startSimulationListener.unsubscribe();
   }
 
   onStartedSimulation(isStarted: boolean) {
@@ -42,5 +43,22 @@ export class SimulationContainerComponent implements OnInit {
 
   onTabChanged(event: MatTabChangeEvent) {
     this.selectedTabIndex = event.index;
+  }
+
+  helper(): SimulationHelper {
+    return {
+      before: () => this.toSimulation(this),
+      after: () => this.toOptions(this)
+    }
+  }
+
+  toSimulation(container: SimulationContainerComponent): void {
+    console.log('switch to simulation!');
+    container.selectedTabIndex = 1;
+  }
+
+  toOptions(container: SimulationContainerComponent): void {
+    console.log('switch to options!');
+    container.selectedTabIndex = 2;
   }
 }

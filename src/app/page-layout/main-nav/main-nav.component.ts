@@ -29,7 +29,7 @@ export class MainNavComponent implements OnInit {
     private btcService: BtcService,
     private dialog: MatDialog) {
     this.navLinks = this.getNavLinks();
-    this.isHandset$ = layout.isHandset;
+    this.isHandset$ = layout.isHandset$;
   }
 
   get presentationMode(): boolean {

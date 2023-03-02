@@ -3,6 +3,7 @@
 .simulation-container {
     .mat-tab-group {
       height: 100%;
+      width: 100%;
 
       .mat-tab-body-wrapper {
         flex-grow: 1;
@@ -70,6 +71,10 @@
                 width: 80vw;
                 border-bottom-left-radius: 2em;
             }
+        }
+        
+        @media only screen and (min-width: $max-content-width) {
+            margin-top: $margin-large !important;
         }
     }
 
