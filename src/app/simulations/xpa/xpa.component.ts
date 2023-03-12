@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { NotificationService } from 'src/app/shared/media/notification.service';
+import { SimulationService } from '../simulation.service';
 
 @Component({
   selector: 'app-xpa',
@@ -20,7 +21,8 @@ export class XpaComponent {
 
   contentLayoutMode = ContentLayoutMode.LockImage;
 
-  constructor(private notificationService: NotificationService, public layout: LayoutService) {
+  constructor(private notificationService: NotificationService, public layout: LayoutService, 
+    private simulationService: SimulationService) {
     this.inputs = new FormGroup({
       blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
       attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),
@@ -99,6 +101,7 @@ export class XpaComponent {
       this.clear();
     }
     this.addBlockIfNecessary();
+    this.simulationService.updateStartSimulation(true);
   }
 
   stop(): void {
@@ -117,7 +120,7 @@ export class XpaComponent {
     if (this.blockchain.length > this.confirmations) {
       if ((this.blockchain.length - this.attackingBlockchain.length) > this.cancelAttack) {
         this.isExecuting = false;
-        this.notificationService.display('Bitcoin hat gewonnen!');
+        this.notificationService.display('Der Angriff wurde abgewehrt!');
       }
     }
     if (!this.isExecuting) {
@@ -136,7 +139,7 @@ export class XpaComponent {
           addBlock = true;
         } else {
           this.isExecuting = false;
-          this.notificationService.display('Bitcoin hat gewonnen!');
+          this.notificationService.display('Der Angriff wurde abgewehrt!');
         }
       }
 
@@ -151,7 +154,7 @@ export class XpaComponent {
           addBlock = true;
         } else {
           this.isExecuting = false;
-          this.notificationService.display('Bitcoin hat verloren!');
+          this.notificationService.display('Der Angriff war erfolgreich!');
         }
       }
 
