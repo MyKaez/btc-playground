@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { first, map, Observable, share, shareReplay, take, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { LayoutService, ContentLayoutMode } from 'src/app/pages';
 import { BtcBlock, BtcPrice, BtcService } from 'src/app/shared/helpers/btc.service';
@@ -20,9 +20,11 @@ export class MainNavComponent implements OnInit {
   currentPrice?: BtcPrice;
   latestBlocks: BtcBlock[] = [];
 
-  isCarousel = () => this.layout.currentBackgroundImages?.length > 1;
-  isLockImage = () => this.layout.currentBackgroundImages?.length === 1;
-  currentBackgroundImages = () => this.layout.currentBackgroundImages;
+  isCarousel$ = this.layout.backgroundImages$.pipe(map(images => images.length > 1), shareReplay());
+  isLockImage$ = this.layout.backgroundImages$.pipe(map(images => images.length === 1), shareReplay());
+  firstImage$ = this.layout.backgroundImages$.pipe(map(images => images.length ? images[0] : null), shareReplay());
+  images$ = this.layout.backgroundImages$.pipe(map(images => images), share(), tap(i => console.log("new imagess", i)));
+  fallbackImages = ["assets/img/wallpapers/fixed-smooth-prisma.png"];
 
   constructor(private router: Router,
     public layout: LayoutService,
@@ -44,7 +46,14 @@ export class MainNavComponent implements OnInit {
     setInterval(() => {
       this.btcService.getCurrentPrice().subscribe(price => this.currentPrice = price);
       this.btcService.getLatestBlocks().subscribe(blocks => this.latestBlocks = blocks);
-    }, 1000);
+
+      let test = this.isCarousel$;
+    }, 1000);   
+    
+    this.layout.backgroundImages$.subscribe(images => console.log("new images", images));
+    this.firstImage$.subscribe(value => console.log("Updatedt firstimage", value));
+    this.isCarousel$.subscribe(value => console.log("Updatedt isCarousel", value));
+    this.isLockImage$.subscribe(value => console.log("Updatedt isLockImage", value));
   }
 
   isLast(part: string): boolean {

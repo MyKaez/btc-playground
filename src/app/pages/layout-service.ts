@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
-import { map, share, shareReplay } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { map, share, shareReplay, take } from "rxjs/operators";
+import { Observable, Observer, Subject, Subscriber } from "rxjs";
 
 @Injectable()
 export class LayoutService {
@@ -25,8 +25,11 @@ export class LayoutService {
     ]
   };
   
-  currentLayoutMode = ContentLayoutMode.ImageCarousel;
-  currentBackgroundImages = this.imageSets.fancy;
+  private observeLayoutMode = new Subject<ContentLayoutMode>();
+  layoutMode$ = this.observeLayoutMode.asObservable();
+
+  private observeBackgroundImages = new Subject<string[]>();
+  backgroundImages$ = this.observeBackgroundImages.asObservable(); 
 
   isHandset$: Observable<boolean>;
   /** Updates if screen width is adjusted and below defined small screen width */
@@ -46,20 +49,25 @@ export class LayoutService {
       map(result => result.matches),
       shareReplay(1)
     );
+
+    this.setLayoutMode(ContentLayoutMode.ImageCarousel);
   }
 
   setLayoutMode(mode: ContentLayoutMode, backgroundImageOptions?: ContentLayoutBackgroundImageOptions) {
-    this.currentLayoutMode = mode;
+    this.observeLayoutMode.next(mode);
     backgroundImageOptions = backgroundImageOptions || this.defaultOptions[mode];
 
-    if(backgroundImageOptions.imageMode != null) this.currentBackgroundImages = this.imageSets[backgroundImageOptions.imageMode];
-    if(backgroundImageOptions.imageUrls) this.currentBackgroundImages = backgroundImageOptions.imageUrls;
+    let nextImages: string[] = [];
+    this.backgroundImages$.pipe(take(1)).subscribe(currentImages => nextImages = currentImages);
+    if(backgroundImageOptions.imageMode != null) nextImages = this.imageSets[backgroundImageOptions.imageMode];
+    if(backgroundImageOptions.imageUrls) nextImages = backgroundImageOptions.imageUrls;
 
     let maxImageCount = Number.MAX_SAFE_INTEGER;
     if(mode == ContentLayoutMode.LockImage) maxImageCount = 1;
     else if (mode == ContentLayoutMode.Plane) maxImageCount = 0;
 
-    this.currentBackgroundImages = this.currentBackgroundImages.slice(0, maxImageCount);
+    nextImages = nextImages.slice(0, maxImageCount);
+    this.observeBackgroundImages.next(nextImages);
   }
   
   defaultOptions: Record<ContentLayoutMode, ContentLayoutBackgroundImageOptions> = {

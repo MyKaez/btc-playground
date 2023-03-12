@@ -1,5 +1,6 @@
 import { _getFocusedElementPierceShadowDom } from '@angular/cdk/platform';
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EmbeddedViewRef, Input, OnInit, SimpleChanges, TemplateRef, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Observable, pipe } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { deprecate } from 'util';
 
@@ -9,26 +10,80 @@ import { deprecate } from 'util';
   styleUrls: ['./image-carousel.component.scss']
 })
 export class ImageCarouselComponent implements OnInit {
-  @Input("image-urls")
-  imageUrls: string[] = [];
+  @Input("image-urls") imageUrls: string[] | null = ["assets/img/wallpapers/fixed-smooth-wireframe.png"];
+  @Input("interval") interval = 10000;
+  @Input('wRecreateViewKey') key: any;
+  
+  viewRef?: EmbeddedViewRef<any>;
 
-  @Input("interval")
-  interval = 10000;
+  slides: {
+    title: string;
+    src: string;
+  }[] = [];
 
-  slides: Slide[] = [];
+  get getSlides() {
+    return this.imageUrls?.map(url => this.getSlide(url)) || [];
+  }
 
-  constructor() {
+  constructor(
+    private changeDetection: ChangeDetectorRef,
+    private templateRef: TemplateRef<any>, 
+    private viewContainer: ViewContainerRef) {
   }
 
   ngOnInit(): void {
-    this.slides = this.imageUrls.map(url => this.getSlide(url));
+    window.setTimeout(() => {
+      this.slides = [
+        {
+            "title": "fixed-crystals",
+            "src": "assets/img/wallpapers/fixed-crystals.png"
+        },
+        {
+            "title": "fixed-cascade",
+            "src": "assets/img/wallpapers/fixed-cascade.png"
+        }
+      ]}, 2000);   
+
+    window.setTimeout(() => {
+      this.slides = [
+        {
+            "title": "fixed-blur",
+            "src": "assets/img/wallpapers/fixed-smooth-blur.png"
+        },
+        {
+            "title": "fixed-wireframe",
+            "src": "assets/img/wallpapers/fixed-smooth-wireframe.png"
+        }
+      ]}, 5000);
   }
 
-  getSlide(url: string): any {
+  getSlide(url: string) {
     return {
-      title: url.split("/")[1].split(".")[0],
+      title: url.split("/")[url.split("/").length - 1].split(".")[0],
       src: url
     };
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ("imageUrls" in changes) {
+      let currentImages = changes["imageUrls"].currentValue as string[];
+      this.slides = currentImages?.map(this.getSlide) || [];
+      console.log("in carousel", this.slides);
+      if (this.viewRef) {
+        this.destroyView();
+      }
+
+      this.createView();
+    }
+  }
+
+  private createView() {
+    this.viewRef = this.viewContainer.createEmbeddedView(this.templateRef);
+  }
+
+  private destroyView() {
+    this.viewRef?.destroy();
+    this.viewRef = undefined;
   }
 
   /**
