@@ -8,12 +8,13 @@ export class PowService {
 
   expectedPrefix(probability: number): string {
     const res: string[] = [];
-    let x = '';
-    for (let i = 0; i < this.calculateLeadingZeros(probability); i++) {
-      x += '0';
+    let prefix = '';
+    let calculcation = this.calculateProbability(probability);
+    for (let i = 0; i < calculcation.leadingZeros; i++) {
+      prefix += '0';
     }
-    for (let i = 0; i < probability; i++) {
-      res.push(x + i.toString(16));
+    for (let i = 0; i < calculcation.rest; i++) {
+      res.push(prefix + i.toString(16));
     }
     if (res.length === 1) {
       return res[0];
@@ -22,12 +23,12 @@ export class PowService {
   }
 
   hexaDecimalFormula(probability: number): string {
-    const leadingZeros = this.calculateLeadingZeros(probability);
-    return calculateHexaDecimalFormula(leadingZeros, probability);
+    const leadingZeros = this.calculateProbability(probability);
+    return calculateHexaDecimalFormula(leadingZeros.leadingZeros, leadingZeros.rest);
   }
 
   createHash(probability: number, cycle: number, no: number): PowHash {
-    const leadingZeros = this.calculateLeadingZeros(probability);
+    const { leadingZeros: zeros } = this.calculateProbability(probability);
     const id = createBlockId();
     return {
       hash: id,
@@ -36,7 +37,7 @@ export class PowService {
       no: no,
       isValid: probability === 1
         ? true
-        : this.validate(id, leadingZeros, probability)
+        : this.validate(id, zeros, probability)
     };
   }
 
@@ -53,7 +54,7 @@ export class PowService {
     return Number.parseInt(hex) < probability;
   }
 
-  calculateLeadingZeros(probability: number) {
+  calculateProbability(probability: number): { leadingZeros: number, rest: number } {
     let leadingZeros = 0;
     for (let i = 0; i < BLOCK_ID_LENGTH; i++) {
       probability = probability * 16;
@@ -62,6 +63,6 @@ export class PowService {
       }
       leadingZeros++;
     }
-    return leadingZeros;
+    return { leadingZeros: leadingZeros, rest: probability };
   }
 }
