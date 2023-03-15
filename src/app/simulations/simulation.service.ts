@@ -28,7 +28,7 @@ export class SimulationService {
         }, {
             title: PowComponent.title,
             description: "Fixes this... Determinismus / Vorhersehbarkeit",
-            youtubeSrc: "MRNSudh565Y",
+            youtubeSrc: "E2ee5ewEddE",
             navigationLink: "simulations/pow"
         }, {
             title: "51% Attacke",
