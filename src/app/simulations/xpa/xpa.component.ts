@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { combineLatest, map, Observable, shareReplay } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
+import { BtcService } from 'src/app/shared/helpers/btc.service';
+import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
 import { NotificationService } from 'src/app/shared/media/notification.service';
 import { SimulationService } from '../simulation.service';
 
@@ -11,25 +13,23 @@ import { SimulationService } from '../simulation.service';
   styleUrls: ['./xpa.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class XpaComponent {
+export class XpaComponent implements AfterViewInit {
   isExecuting: boolean = false;
-  inputs: FormGroup;
+  attackingPowerControl = new FormControl(0, [Validators.min(1), Validators.max(99)]);
+  inputs: FormGroup = new FormGroup({
+    blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
+    attackingPower: this.attackingPowerControl,
+    preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5)]),
+    confirmations: new FormControl(3, [Validators.min(0), Validators.max(10)]),
+    cancelAttack: new FormControl(1, [Validators.min(0), Validators.max(10)])
+  });
   bitcoin: number[] = [];
   attacker: number[] = [];
   clearOnStart: boolean = true;
-  isHandset$: Observable<boolean>;
-
   contentLayoutMode = ContentLayoutMode.LockImage;
 
   constructor(private notificationService: NotificationService, public layout: LayoutService,
-    private simulationService: SimulationService) {
-    this.inputs = new FormGroup({
-      blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
-      attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),
-      preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5)]),
-      confirmations: new FormControl(3, [Validators.min(0), Validators.max(10)]),
-      cancelAttack: new FormControl(1, [Validators.min(0), Validators.max(10)])
-    });
+    private simulationService: SimulationService, private btcService: BtcService) {
     this.inputs.controls['preminedBlocks'].valueChanges.subscribe(value => {
       this.attacker = [];
       this.bitcoin = [];
@@ -43,6 +43,29 @@ export class XpaComponent {
       }
     });
     this.isHandset$ = layout.isHandset$;
+  }
+
+  isHandset$: Observable<boolean>;
+  currentHashRate$ = this.btcService.getCurrentHashRate().pipe(shareReplay(1));
+  bitcoinHashRate$ = this.currentHashRate$.pipe(map(rate => this.getSize(rate)));
+  totalHashRate$ = combineLatest([this.currentHashRate$, this.attackingPowerControl.valueChanges]).pipe(
+    map(([rate, _]) => {
+      const totalPower = rate / this.defendingPower;
+      return this.getSize(totalPower);
+    }));
+  attackerHashRate$ = combineLatest([this.currentHashRate$, this.attackingPowerControl.valueChanges]).pipe(
+    map(([rate, _]) => {
+      const attackingPower = rate / this.defendingPower * this.attackingPower;
+      return this.getSize(attackingPower);
+    }));
+
+  ngAfterViewInit(): void {
+    this.attackingPowerControl.setValue(51);
+  }
+
+  getSize(hashRate: number | null): string {
+    const size = calculateUnit(hashRate ?? 0, UnitOfHash.hashes);
+    return `${size.value.toFixed(2)} ${size.unit.text}`;
   }
 
   ngOnDestroy(): void {
@@ -60,7 +83,7 @@ export class XpaComponent {
   }
 
   get attackingPower(): number {
-    return Number.parseInt(this.inputs.controls['attackingPower'].value);
+    return this.attackingPowerControl.value ?? 0;
   }
 
   get confirmations(): number {
@@ -191,3 +214,4 @@ export class XpaComponent {
     return JSON.stringify(this.inputs.controls[control].errors);
   }
 }
+
