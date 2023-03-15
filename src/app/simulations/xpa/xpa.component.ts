@@ -14,31 +14,31 @@ import { SimulationService } from '../simulation.service';
 export class XpaComponent {
   isExecuting: boolean = false;
   inputs: FormGroup;
-  blockchain: number[] = [];
-  attackingBlockchain: number[] = [];
+  bitcoin: number[] = [];
+  attacker: number[] = [];
   clearOnStart: boolean = true;
   isHandset$: Observable<boolean>;
 
   contentLayoutMode = ContentLayoutMode.LockImage;
 
-  constructor(private notificationService: NotificationService, public layout: LayoutService, 
+  constructor(private notificationService: NotificationService, public layout: LayoutService,
     private simulationService: SimulationService) {
     this.inputs = new FormGroup({
       blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
       attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),
       preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5)]),
-      confirmations: new FormControl(6, [Validators.min(0), Validators.max(10)]),
-      cancelAttack: new FormControl(3, [Validators.min(0), Validators.max(10)])
+      confirmations: new FormControl(3, [Validators.min(0), Validators.max(10)]),
+      cancelAttack: new FormControl(1, [Validators.min(0), Validators.max(10)])
     });
     this.inputs.controls['preminedBlocks'].valueChanges.subscribe(value => {
-      this.attackingBlockchain = [];
-      this.blockchain = [];
+      this.attacker = [];
+      this.bitcoin = [];
       let val = Number.parseInt(value);
       for (let i = 0; i < Math.abs(val); i++) {
         if (val < 0) {
-          this.blockchain.push(this.blockchain.length);
+          this.bitcoin.push(this.bitcoin.length);
         } else {
-          this.attackingBlockchain.push(this.attackingBlockchain.length);
+          this.attacker.push(this.attacker.length);
         }
       }
     });
@@ -52,7 +52,7 @@ export class XpaComponent {
   }
 
   get totalAmountBlocks() {
-    return this.blockchain.length + this.attackingBlockchain.length;
+    return this.bitcoin.length + this.attacker.length;
   }
 
   get blocksToComplete(): number {
@@ -80,11 +80,11 @@ export class XpaComponent {
   }
 
   get progressBlockchain(): number {
-    return this.blockchain.length / this.blocksToComplete * 100;
+    return this.bitcoin.length / this.blocksToComplete * 100;
   }
 
   get progressAttackingBlockchain(): number {
-    return this.attackingBlockchain.length / this.blocksToComplete * 100;
+    return this.attacker.length / this.blocksToComplete * 100;
   }
 
   get totalBlocks(): number[] {
@@ -109,23 +109,28 @@ export class XpaComponent {
   }
 
   clear(): void {
-    this.blockchain = [];
-    this.attackingBlockchain = [];
+    this.bitcoin = [];
+    this.attacker = [];
     for (let i = 0; i < this.preminedBlocks; i++) {
-      this.attackingBlockchain.push(this.attackingBlockchain.length);
+      this.attacker.push(this.attacker.length);
     }
   }
 
   addBlockIfNecessary(): void {
-    if (this.blockchain.length > this.confirmations) {
-      if ((this.blockchain.length - this.attackingBlockchain.length) > this.cancelAttack) {
-        this.isExecuting = false;
-        this.notificationService.display('Der Angriff wurde abgewehrt!');
-      }
+    const bitcoinLead = this.bitcoin.length - this.attacker.length;
+    if (bitcoinLead >= this.cancelAttack) {
+      this.isExecuting = false;
+      this.notificationService.display('Der Angriff wurde abgewehrt!');
+    }
+    const attackLead = this.attacker.length - this.bitcoin.length;
+    if (attackLead >= this.confirmations) {
+      this.isExecuting = false;
+      this.notificationService.display('Der Angriff war erfolgreich!');
     }
     if (!this.isExecuting) {
       return;
     }
+
     setTimeout(() => {
       let addBlock = false;
       let random = Math.random() * 100;
@@ -134,8 +139,8 @@ export class XpaComponent {
       console.log(`random: ${random}, attacking: ${attacking}`);
 
       if (random > attacking) {
-        this.blockchain.push(this.blockchain.length);
-        if (this.blockchain.length < this.blocksToComplete) {
+        this.bitcoin.push(this.bitcoin.length);
+        if (this.bitcoin.length < this.blocksToComplete) {
           addBlock = true;
         } else {
           this.isExecuting = false;
@@ -149,8 +154,8 @@ export class XpaComponent {
       console.log(`random: ${random}, defending: ${defending}`);
 
       if (random > defending) {
-        this.attackingBlockchain.push(this.attackingBlockchain.length);
-        if (this.attackingBlockchain.length < this.blocksToComplete) {
+        this.attacker.push(this.attacker.length);
+        if (this.attacker.length < this.blocksToComplete) {
           addBlock = true;
         } else {
           this.isExecuting = false;

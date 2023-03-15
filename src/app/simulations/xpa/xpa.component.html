@@ -19,9 +19,9 @@
                 &gt; <span *ngFor="let i of totalBlocks"
                     [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
                         *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
-                &gt; <span *ngFor="let i of blockchain" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
+                &gt; <span *ngFor="let i of bitcoin" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
                         *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
-                &gt; Anzahl: ({{blockchain.length}}/{{blocksToComplete}})<br />
+                &gt; Anzahl: ({{bitcoin.length}}/{{blocksToComplete}})<br />
             </p>
             <p></p>
             <p></p>
@@ -30,10 +30,9 @@
                 &gt; <span *ngFor="let i of totalBlocks"
                     [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
                         *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
-                &gt; <span *ngFor="let i of attackingBlockchain"
-                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
+                &gt; <span *ngFor="let i of attacker" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
                         *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
-                &gt; Anzahl: ({{attackingBlockchain.length}}/{{blocksToComplete}})<br />
+                &gt; Anzahl: ({{attacker.length}}/{{blocksToComplete}})<br />
             </p>
         </div>
     </div>
@@ -110,7 +109,7 @@
 
 <ng-template #actions>
     <div class="actions">
-        <button mat-button (click)="start()" [disabled]="isExecuting">Start</button>
+        <button mat-button (click)="start()" [disabled]="isExecuting || preminedBlocks >= confirmations">Start</button>
         <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
         <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
         <span *ngIf="totalAmountBlocks > 0">
