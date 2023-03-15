@@ -38,6 +38,7 @@ export class SimulationService {
             title: "Die Bitcoin Formel",
             description: "Wie funktioniert Bitcoin?",
             imageSrc: "assets/img/fixed-above.png",
+            youtubeSrc: "iCMwPVv2tLg",
             navigationLink: "simulations/formula"
         }];
         if (!environment.simulations) {
