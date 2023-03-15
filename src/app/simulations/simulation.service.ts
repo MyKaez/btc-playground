@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, Subscriber } from 'rxjs';
+import { Observable, of, shareReplay, Subscriber } from 'rxjs';
 import { environment } from "src/environments/environment";
 import { PowComponent } from "./pow/pow.component";
 
@@ -11,6 +11,12 @@ export class SimulationService {
     updateStartSimulation(isStarted: boolean) {
         if (!this.startSimulationSubscriber) return;
         this.startSimulationSubscriber.next(isStarted);
+    }
+
+    getSimulationsStream(): Observable<Simulation[]> {
+        return of(this.getSimulations()).pipe(
+            shareReplay(1)
+        );
     }
 
     getSimulations(): Simulation[] {

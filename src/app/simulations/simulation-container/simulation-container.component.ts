@@ -1,8 +1,9 @@
 import { Component, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { Observable, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { first, map, Observable, Subscription } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
-import { SimulationService } from '../simulation.service';
+import { Simulation, SimulationService } from '../simulation.service';
 import { SimulationHelper } from './simulation-helper';
 
 @Component({
@@ -15,14 +16,24 @@ export class SimulationContainerComponent implements OnInit {
   @Input("simulation-body") simulationBody?: TemplateRef<any>;
   @Input("simulation-controls") simulationControls?: TemplateRef<any>;
   @Input("simulation-definition") simulationDefinition?: TemplateRef<any>;
-  @Input("video-id") videoId?: string;
   @Input("content-layout-mode") contentLayoutMode?: ContentLayoutMode;
 
-  isHandset$: Observable<boolean>;
   private startSimulationListener?: Subscription;
+
   selectedTabIndex = 1;
 
-  constructor(public layout: LayoutService, private simulationService: SimulationService) {
+  isHandset$: Observable<boolean>;
+  simulation$ = this.simulationService.getSimulationsStream().pipe(
+    map(simulations => {
+      const currentRoute = this.router.url.substring(1);
+      const sim = simulations.find(sim => sim.navigationLink === currentRoute);
+      console.log(`current simulation: ${sim?.title}`);
+      return sim;
+    })
+  );
+
+  constructor(public layout: LayoutService, private simulationService: SimulationService,
+    private router: Router) {
     this.isHandset$ = layout.isHandset$;
   }
 

@@ -1,6 +1,5 @@
 <app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
-  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" [video-id]="'E2ee5ewEddE'"
-  #container></app-simulation-container>
+  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" #container></app-simulation-container>
 
 <ng-template #simulation>
   <ng-container *ngIf="(layout.isSmallScreen$ | async)">
