@@ -1,38 +1,36 @@
 <app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
-  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode">
+  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" #container>
 </app-simulation-container>
 
 <ng-template #simulation>
   <ng-container *ngIf="isHandset$ | async">
   </ng-container>
-  <div class="simulation-console">
-    <div class="simulation-console">
-      <div class="console-header">
-        <img src="assets/bitcoin-btc-logo.svg">
-        <span>
-          Blocksize Simulation
-        </span>
-      </div>
-      <div class="console-data">
-        <table>
-          <tr>
-            <th>Einheit</th>
-            <th>Anzahl Blöcke</th>
-            <th>Größe</th>
-          </tr>
+  <div class="simulation-console" *ngIf="container.simulation$ | async as simulation">
+    <div class="console-header">
+      <img src="assets/bitcoin-btc-logo.svg">
+      <span>
+        {{simulation.title}}
+      </span>
+    </div>
+    <div class="console-data">
+      <table>
+        <tr>
+          <th>Einheit</th>
+          <th>Anzahl Blöcke</th>
+          <th>Größe</th>
+        </tr>
 
-          <tr *ngFor="let block of blocks">
-            <td>{{block.interval}}</td>
-            <td>{{block.amountOfBlocks}}</td>
-            <td>{{block.blockSize}}</td>
-          </tr>
-        </table>
+        <tr *ngFor="let block of blocks">
+          <td>{{block.interval}}</td>
+          <td>{{block.amountOfBlocks}}</td>
+          <td>{{block.blockSize}}</td>
+        </tr>
+      </table>
 
-        <hr />
-        <p>
-          Voll nach: {{outOfSpaceTime}}
-        </p>
-      </div>
+      <hr />
+      <p>
+        Voll nach: {{outOfSpaceTime}}
+      </p>
     </div>
   </div>
 </ng-template>

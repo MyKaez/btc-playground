@@ -1,16 +1,16 @@
 <app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
-    [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode">
+    [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" #container>
 </app-simulation-container>
 
 <ng-template #simulation>
     <ng-container *ngIf="isHandset$ | async">
         <ng-container *ngTemplateOutlet="actions"></ng-container>
     </ng-container>
-    <div class="simulation-console">
+    <div class="simulation-console" *ngIf="container.simulation$ | async as simulation">
         <div class="console-header">
             <img src="assets/bitcoin-btc-logo.svg">
             <span>
-                51% Attacke Simulation
+                {{simulation.title}}
             </span>
         </div>
         <div class="console-data">
