@@ -95,6 +95,28 @@ export class XpaComponent {
     return numbers;
   }
 
+  get bitcoinLead(): number {
+    return this.bitcoin.length - this.attacker.length;
+  }
+
+  get attackLead(): number {
+    return this.attacker.length - this.bitcoin.length;
+  }
+
+  isBitcoinLeading(current: number): boolean {
+    if (this.bitcoin.length > this.attacker.length) {
+      return current + 1 > this.attacker.length;
+    }
+    return false;
+  }
+
+  isAttackerLeading(current: number): boolean {
+    if (this.attacker.length > this.bitcoin.length) {
+      return current + 1 > this.bitcoin.length;
+    }
+    return false;
+  }
+
   start() {
     this.isExecuting = true;
     if (this.clearOnStart || this.progressAttackingBlockchain >= 100 || this.progressBlockchain >= 100) {
@@ -117,13 +139,11 @@ export class XpaComponent {
   }
 
   addBlockIfNecessary(): void {
-    const bitcoinLead = this.bitcoin.length - this.attacker.length;
-    if (bitcoinLead >= this.cancelAttack) {
+    if (this.bitcoinLead >= this.cancelAttack) {
       this.isExecuting = false;
       this.notificationService.display('Der Angriff wurde abgewehrt!');
     }
-    const attackLead = this.attacker.length - this.bitcoin.length;
-    if (attackLead >= this.confirmations) {
+    if (this.attackLead >= this.confirmations) {
       this.isExecuting = false;
       this.notificationService.display('Der Angriff war erfolgreich!');
     }

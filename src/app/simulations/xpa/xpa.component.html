@@ -17,22 +17,24 @@
             <p>
                 Bitcoin Blockchain<br />
                 &gt; <span *ngFor="let i of totalBlocks"
-                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
+                    [ngClass]="isBitcoinLeading(i) ? 'confirm' : 'non-confirm'">--<span
                         *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
-                &gt; <span *ngFor="let i of bitcoin" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
+                &gt; <span *ngFor="let i of bitcoin" [ngClass]="isBitcoinLeading(i) ? 'confirm' : 'non-confirm'"><span
                         *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
                 &gt; Anzahl: ({{bitcoin.length}}/{{blocksToComplete}})<br />
+                &gt; Anzahl bis Sieg: ({{bitcoinLead}}/{{cancelAttack}})<br />
             </p>
             <p></p>
             <p></p>
             <p>
                 Angreifende Blockchain<br />
                 &gt; <span *ngFor="let i of totalBlocks"
-                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
+                    [ngClass]="isAttackerLeading(i)? 'confirm' : 'non-confirm'">--<span
                         *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
-                &gt; <span *ngFor="let i of attacker" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
+                &gt; <span *ngFor="let i of attacker" [ngClass]="isAttackerLeading(i)? 'confirm' : 'non-confirm'"><span
                         *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
                 &gt; Anzahl: ({{attacker.length}}/{{blocksToComplete}})<br />
+                &gt; Anzahl bis Sieg: ({{attackLead}}/{{confirmations}})<br />
             </p>
         </div>
     </div>
