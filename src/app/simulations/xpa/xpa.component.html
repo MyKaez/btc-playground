@@ -49,7 +49,7 @@
         <div class="parameters">
             <form [formGroup]="inputs">
                 <mat-form-field appearance="fill">
-                    <mat-label>Maximale Angriffszahl <i>[in Blöcken]</i></mat-label>
+                    <mat-label>Maximale Angriffsdauer <i>[in Blöcken]</i></mat-label>
                     <input matInput type="number" formControlName="blocksToComplete" />
                     <label *ngIf="!isExecuting && !inputs.controls['blocksToComplete'].valid">
                         <span>{{getErrors('blocksToComplete')}}</span>
