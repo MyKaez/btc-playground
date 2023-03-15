@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
+import { BLOCK_DURATION_IN_SECONDS } from "./block";
 
 @Injectable()
 export class BtcService {
@@ -41,6 +42,16 @@ export class BtcService {
                 }
             ]))
         );
+    }
+
+    // https://en.bitcoinwiki.org/wiki/Difficulty_in_Mining#:~:text=Average%20time%20of%20finding%20a,a%20miner%20finds%20per%20second.
+    getCurrentHashRate(): Observable<number> {
+        return this.getLatestBlocks().pipe(
+            map(blocks => {
+                const bitcoinDifficulty = blocks[0].difficulty;
+                return bitcoinDifficulty * (2 ** 32) / BLOCK_DURATION_IN_SECONDS;
+            })
+        )
     }
 }
 
