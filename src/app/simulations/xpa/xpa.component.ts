@@ -175,37 +175,18 @@ export class XpaComponent implements AfterViewInit {
     }
 
     setTimeout(() => {
-      let addBlock = false;
       let random = Math.random() * 100;
       let attacking = this.attackingPower;
-
       console.log(`random: ${random}, attacking: ${attacking}`);
-
       if (random > attacking) {
         this.bitcoin.push(this.bitcoin.length);
-        if (this.bitcoin.length < this.blocksToComplete) {
-          addBlock = true;
-        } else {
-          this.isExecuting = false;
-          this.notificationService.display('Der Angriff wurde abgewehrt!');
-        }
       }
-
       random = Math.random() * 100;
       let defending = 100 - attacking;
-
       console.log(`random: ${random}, defending: ${defending}`);
-
       if (random > defending) {
         this.attacker.push(this.attacker.length);
-        if (this.attacker.length < this.blocksToComplete) {
-          addBlock = true;
-        } else {
-          this.isExecuting = false;
-          this.notificationService.display('Der Angriff war erfolgreich!');
-        }
       }
-
       this.addBlockIfNecessary();
     }, 400);
   }
