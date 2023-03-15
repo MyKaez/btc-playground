@@ -5,11 +5,11 @@
   <ng-container *ngIf="(layout.isSmallScreen$ | async)">
     <ng-container *ngTemplateOutlet="actions"></ng-container>
   </ng-container>
-  <div class="simulation-console">
+  <div class="simulation-console" *ngIf="container.simulation$ | async as simulation">
     <div class="console-header">
       <img src="assets/bitcoin-btc-logo.svg">
       <span>
-        Proof of Work Simulation
+        {{simulation.title}}
       </span>
     </div>
     <div class="console-data">
