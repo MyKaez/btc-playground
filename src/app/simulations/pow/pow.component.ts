@@ -81,7 +81,7 @@ export class PowComponent implements AfterViewInit {
   );
   probability$ = merge(this.totalHashRate$, this.blockTimeChanges$).pipe(
     filter(_ => this.totalHashRate > 0),
-    map(_ => 1 / this.totalHashRate * (this.blockTime.value ?? 0)),
+    map(_ => 1 / (this.totalHashRate * (this.blockTime.value ?? 0))),
     shareReplay(1)
   );
   difficulty$ = this.probability$.pipe(map(probability => 1 / probability));
