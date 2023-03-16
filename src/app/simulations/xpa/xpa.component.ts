@@ -14,6 +14,7 @@ import { SimulationService } from '../simulation.service';
   encapsulation: ViewEncapsulation.None
 })
 export class XpaComponent implements AfterViewInit {
+  static readonly title = "51% Attacke";
   isExecuting: boolean = false;
   attackingPowerControl = new FormControl(0, [Validators.min(1), Validators.max(99)]);
   inputs: FormGroup = new FormGroup({

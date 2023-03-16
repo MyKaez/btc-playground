@@ -1,10 +1,10 @@
-import { PowComponent } from "src/app/simulations";
+import { FormulaComponent, XpaComponent } from "src/app/simulations";
 
 export const environment = {
   production: true,
   presentationMode: true,
   environmentName: "prod",
-  simulations: [PowComponent.title]
+  simulations: [FormulaComponent.title, XpaComponent.title]
 };
 
 export class Config {

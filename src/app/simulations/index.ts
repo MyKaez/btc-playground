@@ -7,3 +7,4 @@ export * from "./rof/ring-of-fire.component";
 export * from "./blocksize/simulation/blocksize.service";
 export * from "./blocksize/blocksize.component";
 export * from "./simulation-container/simulation-container.component";
+export * from "./formula/formula.component";

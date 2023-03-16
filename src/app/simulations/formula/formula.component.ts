@@ -16,6 +16,7 @@ interface Halving {
   styleUrls: ['./formula.component.scss']
 })
 export class FormulaComponent implements AfterViewInit {
+  static readonly title = "Die Bitcoin Formel"; 
   readonly displayedColumns = [
     { prop: 'number', text: 'Nr.' },
     { prop: 'coinsPerBlock', text: 'Coins pro Block' },
