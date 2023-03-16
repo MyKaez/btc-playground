@@ -1,19 +1,14 @@
-<c-carousel [interval]="interval" [pause]="false" transition="slide" class="image-carousel" *wRecreateViewKey="value">
+<c-carousel [interval]="0" [pause]="false" transition="slide" class="image-carousel">
     <c-carousel-inner>
         <c-carousel-item *ngFor="let slide of slides">
         <img
             [src]="slide.src"
             class="d-block w-100"
             [title]="slide.title"
-            loading="eager"
+            loading="lazy"
         />
         </c-carousel-item>
-    </c-carousel-inner>
+    </c-carousel-inner>    
+  <c-carousel-control class="hidden" [routerLink] caption="Previous" direction="prev"></c-carousel-control>
+  <c-carousel-control class="hidden" [routerLink] caption="Next" direction="next"></c-carousel-control>
 </c-carousel>
-<div>
-    <h2>Control Set</h2>
-    <span *ngFor="let slide of slides">
-        <br>
-        {{slide.title}}
-    </span>
-</div>

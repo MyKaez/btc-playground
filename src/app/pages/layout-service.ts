@@ -24,6 +24,11 @@ export class LayoutService {
       "assets/img/wallpapers/fixed-smooth-nodes.png"
     ]
   };
+
+  allImages = [... new Set([
+    ...this.imageSets.calm, 
+    ...this.imageSets.fancy, 
+    ...this.imageSets.simple])];
   
   private observeLayoutMode = new Subject<ContentLayoutMode>();
   layoutMode$ = this.observeLayoutMode.asObservable();

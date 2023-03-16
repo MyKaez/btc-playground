@@ -12,9 +12,6 @@ import { deprecate } from 'util';
 export class ImageCarouselComponent implements OnInit {
   @Input("image-urls") imageUrls: string[] | null = ["assets/img/wallpapers/fixed-smooth-wireframe.png"];
   @Input("interval") interval = 10000;
-  @Input('wRecreateViewKey') key: any;
-  
-  viewRef?: EmbeddedViewRef<any>;
 
   slides: {
     title: string;
@@ -27,34 +24,12 @@ export class ImageCarouselComponent implements OnInit {
 
   constructor(
     private changeDetection: ChangeDetectorRef,
-    private templateRef: TemplateRef<any>, 
-    private viewContainer: ViewContainerRef) {
+    private layout: LayoutService) {
   }
 
   ngOnInit(): void {
-    window.setTimeout(() => {
-      this.slides = [
-        {
-            "title": "fixed-crystals",
-            "src": "assets/img/wallpapers/fixed-crystals.png"
-        },
-        {
-            "title": "fixed-cascade",
-            "src": "assets/img/wallpapers/fixed-cascade.png"
-        }
-      ]}, 2000);   
-
-    window.setTimeout(() => {
-      this.slides = [
-        {
-            "title": "fixed-blur",
-            "src": "assets/img/wallpapers/fixed-smooth-blur.png"
-        },
-        {
-            "title": "fixed-wireframe",
-            "src": "assets/img/wallpapers/fixed-smooth-wireframe.png"
-        }
-      ]}, 5000);
+    this.slides = this.layout.allImages.map(this.getSlide);
+    this.registerSlideEvents();
   }
 
   getSlide(url: string) {
@@ -64,26 +39,8 @@ export class ImageCarouselComponent implements OnInit {
     };
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if ("imageUrls" in changes) {
-      let currentImages = changes["imageUrls"].currentValue as string[];
-      this.slides = currentImages?.map(this.getSlide) || [];
-      console.log("in carousel", this.slides);
-      if (this.viewRef) {
-        this.destroyView();
-      }
-
-      this.createView();
-    }
-  }
-
-  private createView() {
-    this.viewRef = this.viewContainer.createEmbeddedView(this.templateRef);
-  }
-
-  private destroyView() {
-    this.viewRef?.destroy();
-    this.viewRef = undefined;
+  showNextSlide() {
+    (document.querySelector(".carousel-control-next") as HTMLElement).click();
   }
 
   /**
@@ -92,6 +49,25 @@ export class ImageCarouselComponent implements OnInit {
    */
   onItemChange($event: any): void {
     console.log('Carousel onItemChange', $event);
+  }
+
+  private registerSlideEvents() {
+    let wasCurrentlyTouched = false;
+    
+    window.ontouchend = touchEvent => {
+      if(wasCurrentlyTouched) {
+        wasCurrentlyTouched = false;
+        this.showNextSlide();
+        return;
+      }
+
+      wasCurrentlyTouched = true;
+      window.setTimeout(() => {
+        wasCurrentlyTouched = false;
+      }, 750);
+    }; 
+
+    window.onkeyup = keyEvent => keyEvent.key == "c" && this.showNextSlide();
   }
 }
 
