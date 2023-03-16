@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="info-card-media">
-        <youtube-player *ngIf="youtubeSrc" [videoId]="youtubeSrc"></youtube-player>
-        <img *ngIf="!youtubeSrc" [src]="imageSrc || defaultImage" />
+        <youtube-player *ngIf="!showImage" [videoId]="youtubeSrc"></youtube-player>
+        <img *ngIf="showImage" [src]="imageSrc || defaultImage" />
     </div>
 </div>

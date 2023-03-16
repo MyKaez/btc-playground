@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
-import { Observable, Subscriber } from 'rxjs';
+import { Observable, of, shareReplay, Subscriber } from 'rxjs';
 import { environment } from "src/environments/environment";
+import { FormulaComponent } from "./formula/formula.component";
 import { PowComponent } from "./pow/pow.component";
+import { XpaComponent } from "./xpa/xpa.component";
 
 @Injectable()
 export class SimulationService {
@@ -13,6 +15,12 @@ export class SimulationService {
         this.startSimulationSubscriber.next(isStarted);
     }
 
+    getSimulationsStream(): Observable<Simulation[]> {
+        return of(this.getSimulations()).pipe(
+            shareReplay(1)
+        );
+    }
+
     getSimulations(): Simulation[] {
         const simulations = [{
             title: "Blocksize",
@@ -22,11 +30,12 @@ export class SimulationService {
         }, {
             title: PowComponent.title,
             description: "Fixes this... Determinismus / Vorhersehbarkeit",
-            youtubeSrc: "MRNSudh565Y",
+            youtubeSrc: "E2ee5ewEddE",
             navigationLink: "simulations/pow"
         }, {
-            title: "51% Attacke",
+            title: XpaComponent.title,
             description: "Stellen wir uns vor, China kauft das Internet...",
+            imageSrc: "assets/img/simulations/sim-xpa-title.jpg",
             youtubeSrc: "-adMIa1jV80",
             navigationLink: "simulations/xpa"
         }, {
@@ -35,9 +44,10 @@ export class SimulationService {
             youtubeSrc: "88PSUCvErPA",
             navigationLink: "simulations/rof"
         }, {
-            title: "Die Bitcoin Formel",
+            title: FormulaComponent.title,
             description: "Wie funktioniert Bitcoin?",
             imageSrc: "assets/img/fixed-above.png",
+            youtubeSrc: "iCMwPVv2tLg",
             navigationLink: "simulations/formula"
         }];
         if (!environment.simulations) {

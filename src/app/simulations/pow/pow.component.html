@@ -1,16 +1,15 @@
 <app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
-  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" [video-id]="'E2ee5ewEddE'"
-  #container></app-simulation-container>
+  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" #container></app-simulation-container>
 
 <ng-template #simulation>
   <ng-container *ngIf="(layout.isSmallScreen$ | async)">
     <ng-container *ngTemplateOutlet="actions"></ng-container>
   </ng-container>
-  <div class="simulation-console">
+  <div class="simulation-console" *ngIf="container.simulation$ | async as simulation">
     <div class="console-header">
       <img src="assets/bitcoin-btc-logo.svg">
       <span>
-        Proof of Work Simulation
+        {{simulation.title}}
       </span>
     </div>
     <div class="console-data">
@@ -54,7 +53,7 @@
         </mat-hint>
       </mat-form-field>
       <button mat-button (click)="determineExternalHashRate()" [disabled]="isExecuting">
-        Bitcoin Hashrate ermmitteln
+        Bitcoin Hashrate ermitteln
       </button>
       <mat-form-field appearance="fill">
         <mat-label>externe Hashrate [Hashes pro Sekunde]</mat-label>

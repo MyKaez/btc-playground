@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Simulation } from 'src/app/simulations/simulation.service';
+import { environment } from 'src/environments/environment';
 import { WebHelper } from 'src/model/web';
 
 @Component({
@@ -24,9 +25,12 @@ export class SimulationCardComponent implements OnInit, Simulation {
   @Input("navigation-link")
   navigationLink = DefaultSimulationCardProps.navigationLink;
 
-  defaultImage = "./assets/img/simulations/nebulae purple.jpg";
+  showImage = true;
+  defaultImage: string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) { 
+    this.defaultImage = DefaultSimulationCardProps.imageSrc!;
+  }
 
   ngOnInit(): void {
     WebHelper.ensureYoutubeIframe();
@@ -35,11 +39,23 @@ export class SimulationCardComponent implements OnInit, Simulation {
   navigateTo(link: string): void {
     this.router.navigate(['/' + link]);
   }
+
+  getShowImage(): boolean {
+    if(!this.youtubeSrc) return true;
+    if(environment.presentationMode && this.imageSrc) return true;
+    return false;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes["imageSrc"] || changes["youtubeSrc"]) {
+      this.showImage = this.getShowImage();
+    }
+  }
 }
 
 export const DefaultSimulationCardProps: Simulation = {
   title: "You missed a title",
   description: "Every card needs some little description",
-  imageSrc: "https://www.innovationnewsnetwork.com/wp-content/uploads/2021/07/iStockPitris-831501722-696x392.jpg",
+  imageSrc: "assets/img/fixed-above.png",
   youtubeSrc: "dQw4w9WgXcQ", // To Rick
 }

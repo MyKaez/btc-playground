@@ -81,7 +81,7 @@ export class PowComponent implements AfterViewInit {
   );
   probability$ = merge(this.totalHashRate$, this.blockTimeChanges$).pipe(
     filter(_ => this.totalHashRate > 0),
-    map(_ => 1 / this.totalHashRate * (this.blockTime.value ?? 0)),
+    map(_ => 1 / (this.totalHashRate * (this.blockTime.value ?? 0))),
     shareReplay(1)
   );
   difficulty$ = this.probability$.pipe(map(probability => 1 / probability));
@@ -141,11 +141,7 @@ export class PowComponent implements AfterViewInit {
   }
 
   determineExternalHashRate() {
-    this.btcService.getLatestBlocks().subscribe(blocks => {
-      // https://en.bitcoinwiki.org/wiki/Difficulty_in_Mining#:~:text=Average%20time%20of%20finding%20a,a%20miner%20finds%20per%20second.
-      const bitcoinDifficulty = blocks[0].difficulty;
-      this.externalHashRate.setValue(bitcoinDifficulty * (2 ** 32) / BLOCK_DURATION_IN_SECONDS);
-    });
+    this.btcService.getCurrentHashRate().subscribe(rate => this.externalHashRate.setValue(rate));
   }
 
   async start(probability: number) {

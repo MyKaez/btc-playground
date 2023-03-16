@@ -1,39 +1,48 @@
 <app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
-    [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" [video-id]="'-adMIa1jV80'">
+    [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" #container>
 </app-simulation-container>
 
 <ng-template #simulation>
     <ng-container *ngIf="isHandset$ | async">
         <ng-container *ngTemplateOutlet="actions"></ng-container>
     </ng-container>
-    <div class="simulation-console">
+    <div class="simulation-console" *ngIf="container.simulation$ | async as simulation">
         <div class="console-header">
             <img src="assets/bitcoin-btc-logo.svg">
             <span>
-                51% Attacke Simulation
+                {{simulation.title}}
             </span>
         </div>
         <div class="console-data">
-            <p>
-                Bitcoin Blockchain<br />
+            <p *ngIf="bitcoinHashRate$ | async as bitcoinHashRate">
+                &gt; Bitcoin Blockchain<br />
                 &gt; <span *ngFor="let i of totalBlocks"
-                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
+                    [ngClass]="isBitcoinLeading(i) ? 'confirm' : 'non-confirm'">--<span
                         *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
-                &gt; <span *ngFor="let i of blockchain" [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
+                &gt; <span *ngFor="let i of bitcoin" [ngClass]="isBitcoinLeading(i) ? 'confirm' : 'non-confirm'"><span
                         *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
-                &gt; Anzahl: ({{blockchain.length}}/{{blocksToComplete}})<br />
+
+                &gt; Anzahl: ({{bitcoin.length}}/{{blocksToComplete}})<br />
+                &gt; Anzahl bis Sieg: ({{bitcoinLead}}/{{cancelAttack}})<br />
+                &gt; Aktuelle Bitcoin HashRate: {{bitcoinHashRate}}<br />
             </p>
-            <p></p>
-            <p></p>
-            <p>
-                Angreifende Blockchain<br />
+            <p>&gt; ...</p>
+            <p>&gt; ...</p>
+            <p *ngIf="attackerHashRate$ | async as attackerHashRate">
+                &gt; Angreifende Blockchain<br />
                 &gt; <span *ngFor="let i of totalBlocks"
-                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'">--<span
+                    [ngClass]="isAttackerLeading(i)? 'confirm' : 'non-confirm'">--<span
                         *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
-                &gt; <span *ngFor="let i of attackingBlockchain"
-                    [ngClass]="i < confirmations ? 'non-confirm' : 'confirm'"><span
+                &gt; <span *ngFor="let i of attacker" [ngClass]="isAttackerLeading(i)? 'confirm' : 'non-confirm'"><span
                         *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
-                &gt; Anzahl: ({{attackingBlockchain.length}}/{{blocksToComplete}})<br />
+                &gt; Anzahl: ({{attacker.length}}/{{blocksToComplete}})<br />
+                &gt; Anzahl bis Sieg: ({{attackLead}}/{{confirmations}})<br />
+                &gt; Attackierende HashRate: {{attackerHashRate}}<br />
+            </p>
+            <p>&gt; ...</p>
+            <p>&gt; ...</p>
+            <p *ngIf="totalHashRate$ | async as hashRate">
+                &gt; Gesamt HashRate: {{hashRate}}
             </p>
         </div>
     </div>
@@ -49,7 +58,7 @@
         <div class="parameters">
             <form [formGroup]="inputs">
                 <mat-form-field appearance="fill">
-                    <mat-label>Maximale Angriffszahl <i>[in Blöcken]</i></mat-label>
+                    <mat-label>Maximale Angriffsdauer <i>[in Blöcken]</i></mat-label>
                     <input matInput type="number" formControlName="blocksToComplete" />
                     <label *ngIf="!isExecuting && !inputs.controls['blocksToComplete'].valid">
                         <span>{{getErrors('blocksToComplete')}}</span>
@@ -110,7 +119,7 @@
 
 <ng-template #actions>
     <div class="actions">
-        <button mat-button (click)="start()" [disabled]="isExecuting">Start</button>
+        <button mat-button (click)="start()" [disabled]="isExecuting || preminedBlocks >= confirmations">Start</button>
         <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
         <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
         <span *ngIf="totalAmountBlocks > 0">

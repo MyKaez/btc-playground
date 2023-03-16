@@ -1,8 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { combineLatest, map, Observable, shareReplay } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
+import { BtcService } from 'src/app/shared/helpers/btc.service';
+import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
 import { NotificationService } from 'src/app/shared/media/notification.service';
+import { SimulationService } from '../simulation.service';
 
 @Component({
   selector: 'app-xpa',
@@ -10,37 +13,60 @@ import { NotificationService } from 'src/app/shared/media/notification.service';
   styleUrls: ['./xpa.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class XpaComponent {
+export class XpaComponent implements AfterViewInit {
+  static readonly title = "51% Attacke";
   isExecuting: boolean = false;
-  inputs: FormGroup;
-  blockchain: number[] = [];
-  attackingBlockchain: number[] = [];
+  attackingPowerControl = new FormControl(0, [Validators.min(1), Validators.max(99)]);
+  inputs: FormGroup = new FormGroup({
+    blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
+    attackingPower: this.attackingPowerControl,
+    preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5)]),
+    confirmations: new FormControl(3, [Validators.min(0), Validators.max(10)]),
+    cancelAttack: new FormControl(1, [Validators.min(0), Validators.max(10)])
+  });
+  bitcoin: number[] = [];
+  attacker: number[] = [];
   clearOnStart: boolean = true;
-  isHandset$: Observable<boolean>;
-
   contentLayoutMode = ContentLayoutMode.LockImage;
 
-  constructor(private notificationService: NotificationService, public layout: LayoutService) {
-    this.inputs = new FormGroup({
-      blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
-      attackingPower: new FormControl(51, [Validators.min(1), Validators.max(99)]),
-      preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5)]),
-      confirmations: new FormControl(6, [Validators.min(0), Validators.max(10)]),
-      cancelAttack: new FormControl(3, [Validators.min(0), Validators.max(10)])
-    });
+  constructor(private notificationService: NotificationService, public layout: LayoutService,
+    private simulationService: SimulationService, private btcService: BtcService) {
     this.inputs.controls['preminedBlocks'].valueChanges.subscribe(value => {
-      this.attackingBlockchain = [];
-      this.blockchain = [];
+      this.attacker = [];
+      this.bitcoin = [];
       let val = Number.parseInt(value);
       for (let i = 0; i < Math.abs(val); i++) {
         if (val < 0) {
-          this.blockchain.push(this.blockchain.length);
+          this.bitcoin.push(this.bitcoin.length);
         } else {
-          this.attackingBlockchain.push(this.attackingBlockchain.length);
+          this.attacker.push(this.attacker.length);
         }
       }
     });
     this.isHandset$ = layout.isHandset$;
+  }
+
+  isHandset$: Observable<boolean>;
+  currentHashRate$ = this.btcService.getCurrentHashRate().pipe(shareReplay(1));
+  bitcoinHashRate$ = this.currentHashRate$.pipe(map(rate => this.getSize(rate)));
+  totalHashRate$ = combineLatest([this.currentHashRate$, this.attackingPowerControl.valueChanges]).pipe(
+    map(([rate, _]) => {
+      const totalPower = rate / this.defendingPower;
+      return this.getSize(totalPower);
+    }));
+  attackerHashRate$ = combineLatest([this.currentHashRate$, this.attackingPowerControl.valueChanges]).pipe(
+    map(([rate, _]) => {
+      const attackingPower = rate / this.defendingPower * this.attackingPower;
+      return this.getSize(attackingPower);
+    }));
+
+  ngAfterViewInit(): void {
+    this.attackingPowerControl.setValue(51);
+  }
+
+  getSize(hashRate: number | null): string {
+    const size = calculateUnit(hashRate ?? 0, UnitOfHash.hashes);
+    return `${size.value.toFixed(2)} ${size.unit.text}`;
   }
 
   ngOnDestroy(): void {
@@ -50,7 +76,7 @@ export class XpaComponent {
   }
 
   get totalAmountBlocks() {
-    return this.blockchain.length + this.attackingBlockchain.length;
+    return this.bitcoin.length + this.attacker.length;
   }
 
   get blocksToComplete(): number {
@@ -58,7 +84,7 @@ export class XpaComponent {
   }
 
   get attackingPower(): number {
-    return Number.parseInt(this.inputs.controls['attackingPower'].value);
+    return this.attackingPowerControl.value ?? 0;
   }
 
   get confirmations(): number {
@@ -78,11 +104,11 @@ export class XpaComponent {
   }
 
   get progressBlockchain(): number {
-    return this.blockchain.length / this.blocksToComplete * 100;
+    return this.bitcoin.length / this.blocksToComplete * 100;
   }
 
   get progressAttackingBlockchain(): number {
-    return this.attackingBlockchain.length / this.blocksToComplete * 100;
+    return this.attacker.length / this.blocksToComplete * 100;
   }
 
   get totalBlocks(): number[] {
@@ -93,12 +119,35 @@ export class XpaComponent {
     return numbers;
   }
 
+  get bitcoinLead(): number {
+    return this.bitcoin.length - this.attacker.length;
+  }
+
+  get attackLead(): number {
+    return this.attacker.length - this.bitcoin.length;
+  }
+
+  isBitcoinLeading(current: number): boolean {
+    if (this.bitcoin.length > this.attacker.length) {
+      return current + 1 > this.attacker.length;
+    }
+    return false;
+  }
+
+  isAttackerLeading(current: number): boolean {
+    if (this.attacker.length > this.bitcoin.length) {
+      return current + 1 > this.bitcoin.length;
+    }
+    return false;
+  }
+
   start() {
     this.isExecuting = true;
     if (this.clearOnStart || this.progressAttackingBlockchain >= 100 || this.progressBlockchain >= 100) {
       this.clear();
     }
     this.addBlockIfNecessary();
+    this.simulationService.updateStartSimulation(true);
   }
 
   stop(): void {
@@ -106,55 +155,39 @@ export class XpaComponent {
   }
 
   clear(): void {
-    this.blockchain = [];
-    this.attackingBlockchain = [];
+    this.bitcoin = [];
+    this.attacker = [];
     for (let i = 0; i < this.preminedBlocks; i++) {
-      this.attackingBlockchain.push(this.attackingBlockchain.length);
+      this.attacker.push(this.attacker.length);
     }
   }
 
   addBlockIfNecessary(): void {
-    if (this.blockchain.length > this.confirmations) {
-      if ((this.blockchain.length - this.attackingBlockchain.length) > this.cancelAttack) {
-        this.isExecuting = false;
-        this.notificationService.display('Bitcoin hat gewonnen!');
-      }
+    if (this.bitcoinLead >= this.cancelAttack) {
+      this.isExecuting = false;
+      this.notificationService.display('Der Angriff wurde abgewehrt!');
+    }
+    if (this.attackLead >= this.confirmations) {
+      this.isExecuting = false;
+      this.notificationService.display('Der Angriff war erfolgreich!');
     }
     if (!this.isExecuting) {
       return;
     }
+
     setTimeout(() => {
-      let addBlock = false;
       let random = Math.random() * 100;
       let attacking = this.attackingPower;
-
       console.log(`random: ${random}, attacking: ${attacking}`);
-
       if (random > attacking) {
-        this.blockchain.push(this.blockchain.length);
-        if (this.blockchain.length < this.blocksToComplete) {
-          addBlock = true;
-        } else {
-          this.isExecuting = false;
-          this.notificationService.display('Bitcoin hat gewonnen!');
-        }
+        this.bitcoin.push(this.bitcoin.length);
       }
-
       random = Math.random() * 100;
       let defending = 100 - attacking;
-
       console.log(`random: ${random}, defending: ${defending}`);
-
       if (random > defending) {
-        this.attackingBlockchain.push(this.attackingBlockchain.length);
-        if (this.attackingBlockchain.length < this.blocksToComplete) {
-          addBlock = true;
-        } else {
-          this.isExecuting = false;
-          this.notificationService.display('Bitcoin hat verloren!');
-        }
+        this.attacker.push(this.attacker.length);
       }
-
       this.addBlockIfNecessary();
     }, 400);
   }
@@ -163,3 +196,4 @@ export class XpaComponent {
     return JSON.stringify(this.inputs.controls[control].errors);
   }
 }
+

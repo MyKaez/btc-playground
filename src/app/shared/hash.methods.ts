@@ -27,6 +27,6 @@ export function calculateHexaDecimalFormula(leadingZeros: number, probability: n
     for (let i = 0; i < leadingZeros; i++) {
         x += '1/16 * ';
     }
-    x += probability + '/16';
+    x += Math.round(probability) + '/16';
     return x;
 }
