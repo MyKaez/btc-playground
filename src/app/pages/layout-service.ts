@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { map, share, shareReplay, take } from "rxjs/operators";
 import { Observable, Observer, Subject, Subscriber } from "rxjs";
+import { environment } from "src/environments/environment";
 
 @Injectable()
 export class LayoutService {
@@ -59,6 +60,12 @@ export class LayoutService {
   }
 
   setLayoutMode(mode: ContentLayoutMode, backgroundImageOptions?: ContentLayoutBackgroundImageOptions) {
+    // todo - remove for individual experience:
+    if(!environment.production) {
+      mode = ContentLayoutMode.ImageCarousel;
+      backgroundImageOptions = undefined;
+    }
+
     this.observeLayoutMode.next(mode);
     backgroundImageOptions = backgroundImageOptions || this.defaultOptions[mode];
 
