@@ -55,6 +55,27 @@
               ],
               "outputHashing": "none"
             },
+            "plebs": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "5mb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.plebs.ts"
+                }
+              ],
+              "outputHashing": "none"
+            },
             "integration": {
               "budgets": [
                 {
