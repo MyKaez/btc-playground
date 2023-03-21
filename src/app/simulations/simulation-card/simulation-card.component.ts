@@ -42,7 +42,7 @@ export class SimulationCardComponent implements OnInit, Simulation {
 
   getShowImage(): boolean {
     if(!this.youtubeSrc) return true;
-    if(environment.presentationMode && this.imageSrc) return true;
+    if(this.imageSrc) return true;
     return false;
   }
 

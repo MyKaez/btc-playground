@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
-import { first, map, Observable, Subscription } from 'rxjs';
+import { first, map, Observable, shareReplay, startWith, Subscription, tap } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { Simulation, SimulationService } from '../simulation.service';
 import { SimulationHelper } from './simulation-helper';
@@ -32,6 +32,10 @@ export class SimulationContainerComponent implements OnInit {
     })
   );
 
+  videoSimulation$ = this.simulation$.pipe(
+    map(sim => (sim?.imageSrc || sim?.youtubeSrc) ? sim : null, 
+    tap(show => console.log("show container", show))));
+    
   constructor(public layout: LayoutService, private simulationService: SimulationService,
     private router: Router) {
     this.isHandset$ = layout.isHandset$;
