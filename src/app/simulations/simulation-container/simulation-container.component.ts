@@ -22,9 +22,6 @@ export class SimulationContainerComponent implements OnInit {
 
   selectedTabIndex = 1;
 
-  showImageContainer = false;
-  showVideo = false;
-
   isHandset$: Observable<boolean>;
   simulation$ = this.simulationService.getSimulationsStream().pipe(
     map(simulations => {
@@ -33,8 +30,10 @@ export class SimulationContainerComponent implements OnInit {
       console.log(`current simulation: ${sim?.title}`);
       return sim;
     })
-  );  
+  );    
 
+  showImageContainer$ = this.simulation$.pipe(map(sim => sim?.imageSrc || sim?.youtubeSrc));
+  showVideo$ = this.simulation$.pipe(map(sim => sim?.youtubeSrc && !sim?.imageSrc));
   constructor(public layout: LayoutService, private simulationService: SimulationService,
     private router: Router) {
     this.isHandset$ = layout.isHandset$;
@@ -44,11 +43,6 @@ export class SimulationContainerComponent implements OnInit {
     if (this.contentLayoutMode != null) this.layout.setLayoutMode(this.contentLayoutMode);
     this.layout.isSimulation = true;
     this.startSimulationListener = this.simulationService.listeningToStartSimulation.subscribe({ next: isStarted => this.onStartedSimulation(isStarted) });
-
-    this.simulation$.subscribe(sim => {
-      this.showImageContainer = !!(sim?.imageSrc || sim?.youtubeSrc);
-      this.showVideo = !!(sim?.youtubeSrc && !sim?.imageSrc);
-    });
   }
 
   ngOnDestroy(): void {
