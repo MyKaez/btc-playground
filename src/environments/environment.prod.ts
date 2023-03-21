@@ -2,6 +2,7 @@ import { FormulaComponent, XpaComponent } from "src/app/simulations";
 
 export const environment = {
   production: true,
+  beta: false,
   presentationMode: true,
   environmentName: "prod",
   simulations: [FormulaComponent.title, XpaComponent.title],
