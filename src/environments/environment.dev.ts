@@ -9,7 +9,8 @@ export const environment = {
     presentationMode: false,
     beta: true,
     environmentName: "dev",
-    simulations: [XpaComponent.title]
+    simulations: [XpaComponent.title],
+    debugImages: false
 };
 
 export class Config {

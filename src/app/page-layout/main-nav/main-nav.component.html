@@ -83,9 +83,9 @@
 
       <app-footer></app-footer>
     </div>
-    <div class="app-images" [class.hidden]="!isCarousel() && !isLockImage()">
-      <img *ngIf="isLockImage()" [src]="lockedImage()" alt="background" class="d-block w-100" loading="lazy" />
-      <app-image-carousel *ngIf="isCarousel()" [image-urls]="homeImages" [interval]="15000"></app-image-carousel>
+    <div class="app-images">
+      <img *ngIf="isLockImage$ | async" [src]="firstImage$ | async" alt="background" class="d-block w-100" loading="lazy" />
+      <app-image-carousel *ngIf="isCarousel$ | async" [image-urls]="(images$ | async) || fallbackImages" [interval]="5000"></app-image-carousel>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

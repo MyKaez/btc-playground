@@ -5,7 +5,8 @@ export const environment = {
   beta: true,
   presentationMode: false,
   environmentName: "plebs",
-  simulations: [XpaComponent.title]
+  simulations: [XpaComponent.title],
+  debugImages: false
 };
 
 export class Config {

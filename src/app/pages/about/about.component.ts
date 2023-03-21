@@ -11,6 +11,6 @@ export class AboutComponent implements OnInit {
   constructor(private layout: LayoutService) { }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.LockImage);
+    this.layout.setLayoutMode(ContentLayoutMode.Plane);
   }
 }

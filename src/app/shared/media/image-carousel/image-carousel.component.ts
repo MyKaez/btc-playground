@@ -1,5 +1,6 @@
 import { _getFocusedElementPierceShadowDom } from '@angular/cdk/platform';
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EmbeddedViewRef, Input, OnInit, SimpleChanges, TemplateRef, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Observable, pipe } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { deprecate } from 'util';
 
@@ -9,30 +10,37 @@ import { deprecate } from 'util';
   styleUrls: ['./image-carousel.component.scss']
 })
 export class ImageCarouselComponent implements OnInit {
-  @Input("image-urls")
-  imageUrls: string[] = [];
+  @Input("image-urls") imageUrls: string[] | null = ["assets/img/wallpapers/fixed-smooth-wireframe.png"];
+  @Input("interval") interval = 10000;
 
-  @Input("interval")
-  interval = 10000;
+  slides: {
+    title: string;
+    src: string;
+  }[] = [];
 
-  slides: Slide[] = [];
+  get getSlides() {
+    return this.imageUrls?.map(url => this.getSlide(url)) || [];
+  }
 
-  constructor(private layoutService: LayoutService) {
+  constructor(
+    private changeDetection: ChangeDetectorRef,
+    private layout: LayoutService) {
   }
 
   ngOnInit(): void {
-    if (this.layoutService.currentLayoutMode === ContentLayoutMode.ImageCarousel) {
-      this.slides = this.imageUrls.map(url => this.getSlide(url));
-    } else if (this.layoutService.currentLayoutMode === ContentLayoutMode.LockImage) {
-      this.slides = [this.getSlide(this.imageUrls[0])];
-    }
+    this.slides = this.layout.allImages.map(this.getSlide);
+    this.registerSlideEvents();
   }
 
-  getSlide(url: string): any {
+  getSlide(url: string) {
     return {
-      title: url.split("/")[1].split(".")[0],
+      title: url.split("/")[url.split("/").length - 1].split(".")[0],
       src: url
     };
+  }
+
+  showNextSlide() {
+    (document.querySelector(".carousel-control-next") as HTMLElement).click();
   }
 
   /**
@@ -41,6 +49,25 @@ export class ImageCarouselComponent implements OnInit {
    */
   onItemChange($event: any): void {
     console.log('Carousel onItemChange', $event);
+  }
+
+  private registerSlideEvents() {
+    let wasCurrentlyTouched = false;
+    
+    window.ontouchend = touchEvent => {
+      if(wasCurrentlyTouched) {
+        wasCurrentlyTouched = false;
+        this.showNextSlide();
+        return;
+      }
+
+      wasCurrentlyTouched = true;
+      window.setTimeout(() => {
+        wasCurrentlyTouched = false;
+      }, 750);
+    }; 
+
+    window.onkeyup = keyEvent => keyEvent.key == "c" && this.showNextSlide();
   }
 }
 

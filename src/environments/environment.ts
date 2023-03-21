@@ -7,7 +7,8 @@ export const environment = {
   beta: false,
   presentationMode: false,
   environmentName: "default",
-  simulations: undefined
+  simulations: undefined,
+  debugImages: false
 };
 
 export class Config {
