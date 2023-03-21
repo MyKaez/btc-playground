@@ -12,7 +12,7 @@ export class SupportUsComponent implements OnInit {
   constructor(private layout: LayoutService) { }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
+    this.layout.setLayoutMode(ContentLayoutMode.Plane);
   }
 
 }

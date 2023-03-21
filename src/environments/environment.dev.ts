@@ -8,7 +8,8 @@ export const environment = {
     production: false,
     presentationMode: false,
     environmentName: "dev",
-    simulations: undefined
+    simulations: undefined,
+    debugImages: false
 };
 
 export class Config {

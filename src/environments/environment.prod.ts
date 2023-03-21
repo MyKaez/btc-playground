@@ -4,7 +4,8 @@ export const environment = {
   production: true,
   presentationMode: true,
   environmentName: "prod",
-  simulations: [FormulaComponent.title, XpaComponent.title]
+  simulations: [FormulaComponent.title, XpaComponent.title],
+  debugImages: false
 };
 
 export class Config {

@@ -60,14 +60,16 @@ export class LayoutService {
   }
 
   setLayoutMode(mode: ContentLayoutMode, backgroundImageOptions?: ContentLayoutBackgroundImageOptions) {
-    // todo - remove for individual experience:
-    if(!environment.production) {
+    if(environment.debugImages) {
       mode = ContentLayoutMode.ImageCarousel;
       backgroundImageOptions = undefined;
     }
 
     this.observeLayoutMode.next(mode);
     backgroundImageOptions = backgroundImageOptions || this.defaultOptions[mode];
+
+    // This disables the ability to switch modes, for a simpler experience
+    mode = ContentLayoutMode.LockImage;
 
     let nextImages: string[] = [];
     this.backgroundImages$.pipe(take(1)).subscribe(currentImages => nextImages = currentImages);
@@ -83,9 +85,9 @@ export class LayoutService {
   }
   
   defaultOptions: Record<ContentLayoutMode, ContentLayoutBackgroundImageOptions> = {
-    [ContentLayoutMode.Plane]: {},
-    [ContentLayoutMode.ImageCarousel]: {imageMode: ContentLayoutImageMode.Calm},
-    [ContentLayoutMode.LockImage]: {imageMode: ContentLayoutImageMode.Calm}
+    [ContentLayoutMode.Plane]: {imageUrls: ["assets/img/wallpapers/fixed-smooth-nodes.png"]},
+    [ContentLayoutMode.ImageCarousel]: {imageUrls: ["assets/img/wallpapers/fixed-crystals.png"]},
+    [ContentLayoutMode.LockImage]: {imageUrls: ["assets/img/wallpapers/fixed-smooth-wireframe.png"]},
   };
 }
 
