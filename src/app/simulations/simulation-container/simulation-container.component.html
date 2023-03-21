@@ -9,7 +9,7 @@
             <div class="info-card simulation-definition">
                 <div *ngIf="(videoSimulation$ | async) as videoSimulation" class="video-explanation">
                     <youtube-player *ngIf="videoSimulation.youtubeSrc && !videoSimulation.imageSrc" [videoId]="videoSimulation.youtubeSrc"></youtube-player>
-                    <img *ngif="videoSimulation.imageSrc" [src]="videoSimulation.imageSrc"/>
+                    <img *ngIf="videoSimulation.imageSrc" [src]="videoSimulation.imageSrc"/>
                 </div>
                 <div *ngIf="simulationDefinition" class="text-explanation">
                     <ng-container [ngTemplateOutlet]="simulationDefinition"></ng-container>
