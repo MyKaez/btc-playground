@@ -1,5 +1,10 @@
 @import "/src/app/app.component.scss";
 
+:host {
+    display: flex;
+    align-items: center;
+}
+
 ::ng-deep app-simulation-card:last-child .info-card {
     height: 313px;
     border: 2px dashed var(--font-color);
