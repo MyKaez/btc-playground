@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "publish-prod": "ng build --configuration=production --base-href / && gulp apply-timestamp-to-script-references && gulp publish-prod",
-    "publish-plebs": "ng build --configuration=plebs --base-href / && gulp apply-timestamp-to-script-references && gulp publish-plebs",
+    "publish-plebs": "ng build --configuration=plebs --base-href /btc-plebs/ && gulp apply-timestamp-to-script-references && gulp publish-plebs",
     "publish-fancy": "ng build --configuration=integration  --base-href /btc-fancy/ && gulp apply-timestamp-to-script-references && gulp publish-fancy",
     "publish-playground": "ng build --configuration=integration --base-href /btc-playground/ && gulp apply-timestamp-to-script-references && gulp publish-playground"
   },
