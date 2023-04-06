@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { combineLatest, map, Observable, shareReplay } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
@@ -16,13 +16,13 @@ import { SimulationService } from '../simulation.service';
 export class XpaComponent implements AfterViewInit {
   static readonly title = "51% Attacke";
   isExecuting: boolean = false;
-  attackingPowerControl = new FormControl(0, [Validators.min(1), Validators.max(99)]);
+  attackingPowerControl = new FormControl(0, [Validators.min(1), Validators.max(99), Validators.required]);
   inputs: FormGroup = new FormGroup({
-    blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20)]),
+    blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20), Validators.required]),
     attackingPower: this.attackingPowerControl,
-    preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5)]),
-    confirmations: new FormControl(3, [Validators.min(0), Validators.max(10)]),
-    cancelAttack: new FormControl(1, [Validators.min(0), Validators.max(10)])
+    preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5), Validators.required]),
+    confirmations: new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required]),
+    cancelAttack: new FormControl(1, [Validators.min(0), Validators.max(10), Validators.required])
   });
   bitcoin: number[] = [];
   attacker: number[] = [];
@@ -139,6 +139,11 @@ export class XpaComponent implements AfterViewInit {
   }
 
   start() {
+    if(this.getFormErrors().length) {
+      this.notificationService.display("Leider gibt es Fehler in den Einstellungen. Bitte prüfe deine Angaben.");
+      return;
+    }
+
     this.isExecuting = true;
     if (this.clearOnStart || this.progressAttackingBlockchain >= 100 || this.progressBlockchain >= 100) {
       this.clear();
@@ -189,8 +194,32 @@ export class XpaComponent implements AfterViewInit {
     }, 400);
   }
 
-  getErrors(control: string) {
-    return JSON.stringify(this.inputs.controls[control].errors);
+  /** @todo move this to a service */
+  private errorMapping: any = {
+    "min": "Der Wert ist zu niedrig.",
+    "max": "Der Wert ist zu hoch.",
+    "required": "Wert benötigt"
+  };
+
+  /** @todo move this to a service */
+  getErrors(control: string): string | undefined {
+    if (!this.inputs.controls[control].errors) return undefined;
+    return Object.keys(this.inputs.controls[control].errors!)
+      .map(key => this.errorMapping[key] || key)
+      .join(" ");    
+  }
+
+  getFormErrors(): string[] {
+    try {
+      var errors = Object.keys(this.inputs.controls)
+        .map(key => this.getErrors(key));
+      var filtered = errors.filter((error): error is string => !!error);
+      return filtered;
+    }
+    catch(error) {
+      console.error("Failed validating errors", error);
+      return ["Failed validating"];
+    }
   }
 }
 
