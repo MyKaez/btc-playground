@@ -49,15 +49,16 @@ export class XpaComponent implements AfterViewInit {
   isHandset$: Observable<boolean>;
   currentHashRate$ = this.btcService.getCurrentHashRate().pipe(shareReplay(1));
   bitcoinHashRate$ = this.currentHashRate$.pipe(map(rate => this.getSize(rate)));
-  totalHashRate$ = combineLatest([this.currentHashRate$, this.attackingPowerControl.valueChanges]).pipe(
-    map(([rate, _]) => {
-      const totalPower = rate / this.defendingPower;
-      return this.getSize(totalPower);
-    }));
   attackerHashRate$ = combineLatest([this.currentHashRate$, this.attackingPowerControl.valueChanges]).pipe(
-    map(([rate, _]) => {
-      const attackingPower = rate / this.defendingPower * this.attackingPower;
+    map(([cur, att]) => {
+      const attackingPower = cur / this.defendingPower * (att ?? 0);
       return this.getSize(attackingPower);
+    }));
+  totalHashRate$ = combineLatest([this.currentHashRate$, this.attackingPowerControl.valueChanges]).pipe(
+    map(([cur, att]) => {
+      const attackingPower = cur / this.defendingPower * (att ?? 0);
+      const totalPower = cur + attackingPower;
+      return this.getSize(totalPower);
     }));
 
   ngAfterViewInit(): void {
