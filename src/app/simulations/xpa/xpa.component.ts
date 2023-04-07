@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { combineLatest, map, Observable, shareReplay } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, min, Observable, shareReplay, Subject } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
@@ -24,23 +24,19 @@ export class XpaComponent implements AfterViewInit {
     confirmations: new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required]),
     cancelAttack: new FormControl(1, [Validators.min(0), Validators.max(10), Validators.required])
   });
-  bitcoin: number[] = [];
-  attacker: number[] = [];
+
+  minedBlocksBitcoin$ = new BehaviorSubject(0);
+  minedBlocksAttacker$ = new BehaviorSubject(0);
   clearOnStart: boolean = true;
   contentLayoutMode = ContentLayoutMode.LockImage;
 
   constructor(private notificationService: NotificationService, public layout: LayoutService,
     private simulationService: SimulationService, private btcService: BtcService) {
     this.inputs.controls['preminedBlocks'].valueChanges.subscribe(value => {
-      this.attacker = [];
-      this.bitcoin = [];
-      let val = Number.parseInt(value);
-      for (let i = 0; i < Math.abs(val); i++) {
-        if (val < 0) {
-          this.bitcoin.push(this.bitcoin.length);
-        } else {
-          this.attacker.push(this.attacker.length);
-        }
+      let preminedBlocksCount = Number.parseInt(value);
+      if(!isNaN(preminedBlocksCount)) {
+        //this.minedBlocksBitcoin$.next(preminedBlocksCount);
+        this.minedBlocksAttacker$.next(preminedBlocksCount);
       }
     });
     this.isHandset$ = layout.isHandset$;
@@ -57,8 +53,49 @@ export class XpaComponent implements AfterViewInit {
     map(([cur, att]) => this.getSize(cur + att))
   );
 
+  bitcoinParticipant$ = combineLatest([this.minedBlocksBitcoin$, this.bitcoinHashRate$, this.minedBlocksAttacker$])
+    .pipe(map(([mined, hashrate, minedByAttacker]) => this.createParticipant("Bitcoin Blockchain", mined, hashrate, "Aktuelle Bitcoin HashRate", minedByAttacker)));
+  attackerParticipant$ = combineLatest([this.minedBlocksAttacker$, this.attackerHashRate$, this.minedBlocksBitcoin$])
+      .pipe(map(([mined, hashrate, minedByAttacker]) => this.createParticipant("Angreifer Blockchain", mined, hashrate, "Aktuelle Angreifer HashRate", minedByAttacker)));
+
+  participants$ = combineLatest([this.bitcoinParticipant$, this.attackerParticipant$])
+    .pipe(map(([bitcoinParticipant, attackerParticipant]) => [bitcoinParticipant, attackerParticipant].map(p => this.createParticipantView(p))));
+  
+
   ngAfterViewInit(): void {
     this.attackingPowerControl.setValue(51);
+  }
+
+  private createParticipant(title: string, mined: number, hashrate: string, hashrateTitle: string, maxMinedByOther: number): XpaParticipant {
+    return {
+      title: title,
+      completedBlocks: mined,
+      hashrate: hashrate,
+      hashrateTitle: hashrateTitle,
+      blocksInLead: this.getLead(mined, maxMinedByOther)
+    };
+  }
+
+  private createParticipantView(participant: XpaParticipant): XpaParticipantView {
+    return {
+      ... participant,
+      blocks: this.getBlocks(participant.completedBlocks),
+      stripes: "",
+      leadingBlocks: this.getBlocks(participant.blocksInLead, true),
+      leadingStripes: ""
+    };
+  }
+
+  private getStripes(count: number): string {
+    if(count <= 0) return "";
+    return "█--".repeat(count);
+  }
+
+  private getBlocks(count: number, withStripedPrefix = false): string {
+    if(count <= 0) return "";
+    let text = "██-".repeat(count);
+    if(withStripedPrefix) text = "-" + text;
+    return text.substring(0, text.length);
   }
 
   getSize(hashRate: number | null): string {
@@ -72,9 +109,8 @@ export class XpaComponent implements AfterViewInit {
     this.clear();
   }
 
-  get totalAmountBlocks() {
-    return this.bitcoin.length + this.attacker.length;
-  }
+  totalAmountBlocks$ = combineLatest([this.minedBlocksAttacker$, this.minedBlocksBitcoin$])
+    .pipe(map(([attacker, bitcoin]) => attacker + bitcoin));
 
   get blocksToComplete(): number {
     return Number.parseInt(this.inputs.controls['blocksToComplete'].value);
@@ -100,12 +136,8 @@ export class XpaComponent implements AfterViewInit {
     return Number.parseInt(this.inputs.controls['preminedBlocks'].value);
   }
 
-  get progressBlockchain(): number {
-    return this.bitcoin.length / this.blocksToComplete * 100;
-  }
-
-  get progressAttackingBlockchain(): number {
-    return this.attacker.length / this.blocksToComplete * 100;
+  getProgress(minedBlock: number): number {
+    return minedBlock / this.blocksToComplete * 100;
   }
 
   get totalBlocks(): number[] {
@@ -116,26 +148,12 @@ export class XpaComponent implements AfterViewInit {
     return numbers;
   }
 
-  get bitcoinLead(): number {
-    return this.bitcoin.length - this.attacker.length;
+  getLead(minedBlocks: number, maxMinedBlocks: number): number {
+    return minedBlocks - maxMinedBlocks;
   }
 
-  get attackLead(): number {
-    return this.attacker.length - this.bitcoin.length;
-  }
-
-  isBitcoinLeading(current: number): boolean {
-    if (this.bitcoin.length > this.attacker.length) {
-      return current + 1 > this.attacker.length;
-    }
-    return false;
-  }
-
-  isAttackerLeading(current: number): boolean {
-    if (this.attacker.length > this.bitcoin.length) {
-      return current + 1 > this.bitcoin.length;
-    }
-    return false;
+  isLeading(lead: number) {
+    return lead > 0;
   }
 
   start() {
@@ -144,10 +162,13 @@ export class XpaComponent implements AfterViewInit {
       return;
     }
 
+    let minedBlocks = [this.minedBlocksBitcoin$.getValue(), this.minedBlocksAttacker$.getValue()];
+    let miningProgress = minedBlocks.map(this.getProgress);
     this.isExecuting = true;
-    if (this.clearOnStart || this.progressAttackingBlockchain >= 100 || this.progressBlockchain >= 100) {
+    if (this.clearOnStart || miningProgress.some(progress => progress >= 100)) {
       this.clear();
     }
+
     this.addBlockIfNecessary();
     this.simulationService.updateStartSimulation(true);
   }
@@ -157,38 +178,42 @@ export class XpaComponent implements AfterViewInit {
   }
 
   clear(): void {
-    this.bitcoin = [];
-    this.attacker = [];
-    for (let i = 0; i < this.preminedBlocks; i++) {
-      this.attacker.push(this.attacker.length);
-    }
+    this.minedBlocksBitcoin$.next(0);
+    this.minedBlocksAttacker$.next(this.preminedBlocks);
   }
 
   addBlockIfNecessary(): void {
-    if (this.bitcoinLead >= this.cancelAttack) {
-      this.isExecuting = false;
-      this.notificationService.display('Der Angriff wurde abgewehrt!');
-    }
-    if (this.attackLead >= this.confirmations) {
-      this.isExecuting = false;
-      this.notificationService.display('Der Angriff war erfolgreich!');
-    }
-    if (!this.isExecuting) {
-      return;
-    }
+    let interval = window.setInterval(() => {
+      let minedBlocksBitcoin = this.minedBlocksBitcoin$.getValue();
+      let minedBlocksAttacker = this.minedBlocksAttacker$.getValue();
+      let bitcoinLead = this.getLead(minedBlocksBitcoin, minedBlocksAttacker);
+      let attackerLead = this.getLead(minedBlocksAttacker, minedBlocksBitcoin);
 
-    setTimeout(() => {
+      if (bitcoinLead >= this.cancelAttack) {
+        this.isExecuting = false;
+        this.notificationService.display('Der Angriff wurde abgewehrt!');
+      }
+      if (attackerLead >= this.confirmations) {
+        this.isExecuting = false;
+        this.notificationService.display('Der Angriff war erfolgreich!');
+      }
+
+      if (!this.isExecuting) {
+        window.clearInterval(interval);
+        return;
+      }
+
       let random = Math.random() * 100;
       let attacking = this.attackingPower;
       console.log(`random: ${random}, attacking: ${attacking}`);
       if (random > attacking) {
-        this.bitcoin.push(this.bitcoin.length);
+        this.minedBlocksBitcoin$.next(minedBlocksBitcoin + 1);
       }
       random = Math.random() * 100;
       let defending = 100 - attacking;
       console.log(`random: ${random}, defending: ${defending}`);
       if (random > defending) {
-        this.attacker.push(this.attacker.length);
+        this.minedBlocksAttacker$.next(minedBlocksAttacker + 1);
       }
       this.addBlockIfNecessary();
     }, 400);
@@ -221,5 +246,20 @@ export class XpaComponent implements AfterViewInit {
       return ["Failed validating"];
     }
   }
+}
+
+export interface XpaParticipant {
+  title: string;
+  completedBlocks: number;
+  blocksInLead: number;
+  hashrate: string;
+  hashrateTitle: string;
+}
+
+export interface XpaParticipantView extends XpaParticipant {
+  blocks: string;
+  stripes: string;
+  leadingBlocks?: string;
+  leadingStripes?: string;
 }
 
