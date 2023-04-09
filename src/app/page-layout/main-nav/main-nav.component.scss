@@ -40,6 +40,11 @@ $width-which-allows-large-navigation: 1400px;
     height: 100%;
     top: 0;
     left: 0;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
   }
 }
 
