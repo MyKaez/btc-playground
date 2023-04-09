@@ -229,7 +229,6 @@ export class XpaComponent implements AfterViewInit {
       if (random > defending) {
         this.minedBlocksAttackerSubject.next(minedBlocksAttacker + 1);
       }
-      this.addBlockIfNecessary();
     }, 400);
   }
 
