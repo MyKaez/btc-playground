@@ -14,36 +14,36 @@
             </span>
         </div>
         <div class="console-data">
-            <p *ngIf="bitcoinHashRate$ | async as bitcoinHashRate">
-                &gt; Bitcoin Blockchain<br />
-                &gt; <span *ngFor="let i of totalBlocks"
-                    [ngClass]="isBitcoinLeading(i) ? 'confirm' : 'non-confirm'">--<span
-                        *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
-                &gt; <span *ngFor="let i of bitcoin" [ngClass]="isBitcoinLeading(i) ? 'confirm' : 'non-confirm'"><span
-                        *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
+            <div *ngFor="let participant of participants$ | async" class="xpa-participant">
+                <h3>{{participant.title}}</h3>
+                <div class="xpa-stripes">
+                    <span class="non-confirm">{{participant.stripes}}</span>
+                    <span class="confirm" *ngIf="participant.leadingStripes">{{participant.leadingStripes}}</span>
+                </div>
+                <div class="xpa-blocks">
+                    <span class="non-confirm">{{participant.blocks}}</span>
+                    <span class="confirm" *ngIf="participant.leadingStripes">{{participant.leadingBlocks}}</span>
+                </div>
+                <div class="xpa-details">
+                    <div class="xpa-count"><span>Anzahl</span><span>{{participant.minedBlocks}} / {{blocksToComplete}}</span></div>
+                    <div class="xpa-left"><span>Anzahl bis Sieg</span><span>{{participant.blocksInLead}} / {{participant.goal}}</span></div>
+                    <div class="xpa-hashrate">
+                        <span>{{participant.hashrateTitle}}</span>
+                        <span class="confirm">{{participant.hashrate}}</span>
+                        <span>{{participant.hashrateUnit}}</span>
+                    </div>
+                </div>
+            </div>
 
-                &gt; Anzahl: ({{bitcoin.length}}/{{blocksToComplete}})<br />
-                &gt; Anzahl bis Sieg: ({{bitcoinLead}}/{{cancelAttack}})<br />
-                &gt; Aktuelle Bitcoin HashRate: {{bitcoinHashRate}}<br />
-            </p>
-            <p>&gt; ...</p>
-            <p>&gt; ...</p>
-            <p *ngIf="attackerHashRate$ | async as attackerHashRate">
-                &gt; Angreifende Blockchain<br />
-                &gt; <span *ngFor="let i of totalBlocks"
-                    [ngClass]="isAttackerLeading(i)? 'confirm' : 'non-confirm'">--<span
-                        *ngIf="i != totalBlocks[totalBlocks.length-1]">-</span></span><br />
-                &gt; <span *ngFor="let i of attacker" [ngClass]="isAttackerLeading(i)? 'confirm' : 'non-confirm'"><span
-                        *ngIf="i > 0">&horbar;</span>&#9608;&#9608;</span><br />
-                &gt; Anzahl: ({{attacker.length}}/{{blocksToComplete}})<br />
-                &gt; Anzahl bis Sieg: ({{attackLead}}/{{confirmations}})<br />
-                &gt; Attackierende HashRate: {{attackerHashRate}}<br />
-            </p>
-            <p>&gt; ...</p>
-            <p>&gt; ...</p>
-            <p *ngIf="totalHashRate$ | async as hashRate">
-                &gt; Gesamt HashRate: {{hashRate}}
-            </p>
+            <div *ngIf="totalHashRate$ | async as hashRate" class="xpa-participant">
+                <div class="xpa-details">
+                    <div class="xpa-hashrate">
+                        <span>Gesamt HashRate</span>
+                        <span class="confirm">{{hashRate}}</span>
+                        <span>exahashes</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </ng-template>
@@ -122,8 +122,8 @@
         <button mat-button (click)="start()" [disabled]="isExecuting || preminedBlocks >= confirmations">Start</button>
         <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
         <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
-        <span *ngIf="totalAmountBlocks > 0">
-            Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br />
+        <span *ngIf="totalAmountBlocks$ | async as totalAmountBlocks">
+            <span *ngIf="totalAmountBlocks > 0">Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br /></span>            
         </span>
         <div *ngIf="isExecuting">
             <mat-progress-bar [mode]="'indeterminate'">

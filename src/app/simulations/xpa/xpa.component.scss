@@ -8,3 +8,46 @@
 .non-confirm {
     color: $accent-300;
 }
+
+.confirm {
+    color: $accent;
+}
+
+.xpa-participant {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    color: $accent-300;;
+    
+    h3 {
+        margin-bottom: 4px;
+    }
+}
+
+.xpa-details {
+    display: table;
+
+    > * {
+        display: table-row;
+    } 
+    
+    > * > span {
+        display: table-cell;
+
+        &:first-child {
+            width: 1%;
+            white-space: nowrap;
+            font-weight: bold;
+
+            &:before {
+                content: ">";
+                margin: 0 16px 0 4px;
+            } 
+        } 
+    } 
+    
+    > * > span:last-child:before {
+        content: ":";
+        margin: 0 16px 0 4px;
+    } 
+}
