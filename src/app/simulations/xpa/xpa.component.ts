@@ -18,9 +18,10 @@ export class XpaComponent implements AfterViewInit {
   static readonly maxDisplayCount = 1000;
 
   isExecuting: boolean = false;
+  blockToCompleteControl = new FormControl(0, [Validators.min(1), Validators.max(20), Validators.required]);
   attackingPowerControl = new FormControl(0, [Validators.min(1), Validators.max(99), Validators.required]);
   inputs: FormGroup = new FormGroup({
-    blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20), Validators.required]),
+    blocksToComplete: this.blockToCompleteControl,
     attackingPower: this.attackingPowerControl,
     preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5), Validators.required]),
     confirmations: new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required]),
@@ -48,39 +49,36 @@ export class XpaComponent implements AfterViewInit {
 
   isHandset$: Observable<boolean>;
   currentHashRate$ = this.btcService.getCurrentHashRate().pipe(shareReplay(1));
-  bitcoinHashRate$ = this.currentHashRate$.pipe(map(rate => this.getSize(rate)));
   attackingPower$ = combineLatest([this.currentHashRate$, this.attackingPowerControl.valueChanges]).pipe(
     map(([cur, att]) => cur / this.defendingPower * (att ?? 0))
   );
-  attackerHashRate$ = this.attackingPower$.pipe(map(att => this.getSize(att)));
   totalHashRate$ = combineLatest([this.currentHashRate$, this.attackingPower$]).pipe(
-    map(([cur, att]) => this.getSize(cur + att))
+    map(([cur, att]) => this.expandHashrateUnit(cur + att))
   );
 
-  bitcoinParticipant$ = combineLatest([this.minedBlocksBitcoin$, this.bitcoinHashRate$, this.minedBlocksAttacker$]).pipe(
-    map(([mined, hashrate, minedByAttacker]) => this.createParticipant("Bitcoin Blockchain", mined, hashrate, "Aktuelle Bitcoin HashRate", minedByAttacker, this.confirmations)), 
+  bitcoinParticipant$ = combineLatest([this.blockToCompleteControl.valueChanges, this.minedBlocksBitcoin$, this.currentHashRate$, this.minedBlocksAttacker$]).pipe(
+    map(([blocksToComplete, mined, hashrate, minedByAttacker]) => this.createParticipant("Bitcoin Blockchain", mined, hashrate, "Aktuelle Bitcoin HashRate", minedByAttacker, this.confirmations)), 
     tap(p => console.log("blockhain p", p)));
 
-  attackerParticipant$ = combineLatest([this.minedBlocksAttacker$, this.attackerHashRate$, this.minedBlocksBitcoin$]).pipe(
-    map(([mined, hashrate, minedByBitcoin]) => this.createParticipant("Angreifer Blockchain", mined, hashrate, "Aktuelle Angreifer HashRate", minedByBitcoin, this.cancelAttack)));
+  attackerParticipant$ = combineLatest([this.blockToCompleteControl.valueChanges, this.minedBlocksAttacker$, this.attackingPower$, this.minedBlocksBitcoin$]).pipe(
+    map(([blocksToComplete, mined, hashrate, minedByBitcoin]) => this.createParticipant("Angreifer Blockchain", mined, hashrate, "Aktuelle Angreifer HashRate", minedByBitcoin, this.cancelAttack)));
 
   participants$ = combineLatest([this.bitcoinParticipant$, this.attackerParticipant$])
-    .pipe(map(([bitcoinParticipant, attackerParticipant]) => [bitcoinParticipant, attackerParticipant].map(p => this.createParticipantView(p))), 
-    tap(p => console.log("got participant", p)));  
+    .pipe(map(([bitcoinParticipant, attackerParticipant]) => [bitcoinParticipant, attackerParticipant].map(p => this.createParticipantView(p))));  
 
   ngAfterViewInit(): void {
     this.attackingPowerControl.setValue(51);
+    this.blockToCompleteControl.setValue(15);
   }
 
-  private createParticipant(title: string, mined: number, hashrate: string, hashrateTitle: string, maxMinedByOther: number, goal: number): XpaParticipant {
+  private createParticipant(title: string, mined: number, hashrate: number, hashrateTitle: string, maxMinedByOther: number, goal: number): XpaParticipant {
     return {
       title: title,
       minedBlocks: mined,
-      hashrate: hashrate,
+      hashrate: this.expandHashrateUnit(hashrate),
       hashrateTitle: hashrateTitle,
       blocksInLead: this.getLead(mined, maxMinedByOther),
-      goal: goal,
-      hashrateUnit: "exahashes"
+      goal: goal
     };
   }
 
@@ -111,9 +109,12 @@ export class XpaComponent implements AfterViewInit {
     return text.substring(0, text.length - 1);
   }
 
-  getSize(hashRate: number | null): string {
+  expandHashrateUnit(hashRate: number | null): NormalizedHashrate {
     const size = calculateUnit(hashRate ?? 0, UnitOfHash.hashes);
-    return `${size.value.toFixed(2)} ${size.unit.text}`;
+    return {
+      value: size.value.toFixed(2),
+      unit: size.unit.text
+    };
   }
 
   ngOnDestroy(): void {
@@ -266,9 +267,8 @@ export interface XpaParticipant {
   minedBlocks: number;
   blocksInLead: number;
   goal: number;
-  hashrate: string;
+  hashrate: NormalizedHashrate;
   hashrateTitle: string;
-  hashrateUnit: string;
 }
 
 export interface XpaParticipantView extends XpaParticipant {
@@ -276,5 +276,10 @@ export interface XpaParticipantView extends XpaParticipant {
   stripes: string;
   leadingBlocks?: string;
   leadingStripes?: string;
+}
+
+export interface NormalizedHashrate {
+  value: string;
+  unit: string;
 }
 
