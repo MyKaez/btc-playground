@@ -84,11 +84,14 @@ export class XpaComponent implements AfterViewInit {
 
   private createParticipantView(participant: XpaParticipant): XpaParticipantView {
     let leadingAbsolute = Math.max(participant.blocksInLead, 0); 
+    let minedBlocks = participant.minedBlocks;
+    if(leadingAbsolute > 0) minedBlocks -= leadingAbsolute;
+
     return {
       ... participant,
-      blocks: this.getBlocks(participant.minedBlocks),
+      blocks: this.getBlocks(minedBlocks),
       stripes: this.getStripes(this.blocksToComplete - leadingAbsolute), // maybe rather take totalBlocks?
-      leadingBlocks: this.getBlocks(participant.blocksInLead, true),
+      leadingBlocks: this.getBlocks(participant.blocksInLead, minedBlocks > 0),
       leadingStripes: this.getStripes(leadingAbsolute)
     };
   }
