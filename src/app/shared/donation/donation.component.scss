@@ -26,7 +26,8 @@ img {
 
 .lightning,
 .on-chain {
-  margin: $margin-huge;
+  margin: $margin-large;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;

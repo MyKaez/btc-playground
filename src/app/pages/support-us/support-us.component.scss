@@ -33,6 +33,8 @@ img {
       > img {        
         border: 2px solid $primary-300;
         border-radius: 0 2em 0 2em;
+        width: 85vw;
+        max-width: 420px
       }
     }
 
@@ -50,6 +52,11 @@ img {
         }
       }
     }
+  }
+
+  ::ng-deep .lightning,
+  ::ng-deep .on-chain {
+    margin: $margin-huge 0;
   }
 }
 
