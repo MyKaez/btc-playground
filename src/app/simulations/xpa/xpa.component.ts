@@ -5,7 +5,9 @@ import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
 import { NotificationService } from 'src/app/shared/media/notification.service';
+import { NormalizedHashrate } from 'src/model/bitcoin';
 import { StringHelper } from 'src/model/text';
+import { XpaParticipant, XpaParticipantView } from '..';
 import { SimulationService } from '../simulation.service';
 
 @Component({
@@ -261,27 +263,3 @@ export class XpaComponent implements AfterViewInit {
     }
   }
 }
-
-export interface XpaParticipant {
-  title: string;
-  minedBlocks: number;
-  blocksInLead: number;
-  hashrate: NormalizedHashrate;
-  hashrateTitle: string;
-  confirmations: number;
-}
-
-export interface XpaParticipantView extends XpaParticipant {
-  blocks: string;
-  stripes: string;
-  absoluteLead: number;
-  confirmationBoxes?: string;
-  leadingBlocks?: string;
-  leadingStripes?: string;
-}
-
-export interface NormalizedHashrate {
-  value: string;
-  unit: string;
-}
-
