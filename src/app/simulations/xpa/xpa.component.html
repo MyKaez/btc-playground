@@ -58,35 +58,35 @@
             <form [formGroup]="inputs">
                 <mat-form-field appearance="fill">
                     <mat-label>Maximale Angriffsdauer <i>[in Blöcken]</i></mat-label>
-                    <input matInput type="number" formControlName="blocksToComplete" />
+                    <input matInput type="number" formControlName="blocksToComplete" [readonly]="isExecuting"/>
                     <label class="validation-error" *ngIf="!isExecuting && !inputs.controls['blocksToComplete'].valid">
                         <span>{{getErrors('blocksToComplete')}}</span>
                     </label>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Angriffspower <i>[in Prozent]</i></mat-label>
-                    <input matInput type="number" formControlName="attackingPower" />
+                    <input matInput type="number" formControlName="attackingPower" [readonly]="isExecuting"/>
                     <label class="validation-error" *ngIf="!isExecuting && !inputs.controls['attackingPower'].valid">
                         <span>{{getErrors('attackingPower')}}</span>
                     </label>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Vorsprung Angriff <i>[in Blöcken]</i></mat-label>
-                    <input matInput type="number" formControlName="preminedBlocks" />
+                    <input matInput type="number" formControlName="preminedBlocks" [readonly]="isExecuting"/>
                     <label class="validation-error" *ngIf="!isExecuting && !inputs.controls['preminedBlocks'].valid">
                         <span>{{getErrors('preminedBlocks')}}</span>
                     </label>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Abbruch Angriff <i>[nach x Blöcken]</i></mat-label>
-                    <input matInput type="number" formControlName="cancelAttack" />
+                    <input matInput type="number" formControlName="cancelAttack" [readonly]="isExecuting"/>
                     <label class="validation-error" *ngIf="!isExecuting && !inputs.controls['cancelAttack'].valid">
                         <span>{{getErrors('cancelAttack')}}</span>
                     </label>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Anzahl Bestätigungen <i>[in Blöcken]</i></mat-label>
-                    <input matInput type="number" formControlName="confirmations" />
+                    <input matInput type="number" formControlName="confirmations" [readonly]="isExecuting"/>
                     <label class="validation-error" *ngIf="!isExecuting && !inputs.controls['confirmations'].valid">
                         <span>{{getErrors('confirmations')}}</span>
                     </label>

@@ -18,10 +18,9 @@ export class XpaComponent implements AfterViewInit {
   static readonly maxDisplayCount = 1000;
 
   isExecuting: boolean = false;
-  blockToCompleteControl = new FormControl(0, [Validators.min(1), Validators.max(20), Validators.required]);
-  attackingPowerControl = new FormControl(0, [Validators.min(1), Validators.max(99), Validators.required]);
+  attackingPowerControl = new FormControl({value: 0, disabled: this.isExecuting}, [Validators.min(1), Validators.max(99), Validators.required]);
   inputs: FormGroup = new FormGroup({
-    blocksToComplete: this.blockToCompleteControl,
+    blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20), Validators.required]),
     attackingPower: this.attackingPowerControl,
     preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5), Validators.required]),
     confirmations: new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required]),
@@ -56,19 +55,19 @@ export class XpaComponent implements AfterViewInit {
     map(([cur, att]) => this.expandHashrateUnit(cur + att))
   );
 
-  bitcoinParticipant$ = combineLatest([this.blockToCompleteControl.valueChanges, this.minedBlocksBitcoin$, this.currentHashRate$, this.minedBlocksAttacker$]).pipe(
-    map(([blocksToComplete, mined, hashrate, minedByAttacker]) => this.createParticipant("Bitcoin Blockchain", mined, hashrate, "Aktuelle Bitcoin HashRate", minedByAttacker, this.confirmations)), 
-    tap(p => console.log("blockhain p", p)));
+  //anyInputChanged$ = combineLatest()
 
-  attackerParticipant$ = combineLatest([this.blockToCompleteControl.valueChanges, this.minedBlocksAttacker$, this.attackingPower$, this.minedBlocksBitcoin$]).pipe(
-    map(([blocksToComplete, mined, hashrate, minedByBitcoin]) => this.createParticipant("Angreifer Blockchain", mined, hashrate, "Aktuelle Angreifer HashRate", minedByBitcoin, this.cancelAttack)));
+  bitcoinParticipant$ = combineLatest([this.inputs.valueChanges, this.minedBlocksBitcoin$, this.currentHashRate$, this.minedBlocksAttacker$]).pipe(
+    map(([anyInputValue, mined, hashrate, minedByAttacker]) => this.createParticipant("Bitcoin Blockchain", mined, hashrate, "Aktuelle Bitcoin HashRate", minedByAttacker, this.confirmations)));
+
+  attackerParticipant$ = combineLatest([this.inputs.valueChanges, this.minedBlocksAttacker$, this.attackingPower$, this.minedBlocksBitcoin$]).pipe(
+    map(([anyInputValue, mined, hashrate, minedByBitcoin]) => this.createParticipant("Angreifer Blockchain", mined, hashrate, "Aktuelle Angreifer HashRate", minedByBitcoin, this.cancelAttack)));
 
   participants$ = combineLatest([this.bitcoinParticipant$, this.attackerParticipant$])
     .pipe(map(([bitcoinParticipant, attackerParticipant]) => [bitcoinParticipant, attackerParticipant].map(p => this.createParticipantView(p))));  
 
   ngAfterViewInit(): void {
     this.attackingPowerControl.setValue(51);
-    this.blockToCompleteControl.setValue(15);
   }
 
   private createParticipant(title: string, mined: number, hashrate: number, hashrateTitle: string, maxMinedByOther: number, goal: number): XpaParticipant {
