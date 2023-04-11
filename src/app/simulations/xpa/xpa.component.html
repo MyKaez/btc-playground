@@ -56,7 +56,7 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="parameters">
-            <form [formGroup]="inputs">
+            <form [formGroup]="inputs" [ngClass]="{disabled: isExecuting}">
                 <mat-form-field appearance="fill">
                     <mat-label>Maximale Angriffsdauer <i>[in Blöcken]</i></mat-label>
                     <input matInput type="number" formControlName="blocksToComplete" [readonly]="isExecuting"/>

@@ -227,4 +227,11 @@
         border-radius: 2em;
         line-height: inherit;
     }
+
+    form.disabled {
+        .mat-form-field {
+            opacity: 0.5;
+            pointer-events: none
+        }
+    }
 }
