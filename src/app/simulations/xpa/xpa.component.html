@@ -23,6 +23,7 @@
                 <div class="xpa-blocks">
                     <span class="non-confirm">{{participant.blocks}}</span>
                     <span class="confirm" *ngIf="participant.leadingStripes">{{participant.leadingBlocks}}</span>
+                    <span class="confirm" *ngIf="participant.confirmationBoxes">{{participant.confirmationBoxes}}</span>
                 </div>
                 <div class="xpa-details">
                     <div class="xpa-count"><span>Angriffsdauer</span><span class="confirm">{{participant.minedBlocks}} / {{blocksToComplete}}</span></div>

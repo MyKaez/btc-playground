@@ -5,6 +5,7 @@ import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
 import { NotificationService } from 'src/app/shared/media/notification.service';
+import { StringHelper } from 'src/model/text';
 import { SimulationService } from '../simulation.service';
 
 @Component({
@@ -23,8 +24,8 @@ export class XpaComponent implements AfterViewInit {
     blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20), Validators.required]),
     attackingPower: this.attackingPowerControl,
     preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5), Validators.required]),
-    confirmations: new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required]),
-    cancelAttack: new FormControl(1, [Validators.min(0), Validators.max(10), Validators.required])
+    confirmations: new FormControl(5, [Validators.min(0), Validators.max(10), Validators.required]),
+    cancelAttack: new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required])
   });
 
   minedBlocksBitcoinSubject = new BehaviorSubject(0);
@@ -58,10 +59,12 @@ export class XpaComponent implements AfterViewInit {
   //anyInputChanged$ = combineLatest()
 
   bitcoinParticipant$ = combineLatest([this.inputs.valueChanges, this.minedBlocksBitcoin$, this.currentHashRate$, this.minedBlocksAttacker$]).pipe(
-    map(([anyInputValue, mined, hashrate, minedByAttacker]) => this.createParticipant("Bitcoin Blockchain", mined, hashrate, "Aktuelle Bitcoin HashRate", minedByAttacker, this.confirmations)));
+    map(([anyInputValue, mined, hashrate, minedByAttacker]) => this.createParticipant("Bitcoin Blockchain", mined, hashrate, "Aktuelle Bitcoin HashRate", 
+    minedByAttacker)));
 
   attackerParticipant$ = combineLatest([this.inputs.valueChanges, this.minedBlocksAttacker$, this.attackingPower$, this.minedBlocksBitcoin$]).pipe(
-    map(([anyInputValue, mined, hashrate, minedByBitcoin]) => this.createParticipant("Angreifer Blockchain", mined, hashrate, "Aktuelle Angreifer HashRate", minedByBitcoin, this.cancelAttack)));
+    map(([anyInputValue, mined, hashrate, minedByBitcoin]) => this.createParticipant("Angreifer Blockchain", mined, hashrate, "Aktuelle Angreifer HashRate", 
+    minedByBitcoin, this.confirmations)));
 
   participants$ = combineLatest([this.bitcoinParticipant$, this.attackerParticipant$])
     .pipe(map(([bitcoinParticipant, attackerParticipant]) => [bitcoinParticipant, attackerParticipant].map(p => this.createParticipantView(p))));  
@@ -70,14 +73,15 @@ export class XpaComponent implements AfterViewInit {
     this.attackingPowerControl.setValue(51);
   }
 
-  private createParticipant(title: string, mined: number, hashrate: number, hashrateTitle: string, maxMinedByOther: number, goal: number): XpaParticipant {
+  private createParticipant(title: string, mined: number, hashrate: number, hashrateTitle: string, 
+    maxMinedByOther: number, confirmations = 0): XpaParticipant {
     return {
       title: title,
       minedBlocks: mined,
       hashrate: this.expandHashrateUnit(hashrate),
       hashrateTitle: hashrateTitle,
       blocksInLead: this.getLead(mined, maxMinedByOther),
-      goal: goal
+      confirmations: confirmations
     };
   }
 
@@ -85,32 +89,25 @@ export class XpaComponent implements AfterViewInit {
     let absoluteLead = Math.max(participant.blocksInLead, 0); 
     let minedBlocks = participant.minedBlocks;
     if(absoluteLead > 0) minedBlocks -= absoluteLead;
+    let leftConfirmations = participant.confirmations - participant.minedBlocks;
 
     return {
       ... participant,
       blocks: this.getBlocks(minedBlocks),
-      stripes: this.getStripes(this.blocksToComplete - absoluteLead), // maybe rather take totalBlocks?
+      stripes: this.getStripes(this.blocksToComplete - absoluteLead),
+      confirmationBoxes: this.getBoxes(leftConfirmations, participant.minedBlocks > 0),
       absoluteLead: absoluteLead,
       leadingBlocks: this.getBlocks(participant.blocksInLead, minedBlocks > 0),
       leadingStripes: this.getStripes(absoluteLead)
     };
   }
 
-  private getStripes(count: number): string {
-    if(count <= 0) return "";
-    count = Math.min(XpaComponent.maxDisplayCount, count);
+  private getStripes = (count: number) => StringHelper.renderCharacter("--", count, XpaComponent.maxDisplayCount);
 
-    return "--".repeat(count);
-  }
+  private getBlocks = (count: number, withStripedPrefix = false) => StringHelper.renderCharacter("██-", count, XpaComponent.maxDisplayCount, true, withStripedPrefix ? "-" : "");
 
-  private getBlocks(count: number, withStripedPrefix = false): string {
-    if(count <= 0) return "";
-    count = Math.min(XpaComponent.maxDisplayCount, count);
+  private getBoxes = (count: number, withStripedPrefix = false) => StringHelper.renderCharacter("▭-", count, XpaComponent.maxDisplayCount, true, withStripedPrefix ? "-" : "");
 
-    let text = "██-".repeat(count);
-    if(withStripedPrefix) text = "-" + text;
-    return text.substring(0, text.length - 1);
-  }
 
   expandHashrateUnit(hashRate: number | null): NormalizedHashrate {
     const size = calculateUnit(hashRate ?? 0, UnitOfHash.hashes);
@@ -210,7 +207,7 @@ export class XpaComponent implements AfterViewInit {
         this.isExecuting = false;
         this.notificationService.display('Der Angriff wurde abgewehrt!');
       }
-      if (attackerLead >= this.confirmations) {
+      if (attackerLead >= 1 && minedBlocksAttacker >= this.confirmations) {
         this.isExecuting = false;
         this.notificationService.display('Der Angriff war erfolgreich!');
       }
@@ -223,14 +220,15 @@ export class XpaComponent implements AfterViewInit {
       let random = Math.random() * 100;
       let attacking = this.attackingPower;
       //console.log(`random: ${random}, attacking: ${attacking}`);
-      if (random > attacking) {
-        this.minedBlocksBitcoinSubject.next(minedBlocksBitcoin + 1);
+      if (random < attacking) {
+        this.minedBlocksAttackerSubject.next(minedBlocksAttacker + 1);
       }
+
       random = Math.random() * 100;
       let defending = 100 - attacking;
       //console.log(`random: ${random}, defending: ${defending}`);
-      if (random > defending) {
-        this.minedBlocksAttackerSubject.next(minedBlocksAttacker + 1);
+      if (random < defending) {
+        this.minedBlocksBitcoinSubject.next(minedBlocksBitcoin + 1);
       }
     }, 400);
   }
@@ -268,15 +266,16 @@ export interface XpaParticipant {
   title: string;
   minedBlocks: number;
   blocksInLead: number;
-  goal: number;
   hashrate: NormalizedHashrate;
   hashrateTitle: string;
+  confirmations: number;
 }
 
 export interface XpaParticipantView extends XpaParticipant {
   blocks: string;
   stripes: string;
   absoluteLead: number;
+  confirmationBoxes?: string;
   leadingBlocks?: string;
   leadingStripes?: string;
 }
