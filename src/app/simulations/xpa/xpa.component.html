@@ -25,10 +25,10 @@
                     <span class="confirm" *ngIf="participant.leadingStripes">{{participant.leadingBlocks}}</span>
                 </div>
                 <div class="xpa-details">
-                    <div class="xpa-count"><span>Anzahl</span><span class="confirm">{{participant.minedBlocks}} / {{blocksToComplete}}</span></div>
-                    <div class="xpa-left"><span>Anzahl bis Sieg</span><span class="confirm">{{participant.blocksInLead}} / {{participant.goal}}</span></div>
+                    <div class="xpa-count"><span>Angriffsdauer</span><span class="confirm">{{participant.minedBlocks}} / {{blocksToComplete}}</span></div>
+                    <div class="xpa-left"><span>Vorsprung</span><span class="confirm">{{participant.absoluteLead}}</span></div>
                     <div class="xpa-hashrate">
-                        <span>{{participant.hashrateTitle}}</span>
+                        <span>HashRate</span>
                         <span class="confirm">{{participant.hashrate.value}} <span class="non-confirm">{{participant.hashrate.unit}}</span></span>
                         
                     </div>
