@@ -5,6 +5,7 @@ import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
 import { NotificationService } from 'src/app/shared/media/notification.service';
+import { Helper } from 'src/model';
 import { NormalizedHashrate } from 'src/model/bitcoin';
 import { StringHelper } from 'src/model/text';
 import { XpaParticipant, XpaParticipantView } from '..';
@@ -199,7 +200,7 @@ export class XpaComponent implements AfterViewInit {
   }
 
   addBlockIfNecessary(): void {
-    let interval = window.setInterval(() => {
+    Helper.repeat(400, () => !this.isExecuting, () => {
       let minedBlocksBitcoin = this.minedBlocksBitcoinSubject.getValue();
       let minedBlocksAttacker = this.minedBlocksAttackerSubject.getValue();
       let bitcoinLead = this.getLead(minedBlocksBitcoin, minedBlocksAttacker);
@@ -212,11 +213,6 @@ export class XpaComponent implements AfterViewInit {
       if (attackerLead >= 1 && minedBlocksAttacker >= this.confirmations) {
         this.isExecuting = false;
         this.notificationService.display('Der Angriff war erfolgreich!');
-      }
-
-      if (!this.isExecuting) {
-        window.clearInterval(interval);
-        return;
       }
 
       let random = Math.random() * 100;
@@ -232,7 +228,7 @@ export class XpaComponent implements AfterViewInit {
       if (random < defending) {
         this.minedBlocksBitcoinSubject.next(minedBlocksBitcoin + 1);
       }
-    }, 400);
+    });
   }
 
   /** @todo move this to a service */
