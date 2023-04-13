@@ -206,14 +206,9 @@ export class XpaComponent implements AfterViewInit {
       let bitcoinLead = this.getLead(minedBlocksBitcoin, minedBlocksAttacker);
       let attackerLead = this.getLead(minedBlocksAttacker, minedBlocksBitcoin);
 
-      if (bitcoinLead >= this.cancelAttack) {
-        this.isExecuting = false;
-        this.notificationService.display('Der Angriff wurde abgewehrt!');
-      }
-      if (attackerLead >= 1 && minedBlocksAttacker >= this.confirmations) {
-        this.isExecuting = false;
-        this.notificationService.display('Der Angriff war erfolgreich!');
-      }
+      if (bitcoinLead >= this.cancelAttack) this.endExecution('Der Angriff wurde abgewehrt!');
+      else if (attackerLead >= 1 && minedBlocksAttacker >= this.confirmations) this.endExecution('Der Angriff war erfolgreich!');
+      else if (minedBlocksBitcoin >= this.blocksToComplete) this.endExecution('Der Angriff wurde abgebrochen!');
 
       let random = Math.random() * 100;
       let attacking = this.attackingPower;
@@ -229,6 +224,11 @@ export class XpaComponent implements AfterViewInit {
         this.minedBlocksBitcoinSubject.next(minedBlocksBitcoin + 1);
       }
     });
+  }
+
+  private endExecution(notificationText?: string, hasAttackSucceeded?: boolean) {
+    this.isExecuting = false;
+    if (notificationText) this.notificationService.display(notificationText);
   }
 
   /** @todo move this to a service */
