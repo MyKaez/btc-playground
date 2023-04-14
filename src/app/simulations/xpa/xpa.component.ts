@@ -10,6 +10,7 @@ import { NormalizedHashrate } from 'src/model/bitcoin';
 import { StringHelper } from 'src/model/text';
 import { XpaParticipant, XpaParticipantView } from '..';
 import { SimulationService } from '../simulation.service';
+import { Scenario } from './xpa-scenario';
 
 @Component({
   selector: 'app-xpa',
@@ -22,13 +23,17 @@ export class XpaComponent implements AfterViewInit {
   static readonly maxDisplayCount = 1000;
 
   isExecuting: boolean = false;
-  attackingPowerControl = new FormControl({value: 0, disabled: this.isExecuting}, [Validators.min(1), Validators.max(99), Validators.required]);
+  attackingPowerControl = new FormControl({ value: 0, disabled: this.isExecuting }, [Validators.min(1), Validators.max(99), Validators.required]);
+  blocksToCompleteControl = new FormControl(15, [Validators.min(1), Validators.max(20), Validators.required]);
+  preminedBlocksControl = new FormControl(0, [Validators.min(0), Validators.max(5), Validators.required]);
+  confirmationsControl = new FormControl(5, [Validators.min(0), Validators.max(10), Validators.required]);
+  cancelAttackControl = new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required]);
   inputs: FormGroup = new FormGroup({
-    blocksToComplete: new FormControl(15, [Validators.min(1), Validators.max(20), Validators.required]),
+    blocksToComplete: this.blocksToCompleteControl,
     attackingPower: this.attackingPowerControl,
-    preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5), Validators.required]),
-    confirmations: new FormControl(5, [Validators.min(0), Validators.max(10), Validators.required]),
-    cancelAttack: new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required])
+    preminedBlocks: this.preminedBlocksControl,
+    confirmations: this.confirmationsControl,
+    cancelAttack: this.cancelAttackControl
   });
 
   minedBlocksBitcoinSubject = new BehaviorSubject(0);
@@ -42,12 +47,20 @@ export class XpaComponent implements AfterViewInit {
     private simulationService: SimulationService, private btcService: BtcService) {
     this.inputs.controls['preminedBlocks'].valueChanges.subscribe(value => {
       let preminedBlocksCount = Number.parseInt(value);
-      if(!isNaN(preminedBlocksCount)) {
+      if (!isNaN(preminedBlocksCount)) {
         //this.minedBlocksBitcoin$.next(preminedBlocksCount);
         this.minedBlocksAttackerSubject.next(preminedBlocksCount);
       }
     });
     this.isHandset$ = layout.isHandset$;
+  }
+
+  set scenario(value: Scenario) {
+    this.attackingPowerControl.setValue(value.attackingPower);
+    this.blocksToCompleteControl.setValue(value.blocksToComplete);
+    this.cancelAttackControl.setValue(value.cancelAttack);
+    this.confirmationsControl.setValue(value.confirmations);
+    this.preminedBlocksControl.setValue(value.preminedBlocks);
   }
 
   isHandset$: Observable<boolean>;
@@ -62,21 +75,21 @@ export class XpaComponent implements AfterViewInit {
   //anyInputChanged$ = combineLatest()
 
   bitcoinParticipant$ = combineLatest([this.inputs.valueChanges, this.minedBlocksBitcoin$, this.currentHashRate$, this.minedBlocksAttacker$]).pipe(
-    map(([anyInputValue, mined, hashrate, minedByAttacker]) => this.createParticipant("Bitcoin Blockchain", mined, hashrate, "Aktuelle Bitcoin HashRate", 
-    minedByAttacker)));
+    map(([anyInputValue, mined, hashrate, minedByAttacker]) => this.createParticipant("Bitcoin Blockchain", mined, hashrate, "Aktuelle Bitcoin HashRate",
+      minedByAttacker)));
 
   attackerParticipant$ = combineLatest([this.inputs.valueChanges, this.minedBlocksAttacker$, this.attackingPower$, this.minedBlocksBitcoin$]).pipe(
-    map(([anyInputValue, mined, hashrate, minedByBitcoin]) => this.createParticipant("Angreifer Blockchain", mined, hashrate, "Aktuelle Angreifer HashRate", 
-    minedByBitcoin, this.confirmations)));
+    map(([anyInputValue, mined, hashrate, minedByBitcoin]) => this.createParticipant("Angreifer Blockchain", mined, hashrate, "Aktuelle Angreifer HashRate",
+      minedByBitcoin, this.confirmations)));
 
   participants$ = combineLatest([this.bitcoinParticipant$, this.attackerParticipant$])
-    .pipe(map(([bitcoinParticipant, attackerParticipant]) => [bitcoinParticipant, attackerParticipant].map(p => this.createParticipantView(p))));  
+    .pipe(map(([bitcoinParticipant, attackerParticipant]) => [bitcoinParticipant, attackerParticipant].map(p => this.createParticipantView(p))));
 
   ngAfterViewInit(): void {
     this.attackingPowerControl.setValue(51);
   }
 
-  private createParticipant(title: string, mined: number, hashrate: number, hashrateTitle: string, 
+  private createParticipant(title: string, mined: number, hashrate: number, hashrateTitle: string,
     maxMinedByOther: number, confirmations = 0): XpaParticipant {
     return {
       title: title,
@@ -89,13 +102,13 @@ export class XpaComponent implements AfterViewInit {
   }
 
   private createParticipantView(participant: XpaParticipant): XpaParticipantView {
-    let absoluteLead = Math.max(participant.blocksInLead, 0); 
+    let absoluteLead = Math.max(participant.blocksInLead, 0);
     let minedBlocks = participant.minedBlocks;
-    if(absoluteLead > 0) minedBlocks -= absoluteLead;
+    if (absoluteLead > 0) minedBlocks -= absoluteLead;
     let leftConfirmations = participant.confirmations - participant.minedBlocks;
 
     return {
-      ... participant,
+      ...participant,
       blocks: this.getBlocks(minedBlocks),
       stripes: this.getStripes(this.blocksToComplete - absoluteLead),
       confirmationBoxes: this.getBoxes(leftConfirmations, participant.minedBlocks > 0),
@@ -174,7 +187,7 @@ export class XpaComponent implements AfterViewInit {
   }
 
   start() {
-    if(this.getFormErrors().length) {
+    if (this.getFormErrors().length) {
       this.notificationService.display("Leider gibt es Fehler in den Einstellungen. Bitte prüfe deine Angaben.");
       return;
     }
@@ -243,7 +256,7 @@ export class XpaComponent implements AfterViewInit {
     if (!this.inputs.controls[control].errors) return undefined;
     return Object.keys(this.inputs.controls[control].errors!)
       .map(key => this.errorMapping[key] || key)
-      .join(" ");    
+      .join(" ");
   }
 
   getFormErrors(): string[] {
@@ -253,7 +266,7 @@ export class XpaComponent implements AfterViewInit {
       var filtered = errors.filter((error): error is string => !!error);
       return filtered;
     }
-    catch(error) {
+    catch (error) {
       console.error("Failed validating errors", error);
       return ["Failed validating"];
     }
