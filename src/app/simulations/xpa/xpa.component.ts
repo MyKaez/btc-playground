@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { BehaviorSubject, combineLatest, map, min, Observable, shareReplay, Subject, tap } from 'rxjs';
+import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject, combineLatest, map, Observable, shareReplay } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
@@ -25,13 +25,13 @@ export class XpaComponent implements AfterViewInit {
   isExecuting: boolean = false;
   attackingPowerControl = new FormControl({ value: 0, disabled: this.isExecuting }, [Validators.min(1), Validators.max(99), Validators.required]);
   blocksToCompleteControl = new FormControl(15, [Validators.min(1), Validators.max(20), Validators.required]);
-  preminedBlocksControl = new FormControl(0, [Validators.min(0), Validators.max(5), Validators.required]);
+
   confirmationsControl = new FormControl(5, [Validators.min(0), Validators.max(10)]);
   cancelAttackControl = new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required]);
   inputs: FormGroup = new FormGroup({
     blocksToComplete: this.blocksToCompleteControl,
     attackingPower: this.attackingPowerControl,
-    preminedBlocks: this.preminedBlocksControl,
+    preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5), Validators.required]),
     confirmations: this.confirmationsControl,
     cancelAttack: this.cancelAttackControl
   });
@@ -60,7 +60,11 @@ export class XpaComponent implements AfterViewInit {
     this.blocksToCompleteControl.setValue(value.blocksToComplete);
     this.cancelAttackControl.setValue(value.cancelAttack);
     this.confirmationsControl.setValue(value.confirmations);
-    this.preminedBlocksControl.setValue(value.preminedBlocks);
+    if (this.preminedBlocks > 0) {
+      this.minedBlocksAttackerSubject.next(this.preminedBlocks);
+    } else if (this.preminedBlocks < 0) {
+      this.minedBlocksBitcoinSubject.next(-this.preminedBlocks);
+    }
   }
 
   isHandset$: Observable<boolean>;
@@ -219,9 +223,22 @@ export class XpaComponent implements AfterViewInit {
       let bitcoinLead = this.getLead(minedBlocksBitcoin, minedBlocksAttacker);
       let attackerLead = this.getLead(minedBlocksAttacker, minedBlocksBitcoin);
 
-      if (bitcoinLead >= this.cancelAttack) this.endExecution('Der Angriff wurde abgewehrt!');
-      else if (attackerLead >= 1 && minedBlocksAttacker >= this.confirmations) this.endExecution('Der Angriff war erfolgreich!');
-      else if (minedBlocksBitcoin >= this.blocksToComplete) this.endExecution('Der Angriff wurde abgebrochen!');
+      if (bitcoinLead >= this.cancelAttack) {
+        this.endExecution('Der Angriff wurde abgewehrt!');
+        return;
+      }
+      else if (attackerLead >= this.cancelAttack && Number.isNaN(this.confirmations)) {
+        this.endExecution('Der Angriff war erfolgreich!');
+        return;
+      }
+      else if (attackerLead >= 1 && minedBlocksAttacker >= this.confirmations) {
+        this.endExecution('Der Angriff war erfolgreich!');
+        return;
+      }
+      else if (minedBlocksBitcoin >= this.blocksToComplete) {
+        this.endExecution('Der Angriff wurde abgebrochen!');
+        return;
+      }
 
       let random = Math.random() * 100;
       let attacking = this.attackingPower;
