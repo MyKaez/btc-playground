@@ -10,7 +10,7 @@ import { NormalizedHashrate } from 'src/model/bitcoin';
 import { StringHelper } from 'src/model/text';
 import { XpaParticipant, XpaParticipantView } from '..';
 import { SimulationService } from '../simulation.service';
-import { Scenario } from './xpa-scenario';
+import { DOUBLE_SPEND, STATE_ATTACK, Scenario } from './xpa-scenario';
 
 @Component({
   selector: 'app-xpa',
@@ -26,7 +26,7 @@ export class XpaComponent implements AfterViewInit {
   attackingPowerControl = new FormControl({ value: 0, disabled: this.isExecuting }, [Validators.min(1), Validators.max(99), Validators.required]);
   blocksToCompleteControl = new FormControl(15, [Validators.min(1), Validators.max(20), Validators.required]);
   preminedBlocksControl = new FormControl(0, [Validators.min(0), Validators.max(5), Validators.required]);
-  confirmationsControl = new FormControl(5, [Validators.min(0), Validators.max(10), Validators.required]);
+  confirmationsControl = new FormControl(5, [Validators.min(0), Validators.max(10)]);
   cancelAttackControl = new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required]);
   inputs: FormGroup = new FormGroup({
     blocksToComplete: this.blocksToCompleteControl,
@@ -86,7 +86,7 @@ export class XpaComponent implements AfterViewInit {
     .pipe(map(([bitcoinParticipant, attackerParticipant]) => [bitcoinParticipant, attackerParticipant].map(p => this.createParticipantView(p))));
 
   ngAfterViewInit(): void {
-    this.attackingPowerControl.setValue(51);
+    this.scenario = DOUBLE_SPEND;
   }
 
   private createParticipant(title: string, mined: number, hashrate: number, hashrateTitle: string,
@@ -270,5 +270,15 @@ export class XpaComponent implements AfterViewInit {
       console.error("Failed validating errors", error);
       return ["Failed validating"];
     }
+  }
+
+  doubleSpend() {
+    this.clear();
+    this.scenario = DOUBLE_SPEND;
+  }
+
+  stateAttack() {
+    this.clear();
+    this.scenario = STATE_ATTACK;
   }
 }

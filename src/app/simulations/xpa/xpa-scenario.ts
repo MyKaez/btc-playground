@@ -3,7 +3,7 @@ export interface Scenario {
     attackingPower: number;
     preminedBlocks: number;
     cancelAttack: number;
-    confirmations: number;
+    confirmations: number | null;
 }
 
 export const DOUBLE_SPEND: Scenario = {
@@ -14,10 +14,10 @@ export const DOUBLE_SPEND: Scenario = {
     confirmations: 6
 }
 
-export const STATE_BREAKDOWN: Scenario = {
+export const STATE_ATTACK: Scenario = {
     blocksToComplete: 15,
     attackingPower: 51,
     preminedBlocks: 1,
     cancelAttack: 3,
-    confirmations: 0
+    confirmations: null
 }
