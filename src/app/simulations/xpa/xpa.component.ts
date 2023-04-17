@@ -112,7 +112,7 @@ export class XpaComponent implements AfterViewInit {
     let leftConfirmations = participant.confirmations - participant.minedBlocks;
 
     return {
-      ...participant,
+      ... participant,
       blocks: this.getBlocks(minedBlocks),
       stripes: this.getStripes(this.blocksToComplete - absoluteLead),
       confirmationBoxes: this.getBoxes(leftConfirmations, participant.minedBlocks > 0),

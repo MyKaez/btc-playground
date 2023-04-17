@@ -131,14 +131,14 @@
         <button mat-button (click)="start()" [disabled]="isExecuting || preminedBlocks >= confirmations">Start</button>
         <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
         <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
-        <span *ngIf="totalAmountBlocks$ | async as totalAmountBlocks">
+        <span *ngIf="totalAmountBlocks$ | async as totalAmountBlocks" class="action-info">
             <span *ngIf="totalAmountBlocks > 0">Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br /></span>
         </span>
-        <div *ngIf="isExecuting">
+        <div *ngIf="isExecuting" class="action-info">
             <mat-progress-bar [mode]="'indeterminate'">
             </mat-progress-bar>
         </div>
-        <div *ngIf="!isExecuting">
+        <div *ngIf="!isExecuting" class="action-info">
             <span>
                 Bereit für Simulation.
             </span>
