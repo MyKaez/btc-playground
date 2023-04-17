@@ -1,12 +1,18 @@
 import { Injectable } from "@angular/core";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { map, share, shareReplay, take } from "rxjs/operators";
-import { Observable, Observer, Subject, Subscriber } from "rxjs";
+import { BehaviorSubject, Observable, Observer, Subject, Subscriber } from "rxjs";
 import { environment } from "src/environments/environment";
 
 @Injectable()
 export class LayoutService {
   readonly maxSmallScreenWidthPx = 999;
+  
+  readonly defaultOptions: Record<ContentLayoutMode, ContentLayoutBackgroundImageOptions> = {
+    [ContentLayoutMode.Plane]: {imageUrls: ["assets/img/wallpapers/fixed-smooth-nodes.png"]},
+    [ContentLayoutMode.ImageCarousel]: {imageUrls: ["assets/img/wallpapers/fixed-crystals.png"]},
+    [ContentLayoutMode.LockImage]: {imageUrls: ["assets/img/wallpapers/fixed-smooth-wireframe.png"]},
+  };
 
   imageSets = {
     fancy: [
@@ -31,10 +37,10 @@ export class LayoutService {
     ...this.imageSets.fancy, 
     ...this.imageSets.simple])];
   
-  private observeLayoutMode = new Subject<ContentLayoutMode>();
+  private observeLayoutMode = new BehaviorSubject(ContentLayoutMode.ImageCarousel);
   layoutMode$ = this.observeLayoutMode.asObservable();
 
-  private observeBackgroundImages = new Subject<string[]>();
+  private observeBackgroundImages = new BehaviorSubject(this.defaultOptions[0].imageUrls!);
   backgroundImages$ = this.observeBackgroundImages.asObservable(); 
 
   isHandset$: Observable<boolean>;
@@ -71,8 +77,7 @@ export class LayoutService {
     // This disables the ability to switch modes, for a simpler experience
     mode = ContentLayoutMode.LockImage;
 
-    let nextImages: string[] = [];
-    this.backgroundImages$.pipe(take(1)).subscribe(currentImages => nextImages = currentImages);
+    let nextImages = this.observeBackgroundImages.getValue();
     if(backgroundImageOptions.imageMode != null) nextImages = this.imageSets[backgroundImageOptions.imageMode];
     if(backgroundImageOptions.imageUrls) nextImages = backgroundImageOptions.imageUrls;
 
@@ -83,12 +88,6 @@ export class LayoutService {
     nextImages = nextImages.slice(0, maxImageCount);
     this.observeBackgroundImages.next(nextImages);
   }
-  
-  defaultOptions: Record<ContentLayoutMode, ContentLayoutBackgroundImageOptions> = {
-    [ContentLayoutMode.Plane]: {imageUrls: ["assets/img/wallpapers/fixed-smooth-nodes.png"]},
-    [ContentLayoutMode.ImageCarousel]: {imageUrls: ["assets/img/wallpapers/fixed-crystals.png"]},
-    [ContentLayoutMode.LockImage]: {imageUrls: ["assets/img/wallpapers/fixed-smooth-wireframe.png"]},
-  };
 }
 
 export enum ContentLayoutMode {
