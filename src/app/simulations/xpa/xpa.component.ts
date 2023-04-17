@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, combineLatest, map, Observable, shareReplay } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, shareReplay, startWith, tap } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
@@ -23,15 +23,16 @@ export class XpaComponent implements AfterViewInit {
   static readonly maxDisplayCount = 1000;
 
   isExecuting: boolean = false;
-  attackingPowerControl = new FormControl({ value: 0, disabled: this.isExecuting }, [Validators.min(1), Validators.max(99), Validators.required]);
+  attackingPowerControl = new FormControl(0, [Validators.min(1), Validators.max(99), Validators.required]);
   blocksToCompleteControl = new FormControl(15, [Validators.min(0), Validators.max(20), Validators.required]);
-
   confirmationsControl = new FormControl(5, [Validators.min(0), Validators.max(10), Validators.required]);
   cancelAttackControl = new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required]);
+  preminedBlocksControl = new FormControl(0, [Validators.min(0), Validators.max(5), Validators.required]);
+
   inputs: FormGroup = new FormGroup({
     blocksToComplete: this.blocksToCompleteControl,
     attackingPower: this.attackingPowerControl,
-    preminedBlocks: new FormControl(0, [Validators.min(0), Validators.max(5), Validators.required]),
+    preminedBlocks: this.preminedBlocksControl,
     confirmations: this.confirmationsControl,
     cancelAttack: this.cancelAttackControl
   });
@@ -39,20 +40,16 @@ export class XpaComponent implements AfterViewInit {
   minedBlocksBitcoinSubject = new BehaviorSubject(0);
   minedBlocksBitcoin$ = this.minedBlocksBitcoinSubject.asObservable();
   minedBlocksAttackerSubject = new BehaviorSubject(0);
-  minedBlocksAttacker$ = this.minedBlocksAttackerSubject.asObservable();
+  minedBlocksAttacker$ = combineLatest([this.preminedBlocksControl.valueChanges.pipe(startWith(0)), this.minedBlocksAttackerSubject.asObservable()]).pipe(
+    map(([premined, mined]) => (this.isExecuting || !premined || mined > premined) ? mined : premined)
+  );
+  //@kenny: ohne StartWith wird hier initial nix gerendert. Lass mal drüber reden 
+
   clearOnStart: boolean = true;
   contentLayoutMode = ContentLayoutMode.LockImage;
 
   constructor(private notificationService: NotificationService, public layout: LayoutService,
     private simulationService: SimulationService, private btcService: BtcService) {
-    this.inputs.controls['preminedBlocks'].valueChanges.subscribe(value => {
-      let preminedBlocksCount = Number.parseInt(value);
-      if (!isNaN(preminedBlocksCount)) {
-        //this.minedBlocksBitcoin$.next(preminedBlocksCount);
-        this.minedBlocksAttackerSubject.next(preminedBlocksCount);
-      }
-    });
-
     this.confirmationsControl.addValidators(this.createValidatorIsMoreThanPremined.bind(this));
     this.isHandset$ = layout.isHandset$;
   }
