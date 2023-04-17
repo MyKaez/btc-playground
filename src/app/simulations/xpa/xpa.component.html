@@ -76,21 +76,21 @@
                     </label>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
-                    <mat-label>Vorsprung Angriff <i>[in Blöcken]</i></mat-label>
+                    <mat-label>Vorsprung <i>[in Blöcken]</i></mat-label>
                     <input matInput type="number" formControlName="preminedBlocks" [readonly]="isExecuting" />
                     <label class="validation-error" *ngIf="!isExecuting && !inputs.controls['preminedBlocks'].valid">
                         <span>{{getErrors('preminedBlocks')}}</span>
                     </label>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
-                    <mat-label>Abbruch Angriff <i>[nach x Blöcken]</i></mat-label>
+                    <mat-label>Abbruch <i>[nach x Blöcken]</i></mat-label>
                     <input matInput type="number" formControlName="cancelAttack" [readonly]="isExecuting" />
                     <label class="validation-error" *ngIf="!isExecuting && !inputs.controls['cancelAttack'].valid">
                         <span>{{getErrors('cancelAttack')}}</span>
                     </label>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
-                    <mat-label>Anzahl Bestätigungen <i>[in Blöcken]</i></mat-label>
+                    <mat-label>Bestätigungen <i>[in Blöcken]</i></mat-label>
                     <input matInput type="number" formControlName="confirmations" [readonly]="isExecuting" />
                     <label class="validation-error" *ngIf="!isExecuting && !inputs.controls['confirmations'].valid">
                         <span>{{getErrors('confirmations')}}</span>
@@ -101,7 +101,7 @@
         <h3>Szenarios</h3>
         <div class="options">
             <button mat-button (click)="doubleSpend()">Double Spend</button>
-            <button mat-button (click)="stateAttack()">Staatsattacke</button>
+            <button mat-button (click)="stateAttack()">Non Profit</button>
         </div>
     </mat-expansion-panel>
 
@@ -128,7 +128,7 @@
 
 <ng-template #actions>
     <div class="actions">
-        <button mat-button (click)="start()" [disabled]="isExecuting || preminedBlocks >= confirmations">Start</button>
+        <button mat-button (click)="start()" [disabled]="isExecuting">Start</button>
         <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
         <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
         <span *ngIf="totalAmountBlocks$ | async as totalAmountBlocks" class="action-info">

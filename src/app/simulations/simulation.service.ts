@@ -34,7 +34,7 @@ export class SimulationService {
             navigationLink: "simulations/pow"
         }, {
             title: XpaComponent.title,
-            description: "Stellen wir uns vor, China kauft das Internet...",
+            description: "Mit BitCoins zahlen ohne zu zahlen.",
             imageSrc: "assets/img/simulations/sim-xpa-title.jpg",
             youtubeSrc: "-adMIa1jV80",
             navigationLink: "simulations/xpa"

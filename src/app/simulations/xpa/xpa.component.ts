@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, combineLatest, map, Observable, shareReplay } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
@@ -24,9 +24,9 @@ export class XpaComponent implements AfterViewInit {
 
   isExecuting: boolean = false;
   attackingPowerControl = new FormControl({ value: 0, disabled: this.isExecuting }, [Validators.min(1), Validators.max(99), Validators.required]);
-  blocksToCompleteControl = new FormControl(15, [Validators.min(1), Validators.max(20), Validators.required]);
+  blocksToCompleteControl = new FormControl(15, [Validators.min(0), Validators.max(20), Validators.required]);
 
-  confirmationsControl = new FormControl(5, [Validators.min(0), Validators.max(10)]);
+  confirmationsControl = new FormControl(5, [Validators.min(0), Validators.max(10), Validators.required]);
   cancelAttackControl = new FormControl(3, [Validators.min(0), Validators.max(10), Validators.required]);
   inputs: FormGroup = new FormGroup({
     blocksToComplete: this.blocksToCompleteControl,
@@ -52,6 +52,8 @@ export class XpaComponent implements AfterViewInit {
         this.minedBlocksAttackerSubject.next(preminedBlocksCount);
       }
     });
+
+    this.confirmationsControl.addValidators(this.createValidatorIsMoreThanPremined.bind(this));
     this.isHandset$ = layout.isHandset$;
   }
 
@@ -75,8 +77,6 @@ export class XpaComponent implements AfterViewInit {
   totalHashRate$ = combineLatest([this.currentHashRate$, this.attackingPower$]).pipe(
     map(([cur, att]) => this.expandHashrateUnit(cur + att))
   );
-
-  //anyInputChanged$ = combineLatest()
 
   bitcoinParticipant$ = combineLatest([this.inputs.valueChanges, this.minedBlocksBitcoin$, this.currentHashRate$, this.minedBlocksAttacker$]).pipe(
     map(([anyInputValue, mined, hashrate, minedByAttacker]) => this.createParticipant("Bitcoin Blockchain", mined, hashrate, "Aktuelle Bitcoin HashRate",
@@ -265,8 +265,18 @@ export class XpaComponent implements AfterViewInit {
   private errorMapping: any = {
     "min": "Der Wert ist zu niedrig.",
     "max": "Der Wert ist zu hoch.",
-    "required": "Wert benötigt"
+    "required": "Wert benötigt",
+    "isLessThanPremined": "Sollte 0 oder dem Vorsprung entsprechen."
   };
+
+  private createValidatorIsMoreThanPremined(control: AbstractControl): {[key: string]: number} | null {
+    let numberValue = Number.parseInt(control.value);
+    if(numberValue && numberValue <= this.preminedBlocks) {
+      return { isLessThanPremined: this.preminedBlocks };
+    }
+    
+    return null;
+  }
 
   /** @todo move this to a service */
   getErrors(control: string): string | undefined {
