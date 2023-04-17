@@ -10,7 +10,7 @@ import { NormalizedHashrate } from 'src/model/bitcoin';
 import { StringHelper } from 'src/model/text';
 import { XpaParticipant, XpaParticipantView } from '..';
 import { SimulationService } from '../simulation.service';
-import { DOUBLE_SPEND, STATE_ATTACK, Scenario } from './xpa-scenario';
+import { DOUBLE_SPEND, STATE_ATTACK, XpaScenario } from './xpa-scenario';
 
 @Component({
   selector: 'app-xpa',
@@ -54,7 +54,7 @@ export class XpaComponent implements AfterViewInit {
     this.isHandset$ = layout.isHandset$;
   }
 
-  set scenario(value: Scenario) {
+  set scenario(value: XpaScenario) {
     this.attackingPowerControl.setValue(value.attackingPower);
     this.blocksToCompleteControl.setValue(value.blocksToComplete);
     this.cancelAttackControl.setValue(value.cancelAttack);

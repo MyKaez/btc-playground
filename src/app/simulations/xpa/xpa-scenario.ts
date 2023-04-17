@@ -1,4 +1,4 @@
-export interface Scenario {
+export interface XpaScenario {
     blocksToComplete: number;
     attackingPower: number;
     preminedBlocks: number;
@@ -6,7 +6,7 @@ export interface Scenario {
     confirmations: number | null;
 }
 
-export const DOUBLE_SPEND: Scenario = {
+export const DOUBLE_SPEND: XpaScenario = {
     blocksToComplete: 15,
     attackingPower: 51,
     preminedBlocks: 0,
@@ -14,7 +14,7 @@ export const DOUBLE_SPEND: Scenario = {
     confirmations: 6
 }
 
-export const STATE_ATTACK: Scenario = {
+export const STATE_ATTACK: XpaScenario = {
     blocksToComplete: 15,
     attackingPower: 51,
     preminedBlocks: 1,
