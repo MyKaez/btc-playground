@@ -224,7 +224,7 @@ export class XpaComponent implements AfterViewInit {
         this.endExecution('Der Angriff wurde abgewehrt!');
         return;
       }
-      else if (attackerLead >= this.cancelAttack && Number.isNaN(this.confirmations)) {
+      else if (attackerLead >= 1 && this.confirmations == 0) {
         this.endExecution('Der Angriff war erfolgreich!');
         return;
       }
