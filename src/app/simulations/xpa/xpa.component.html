@@ -53,6 +53,20 @@
 </ng-template>
 
 <ng-template #controls>
+    <ng-container *ngTemplateOutlet="actions"></ng-container>
+
+    <mat-expansion-panel expanded="false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h2>Szenarios</h2>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="options">
+            <button type="button" mat-button (click)="doubleSpend()">Double Spend</button>
+            <button type="button" mat-button (click)="stateAttack()">Non Profit</button>
+        </div>
+    </mat-expansion-panel>
+
     <mat-expansion-panel expanded="false">
         <mat-expansion-panel-header>
             <mat-panel-title>
@@ -98,11 +112,6 @@
                 </mat-form-field>
             </form>
         </div>
-        <h3>Szenarios</h3>
-        <div class="options">
-            <button mat-button (click)="doubleSpend()">Double Spend</button>
-            <button mat-button (click)="stateAttack()">Non Profit</button>
-        </div>
     </mat-expansion-panel>
 
     <mat-expansion-panel>
@@ -117,8 +126,6 @@
             </mat-checkbox>
         </div>
     </mat-expansion-panel>
-
-    <ng-container *ngTemplateOutlet="actions"></ng-container>
 </ng-template>
 
 <ng-template #definition>
@@ -128,9 +135,10 @@
 
 <ng-template #actions>
     <div class="actions">
-        <button mat-button (click)="start()" [disabled]="isExecuting">Start</button>
-        <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
-        <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
+        <div class="actions-bar">
+            <button mat-button class="btn-circle" (click)="toggleStartStop()" title="Start/Stop"><mat-icon>{{isExecuting ? "stop" : "play_arrow"}}</mat-icon></button>
+            <button mat-button class="btn-circle" (click)="clear()" [disabled]="isExecuting" title="Clear"><mat-icon>replay</mat-icon></button>
+        </div>
         <span *ngIf="totalAmountBlocks$ | async as totalAmountBlocks" class="action-info">
             <span *ngIf="totalAmountBlocks > 0">Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br /></span>
         </span>

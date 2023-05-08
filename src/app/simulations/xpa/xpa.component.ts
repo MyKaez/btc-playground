@@ -187,6 +187,11 @@ export class XpaComponent implements AfterViewInit {
     return lead > 0;
   }
 
+  toggleStartStop() {
+    if(this.isExecuting) this.stop();
+    else this.start();
+  }
+
   start() {
     if (this.getFormErrors().length) {
       this.notificationService.display("Leider gibt es Fehler in den Einstellungen. Bitte prüfe deine Angaben.");

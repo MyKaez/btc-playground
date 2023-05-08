@@ -164,13 +164,23 @@ button {
 .mat-expansion-panel {
   color: $light-color;
   background: 0 !important;
-  margin-top: 1em !important;
-  box-shadow: 1px 0 0 0 #434355 inset !important;
-  -moz-box-shadow: 1px 0 0 0 #434355 inset !important;
-}
+  //margin-top: 1em !important;
+  //box-shadow: 1px 0 0 0 #434355 inset !important;
+  //-moz-box-shadow: 1px 0 0 0 #434355 inset !important;
+  border-left: 4px solid #666;
+  box-shadow: unset !important;
+  border-radius: unset !important;
 
-.mat-expansion-panel {
-  -webkit-box-shadow: 1px 0 0 0 #434355 inset !important;
+  .mat-expansion-panel-header {
+    box-shadow: unset !important;
+    height: 50px;
+    //padding: 0 4px 0px 14px;
+    padding: 0 $margin-slim 0px $margin-large;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0 $margin-slim 0px $margin-large;
+  }
 }
 
 mat-label {
