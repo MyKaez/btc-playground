@@ -67,7 +67,7 @@
         </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel expanded="false">
+    <mat-expansion-panel [expanded]="isHandset$ | async">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <h2>Input</h2>
@@ -114,7 +114,7 @@
         </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="isHandset$ | async">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <h2>Optionen</h2>
