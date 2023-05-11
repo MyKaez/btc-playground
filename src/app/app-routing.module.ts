@@ -14,7 +14,8 @@ import {
   BlocksizeComponent,
   XpaComponent,
   RingOfFireComponent,
-  PowComponent
+  PowComponent,
+  PowOnlineComponent
 } from './simulations';
 import { FormulaComponent } from './simulations/formula/formula.component';
 
@@ -25,6 +26,8 @@ const routes: Routes = [
   { path: 'simulations', component: SimulationsComponent },
   { path: 'simulations/pow', component: PowComponent },
   { path: 'simulations/pow/:tab', component: PowComponent },
+  { path: 'simulations/pow-online', component: PowOnlineComponent },
+  { path: 'simulations/pow-online/:tab', component: PowOnlineComponent },
   { path: 'simulations/xpa', component: XpaComponent },
   { path: 'simulations/rof', component: RingOfFireComponent },
   { path: 'simulations/blocksize', component: BlocksizeComponent },

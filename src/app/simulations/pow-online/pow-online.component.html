@@ -167,10 +167,10 @@
 <ng-template #actions>
   <div class="actions" *ngIf="probability$ | async as probability">    
     <div class="actions-bar">
-      <button mat-button class="btn-circle" (click)="toggleStartStop(probability)" title="Start/Stop" [disabled]="formGroup.invalid">
-        <mat-icon>{{isExecuting ? "stop" : "play_arrow"}}</mat-icon>
+      <button mat-button class="btn-circle" (click)="create()" title="Sitzung erstellen" [disabled]="isExecuting">
+        <mat-icon>add_to_queue</mat-icon>
       </button>
-      <button mat-button class="btn-circle" (click)="clear()" [disabled]="isExecuting" title="Clear"><mat-icon>replay</mat-icon></button>
+      <button mat-button class="btn-circle" (click)="join()" [disabled]="isExecuting" title="Sitzung beitreten"><mat-icon>group</mat-icon></button>
     </div>
     <div class="action-info">
       <span *ngIf="hashCount > 0">

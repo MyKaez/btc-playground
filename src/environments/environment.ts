@@ -8,7 +8,8 @@ export const environment = {
   presentationMode: false,
   environmentName: "default",
   simulations: undefined,
-  debugImages: false
+  debugImages: false,
+  apiUrl: "https://api.btcis.me"
 };
 
 export class Config {

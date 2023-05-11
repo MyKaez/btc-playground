@@ -4,6 +4,7 @@ import { environment } from "src/environments/environment";
 import { FormulaComponent } from "./formula/formula.component";
 import { PowComponent } from "./pow/pow.component";
 import { XpaComponent } from "./xpa/xpa.component";
+import { PowOnlineComponent } from "./pow-online/pow-online.component";
 
 @Injectable()
 export class SimulationService {
@@ -32,6 +33,10 @@ export class SimulationService {
             description: "Fixes this... Determinismus / Vorhersehbarkeit",
             youtubeSrc: "E2ee5ewEddE",
             navigationLink: "simulations/pow"
+        }, {
+            title: PowOnlineComponent.title,
+            description: "Fixes this... vs... first",
+            navigationLink: "simulations/pow-online"
         }, {
             title: XpaComponent.title,
             description: "Mit BitCoins zahlen ohne zu zahlen.",

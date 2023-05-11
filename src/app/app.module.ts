@@ -5,7 +5,7 @@ import { CarouselModule } from '@coreui/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PowComponent, PowOnlineComponent } from './simulations';
+import { PowComponent, PowOnlineComponent, PowOnlineService } from './simulations';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -132,6 +132,7 @@ import { AppContextService } from './core';
     BtcPayService,
     BlockSizeService,
     PowService,
+    PowOnlineService,
     SimulationService,
     NotificationService,
     TeamService

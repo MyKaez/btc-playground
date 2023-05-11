@@ -12,6 +12,8 @@ import { SimulationHelper } from '../simulation-container/simulation-helper';
 import { PowComponent } from '../pow/pow.component';
 import { PowHash } from '../pow/simulation/pow-interfaces';
 import { PowService } from '../pow/simulation/pow.service';
+import { PowOnlineService } from './pow-online.service';
+import { StringHelper } from 'src/model/text';
 
 @Component({
   selector: 'app-pow-online',
@@ -19,7 +21,7 @@ import { PowService } from '../pow/simulation/pow.service';
   styleUrls: ['./pow-online.component.scss']
 })
 export class PowOnlineComponent implements OnInit {
-  static readonly title = "Proof of Work";
+  static readonly title = "Multi-PoW";
   static readonly defaultAmountOfHashesToShow = 20;
 
   displayedColumns: { prop: string, text: string }[] = [
@@ -50,11 +52,13 @@ export class PowOnlineComponent implements OnInit {
     return (this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0);
   }
 
-  constructor(public layout: LayoutService, private btcService: BtcService, private powService: PowService, private simulationService: SimulationService) {
+  constructor(public layout: LayoutService, private btcService: BtcService, 
+    private powService: PowService, private simulationService: SimulationService,
+    private powOnlineService: PowOnlineService) {
     this.isHandset$ = layout.isHandset$;
   }
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
   }
 
   isHandset$: Observable<boolean>;
@@ -150,6 +154,14 @@ export class PowOnlineComponent implements OnInit {
   toggleStartStop(probability: number) {
     if(this.isExecuting) this.stop();
     else this.start(probability);
+  }
+
+  create() {
+    this.powOnlineService.createSession(StringHelper.createGuid());
+  }
+
+  join() {
+
   }
 
   async start(probability: number) {

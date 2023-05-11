@@ -10,7 +10,8 @@ export const environment = {
     beta: true,
     environmentName: "dev",
     simulations: undefined,
-    debugImages: false
+    debugImages: false,
+    apiUrl: "https://api.btcis.me"
 };
 
 export class Config {
