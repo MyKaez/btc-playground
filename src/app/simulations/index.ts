@@ -2,6 +2,7 @@ export * from "./simulation-card/simulation-card.component";
 export * from "./simulation.service";
 export * from "./pow/simulation/pow.service";
 export * from "./pow/pow.component";
+export * from "./pow-online/pow-online.component";
 export * from "./xpa/xpa.component";
 export * from "./xpa/xpa-participant";
 export * from "./xpa/xpa-participant-view";

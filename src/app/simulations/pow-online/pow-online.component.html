@@ -1,0 +1,194 @@
+<app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
+  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" #container></app-simulation-container>
+
+<ng-template #simulation>
+  <ng-container *ngIf="(layout.isSmallScreen$ | async)">
+    <ng-container *ngTemplateOutlet="actions"></ng-container>
+  </ng-container>
+  <div class="simulation-console" *ngIf="container.simulation$ | async as simulation">
+    <div class="console-header">
+      <img src="assets/bitcoin-btc-logo.svg">
+      <span>
+        {{simulation.title}}
+      </span>
+    </div>
+    <div class="console-data">
+      <table>
+        <tr>
+          <th *ngFor="let column of displayedColumns">
+            <span *ngIf="column !== displayedColumns[0]"> | </span> <span> {{column.text}} </span>
+          </th>
+        </tr>
+        <tr *ngFor="let hash of hashes">
+          <td *ngFor="let column of displayedColumns">
+            <span *ngIf="column !== displayedColumns[0]"> | </span> {{getValue(hash, column.prop)}}
+          </td>
+        </tr>
+
+      </table>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #controls>
+  <ng-container *ngTemplateOutlet="actions"></ng-container>
+
+  <mat-expansion-panel expanded="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h2>Input</h2>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="parameters">
+      <button mat-button (click)="determineHashRate(container.helper())" [disabled]="isExecuting">
+        Eigene Hashrate ermitteln
+      </button>
+      <mat-form-field appearance="fill">
+        <mat-label>Hashrate [Hashes pro Sekunde]</mat-label>
+        <input matInput type="number" [formControl]="hashRate" [readonly]="isExecuting" />
+        <!--label *ngIf="!isExecuting && !inputs.controls['hashRate'].valid">
+          <span>{{getErrors('hashRate')}}</span>
+        </label-->
+        <mat-hint *ngIf="currentHashRate$ | async as currentHashRate">
+          {{currentHashRate}}
+        </mat-hint>
+      </mat-form-field>
+      <button mat-button (click)="determineExternalHashRate()" [disabled]="isExecuting">
+        Bitcoin Hashrate ermitteln
+      </button>
+      <mat-form-field appearance="fill">
+        <mat-label>externe Hashrate [Hashes pro Sekunde]</mat-label>
+        <input matInput type="number" [formControl]="externalHashRate" [readonly]="isExecuting" />
+        <!--label *ngIf="!isExecuting && !inputs.controls['externalHashRate'].valid">
+          <span>{{getErrors('externalHashRate')}}</span>
+        </label-->
+        <mat-hint *ngIf="currentExternalHashRate$ | async as currentExternalHashRate">
+          {{currentExternalHashRate}}
+        </mat-hint>
+      </mat-form-field>
+
+      <hr />
+
+      <h3 *ngIf="incorrectHashRate$ | async as msg">
+        {{msg}}
+      </h3>
+
+      <mat-form-field appearance="fill" *ngIf="totalHashRate$ | async as totalHashRate">
+        <mat-label>gesamte Hashrate [Hashes pro Sekunde]</mat-label>
+        <input matInput type="text" value="{{totalHashRate}}" readonly="true" />
+      </mat-form-field>
+
+      <hr />
+
+      <button mat-button (click)="setBitcoinBlockTime()" [disabled]="isExecuting">
+        Bitcoin Blockzeit setzen
+      </button>
+      <mat-form-field appearance="fill">
+        <mat-label>Blockzeit [in Sekunden]</mat-label>
+        <input matInput type="number" [formControl]="blockTime" />
+        <!--label *ngIf="!isExecuting && !inputs.controls['blockTime'].valid">
+            <span>{{getErrors('blockTime')}}</span>
+          </label-->
+        <mat-hint *ngIf="currentBlockTime$ | async as currentBlockTime">
+          {{currentBlockTime}}
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <mat-expansion-panel expanded="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h3>Berechungen</h3>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="calculations">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Wahrscheinlichkeit [pro Block]</mat-label>
+          <input matInput type="text" value="1 / (Hashrate * Blockzeit)" readonly="true" />
+          <mat-hint>
+            1 / (
+            <span *ngIf="totalHashRate$ | async as hr">{{hr}}</span>
+            *
+            <span>{{blockTime.value}}</span>
+            ) <br /> =
+            <span *ngIf="probability$ | async as probability">{{probability * 100}}%</span>
+          </mat-hint>
+        </mat-form-field>
+
+        <br />
+
+        <mat-form-field appearance="fill">
+          <mat-label>Erwartungswert [Anzahl Blöcke]</mat-label>
+          <input matInput type="text" value="Hashrate * Blockzeit" readonly="true" />
+          <mat-hint><span *ngIf="difficulty$ | async as difficulty">{{difficulty}}</span></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" *ngIf="expectedDuration$ | async as expectedDuration">
+          <mat-label>Erwartete Dauer</mat-label>
+          <input matInput type="text" [value]="expectedDuration" readonly="true" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" *ngIf="expectedPrefix$ | async as expectedPrefix">
+          <mat-label>Erwartete Hash Präfixe</mat-label>
+          <input matInput type="text" [value]="expectedPrefix" readonly="true" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" *ngIf="hexaDecimalFormula$ | async as hexaDecimalFormula">
+          <mat-label>Hexadezimal Formel</mat-label>
+          <input matInput type="text" [value]="hexaDecimalFormula" readonly="true" />
+        </mat-form-field>
+
+      </div>
+    </mat-expansion-panel>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h2>Optionen</h2>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class=" options">
+      <mat-form-field apperance="fill">
+        <mat-label>Anzahl angezeigter Hashes</mat-label>
+        <input type="number" matInput [formControl]="amountOfHashes" step="1">
+      </mat-form-field>
+      <mat-checkbox [formControl]="stopOnFoundBlock">
+        Stoppen bei gefundenem Block
+      </mat-checkbox>
+      <mat-checkbox [formControl]="clearOnStart">
+        Clear bei Start
+      </mat-checkbox>
+    </div>
+  </mat-expansion-panel>
+</ng-template>
+
+<ng-template #actions>
+  <div class="actions" *ngIf="probability$ | async as probability">    
+    <div class="actions-bar">
+      <button mat-button class="btn-circle" (click)="toggleStartStop(probability)" title="Start/Stop" [disabled]="formGroup.invalid">
+        <mat-icon>{{isExecuting ? "stop" : "play_arrow"}}</mat-icon>
+      </button>
+      <button mat-button class="btn-circle" (click)="clear()" [disabled]="isExecuting" title="Clear"><mat-icon>replay</mat-icon></button>
+    </div>
+    <div class="action-info">
+      <span *ngIf="hashCount > 0">
+        Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br />
+      </span>
+      <div *ngIf="isExecuting">
+        <mat-progress-bar [mode]="'indeterminate'">
+        </mat-progress-bar>
+      </div>
+      <div *ngIf="!isExecuting">
+        <span>Bereit für Simulation.</span>
+        <mat-progress-bar [mode]="'determinate'">
+        </mat-progress-bar>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #definition>
+  <app-pow-definition></app-pow-definition>
+</ng-template>
