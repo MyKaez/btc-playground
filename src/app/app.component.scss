@@ -151,10 +151,11 @@ button {
   background: 0 !important;
   -webkit-box-shadow: 1px 0 0 0 #434355 inset !important;
   -moz-box-shadow: 1px 0 0 0 #434355 inset !important;
-}
-
-.mat-expansion-panel-header {
   box-shadow: 1px 0 0 0 #434355 inset !important;
+
+  &:hover {
+    opacity: .7;
+  }
 }
 
 .mat-expansion-panel-header-title {
