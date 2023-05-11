@@ -80,6 +80,8 @@
     }
 
     .simulation-controls {
+        position: relative;
+
         h2 {
             font-size: 2rem;
             margin-bottom: $margin-small;
@@ -93,8 +95,27 @@
             display: block;
         }
 
+        .actions {
+            padding-top: 50px;
+
+            .actions-bar {
+                position: absolute;
+                top: 0;
+                width: 100%;
+                background-color: $primary-700;
+                border-bottom: 2px solid #434355;
+                left: 0;
+                padding: .5rem;
+            }
+        }
+
         .action-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        
             padding: 8px 10px;
+            min-height: 60px;
         }
 
         > *:not(:last-child) {

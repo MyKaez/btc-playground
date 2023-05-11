@@ -55,7 +55,7 @@
 <ng-template #controls>
     <ng-container *ngTemplateOutlet="actions"></ng-container>
 
-    <mat-expansion-panel expanded="false">
+    <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <h2>Szenarios</h2>
@@ -139,19 +139,20 @@
             <button mat-button class="btn-circle" (click)="toggleStartStop()" title="Start/Stop"><mat-icon>{{isExecuting ? "stop" : "play_arrow"}}</mat-icon></button>
             <button mat-button class="btn-circle" (click)="clear()" [disabled]="isExecuting" title="Clear"><mat-icon>replay</mat-icon></button>
         </div>
-        <span *ngIf="totalAmountBlocks$ | async as totalAmountBlocks" class="action-info">
-            <span *ngIf="totalAmountBlocks > 0">Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br /></span>
-        </span>
-        <div *ngIf="isExecuting" class="action-info">
-            <mat-progress-bar [mode]="'indeterminate'">
-            </mat-progress-bar>
-        </div>
-        <div *ngIf="!isExecuting" class="action-info">
-            <span>
-                Bereit für Simulation.
+
+        <div class="action-info">
+            <span *ngIf="totalAmountBlocks$ | async as totalAmountBlocks">
+                <span *ngIf="totalAmountBlocks > 0">Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br /></span>
             </span>
-            <mat-progress-bar [mode]="'determinate'">
+
+            <mat-progress-bar *ngIf="isExecuting" [mode]="'indeterminate'">
             </mat-progress-bar>
+
+            <div *ngIf="!isExecuting">
+                <span> Bereit für Simulation. </span>
+                <mat-progress-bar [mode]="'determinate'">
+                </mat-progress-bar>
+            </div>
         </div>
     </div>
 </ng-template>
