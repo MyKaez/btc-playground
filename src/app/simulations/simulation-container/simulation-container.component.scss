@@ -127,8 +127,12 @@
             .mat-form-field,
             .mat-expansion-panel {
                &:not(:first-child) {
-                margin-top: $margin-small;
+                margin-top: $margin-large;
                }
+            }
+
+            hr {
+                margin: $margin-small 0 $margin-slim 0;
             }
         }
     }
