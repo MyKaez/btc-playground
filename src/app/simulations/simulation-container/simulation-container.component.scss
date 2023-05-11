@@ -121,6 +121,16 @@
         > *:not(:last-child) {
             margin-bottom: $margin-large;
         }
+
+        .mat-expansion-panel {
+            button,
+            .mat-form-field,
+            .mat-expansion-panel {
+               &:not(:first-child) {
+                margin-top: $margin-small;
+               }
+            }
+        }
     }
 
     .simulation-items-handset {
@@ -216,12 +226,6 @@
             }
 
             >:not(:last-child) {
-                margin-bottom: $margin-small;
-            }
-        }
-
-        .options {
-            :not(:last-child) {
                 margin-bottom: $margin-small;
             }
         }
