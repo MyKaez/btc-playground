@@ -144,6 +144,11 @@ export class PowComponent implements AfterViewInit {
     this.btcService.getCurrentHashRate().subscribe(rate => this.externalHashRate.setValue(rate));
   }
 
+  toggleStartStop(probability: number) {
+    if(this.isExecuting) this.stop();
+    else this.start(probability);
+  }
+
   async start(probability: number) {
     this.isExecuting = true;
     if (this.clearOnStart.value) {

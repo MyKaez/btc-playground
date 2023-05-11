@@ -32,7 +32,9 @@
 </ng-template>
 
 <ng-template #controls>
-  <mat-expansion-panel expanded="true">
+  <ng-container *ngTemplateOutlet="actions"></ng-container>
+
+  <mat-expansion-panel expanded="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <h2>Input</h2>
@@ -160,29 +162,29 @@
       </mat-checkbox>
     </div>
   </mat-expansion-panel>
-
-  <ng-container *ngTemplateOutlet="actions"></ng-container>
-
 </ng-template>
 
 <ng-template #actions>
-  <div class="actions" *ngIf="probability$ | async as probability">
-    <button mat-button (click)="start(probability)" [disabled]="isExecuting || formGroup.invalid">Start</button>
-    <button mat-button (click)="stop()" [disabled]="!isExecuting">Stop</button>
-    <button mat-button (click)="clear()" [disabled]="isExecuting">Clear</button>
-    <span *ngIf="hashCount > 0">
-      Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br />
-    </span>
-    <div *ngIf="isExecuting">
-      <mat-progress-bar [mode]="'indeterminate'">
-      </mat-progress-bar>
+  <div class="actions" *ngIf="probability$ | async as probability">    
+    <div class="actions-bar">
+      <button mat-button class="btn-circle" (click)="toggleStartStop(probability)" title="Start/Stop" [disabled]="formGroup.invalid">
+        <mat-icon>{{isExecuting ? "stop" : "play_arrow"}}</mat-icon>
+      </button>
+      <button mat-button class="btn-circle" (click)="clear()" [disabled]="isExecuting" title="Clear"><mat-icon>replay</mat-icon></button>
     </div>
-    <div *ngIf="!isExecuting">
-      <span>
-        Bereit für Simulation.
+    <div class="action-info">
+      <span *ngIf="hashCount > 0">
+        Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br />
       </span>
-      <mat-progress-bar [mode]="'determinate'">
-      </mat-progress-bar>
+      <div *ngIf="isExecuting">
+        <mat-progress-bar [mode]="'indeterminate'">
+        </mat-progress-bar>
+      </div>
+      <div *ngIf="!isExecuting">
+        <span>Bereit für Simulation.</span>
+        <mat-progress-bar [mode]="'determinate'">
+        </mat-progress-bar>
+      </div>
     </div>
   </div>
 </ng-template>
