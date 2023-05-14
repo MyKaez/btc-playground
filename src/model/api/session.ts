@@ -1,4 +1,4 @@
-import { SessionStatus } from "./sesstion-status";
+import { SessionStatus } from "./session-status";
 
 export interface Session {    
     id: string;
