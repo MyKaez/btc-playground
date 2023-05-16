@@ -63,6 +63,7 @@ import { PowDefinitionComponent } from './simulations/pow/definition/pow-definit
 import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.component';
 import { FormulaComponent } from './simulations/formula/formula.component';
 import { AppContextService } from './core';
+import { DisplayTableComponent } from './shared/container';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { AppContextService } from './core';
     RingOfFireComponent,
     MainNavComponent,
     FooterComponent,
+    DisplayTableComponent,
     XpaComponent,
     InfoComponent,
     SocialBarComponent,

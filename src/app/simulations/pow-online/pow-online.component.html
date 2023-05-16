@@ -5,29 +5,34 @@
   <ng-container *ngIf="(layout.isSmallScreen$ | async)">
     <ng-container *ngTemplateOutlet="actions"></ng-container>
   </ng-container>
-  <div class="simulation-console" *ngIf="container.simulation$ | async as simulation">
-    <div class="console-header">
-      <img src="assets/bitcoin-btc-logo.svg">
-      <span>
-        {{simulation.title}}
-      </span>
-    </div>
-    <div class="console-data">
-      <table>
-        <tr>
-          <th *ngFor="let column of displayedColumns">
-            <span *ngIf="column !== displayedColumns[0]"> | </span> <span> {{column.text}} </span>
-          </th>
-        </tr>
-        <tr *ngFor="let hash of hashes">
-          <td *ngFor="let column of displayedColumns">
-            <span *ngIf="column !== displayedColumns[0]"> | </span> {{getValue(hash, column.prop)}}
-          </td>
-        </tr>
+  <div class="simulation-content">
+    <app-display-table>      
+    </app-display-table>
 
-      </table>
+    <div class="simulation-console" *ngIf="container.simulation$ | async as simulation">
+      <div class="console-header">
+        <img src="assets/bitcoin-btc-logo.svg">
+        <span>
+          {{simulation.title}}
+        </span>
+      </div>
+      <div class="console-data">
+        <table>
+          <tr>
+            <th *ngFor="let column of displayedColumns">
+              <span *ngIf="column !== displayedColumns[0]"> | </span> <span> {{column.text}} </span>
+            </th>
+          </tr>
+          <tr *ngFor="let hash of hashes">
+            <td *ngFor="let column of displayedColumns">
+              <span *ngIf="column !== displayedColumns[0]"> | </span> {{getValue(hash, column.prop)}}
+            </td>
+          </tr>
+  
+        </table>
+      </div>
+  
     </div>
-
   </div>
 </ng-template>
 
