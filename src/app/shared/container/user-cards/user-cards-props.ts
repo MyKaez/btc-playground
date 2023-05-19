@@ -1,4 +1,5 @@
-export interface ParticipantCardProps {
+export interface UserCardProps {
+    id?: string;
     title: string;
     className?: string;
     avatarImageUrl?: string;

@@ -6,8 +6,7 @@
     <ng-container *ngTemplateOutlet="actions"></ng-container>
   </ng-container>
   <div class="simulation-content">
-    <app-display-table>      
-    </app-display-table>
+    <app-user-cards [users]="participants$"> </app-user-cards>
 
     <div class="simulation-console" *ngIf="container.simulation$ | async as simulation">
       <div class="console-header">

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { FormControl, FormGroup, Validators, } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, map, merge, Observable, shareReplay } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, filter, map, merge, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
@@ -14,6 +14,9 @@ import { PowHash } from '../pow/simulation/pow-interfaces';
 import { PowService } from '../pow/simulation/pow.service';
 import { PowOnlineService } from './pow-online.service';
 import { StringHelper } from 'src/model/text';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'src/model/api';
+import { UserCardProps } from 'src/app/shared/container/user-cards/user-cards-props';
 
 @Component({
   selector: 'app-pow-online',
@@ -29,7 +32,37 @@ export class PowOnlineComponent implements OnInit {
     { prop: 'hash', text: 'Hash' },
     { prop: 'cycle', text: 'Zyklus' },
     { prop: 'isValid', text: 'Valide' }
-  ]
+  ];
+
+  getSessionById$ = this.route.params.pipe(
+    map(p => p['id']),
+    filter(sessionId => sessionId !== undefined && sessionId !== null),
+    switchMap(p => this.powOnlineService.getSession(p).pipe(
+      catchError(error => {
+        if (error.status === 404) {
+          this.router.navigate(['/session']);
+          return of(undefined);
+        } else {
+          throw error;
+        }
+      })
+    ))
+    //, tap(_ => this.type = 'user-action')
+  );
+
+  currentSession$ = merge(this.powOnlineService.lastCreatedSession$, this.getSessionById$);
+  participants$ = this.currentSession$.pipe(
+    map(session => session?.users?.map(this.createUserCardProps) || [])
+  )
+
+  private createUserCardProps(user: User): UserCardProps {
+    return {
+      title: user.name,
+      id: user.id,
+      className: user.status
+    };
+  }
+
   hashRate = new FormControl<number>(0, [Validators.min(1), Validators.max(50)]);
   externalHashRate = new FormControl<number>(0, [Validators.min(0)]);
   blockTime = new FormControl<number>(0, [Validators.min(1)]);
@@ -54,7 +87,7 @@ export class PowOnlineComponent implements OnInit {
 
   constructor(public layout: LayoutService, private btcService: BtcService, 
     private powService: PowService, private simulationService: SimulationService,
-    private powOnlineService: PowOnlineService) {
+    private powOnlineService: PowOnlineService, private route: ActivatedRoute, private router: Router) {
     this.isHandset$ = layout.isHandset$;
   }
 
