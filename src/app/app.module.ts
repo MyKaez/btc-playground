@@ -63,7 +63,7 @@ import { PowDefinitionComponent } from './simulations/pow/definition/pow-definit
 import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.component';
 import { FormulaComponent } from './simulations/formula/formula.component';
 import { AppContextService } from './core';
-import { ParticipantCardsComponent } from './shared/container/participant-cards/participant-cards.component';
+import { UserCardsComponent } from './shared/container/user-cards/user-cards.component';
 import { DisplayTableComponent } from './shared/container/display-table';
 
 
@@ -98,7 +98,7 @@ import { DisplayTableComponent } from './shared/container/display-table';
     SimulationContainerComponent,
     FormulaComponent,
     PowOnlineComponent,
-    ParticipantCardsComponent
+    UserCardsComponent
   ],
   imports: [
     BrowserModule,
