@@ -63,7 +63,8 @@ import { PowDefinitionComponent } from './simulations/pow/definition/pow-definit
 import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.component';
 import { FormulaComponent } from './simulations/formula/formula.component';
 import { AppContextService } from './core';
-import { DisplayTableComponent } from './shared/container';
+import { ParticipantCardsComponent } from './shared/container/participant-cards/participant-cards.component';
+import { DisplayTableComponent } from './shared/container/display-table';
 
 
 @NgModule({
@@ -96,7 +97,8 @@ import { DisplayTableComponent } from './shared/container';
     XpaDefinitionComponent,
     SimulationContainerComponent,
     FormulaComponent,
-    PowOnlineComponent
+    PowOnlineComponent,
+    ParticipantCardsComponent
   ],
   imports: [
     BrowserModule,
