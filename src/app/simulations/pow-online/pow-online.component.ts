@@ -17,6 +17,7 @@ import { StringHelper } from 'src/model/text';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/model/api';
 import { UserCardProps } from 'src/app/shared/container/user-cards/user-cards-props';
+import { PowOnlineUser } from './pow-online-users/pow-online-user';
 
 @Component({
   selector: 'app-pow-online',
@@ -51,15 +52,19 @@ export class PowOnlineComponent implements OnInit {
   );
 
   currentSession$ = merge(this.powOnlineService.lastCreatedSession$, this.getSessionById$);
+  
+  nextUsers$ = this.currentSession$.pipe(map(session => session?.users));  
   participants$ = this.currentSession$.pipe(
     map(session => session?.users?.map(this.createUserCardProps) || [])
   )
 
-  private createUserCardProps(user: User): UserCardProps {
+  private createUserCardProps(user: User): PowOnlineUser {
     return {
       title: user.name,
       id: user.id,
-      className: user.status
+      className: user.status,
+      status: user.status,
+      hashrate: 3
     };
   }
 

@@ -4,6 +4,7 @@ export * from "./pow/simulation/pow.service";
 export * from "./pow/pow.component";
 export * from "./pow-online/pow-online.component";
 export * from "./pow-online/pow-online.service";
+export * from "./pow-online/pow-online-users/pow-online-users.component";
 export * from "./xpa/xpa.component";
 export * from "./xpa/xpa-participant";
 export * from "./xpa/xpa-participant-view";

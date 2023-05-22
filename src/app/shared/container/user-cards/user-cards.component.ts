@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CardSubtitleDirective } from '@coreui/angular';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { UserCardProps } from './user-cards-props';
 
 @Component({
@@ -14,7 +14,8 @@ export class UserCardsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    
+    console.log("card constructor", this.users$);
   }
 
+  test$ = this.users$.pipe(tap(user => console.log("user cards", user)));
 }

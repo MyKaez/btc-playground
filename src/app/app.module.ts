@@ -5,7 +5,7 @@ import { CarouselModule } from '@coreui/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PowComponent, PowOnlineComponent, PowOnlineService } from './simulations';
+import { PowComponent, PowOnlineComponent, PowOnlineService, PowOnlineUsersComponent } from './simulations';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -98,7 +98,8 @@ import { DisplayTableComponent } from './shared/container/display-table';
     SimulationContainerComponent,
     FormulaComponent,
     PowOnlineComponent,
-    UserCardsComponent
+    UserCardsComponent,
+    PowOnlineUsersComponent
   ],
   imports: [
     BrowserModule,
