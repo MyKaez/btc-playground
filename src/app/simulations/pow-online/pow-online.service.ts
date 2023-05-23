@@ -1,14 +1,15 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { lastValueFrom, map, Observable, Subject, tap } from "rxjs";
+import { lastValueFrom, map, Observable, of, Subject, tap } from "rxjs";
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { environment } from "src/environments/environment";
 import { Message, Session, SessionAction, SessionControlInfo, SessionInfo } from "src/model/api";
+import { CacheService } from "src/app/shared/helpers";
 
 @Injectable()
 export class PowOnlineService {
     private readonly url = environment.apiUrl;
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private cache: CacheService) {
         
     }
 
@@ -39,9 +40,15 @@ export class PowOnlineService {
             name: sessionName
         }).pipe(map(session => <SessionControlInfo>session));
         
-        createdSession$.subscribe(session => this.createSessionSubject.next(session));
+        createdSession$.subscribe(session => {
+            this.cache.set("lastSession", session, true);
+            this.createSessionSubject.next(session);
+        });
+
         return createdSession$;
     }
+
+    storedSession$ = of(this.cache.get("lastSession") as SessionControlInfo);
 
     sendMessage(session: SessionControlInfo, message: Message): Observable<SessionInfo> {
         const req = {

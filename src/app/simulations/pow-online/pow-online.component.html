@@ -135,18 +135,8 @@
       <button mat-button class="btn-circle" (click)="join()" [disabled]="isExecuting" title="Sitzung beitreten"><mat-icon>group</mat-icon></button>
     </div>
     <div class="action-info">
-      <span *ngIf="hashCount > 0">
-        Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br />
-      </span>
-      <div *ngIf="isExecuting">
-        <mat-progress-bar [mode]="'indeterminate'">
-        </mat-progress-bar>
-      </div>
-      <div *ngIf="!isExecuting">
-        <span>Bereit für Simulation.</span>
-        <mat-progress-bar [mode]="'determinate'">
-        </mat-progress-bar>
-      </div>
+      <span *ngIf="currentSession$ | async as currentSession; else without_session">In Sitzung {{currentSession.id}}</span>
+      <ng-template #without_session>Suche Sitzung</ng-template>
     </div>
   </div>
 </ng-template>

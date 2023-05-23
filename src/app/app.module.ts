@@ -65,6 +65,7 @@ import { FormulaComponent } from './simulations/formula/formula.component';
 import { AppContextService } from './core';
 import { UserCardsComponent } from './shared/container/user-cards/user-cards.component';
 import { DisplayTableComponent } from './shared/container/display-table';
+import { CacheService } from './shared/helpers';
 
 
 @NgModule({
@@ -132,6 +133,7 @@ import { DisplayTableComponent } from './shared/container/display-table';
   ],
   providers: [
     AppContextService,
+    CacheService,
     LayoutService,
     BtcService,
     BtcPayService,

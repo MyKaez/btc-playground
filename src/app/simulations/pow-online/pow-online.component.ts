@@ -51,7 +51,7 @@ export class PowOnlineComponent implements OnInit {
     //, tap(_ => this.type = 'user-action')
   );
 
-  currentSession$ = merge(this.powOnlineService.lastCreatedSession$, this.getSessionById$);
+  currentSession$ = merge(this.powOnlineService.lastCreatedSession$, this.getSessionById$, this.powOnlineService.storedSession$);
   
   nextUsers$ = this.currentSession$.pipe(map(session => session?.users));  
   participants$ = this.currentSession$.pipe(
