@@ -35,12 +35,12 @@ export class PowOnlineService {
     private createSessionSubject = new Subject<SessionControlInfo>;
     lastCreatedSession$ = this.createSessionSubject.asObservable();
     createSession(sessionName: string): Observable<SessionControlInfo> {
-        return this.httpClient.post(`${this.url}/v1/sessions`, {
+        let createdSession$ = this.httpClient.post(`${this.url}/v1/sessions`, {
             name: sessionName
-        }).pipe(
-            map(value => <SessionControlInfo>value),
-            tap(sessionInfo => this.createSessionSubject.next(sessionInfo))
-        )
+        }).pipe(map(session => <SessionControlInfo>session));
+        
+        createdSession$.subscribe(session => this.createSessionSubject.next(session));
+        return createdSession$;
     }
 
     sendMessage(session: SessionControlInfo, message: Message): Observable<SessionInfo> {

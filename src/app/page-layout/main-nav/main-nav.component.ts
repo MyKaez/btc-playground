@@ -49,10 +49,10 @@ export class MainNavComponent implements OnInit {
       let test = this.isCarousel$;
     }, 1000);   
     
-    this.layout.backgroundImages$.subscribe(images => console.log("new images", images));
-    this.firstImage$.subscribe(value => console.log("Updatedt firstimage", value));
-    this.isCarousel$.subscribe(value => console.log("Updatedt isCarousel", value));
-    this.isLockImage$.subscribe(value => console.log("Updatedt isLockImage", value));
+    this.layout.backgroundImages$.subscribe();
+    this.firstImage$.subscribe();
+    this.isCarousel$.subscribe();
+    this.isLockImage$.subscribe();
   }
 
   isLast(part: string): boolean {

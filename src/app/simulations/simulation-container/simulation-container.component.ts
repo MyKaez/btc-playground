@@ -27,7 +27,6 @@ export class SimulationContainerComponent implements OnInit {
     map(simulations => {
       const currentRoute = this.router.url.substring(1);
       const sim = simulations.find(sim => sim.navigationLink === currentRoute);
-      console.log(`current simulation: ${sim?.title}`);
       return sim;
     })
   );    

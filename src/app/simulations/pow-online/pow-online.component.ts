@@ -55,8 +55,9 @@ export class PowOnlineComponent implements OnInit {
   
   nextUsers$ = this.currentSession$.pipe(map(session => session?.users));  
   participants$ = this.currentSession$.pipe(
+    tap(s => console.log("current session", s)),
     map(session => session?.users?.map(this.createUserCardProps) || [])
-  )
+  );
 
   private createUserCardProps(user: User): PowOnlineUser {
     return {
