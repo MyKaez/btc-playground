@@ -52,7 +52,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { YouTubePlayerModule } from '@angular/youtube-player';
-import { ImageCarouselComponent } from './shared/media';
+import { ImageCarouselComponent, SessionJoinFormularComponent } from './shared/media';
 import { NotificationService } from './shared/media/notification.service';
 import { TeamService } from './pages/about-the-team/team.service';
 import { BtcService } from './shared/helpers/btc.service';
@@ -73,6 +73,7 @@ import { CacheService } from './shared/helpers';
     AppComponent,
     NodeModelComponent,
     ImageCarouselComponent,
+    SessionJoinFormularComponent,
     PowComponent,
     VidComponent,
     HomeComponent,

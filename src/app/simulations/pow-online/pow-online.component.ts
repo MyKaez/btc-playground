@@ -18,6 +18,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/model/api';
 import { UserCardProps } from 'src/app/shared/container/user-cards/user-cards-props';
 import { PowOnlineUser } from './pow-online-users/pow-online-user';
+import { MatDialog } from '@angular/material/dialog';
+import { SessionJoinFormularComponent } from 'src/app/shared/media';
 
 @Component({
   selector: 'app-pow-online',
@@ -91,7 +93,7 @@ export class PowOnlineComponent implements OnInit {
     return (this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0);
   }
 
-  constructor(public layout: LayoutService, private btcService: BtcService, 
+  constructor(public layout: LayoutService, private btcService: BtcService, private dialog: MatDialog,
     private powService: PowService, private simulationService: SimulationService,
     private powOnlineService: PowOnlineService, private route: ActivatedRoute, private router: Router) {
     this.isHandset$ = layout.isHandset$;
@@ -199,8 +201,8 @@ export class PowOnlineComponent implements OnInit {
     this.powOnlineService.createSession(StringHelper.createGuid());
   }
 
-  join() {
-
+  join() {    
+    this.dialog.open(SessionJoinFormularComponent);
   }
 
   async start(probability: number) {
