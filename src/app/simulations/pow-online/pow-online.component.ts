@@ -202,7 +202,9 @@ export class PowOnlineComponent implements OnInit {
   }
 
   join() {    
-    this.dialog.open(SessionJoinFormularComponent);
+    this.dialog.open(SessionJoinFormularComponent).afterClosed().subscribe(id => {
+        console.log("join session by id", id);
+    });
   }
 
   async start(probability: number) {

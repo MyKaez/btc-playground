@@ -1,10 +1,11 @@
 <div class="session-join-formular">
     <h3>Sitzung beitreten</h3>
     <div>        
-        <input type="text" placeholder="ID der Sitzung" />
+        <input matInput [formControl]="sessionIdControl" type="text" placeholder="ID der Sitzung" />
         <button mat-button class="btn-circle" (click)="scan()" title="Code scanen"><mat-icon>photo_camera</mat-icon></button>
+        <video></video>
     </div>
     <div class="actions">
-        <button type="button">Beitreten</button>
+        <button type="button" (click)="join()">Beitreten</button>
     </div>
 </div>
