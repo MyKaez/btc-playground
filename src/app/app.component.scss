@@ -192,5 +192,6 @@ mat-label {
     .mat-dialog-container {
         background-color: rgba($primary-700,0.99);
         border: 2px solid $primary-100;
+        height: unset;
     }
 }
