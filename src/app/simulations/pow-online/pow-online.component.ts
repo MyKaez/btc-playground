@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { FormControl, FormGroup, Validators, } from '@angular/forms';
-import { catchError, debounceTime, distinctUntilChanged, filter, map, merge, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, filter, map, merge, Observable, of, shareReplay, Subject, switchMap, tap } from 'rxjs';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
@@ -15,7 +15,7 @@ import { PowService } from '../pow/simulation/pow.service';
 import { PowOnlineService } from './pow-online.service';
 import { StringHelper } from 'src/model/text';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/model/api';
+import { SessionControlInfo, SessionInfo, User } from 'src/model/api';
 import { UserCardProps } from 'src/app/shared/container/user-cards/user-cards-props';
 import { PowOnlineUser } from './pow-online-users/pow-online-user';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,6 +27,8 @@ import { SessionJoinFormularComponent } from 'src/app/shared/media';
   styleUrls: ['./pow-online.component.scss']
 })
 export class PowOnlineComponent implements OnInit {
+  @ViewChild('shareContent') shareContentTemplate?: TemplateRef<any>;
+  
   static readonly title = "Multi-PoW";
   static readonly defaultAmountOfHashesToShow = 20;
 
@@ -53,7 +55,9 @@ export class PowOnlineComponent implements OnInit {
     //, tap(_ => this.type = 'user-action')
   );
 
-  currentSession$ = merge(this.powOnlineService.lastCreatedSession$, this.getSessionById$, this.powOnlineService.storedSession$);
+  private selectedSessionSubject = new Subject<SessionInfo | undefined>();
+  currentSession$ = merge(this.selectedSessionSubject, this.powOnlineService.lastCreatedSession$, this.getSessionById$, this.powOnlineService.storedSession$)
+    .pipe(shareReplay());
   
   nextUsers$ = this.currentSession$.pipe(map(session => session?.users));  
   participants$ = this.currentSession$.pipe(
@@ -202,9 +206,27 @@ export class PowOnlineComponent implements OnInit {
   }
 
   join() {    
-    this.dialog.open(SessionJoinFormularComponent).afterClosed().subscribe(id => {
-        console.log("join session by id", id);
+    const joinSession$ = this.dialog.open(SessionJoinFormularComponent).afterClosed().pipe(
+      switchMap(sessionId => this.powOnlineService.getSession(sessionId))
+    );
+
+    let subscribeJoinSession = joinSession$.subscribe(session => {
+      this.selectedSessionSubject.next(session);
+      subscribeJoinSession.unsubscribe();
     });
+  }
+
+  leave() {
+    this.selectedSessionSubject.next(undefined);
+  }
+
+  share() {
+    if(!this.shareContentTemplate) {
+      console.error("share content templat is missing");
+      return;
+    }
+
+    this.dialog.open(this.shareContentTemplate);
   }
 
   async start(probability: number) {
