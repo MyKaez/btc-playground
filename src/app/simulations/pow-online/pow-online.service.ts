@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { filter, lastValueFrom, map, Observable, of, shareReplay, Subject, switchMap, tap } from "rxjs";
+import { BehaviorSubject, filter, lastValueFrom, map, merge, Observable, of, shareReplay, Subject, switchMap, tap } from "rxjs";
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { environment } from "src/environments/environment";
-import { Message, Session, SessionAction, SessionControlInfo, SessionInfo } from "src/model/api";
+import { Message, Session, SessionAction, SessionControlInfo, SessionInfo, User, UserControl } from "src/model/api";
 import { CacheService } from "src/app/shared/helpers";
 
 @Injectable()
@@ -42,7 +42,16 @@ export class PowOnlineService {
         
         createdSession$.subscribe(session => {
             this.cache.set("lastSession", session, true);
-            this.createSessionSubject.next(session);
+            
+            // todo: replace by 
+            let registerUsers$ = merge(
+                this.registerUser(session.id, "Doom Slayer"), 
+                this.registerUser(session.id, "Ashen Borne"));
+            
+            registerUsers$.subscribe(user => {
+                console.log("got user", user);
+                this.createSessionSubject.next(session);
+            });
         });
 
         return createdSession$;
@@ -53,6 +62,31 @@ export class PowOnlineService {
         switchMap(session => this.getSession(session.id)),
         shareReplay()
     );
+
+    /*getUsers(sessionId: string): Observable<User[]> {
+        return this.httpClient.get(`${this.url}/v1/sessions/${sessionId}/users`).pipe(
+            map(value => <User[]>value)
+        )
+    }*/
+
+    getUsers(sessionId: string): Observable<User[]> {
+        return this.httpClient.get(`${this.url}/v1/sessions/${sessionId}/users`).pipe(
+            map(value => <User[]>value)
+        )
+    }
+
+    registerUser(sessionId: string, userName: string): Observable<UserControl> {
+        const user = { name: userName };
+        return this.httpClient.post(`${this.url}/v1/sessions/${sessionId}/users`, user).pipe(
+            map(value => <UserControl>value)
+        )
+    }
+
+    private currentUserSubject = new BehaviorSubject<User | undefined>(undefined);
+    currentUser$ = this.currentUserSubject.asObservable();
+    updateCurrentUser(name?: string, avatarUrl?: string, id?: string) {
+        throw new Error("not implemented");
+    }
 
     sendMessage(session: SessionControlInfo, message: Message): Observable<SessionInfo> {
         const req = {
