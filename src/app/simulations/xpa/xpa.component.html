@@ -12,6 +12,9 @@
             <span>
                 {{simulation.title}}
             </span>
+            <span *ngIf="scenarioTitle$ | async as scenarioTitle" class="scenario-header">
+                {{scenarioTitle}}
+            </span>
         </div>
         <div class="console-data">
             <div *ngFor="let participant of participants$ | async" class="xpa-participant">

@@ -4,6 +4,13 @@
     height: 100%;
 }
 
+.scenario-header {
+    font-size: smaller;
+    font-style: italic;
+    color: $gray;
+    margin-left: $margin-small;
+}
+
 .non-confirm {
     color: $accent-300;
 }
