@@ -33,7 +33,7 @@ export class PowOnlineService {
         )
     }
 
-    private createSessionSubject = new Subject<SessionControlInfo>;
+    private createSessionSubject = new Subject<SessionControlInfo | null>;
     lastCreatedSession$ = this.createSessionSubject.asObservable();
     createSession(sessionName: string): Observable<SessionControlInfo> {
         let createdSession$ = this.httpClient.post(`${this.url}/v1/sessions`, {
@@ -55,6 +55,11 @@ export class PowOnlineService {
         });
 
         return createdSession$;
+    }
+
+    leaveSession() {
+        this.cache.remove("lastSession");
+        this.createSessionSubject.next(null);
     }
 
     storedSession$ = of((this.cache.get("lastSession") as SessionControlInfo)).pipe(

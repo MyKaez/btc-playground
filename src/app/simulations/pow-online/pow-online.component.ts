@@ -57,11 +57,10 @@ export class PowOnlineComponent implements OnInit {
 
   private selectedSessionSubject = new Subject<SessionInfo | undefined>();
   currentSession$ = merge(this.selectedSessionSubject, this.powOnlineService.lastCreatedSession$, this.getSessionById$, this.powOnlineService.storedSession$)
-    .pipe(shareReplay(), 
+    .pipe(shareReplay(1), 
     tap(session => console.log("next session", session)));
   
-  nextUsers$ = this.currentSession$.pipe(filter(session => !!session), 
-  switchMap(session => this.powOnlineService.getUsers(session!.id)));  
+  nextUsers$ = this.currentSession$.pipe(switchMap(session => session ? this.powOnlineService.getUsers(session.id) : []));  
 
   participants$ = this.nextUsers$.pipe(
     tap(users => console.log("next users", users)),
