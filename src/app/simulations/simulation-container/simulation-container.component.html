@@ -22,9 +22,14 @@
                 <span class="mat-tab-label">Simulation</span>
             </ng-template>
             <div [class]="(layout.isSmallScreen$ | async) ? 'simulation-items-handset': 'simulation-items'">
-                <div *ngIf="simulationControls && !(layout.isSmallScreen$ | async)"
-                    class="text info-card simulation-controls">
-                    <ng-container [ngTemplateOutlet]="simulationControls"></ng-container>
+                <div *ngIf="(simulationControls || simulationOptions) && !(layout.isSmallScreen$ | async)"
+                    class="simulation-controls">
+                    <div *ngIf="simulationControls" class="actions">
+                        <ng-container [ngTemplateOutlet]="simulationControls"></ng-container>
+                    </div>
+                    <div *ngIf="simulationOptions" class="simulation-options">
+                        <ng-container [ngTemplateOutlet]="simulationOptions"></ng-container>
+                    </div>                    
                 </div>
 
                 <div *ngIf="simulationBody" class="simulation">
@@ -33,13 +38,18 @@
             </div>
         </mat-tab>
 
-        <mat-tab *ngIf="simulationControls && (layout.isSmallScreen$ | async)">
+        <mat-tab *ngIf="(simulationControls || simulationOptions) && (layout.isSmallScreen$ | async)">
             <ng-template mat-tab-label>
                 <span class="mat-tab-label">Optionen</span>
             </ng-template>
             <div class="simulation-items-handset">
-                <div class="text info-card simulation-controls">
-                    <ng-container [ngTemplateOutlet]="simulationControls"></ng-container>
+                <div class="simulation-controls">
+                    <div class="actions">
+                        <ng-container *ngIf="simulationControls" [ngTemplateOutlet]="simulationControls"></ng-container>
+                    </div> 
+                    <div *ngIf="simulationOptions" class="simulation-options">
+                        <div class="simulation-options"><ng-container [ngTemplateOutlet]="simulationOptions"></ng-container></div>
+                    </div>
                 </div>
             </div>
         </mat-tab>

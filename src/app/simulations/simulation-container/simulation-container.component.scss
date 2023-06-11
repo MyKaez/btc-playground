@@ -1,4 +1,5 @@
 @import "/src/styles.scss";
+@import "/src/app/app.component.scss";
 
 .simulation-container {
     .mat-tab-group {
@@ -96,12 +97,7 @@
         }
 
         .actions {
-            padding-top: 50px;
-
             .actions-bar {
-                position: absolute;
-                top: 0;
-                width: 100%;
                 background-color: $primary-700;
                 border-bottom: 2px solid #434355;
                 left: 0;
@@ -116,10 +112,6 @@
         
             padding: 8px 10px;
             min-height: 60px;
-        }
-
-        > *:not(:last-child) {
-            margin-bottom: $margin-large;
         }
 
         .mat-expansion-panel {
@@ -169,7 +161,7 @@
         justify-content: space-evenly;
         padding-top: $margin-large;
 
-        .text {
+        .simulation-card {
             overflow: auto;
         }
 
@@ -189,12 +181,9 @@
             color: white;
         }
 
-        .text {
-            &.info-card {
-                width: auto;
-                height: auto;
-                margin: 0;
-            }
+        .simulation-controls {
+            @extend .info-card;
+            padding: 0;
 
             .parameters,
             .calculations,
@@ -222,15 +211,16 @@
             }
         }
 
+        .simulation-options {
+            padding: $margin-large;
+        }
+
         .actions {
             .actions-bar {
                 display: flex;
                 justify-content: space-evenly;
                 flex-grow: 1;
-            }
-
-            >:not(:last-child) {
-                margin-bottom: $margin-small;
+                border-top-right-radius: 2rem;
             }
         }
 

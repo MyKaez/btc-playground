@@ -1,9 +1,9 @@
 <app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
-  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" #container></app-simulation-container>
+  [simulation-controls]="actions" [simulation-options]="options" [content-layout-mode]="contentLayoutMode" #container></app-simulation-container>
 
 <ng-template #simulation>
   <ng-container *ngIf="(layout.isSmallScreen$ | async)">
-    <ng-container *ngTemplateOutlet="actions"></ng-container>
+    <div class="actions"><ng-container *ngTemplateOutlet="actions"></ng-container></div>
   </ng-container>
   <div class="simulation-content">
     <app-pow-online-users [users]="participants$"> </app-pow-online-users>
@@ -35,9 +35,7 @@
   </div>
 </ng-template>
 
-<ng-template #controls>
-  <ng-container *ngTemplateOutlet="actions"></ng-container>
-
+<ng-template #options>
   <mat-expansion-panel expanded="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -127,30 +125,28 @@
 </ng-template>
 
 <ng-template #actions>
-  <div class="actions">
-    <div class="actions-bar" *ngIf="currentSession$ | async as currentSession; else no_session">
-      <button mat-button class="btn-circle" (click)="share()" [disabled]="isExecuting" title="Zur Sitzung einladen">
-        <mat-icon>share</mat-icon>
+  <div class="actions-bar" *ngIf="currentSession$ | async as currentSession; else no_session">
+    <button mat-button class="btn-circle" (click)="share()" [disabled]="isExecuting" title="Zur Sitzung einladen">
+      <mat-icon>share</mat-icon>
+    </button>
+    <button mat-button class="btn-circle" (click)="leave()" [disabled]="isExecuting" title="Sitzung verlassen">
+      <mat-icon>offline_bolt</mat-icon>
+    </button>
+  </div>
+  <ng-template #no_session>
+    <div class="actions-bar">
+      <button mat-button class="btn-circle" (click)="create()" title="Sitzung erstellen">
+        <mat-icon>add_to_queue</mat-icon>
       </button>
-      <button mat-button class="btn-circle" (click)="leave()" [disabled]="isExecuting" title="Sitzung verlassen">
-        <mat-icon>offline_bolt</mat-icon>
+      <button mat-button class="btn-circle" (click)="join()" title="Sitzung beitreten">
+        <mat-icon>group</mat-icon>
       </button>
     </div>
-    <ng-template #no_session>
-      <div class="actions-bar">
-        <button mat-button class="btn-circle" (click)="create()" title="Sitzung erstellen">
-          <mat-icon>add_to_queue</mat-icon>
-        </button>
-        <button mat-button class="btn-circle" (click)="join()" title="Sitzung beitreten">
-          <mat-icon>group</mat-icon>
-        </button>
-      </div>
-    </ng-template>
-    <div class="action-info">
-      <span *ngIf="currentSession$ | async as currentSession; else without_session">In Sitzung
-        {{currentSession.id}}</span>
-      <ng-template #without_session>Suche Sitzung</ng-template>
-    </div>
+  </ng-template>
+  <div class="action-info">
+    <span *ngIf="currentSession$ | async as currentSession; else without_session">In Sitzung
+      {{currentSession.id}}</span>
+    <ng-template #without_session>Suche Sitzung</ng-template>
   </div>
 </ng-template>
 

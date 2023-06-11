@@ -15,6 +15,7 @@ import { SimulationHelper } from './simulation-helper';
 export class SimulationContainerComponent implements OnInit {
   @Input("simulation-body") simulationBody?: TemplateRef<any>;
   @Input("simulation-controls") simulationControls?: TemplateRef<any>;
+  @Input("simulation-options") simulationOptions?: TemplateRef<any>;
   @Input("simulation-definition") simulationDefinition?: TemplateRef<any>;
   @Input("content-layout-mode") contentLayoutMode?: ContentLayoutMode;
 

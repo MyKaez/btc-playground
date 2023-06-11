@@ -1,10 +1,10 @@
 <app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
-    [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" #container>
+    [simulation-controls]="actions" [simulation-options]="options" [content-layout-mode]="contentLayoutMode" #container>
 </app-simulation-container>
 
 <ng-template #simulation>
     <ng-container *ngIf="isHandset$ | async">
-        <ng-container *ngTemplateOutlet="actions"></ng-container>
+        <div class="actions"><ng-container *ngTemplateOutlet="actions"></ng-container></div>
     </ng-container>
     <div class="simulation-console" *ngIf="container.simulation$ | async as simulation">
         <div class="console-header">
@@ -55,9 +55,7 @@
     </div>
 </ng-template>
 
-<ng-template #controls>
-    <ng-container *ngTemplateOutlet="actions"></ng-container>
-
+<ng-template #options>
     <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
@@ -140,25 +138,23 @@
 
 
 <ng-template #actions>
-    <div class="actions">
-        <div class="actions-bar">
-            <button mat-button class="btn-circle" (click)="toggleStartStop()" title="Start/Stop"><mat-icon>{{isExecuting ? "stop" : "play_arrow"}}</mat-icon></button>
-            <button mat-button class="btn-circle" (click)="clear()" [disabled]="isExecuting" title="Clear"><mat-icon>replay</mat-icon></button>
-        </div>
+    <div class="actions-bar">
+        <button mat-button class="btn-circle" (click)="toggleStartStop()" title="Start/Stop"><mat-icon>{{isExecuting ? "stop" : "play_arrow"}}</mat-icon></button>
+        <button mat-button class="btn-circle" (click)="clear()" [disabled]="isExecuting" title="Clear"><mat-icon>replay</mat-icon></button>
+    </div>
 
-        <div class="action-info">
-            <span *ngIf="totalAmountBlocks$ | async as totalAmountBlocks">
-                <span *ngIf="totalAmountBlocks > 0">Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br /></span>
-            </span>
+    <div class="action-info">
+        <span *ngIf="totalAmountBlocks$ | async as totalAmountBlocks">
+            <span *ngIf="totalAmountBlocks > 0">Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br /></span>
+        </span>
 
-            <mat-progress-bar *ngIf="isExecuting" [mode]="'indeterminate'">
+        <mat-progress-bar *ngIf="isExecuting" [mode]="'indeterminate'">
+        </mat-progress-bar>
+
+        <div *ngIf="!isExecuting">
+            <span> Bereit für Simulation. </span>
+            <mat-progress-bar [mode]="'determinate'">
             </mat-progress-bar>
-
-            <div *ngIf="!isExecuting">
-                <span> Bereit für Simulation. </span>
-                <mat-progress-bar [mode]="'determinate'">
-                </mat-progress-bar>
-            </div>
         </div>
     </div>
 </ng-template>
