@@ -73,7 +73,8 @@ export class PowOnlineComponent implements OnInit {
       id: user.id,
       className: user.status,
       status: user.status,
-      hashrate: 3
+      hashrate: 3,
+      avatarInitials: user.name.split(" ").map(part => part[0].toUpperCase()).slice(0, 2).join("")
     };
   }
 

@@ -1,5 +1,8 @@
 <div class="user-cards">
     <div class="user-card" *ngFor="let user of users$ | async">
+        <div class="user-card-avatar">
+            <span>{{user.avatarInitials}}</span>
+        </div>
         <div class="user-card-title">{{user.title}}</div>
     </div>
 </div>

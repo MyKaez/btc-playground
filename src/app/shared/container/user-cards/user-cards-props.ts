@@ -3,5 +3,6 @@ export interface UserCardProps {
     title: string;
     className?: string;
     avatarImageUrl?: string;
+    avatarInitials?: string;
     properties?: string[];
 }
