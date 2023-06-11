@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, combineLatest, map, Observable, shareReplay, startWith, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, shareReplay, startWith, switchMap, tap } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
@@ -10,7 +10,7 @@ import { NormalizedHashrate } from 'src/model/bitcoin';
 import { StringHelper } from 'src/model/text';
 import { XpaParticipant, XpaParticipantView } from '..';
 import { SimulationService } from '../simulation.service';
-import { DOUBLE_SPEND, STATE_ATTACK, XpaScenario } from './xpa-scenario';
+import { compareScenario, createScenario, DOUBLE_SPEND, STATE_ATTACK, XpaScenario } from './xpa-scenario';
 
 @Component({
   selector: 'app-xpa',
@@ -59,11 +59,8 @@ export class XpaComponent implements AfterViewInit {
     this.blocksToCompleteControl.setValue(value.blocksToComplete);
     this.cancelAttackControl.setValue(value.cancelAttack);
     this.confirmationsControl.setValue(value.confirmations);
-    if (this.preminedBlocks > 0) {
-      this.minedBlocksAttackerSubject.next(this.preminedBlocks);
-    } else if (this.preminedBlocks < 0) {
-      this.minedBlocksBitcoinSubject.next(-this.preminedBlocks);
-    }
+    this.preminedBlocksControl.setValue(value.preminedBlocks);
+    this.minedBlocksAttackerSubject.next(value.preminedBlocks);
   }
 
   isHandset$: Observable<boolean>;
@@ -74,6 +71,15 @@ export class XpaComponent implements AfterViewInit {
   totalHashRate$ = combineLatest([this.currentHashRate$, this.attackingPower$]).pipe(
     map(([cur, att]) => this.expandHashrateUnit(cur + att))
   );
+
+  scenarioTitle$ = this.inputs.valueChanges.pipe(map(inputValue => {
+    const currentScenarioSettings = createScenario(this.attackingPower, this.blocksToComplete, this.preminedBlocks, 
+      this.cancelAttack, this.confirmations);
+    let scenarioTitle = "Angepasst";
+    if(!compareScenario(currentScenarioSettings, DOUBLE_SPEND)) scenarioTitle = "Double Spend";
+    else if (!compareScenario(currentScenarioSettings, STATE_ATTACK)) scenarioTitle = "Non Profit";
+    return scenarioTitle;
+  }));
 
   bitcoinParticipant$ = combineLatest([this.inputs.valueChanges, this.minedBlocksBitcoin$, this.currentHashRate$, this.minedBlocksAttacker$]).pipe(
     map(([anyInputValue, mined, hashrate, minedByAttacker]) => this.createParticipant("Bitcoin Blockchain", mined, hashrate, "Aktuelle Bitcoin HashRate",

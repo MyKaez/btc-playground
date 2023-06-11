@@ -4,6 +4,16 @@
     height: 100%;
 }
 
+.scenario-header {
+    font-size: 12px !important;
+    font-style: italic;
+    color: $gray;
+    margin-left: $margin-large !important;
+}
+
+.simulation-controls .scenario-header { display: none; }
+.handset-layout .simulation-controls .scenario-header { display: inline; }
+
 .non-confirm {
     color: $accent-300;
 }
