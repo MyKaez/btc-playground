@@ -1,10 +1,13 @@
 
 export interface User {
-    id: string;
+    id?: string;
     name: string;
     status: UserStatus;
-    configuration?: any;
     avatarUrl?: string;
+}
+
+export interface ConfiguredUser<T> extends User {
+    configuration: T;
 }
 
 export type UserStatus = 'notReady' | 'ready';

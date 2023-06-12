@@ -17,7 +17,7 @@ import { StringHelper } from 'src/model/text';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionControlInfo, SessionInfo, User } from 'src/model/api';
 import { UserCardProps } from 'src/app/shared/container/user-cards/user-cards-props';
-import { PowOnlineUser } from './pow-online-users/pow-online-user';
+import { PowUser } from './pow-online-users/pow-online-user';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionJoinFormularComponent } from 'src/app/shared/media';
 
@@ -67,14 +67,19 @@ export class PowOnlineComponent implements OnInit {
     map(users => users.map(this.createUserCardProps))
   );
 
-  private createUserCardProps(user: User): PowOnlineUser {
+  private createUserCardProps(user: User): PowUser {
     return {
       title: user.name,
+      name: user.name,
       id: user.id,
       className: user.status,
       status: user.status,
-      hashrate: 3,
-      avatarInitials: user.name.split(" ").map(part => part[0].toUpperCase()).slice(0, 2).join("")
+      avatarInitials: user.name.split(" ").map(part => part[0].toUpperCase()).slice(0, 2).join(""),
+      configuration: {
+        cycle: 1,
+        hashes: 2,
+        hashrate: "20"
+      }
     };
   }
 

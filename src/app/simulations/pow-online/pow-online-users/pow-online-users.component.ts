@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import { User } from 'src/model/api';
-import { PowOnlineUser } from './pow-online-user';
+import { PowUser } from './pow-online-user';
 
 @Component({
   selector: 'app-pow-online-users',
@@ -9,7 +9,7 @@ import { PowOnlineUser } from './pow-online-user';
   styleUrls: ['./pow-online-users.component.scss']
 })
 export class PowOnlineUsersComponent implements OnInit {
-  @Input("users") users$?: Observable<PowOnlineUser[]>;
+  @Input("users") users$?: Observable<PowUser[]>;
 
   constructor() { }
 

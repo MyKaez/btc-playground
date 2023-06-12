@@ -1,7 +1,10 @@
 import { UserCardProps } from "src/app/shared/container/user-cards/user-cards-props";
-import { UserStatus } from "src/model/api";
+import { ConfiguredUser, UserStatus } from "src/model/api";
 
-export interface PowOnlineUser extends UserCardProps {
-    hashrate: number;    
-    status: UserStatus;
+export interface PowUser extends ConfiguredUser<PowUserConfiguration>, UserCardProps {}
+
+export interface PowUserConfiguration {
+    hashrate: string;
+    cycle: number;
+    hashes: number;
 }
