@@ -1,9 +1,9 @@
 <h2>Existing Sessions</h2>
-<div *ngFor="let session of sessions$ | async ">
-    <span>{{session.name}}</span>
-    <span>{{session.status}}</span>
-    <span>{{session.expirationTime}}</span>
+<ul *ngFor="let session of sessions$ | async ">
+    <li>{{session.name}}</li>
+    <li>{{session.status}}</li>
+    <li>{{session.expirationTime}}</li>
     <button mat-button fill="clear" (click)="openSession(session.id)">
         Open Session
     </button>
-</div>
+</ul>
