@@ -1,6 +1,6 @@
 <div>
-    <ion-textarea label="Message" labelPlacement="stacked" placeholder="Enter message" [formControl]="messageControl"
-        (keyup.enter)="sendMessage()"></ion-textarea>
+    <textarea label="Message" labelPlacement="stacked" placeholder="Enter message" [formControl]="messageControl"
+        (keyup.enter)="sendMessage()"></textarea>
     <button mat-button="clear" slot="end" (click)="sendMessage()" [disabled]="messageControl.invalid">
         Send
     </button>
