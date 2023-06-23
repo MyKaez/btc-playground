@@ -145,7 +145,7 @@ import { SessionInfoComponent } from './pages/sessions/ui/session-info/session-i
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
   constructor(appContext: AppContextService) {
     appContext.setup();
   }

@@ -23,15 +23,18 @@
     </mat-form-field>
 
     <!--div *ngIf="session.configuration?.simulationType === 'proofOfWork'">
-    <app-proof-of-work [session]="session"></app-proof-of-work>
-</div-->
+        <app-proof-of-work [session]="session"></app-proof-of-work>
+    </div-->
 
-    <!--ion-item>
-    <ion-input label="Link" labelPlacement="stacked" [value]="sessionLink" [readonly]="true"></ion-input>
-    <ion-button fill="clear" (click)="openLink()"><ion-icon name="open-outline"></ion-icon></ion-button>
-    <ion-button fill="clear" (click)="copyLink()"><ion-icon name="copy-outline"></ion-icon></ion-button>
-</ion-item>
-<ion-item>
-    <qrcode [qrdata]="sessionLink" [width]="256" [errorCorrectionLevel]="'L'" (click)="openLink()"></qrcode>
-</ion-item-->
+    <div>
+        <mat-form-field *ngIf="session.configuration">
+            <mat-label>Link</mat-label>
+            <input matInput [value]="sessionLink" [readonly]="true">
+        </mat-form-field>
+        <button mat-button fill="clear" (click)="openLink()">Open Link</button>
+        <button mat-button fill="clear" (click)="copyLink()">Copy Link</button>
+    </div>
+    <div>
+        <!--qrcode [qrdata]="sessionLink" [width]="256" [errorCorrectionLevel]="'L'" (click)="openLink()"></qrcode-->
+    </div>
 </div>
