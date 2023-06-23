@@ -70,6 +70,7 @@ import { SessionInfoComponent } from './pages/sessions/ui/session-info/session-i
 import { UserComponent } from './pages/sessions/feature/user/user.component';
 import { HashListComponent } from './pages/sessions/ui/hash-list/hash-list.component';
 import { HostComponent } from './pages/sessions/feature/host/host.component';
+import { SendMessageComponent } from './pages/sessions/ui/send-message/send-message.component';
 
 
 @NgModule({
@@ -107,7 +108,8 @@ import { HostComponent } from './pages/sessions/feature/host/host.component';
     SessionInfoComponent,
     UserComponent,
     HashListComponent,
-    HostComponent
+    HostComponent,
+    SendMessageComponent
   ],
   imports: [
     BrowserModule,
