@@ -66,6 +66,7 @@ import { AppContextService } from './core';
 import { SessionsComponent } from './pages/sessions/sessions.component';
 import { InputSessionComponent } from './pages/sessions/ui/input-session/input-session.component';
 import { SessionListComponent } from './pages/sessions/ui/session-list/session-list.component';
+import { SessionInfoComponent } from './pages/sessions/ui/session-info/session-info.component';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { SessionListComponent } from './pages/sessions/ui/session-list/session-l
     FormulaComponent,
     SessionsComponent,
     InputSessionComponent,
-    SessionListComponent
+    SessionListComponent,
+    SessionInfoComponent
   ],
   imports: [
     BrowserModule,

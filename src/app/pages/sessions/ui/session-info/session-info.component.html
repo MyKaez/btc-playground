@@ -1,0 +1,37 @@
+<h2>Session Info</h2>
+
+<div>
+    <mat-form-field>
+        <mat-label>ID</mat-label>
+        <input matInput [value]="session.id" [readonly]="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [value]="session.name" [readonly]="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Status</mat-label>
+        <input matInput [value]="session.status" [readonly]="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Expiration Time</mat-label>
+        <input matInput [value]="session.expirationTime" [readonly]="true">
+    </mat-form-field>
+    <mat-form-field *ngIf="session.configuration">
+        <mat-label>SimulationType</mat-label>
+        <input matInput [value]="session.configuration.simulationType" [readonly]="true">
+    </mat-form-field>
+
+    <!--div *ngIf="session.configuration?.simulationType === 'proofOfWork'">
+    <app-proof-of-work [session]="session"></app-proof-of-work>
+</div-->
+
+    <!--ion-item>
+    <ion-input label="Link" labelPlacement="stacked" [value]="sessionLink" [readonly]="true"></ion-input>
+    <ion-button fill="clear" (click)="openLink()"><ion-icon name="open-outline"></ion-icon></ion-button>
+    <ion-button fill="clear" (click)="copyLink()"><ion-icon name="copy-outline"></ion-icon></ion-button>
+</ion-item>
+<ion-item>
+    <qrcode [qrdata]="sessionLink" [width]="256" [errorCorrectionLevel]="'L'" (click)="openLink()"></qrcode>
+</ion-item-->
+</div>
