@@ -3,13 +3,28 @@
         Leave Session
     </button>
 
-    <div *ngIf="vm.isSessionHost;else userView">
-        DISPLAY ACTIONS FOR HOST
-    </div>
-    <ng-template #userView>
-        <app-user [session]="vm.session" [(user)]="vm.user" [hubConnection]="vm.connection"></app-user>
-    </ng-template>
-    <app-session-info [session]="vm.session"></app-session-info>
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Session
+            </ng-template>
+            <app-session-info [session]="vm.session"></app-session-info>
+        </mat-tab>
+
+        <mat-tab *ngIf="vm.isSessionHost">
+            <ng-template mat-tab-label>
+                Session Action
+            </ng-template>
+            DISPLAY ACTIONS FOR HOST
+        </mat-tab>
+
+        <mat-tab *ngIf="!vm.isSessionHost">
+            <ng-template mat-tab-label>
+                User
+            </ng-template>
+            <app-user [session]="vm.session" [(user)]="vm.user" [hubConnection]="vm.connection"></app-user>
+        </mat-tab>
+    </mat-tab-group>
     <!--ion-segment value="session-info" [(ngModel)]="type">
         <ion-segment-button value="session-info">
             <ion-label>Session</ion-label>
