@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, catchError, combineLatest, delay, filter, map, merge, of, shareReplay, switchMap, take, tap } from 'rxjs';
 import { ConnectionService } from 'src/app/core/connection.service';
@@ -27,7 +27,7 @@ export class SessionsComponent {
   type: 'session-info' | 'message-center' | 'user-action' = 'session-info';
   messages: Message[] = [];
   getSessionById$ = this.route.params.pipe(
-    map(p => p['id']),
+    map(p => p['sessionId']),
     filter(sessionId => sessionId !== undefined && sessionId !== null),
     switchMap(p => this.sessionService.getSession(p).pipe(
       catchError(error => {
