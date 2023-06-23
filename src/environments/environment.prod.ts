@@ -6,7 +6,9 @@ export const environment = {
   presentationMode: true,
   environmentName: "prod",
   simulations: [FormulaComponent.title, XpaComponent.title],
-  debugImages: false
+  debugImages: false,
+  btcApi: 'https://api.btcis.me',
+  //btcApi: 'https://localhost:5001',
 };
 
 export class Config {

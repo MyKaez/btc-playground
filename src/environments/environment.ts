@@ -8,7 +8,9 @@ export const environment = {
   presentationMode: false,
   environmentName: "default",
   simulations: undefined,
-  debugImages: false
+  debugImages: false,
+  btcApi: 'https://api.btcis.me',
+  //btcApi: 'https://localhost:5001',
 };
 
 export class Config {
