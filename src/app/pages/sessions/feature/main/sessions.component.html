@@ -8,6 +8,7 @@
             <ng-template mat-tab-label>
                 Session
             </ng-template>
+            <app-host [vm]="vm"></app-host>
             <app-session-info [session]="vm.session"></app-session-info>
         </mat-tab>
 
@@ -24,32 +25,15 @@
             </ng-template>
             <app-user [session]="vm.session" [(user)]="vm.user" [hubConnection]="vm.connection"></app-user>
         </mat-tab>
-    </mat-tab-group>
-    <!--ion-segment value="session-info" [(ngModel)]="type">
-        <ion-segment-button value="session-info">
-            <ion-label>Session</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="user-action" *ngIf="!vm.isSessionHost">
-            <ion-label>User</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="message-center" *ngIf="vm.user || vm.isSessionHost">
-            <ion-label>Message Center</ion-label>
-        </ion-segment-button>
-    </ion-segment-->
 
-    <!--div [ngSwitch]="type">
-        <div *ngSwitchCase="'session-info'">
-            <app-session-info [session]="vm.session"></app-session-info>
-            <app-user-info [session]="vm.session"></app-user-info>
-        </div>
-        <div *ngSwitchCase="'user-action'">
-            <app-user [session]="vm.session" [user]="vm.user" [hubConnection]="vm.connection"
-                (userChange)="vm.user = $event" #userView></app-user>
-        </div>
-        <div *ngSwitchCase="'message-center'">
-            <app-message-center [session]="vm.session" [user]="vm.user" [messages]="messages"></app-message-center>
-        </div>
-    </div-->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Message Center
+            </ng-template>
+            <!--app-message-center [session]="vm.session" [user]="vm.user" [messages]="messages"></app-message-center-->
+        </mat-tab>
+
+    </mat-tab-group>
 </div>
 
 <ng-template #noSession>

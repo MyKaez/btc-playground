@@ -69,6 +69,7 @@ import { SessionListComponent } from './pages/sessions/ui/session-list/session-l
 import { SessionInfoComponent } from './pages/sessions/ui/session-info/session-info.component';
 import { UserComponent } from './pages/sessions/feature/user/user.component';
 import { HashListComponent } from './pages/sessions/ui/hash-list/hash-list.component';
+import { HostComponent } from './pages/sessions/feature/host/host.component';
 
 
 @NgModule({
@@ -105,7 +106,8 @@ import { HashListComponent } from './pages/sessions/ui/hash-list/hash-list.compo
     SessionListComponent,
     SessionInfoComponent,
     UserComponent,
-    HashListComponent
+    HashListComponent,
+    HostComponent
   ],
   imports: [
     BrowserModule,
