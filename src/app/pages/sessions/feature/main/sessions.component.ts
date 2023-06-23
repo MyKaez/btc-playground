@@ -20,8 +20,9 @@ export class SessionsComponent {
   private load = new Subject<boolean>();
 
   constructor(
-    private route: ActivatedRoute, private router: Router,
-    private sessionService: SessionService, private connectionService: ConnectionService) {
+    private route: ActivatedRoute,
+    private sessionService: SessionService,
+    private connectionService: ConnectionService) {
   }
 
   type: 'session-info' | 'message-center' | 'user-action' = 'session-info';
@@ -32,7 +33,7 @@ export class SessionsComponent {
     switchMap(p => this.sessionService.getSession(p).pipe(
       catchError(error => {
         if (error.status === 404) {
-          this.router.navigate(['/session']);
+          // this.router.navigate(['/session']);
           return of(undefined);
         } else {
           throw error;
@@ -87,8 +88,11 @@ export class SessionsComponent {
 
   logOut() {
     localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
-    window.location.reload();
-    //this.router.navigate(['/log-out/session'])
+    let url = window.location.href ?? '';
+    if (url.includes('/sessions/')) {
+      url = url.substring(0, url.indexOf('/sessions/'));
+    }
+    window.open(url, '_self');
   }
 
   registerSession(sessionName: string): void {
