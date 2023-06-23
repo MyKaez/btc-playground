@@ -63,7 +63,7 @@ import { PowDefinitionComponent } from './simulations/pow/definition/pow-definit
 import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.component';
 import { FormulaComponent } from './simulations/formula/formula.component';
 import { AppContextService } from './core';
-import { SessionsComponent } from './pages/sessions/sessions.component';
+import { SessionsComponent } from './pages/sessions/feature/main/sessions.component';
 import { InputSessionComponent } from './pages/sessions/ui/input-session/input-session.component';
 import { SessionListComponent } from './pages/sessions/ui/session-list/session-list.component';
 import { SessionInfoComponent } from './pages/sessions/ui/session-info/session-info.component';
