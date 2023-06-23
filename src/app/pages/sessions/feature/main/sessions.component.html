@@ -2,21 +2,14 @@
     <button mat-button fill="clear" (click)="logOut()">
         Leave Session
     </button>
+    <app-host [vm]="vm"></app-host>
 
     <mat-tab-group>
         <mat-tab>
             <ng-template mat-tab-label>
                 Session
             </ng-template>
-            <app-host [vm]="vm"></app-host>
             <app-session-info [session]="vm.session"></app-session-info>
-        </mat-tab>
-
-        <mat-tab *ngIf="vm.isSessionHost">
-            <ng-template mat-tab-label>
-                Session Action
-            </ng-template>
-            DISPLAY ACTIONS FOR HOST
         </mat-tab>
 
         <mat-tab *ngIf="!vm.isSessionHost">
