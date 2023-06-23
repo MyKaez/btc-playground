@@ -25,12 +25,13 @@ export class SimulationContainerComponent implements OnInit {
   isHandset$: Observable<boolean>;
   simulation$ = this.simulationService.getSimulationsStream().pipe(
     map(simulations => {
-      const currentRoute = this.router.url.substring(1);
+      const parts = this.router.url.substring(1).split('/');
+      const currentRoute = `${parts[0]}/${parts[1]}`;
       const sim = simulations.find(sim => sim.navigationLink === currentRoute);
-      console.log(`current simulation: ${sim?.title}`);
+      console.log(`current simulation: ${sim?.title} `);
       return sim;
     })
-  );    
+  );
 
   showImageContainer$ = this.simulation$.pipe(map(sim => sim?.imageSrc || sim?.youtubeSrc));
   showVideo$ = this.simulation$.pipe(map(sim => sim?.youtubeSrc && !sim?.imageSrc));
