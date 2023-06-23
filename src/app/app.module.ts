@@ -64,6 +64,8 @@ import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.
 import { FormulaComponent } from './simulations/formula/formula.component';
 import { AppContextService } from './core';
 import { SessionsComponent } from './pages/sessions/sessions.component';
+import { InputSessionComponent } from './pages/sessions/ui/input-session/input-session.component';
+import { SessionListComponent } from './pages/sessions/ui/session-list/session-list.component';
 
 
 @NgModule({
@@ -95,7 +97,9 @@ import { SessionsComponent } from './pages/sessions/sessions.component';
     XpaDefinitionComponent,
     SimulationContainerComponent,
     FormulaComponent,
-    SessionsComponent
+    SessionsComponent,
+    InputSessionComponent,
+    SessionListComponent
   ],
   imports: [
     BrowserModule,

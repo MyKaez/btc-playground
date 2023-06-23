@@ -1,1 +1,42 @@
-<p>sessions works!</p>
+<div *ngIf="vm$ | async as vm;else noSession">
+    <button mat-button fill="clear" (click)="logOut()">
+        Leave Session
+    </button>
+    <!--ion-segment value="session-info" [(ngModel)]="type">
+        <ion-segment-button value="session-info">
+            <ion-label>Session</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="user-action" *ngIf="!vm.isSessionHost">
+            <ion-label>User</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="message-center" *ngIf="vm.user || vm.isSessionHost">
+            <ion-label>Message Center</ion-label>
+        </ion-segment-button>
+    </ion-segment-->
+
+    <!--div [ngSwitch]="type">
+        <div *ngSwitchCase="'session-info'">
+            <app-session-info [session]="vm.session"></app-session-info>
+            <app-user-info [session]="vm.session"></app-user-info>
+        </div>
+        <div *ngSwitchCase="'user-action'">
+            <app-user [session]="vm.session" [user]="vm.user" [hubConnection]="vm.connection"
+                (userChange)="vm.user = $event" #userView></app-user>
+        </div>
+        <div *ngSwitchCase="'message-center'">
+            <app-message-center [session]="vm.session" [user]="vm.user" [messages]="messages"></app-message-center>
+        </div>
+    </div-->
+</div>
+
+<ng-template #noSession>
+    <div *ngIf="loading$ | async;else enterData">
+        Loading...
+    </div>
+    <ng-template #enterData>
+        Please create a session or hook up into an existing one<br />
+        <app-input-session (nameChange)="registerSession($event)"></app-input-session>
+        <app-session-list></app-session-list>
+    </ng-template>
+
+</ng-template>

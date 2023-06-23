@@ -1,0 +1,12 @@
+<h2>Register Session</h2>
+<div *ngIf="nameControl$ | async as name">
+
+    <mat-form-field appearance="fill">
+        <mat-label>Session Name</mat-label>
+        <input matInput [formControl]="nameControl" (keyup.enter)="nameChange.emit(name)" />
+    </mat-form-field>
+
+    <button mat-button fill="clear" slot="end" (click)="nameChange.emit(name)" [disabled]="nameControl.invalid">
+        Create Session
+    </button>
+</div>
