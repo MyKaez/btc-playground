@@ -24,7 +24,8 @@ export class MessageCenterComponent {
         subscription.unsubscribe();
       });
     } else if ('controlId' in this.session) {
-      const sessionControl = { ...this.session, controlId: <string>this.session.controlId };
+      const cast = <any>this.session;
+      const sessionControl = { ...this.session, controlId: <string>cast.controlId };
       const subscription = this.sessionService.sendMessage(sessionControl, message).subscribe(() => {
         subscription.unsubscribe();
       });
