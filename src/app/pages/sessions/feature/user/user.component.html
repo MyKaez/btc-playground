@@ -1,0 +1,50 @@
+<h2>User Actions</h2>
+
+<div *ngIf="user || (user$ | async) as user;else noUser">
+    <ul>
+        <li>ID: {{user.id}}</li>
+        <li>Name: {{user.name}}</li>
+        <li>Status: {{user.status}}</li>
+    </ul>
+
+    <h3>Personal Session Data</h3>
+
+    <div [ngSwitch]="session.status">
+        <div *ngSwitchCase="'notStarted'">
+            Session hasn't started yet...
+        </div>
+        <div *ngSwitchCase="'preparing'">
+            <div>
+                <input matInput [readonly]="true" [formControl]="hashRateControl" />
+                <button mat-button fill="clear" slot="end" (click)="determine()">
+                    determine
+                </button>
+            </div>
+            <app-hash-list [session]="session" [user]="user" #hashList></app-hash-list>
+        </div>
+        <div *ngSwitchCase="'started'">
+            <app-hash-list [session]="session" [user]="user" [go]="true" (blockFound)="blockFound($event)"
+                #hashList></app-hash-list>
+        </div>
+        <div *ngSwitchCase="'stopped'">
+            <app-hash-list [session]="session" [user]="user" #hashList></app-hash-list>
+        </div>
+    </div>
+
+</div>
+<ng-template #noUser>
+    <div *ngIf="loading$ | async;else enterData">
+        Loading...
+    </div>
+    <ng-template #enterData>
+        Please register as user
+
+        <div>
+            <input matInput (keyup.enter)="registerUser()" [formControl]="userNameControl" />
+            <button mat-button fill="clear" slot="end" (click)="registerUser()" [disabled]="userNameControl.invalid">
+                Register
+            </button>
+        </div>
+
+    </ng-template>
+</ng-template>

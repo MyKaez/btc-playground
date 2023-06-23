@@ -67,6 +67,8 @@ import { SessionsComponent } from './pages/sessions/feature/main/sessions.compon
 import { InputSessionComponent } from './pages/sessions/ui/input-session/input-session.component';
 import { SessionListComponent } from './pages/sessions/ui/session-list/session-list.component';
 import { SessionInfoComponent } from './pages/sessions/ui/session-info/session-info.component';
+import { UserComponent } from './pages/sessions/feature/user/user.component';
+import { HashListComponent } from './pages/sessions/ui/hash-list/hash-list.component';
 
 
 @NgModule({
@@ -101,7 +103,9 @@ import { SessionInfoComponent } from './pages/sessions/ui/session-info/session-i
     SessionsComponent,
     InputSessionComponent,
     SessionListComponent,
-    SessionInfoComponent
+    SessionInfoComponent,
+    UserComponent,
+    HashListComponent
   ],
   imports: [
     BrowserModule,

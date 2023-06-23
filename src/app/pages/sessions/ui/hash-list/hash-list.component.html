@@ -1,0 +1,32 @@
+<div *ngIf="session?.status === 'stopped';else work">
+    <div *ngIf="user?.status === 'notReady';else userView">
+        Session is over, please wait until next round!
+    </div>
+    <ng-template #userView>
+        <span *ngIf="isMe" class="winner">
+            WIN!!!!
+        </span>
+        <span *ngIf="!isMe" class="loser">
+            LOSE!!!!
+        </span>
+        <ul>
+            <li>
+                <input matInput [readonly]="true" [value]="winner" />
+            </li>
+            <li>
+                <input matInput [readonly]="true" [value]="winnerBlock.text" />
+            </li>
+            <li>
+                <input matInput [readonly]="true" [value]="winnerBlock.hash">
+            </li>
+        </ul>
+    </ng-template>
+</div>
+<ng-template #work>
+    <ul>
+        <li *ngFor="let block of blocks">
+            <input matInput [value]="block.text" [readonly]="true" />
+            <input matInput labelPlacement="stacked" [value]="block.hash" [readonly]="true" />
+        </li>
+    </ul>
+</ng-template>
