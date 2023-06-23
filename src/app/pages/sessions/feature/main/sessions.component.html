@@ -3,6 +3,12 @@
         Leave Session
     </button>
 
+    <div *ngIf="vm.isSessionHost;else userView">
+        DISPLAY ACTIONS FOR HOST
+    </div>
+    <ng-template #userView>
+        <app-user [session]="vm.session" [(user)]="vm.user" [hubConnection]="vm.connection"></app-user>
+    </ng-template>
     <app-session-info [session]="vm.session"></app-session-info>
     <!--ion-segment value="session-info" [(ngModel)]="type">
         <ion-segment-button value="session-info">
