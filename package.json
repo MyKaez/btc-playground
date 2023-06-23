@@ -30,6 +30,7 @@
     "@coreui/icons": "^2.1.0",
     "@coreui/icons-angular": "^4.2.4",
     "@material/snackbar": "^14.0.0",
+    "@microsoft/signalr": "^7.0.7",
     "c": "^1.1.1",
     "ngx-color-picker": "^13.0.0",
     "rxjs": "~7.5.0",
