@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from 'src/app/core/session.service';
 
@@ -19,7 +19,6 @@ export class SessionListComponent {
       .replace('https://', '');
     baseUrl = baseUrl.substring(baseUrl.indexOf('/'));
     const sessionUrl = baseUrl + '/sessions/' + sessionId;
-    alert(sessionUrl)
     this.router.navigate([sessionUrl]);
   }
 }
