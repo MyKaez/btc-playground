@@ -9,7 +9,7 @@
             <div class="info-card simulation-definition">
                 <div *ngIf="showImageContainer$ | async" class="video-explanation">
                     <youtube-player *ngIf="showVideo$ | async" [videoId]="simulation.youtubeSrc"></youtube-player>
-                    <img *ngIf="!(showVideo$ | async)" [src]="simulation.imageSrc"/>
+                    <img *ngIf="!(showVideo$ | async)" [src]="simulation.imageSrc" />
                 </div>
                 <div *ngIf="simulationDefinition" class="text-explanation">
                     <ng-container [ngTemplateOutlet]="simulationDefinition"></ng-container>
@@ -30,6 +30,18 @@
                 <div *ngIf="simulationBody" class="simulation">
                     <ng-container [ngTemplateOutlet]="simulationBody"></ng-container>
                 </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="mat-tab-label">Session</span>
+            </ng-template>
+
+            <div class="info-card simulation-definition">
+
+                Session data will be displayed here
+
             </div>
         </mat-tab>
 
