@@ -14,6 +14,12 @@ export class SessionListComponent {
   sessions$ = this.sessionService.getAll().pipe();
 
   openSession(sessionId: string) {
-    this.router.navigate(['/session/' + sessionId]);
+    let baseUrl = window.location.href
+      .replace('http://', '')
+      .replace('https://', '');
+    baseUrl = baseUrl.substring(baseUrl.indexOf('/'));
+    const sessionUrl = baseUrl + '/sessions/' + sessionId;
+    alert(sessionUrl)
+    this.router.navigate([sessionUrl]);
   }
 }
