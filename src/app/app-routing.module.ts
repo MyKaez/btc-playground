@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'simulations', component: SimulationsComponent },
   { path: 'simulations/pow', component: PowComponent },
   { path: 'simulations/pow/:tab', component: PowComponent },
+  { path: 'simulations/pow/sessions/:sessionId', component: PowComponent },
   { path: 'simulations/xpa', component: XpaComponent },
   { path: 'simulations/rof', component: RingOfFireComponent },
   { path: 'simulations/blocksize', component: BlocksizeComponent },
