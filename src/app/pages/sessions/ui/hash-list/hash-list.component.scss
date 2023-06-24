@@ -1,0 +1,9 @@
+@import "/src/styles.scss";
+
+.block {
+    direction: flex;
+    margin: $margin-small;
+    // fill the available space
+    flex: 1 1 auto;
+    width: 100%;
+}

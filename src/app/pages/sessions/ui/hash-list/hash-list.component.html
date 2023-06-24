@@ -11,22 +11,38 @@
         </span>
         <ul>
             <li>
-                <input matInput [readonly]="true" [value]="winner" />
+                <mat-form-field>
+                    <mat-label>Winner</mat-label>
+                    <input matInput [value]="winner" [readonly]="true">
+                </mat-form-field>
             </li>
             <li>
-                <input matInput [readonly]="true" [value]="winnerBlock.text" />
+                <mat-form-field>
+                    <mat-label>Text</mat-label>
+                    <input matInput [value]="winnerBlock.text" [readonly]="true">
+                </mat-form-field>
             </li>
             <li>
-                <input matInput [readonly]="true" [value]="winnerBlock.hash">
+                <mat-form-field>
+                    <mat-label>Hash</mat-label>
+                    <input matInput [value]="winnerBlock.hash" [readonly]="true">
+                </mat-form-field>
             </li>
         </ul>
     </ng-template>
 </div>
 <ng-template #work>
-    <ul>
-        <li *ngFor="let block of blocks">
-            <input matInput [value]="block.text" [readonly]="true" />
-            <input matInput labelPlacement="stacked" [value]="block.hash" [readonly]="true" />
-        </li>
-    </ul>
+    <div *ngFor="let block of blocks" class="block">
+
+        <mat-form-field>
+            <mat-label>Text</mat-label>
+            <input matInput [value]="block.text" [readonly]="true">
+        </mat-form-field>
+        -
+        <mat-form-field>
+            <mat-label>Hash</mat-label>
+            <input matInput [value]="block.hash" [readonly]="true">
+        </mat-form-field>
+
+    </div>
 </ng-template>
