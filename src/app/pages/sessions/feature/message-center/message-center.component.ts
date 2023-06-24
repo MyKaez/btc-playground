@@ -19,6 +19,9 @@ export class MessageCenterComponent {
   constructor(private sessionService: SessionService, private userService: UserService) { }
 
   sendMessage(message: Message): void {
+    if ((message.text?.trimEnd() ?? '') === '') {
+      return;
+    }
     if (this.user) {
       const subscription = this.userService.sendMessage(this.session.id, this.user, message).subscribe(() => {
         subscription.unsubscribe();
