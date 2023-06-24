@@ -39,6 +39,9 @@ export class SimulationContainerComponent implements OnInit {
           this.toSessions(this);
         } else if (tab === 'options') {
           this.toOptions(this);
+        } else {
+          console.log('unknown tab: ' + tab);
+          this.toSimulation(this);
         }
       }
 
