@@ -18,7 +18,11 @@ export class SessionListComponent {
       .replace('http://', '')
       .replace('https://', '');
     baseUrl = baseUrl.substring(baseUrl.indexOf('/'));
-    const sessionUrl = baseUrl + '/sessions/' + sessionId;
+    let sessionUrl = baseUrl;
+    if (baseUrl.includes('sessions'))
+      sessionUrl += '/' + sessionId;
+    else
+      sessionUrl += '/sessions/' + sessionId;
     this.router.navigate([sessionUrl]);
   }
 }
