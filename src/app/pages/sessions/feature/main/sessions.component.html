@@ -5,12 +5,19 @@
     <app-host [vm]="vm" *ngIf="vm.isSessionHost"></app-host>
     <app-host-info [vm]="vm" *ngIf="!vm.isSessionHost"></app-host-info>
 
-    <mat-tab-group [selectedIndex]="vm.isSessionHost ? 0 : 1">
+    <mat-tab-group [selectedIndex]="vm.isSessionHost ? 0 : 2">
         <mat-tab>
             <ng-template mat-tab-label>
                 Session
             </ng-template>
             <app-session-info [session]="vm.session"></app-session-info>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Session Users
+            </ng-template>
+            <app-user-list [users]="vm.session.users"></app-user-list>
         </mat-tab>
 
         <mat-tab *ngIf="!vm.isSessionHost">
