@@ -21,6 +21,7 @@ export class SessionsComponent {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private sessionService: SessionService,
     private connectionService: ConnectionService) {
   }
@@ -33,7 +34,15 @@ export class SessionsComponent {
     switchMap(p => this.sessionService.getSession(p).pipe(
       catchError(error => {
         if (error.status === 404) {
-          // this.router.navigate(['/session']);
+          let sessionUrl = window.location.href
+            .replace('http://', '')
+            .replace('https://', '');
+          sessionUrl = sessionUrl.substring(sessionUrl.indexOf('/'));
+          if (sessionUrl.includes('/sessions/')) {
+            localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
+            sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
+          }
+          this.router.navigate([sessionUrl]);
           return of(undefined);
         } else {
           throw error;
