@@ -72,6 +72,7 @@ import { HashListComponent } from './pages/sessions/ui/hash-list/hash-list.compo
 import { HostComponent } from './pages/sessions/feature/host/host.component';
 import { SendMessageComponent } from './pages/sessions/ui/send-message/send-message.component';
 import { MessageCenterComponent } from './pages/sessions/feature/message-center/message-center.component';
+import { HostInfoComponent } from './pages/sessions/ui/host-info/host-info.component';
 
 
 @NgModule({
@@ -111,7 +112,8 @@ import { MessageCenterComponent } from './pages/sessions/feature/message-center/
     HashListComponent,
     HostComponent,
     SendMessageComponent,
-    MessageCenterComponent
+    MessageCenterComponent,
+    HostInfoComponent
   ],
   imports: [
     BrowserModule,

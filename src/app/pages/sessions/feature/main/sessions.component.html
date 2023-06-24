@@ -2,7 +2,8 @@
     <button mat-button fill="clear" (click)="logOut()">
         Leave Session
     </button>
-    <app-host [vm]="vm"></app-host>
+    <app-host [vm]="vm" *ngIf="vm.isSessionHost"></app-host>
+    <app-host-info [vm]="vm" *ngIf="!vm.isSessionHost"></app-host-info>
 
     <mat-tab-group [selectedIndex]="vm.isSessionHost ? 0 : 1">
         <mat-tab>
