@@ -14,7 +14,9 @@ export class SessionInfoComponent {
     const sessionId = this.session.id;
     if (window.location.href.includes(sessionId))
       return window.location.href;
-    return window.location.href + '/' + sessionId;
+    if (window.location.href.includes('sessions'))
+      return window.location.href + '/' + sessionId;
+    return window.location.href + '/sessions/' + sessionId;
   }
 
   openLink(): void {
