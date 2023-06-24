@@ -4,7 +4,7 @@
     </button>
     <app-host [vm]="vm"></app-host>
 
-    <mat-tab-group>
+    <mat-tab-group [selectedIndex]="vm.isSessionHost ? 0 : 1">
         <mat-tab>
             <ng-template mat-tab-label>
                 Session
