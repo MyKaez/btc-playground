@@ -1,1 +1,4 @@
-<p>config-info works!</p>
+<mat-form-field *ngFor="let key of keys">
+    <mat-label>{{key}}</mat-label>
+    <input matInput [value]="config[key]" [readonly]="true">
+</mat-form-field>
