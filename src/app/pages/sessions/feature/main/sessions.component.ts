@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, catchError, combineLatest, delay, filter, map, merge, of, shareReplay, switchMap, take, tap } from 'rxjs';
 import { ConnectionService } from 'src/app/core/connection.service';
@@ -15,6 +15,8 @@ import { ViewModel } from 'src/app/models/view-model';
 export class SessionsComponent {
 
   private static readonly LOCAL_STORAGE = 'sessionHost';
+
+  @Input("simulationType") simulationType !: string;
 
   private session = new Subject<Session>();
   private load = new Subject<boolean>();
