@@ -74,6 +74,7 @@ import { SendMessageComponent } from './pages/sessions/ui/send-message/send-mess
 import { MessageCenterComponent } from './pages/sessions/feature/message-center/message-center.component';
 import { HostInfoComponent } from './pages/sessions/ui/host-info/host-info.component';
 import { UserListComponent } from './pages/sessions/ui/user-list/user-list.component';
+import { ConfigInfoComponent } from './pages/sessions/ui/config-info/config-info.component';
 
 
 @NgModule({
@@ -115,7 +116,8 @@ import { UserListComponent } from './pages/sessions/ui/user-list/user-list.compo
     SendMessageComponent,
     MessageCenterComponent,
     HostInfoComponent,
-    UserListComponent
+    UserListComponent,
+    ConfigInfoComponent
   ],
   imports: [
     BrowserModule,
