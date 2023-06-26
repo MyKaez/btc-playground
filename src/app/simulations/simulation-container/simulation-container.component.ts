@@ -16,6 +16,7 @@ export class SimulationContainerComponent implements OnInit {
   @Input("simulation-body") simulationBody?: TemplateRef<any>;
   @Input("simulation-controls") simulationControls?: TemplateRef<any>;
   @Input("simulation-definition") simulationDefinition?: TemplateRef<any>;
+  @Input("simulation-session") simulationSessions?: TemplateRef<any>;
   @Input("content-layout-mode") contentLayoutMode?: ContentLayoutMode;
 
   private startSimulationListener?: Subscription;

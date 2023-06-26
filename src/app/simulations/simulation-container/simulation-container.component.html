@@ -33,15 +33,13 @@
             </div>
         </mat-tab>
 
-        <mat-tab>
+        <mat-tab *ngIf="simulationSessions">
             <ng-template mat-tab-label>
                 <span class="mat-tab-label">Session</span>
             </ng-template>
 
-            <div class="info-card simulation-definition">
-
-                <app-sessions></app-sessions>
-
+            <div class="info-card simulation-sessions">
+                <ng-container [ngTemplateOutlet]="simulationSessions"></ng-container>
             </div>
         </mat-tab>
 

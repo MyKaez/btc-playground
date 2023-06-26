@@ -1,5 +1,6 @@
 <app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
-  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" #container></app-simulation-container>
+  [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" [simulation-session]="sessions"
+  #container></app-simulation-container>
 
 <ng-template #simulation>
   <ng-container *ngIf="(layout.isSmallScreen$ | async)">
@@ -165,12 +166,14 @@
 </ng-template>
 
 <ng-template #actions>
-  <div class="actions" *ngIf="probability$ | async as probability">    
+  <div class="actions" *ngIf="probability$ | async as probability">
     <div class="actions-bar">
-      <button mat-button class="btn-circle" (click)="toggleStartStop(probability)" title="Start/Stop" [disabled]="formGroup.invalid">
+      <button mat-button class="btn-circle" (click)="toggleStartStop(probability)" title="Start/Stop"
+        [disabled]="formGroup.invalid">
         <mat-icon>{{isExecuting ? "stop" : "play_arrow"}}</mat-icon>
       </button>
-      <button mat-button class="btn-circle" (click)="clear()" [disabled]="isExecuting" title="Clear"><mat-icon>replay</mat-icon></button>
+      <button mat-button class="btn-circle" (click)="clear()" [disabled]="isExecuting"
+        title="Clear"><mat-icon>replay</mat-icon></button>
     </div>
     <div class="action-info">
       <span *ngIf="hashCount > 0">
@@ -191,4 +194,8 @@
 
 <ng-template #definition>
   <app-pow-definition></app-pow-definition>
+</ng-template>
+
+<ng-template #sessions>
+  <app-sessions></app-sessions>
 </ng-template>
