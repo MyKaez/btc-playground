@@ -22,9 +22,9 @@
         <input matInput [value]="session.configuration.simulationType" [readonly]="true">
     </mat-form-field>
 
-    <!--div *ngIf="session.configuration?.simulationType === 'proofOfWork'">
-        <app-proof-of-work [session]="session"></app-proof-of-work>
-    </div-->
+    <div *ngIf="session.configuration">
+        <app-config-info [config]="session.configuration"></app-config-info>
+    </div>
 
     <div>
         <mat-form-field *ngIf="session.configuration">
