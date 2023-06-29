@@ -2,12 +2,14 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { XpaComponent } from "src/app/simulations";
+
 export const environment = {
-  production: false,
-  beta: false,
+  production: true,
+  beta: true,
   presentationMode: false,
+  simulations: [XpaComponent.title],
   environmentName: "default",
-  simulations: undefined,
   debugImages: false
 };
 

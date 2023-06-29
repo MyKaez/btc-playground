@@ -4,9 +4,9 @@ export const environment = {
   production: true,
   beta: true,
   presentationMode: false,
-  environmentName: "plebs",
   simulations: [XpaComponent.title],
-  debugImages: false
+  debugImages: false,
+  environmentName: "plebs"
 };
 
 export class Config {

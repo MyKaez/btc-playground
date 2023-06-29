@@ -35,8 +35,9 @@ export class SimulationService {
         }, {
             title: XpaComponent.title,
             description: "Mit BitCoins zahlen ohne zu zahlen.",
-            imageSrc: "assets/img/simulations/sim-xpa-title.jpg",
-            youtubeSrc: "-adMIa1jV80",
+            //imageSrc: "assets/img/simulations/sim-xpa-title.jpg",
+            imageSrc: undefined,
+            youtubeSrc: "y2Qxss9XO8Q",
             navigationLink: "simulations/xpa"
         }, {
             title: "Ring Of Fire",

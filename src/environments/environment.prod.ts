@@ -2,10 +2,10 @@ import { FormulaComponent, XpaComponent } from "src/app/simulations";
 
 export const environment = {
   production: true,
-  beta: false,
-  presentationMode: true,
+  beta: true,
+  presentationMode: false,
+  simulations: [XpaComponent.title],
   environmentName: "prod",
-  simulations: [FormulaComponent.title, XpaComponent.title],
   debugImages: false
 };
 
