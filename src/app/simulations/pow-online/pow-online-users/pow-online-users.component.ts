@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
-import { User } from 'src/model/api';
+import { Session, SessionStatus, User } from 'src/model/api';
 import { PowUser } from './pow-online-user';
 
 @Component({
@@ -10,8 +10,10 @@ import { PowUser } from './pow-online-user';
 })
 export class PowOnlineUsersComponent implements OnInit {
   @Input("users") users$?: Observable<PowUser[]>;
+  @Input("sessionStatus") sessionStatus = "notStarted";
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit(): void {
   }

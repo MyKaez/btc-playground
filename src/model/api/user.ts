@@ -4,6 +4,7 @@ export interface User {
     name: string;
     status: UserStatus;
     avatarUrl?: string;
+    isCurrent?: boolean;
 }
 
 export interface ConfiguredUser<T> extends User {
