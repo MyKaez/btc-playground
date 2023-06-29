@@ -34,7 +34,7 @@ export class SimulationService {
             navigationLink: "simulations/pow"
         }, {
             title: XpaComponent.title,
-            description: "Mit BitCoins zahlen ohne zu zahlen.",
+            description: "Die bekannteste Attacke auf Bitcoin.",
             //imageSrc: "assets/img/simulations/sim-xpa-title.jpg",
             imageSrc: undefined,
             youtubeSrc: "y2Qxss9XO8Q",
