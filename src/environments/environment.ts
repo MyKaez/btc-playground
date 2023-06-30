@@ -10,7 +10,8 @@ export const environment = {
   presentationMode: false,
   simulations: [XpaComponent.title],
   environmentName: "default",
-  debugImages: false
+  debugImages: false,
+  useHttpsRouting: false
 };
 
 export class Config {

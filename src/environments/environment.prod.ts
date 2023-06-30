@@ -6,7 +6,8 @@ export const environment = {
   presentationMode: false,
   simulations: [XpaComponent.title],
   environmentName: "prod",
-  debugImages: false
+  debugImages: false,
+  useHttpsRouting: true
 };
 
 export class Config {

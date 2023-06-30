@@ -63,6 +63,7 @@ import { PowDefinitionComponent } from './simulations/pow/definition/pow-definit
 import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.component';
 import { FormulaComponent } from './simulations/formula/formula.component';
 import { AppContextService } from './core';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -138,7 +139,15 @@ import { AppContextService } from './core';
   bootstrap: [AppComponent]
 })
 export class AppModule { 
-  constructor(appContext: AppContextService) {
+  constructor(appContext: AppContextService) {   
+    this.ensureHttps();
     appContext.setup();
+  }
+
+  /** Quick and dirty rerouting to https to ensure https. Should be replaced by a server rule */
+  private ensureHttps() {
+    if(!environment.useHttpsRouting) return;
+    if(window.location.protocol !== "http:") return;
+    window.location.protocol = "https:";
   }
 }
