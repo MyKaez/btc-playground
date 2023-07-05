@@ -10,16 +10,20 @@ import { PowConfig } from '../models/pow-config';
 export class PowService {
 
   blocks: Block[] = [];
+  isExecuting: boolean = false;
 
-  async findBlock(runId: string, config: PowConfig): Promise<Block> {
-    let overallHashRate = 0;
+  async findBlock(runId: string, config: PowConfig): Promise<Block | undefined> {
+    this.isExecuting = true;
+    let amountOfBlocks = 0;
     const id = runId.split('-')[0];
     const timestamp = new Date().toISOString();
     const template = `${id}_${timestamp}_`;
-    this.blocks.length = 0;
     do {
-      overallHashRate++;
-      const text = template + overallHashRate;
+      if (!this.isExecuting) {
+        return undefined;
+      }
+      amountOfBlocks++;
+      const text = template + amountOfBlocks;
       const hash = SHA256(text).toString();
       const block = {
         userId: runId,
@@ -32,6 +36,7 @@ export class PowService {
       }
       await delay(1);
     } while (this.blocks[0].hash > config.threshold);
+    this.isExecuting = false;
     return this.blocks[0];
   }
 
@@ -39,6 +44,7 @@ export class PowService {
     if (!runId) {
       runId = 'determination-run'
     };
+    this.isExecuting = true;
     this.blocks.length = 0;
     let overallHashRate = 0;
     const determineRounds = 5;
@@ -64,7 +70,7 @@ export class PowService {
       this.blocks.length = 0;
     }
     const allowedHashRate = Math.round(Math.round(overallHashRate * 0.75) / determineRounds);
-
+    this.isExecuting = false;
     return allowedHashRate;
   }
 }

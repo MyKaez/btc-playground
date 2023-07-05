@@ -42,12 +42,12 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="parameters">
-      <button mat-button (click)="determineHashRate(container.helper())" [disabled]="isExecuting">
+      <button mat-button (click)="determineHashRate(container.helper())" [disabled]="powService.isExecuting">
         Eigene Hashrate ermitteln
       </button>
       <mat-form-field appearance="fill">
         <mat-label>Hashrate [Hashes pro Sekunde]</mat-label>
-        <input matInput type="number" [formControl]="hashRate" [readonly]="isExecuting" />
+        <input matInput type="number" [formControl]="hashRate" [readonly]="powService.isExecuting" />
         <!--label *ngIf="!isExecuting && !inputs.controls['hashRate'].valid">
           <span>{{getErrors('hashRate')}}</span>
         </label-->
@@ -55,12 +55,12 @@
           {{currentHashRate}}
         </mat-hint>
       </mat-form-field>
-      <button mat-button (click)="determineExternalHashRate()" [disabled]="isExecuting">
+      <button mat-button (click)="determineExternalHashRate()" [disabled]="powService.isExecuting">
         Bitcoin Hashrate ermitteln
       </button>
       <mat-form-field appearance="fill">
         <mat-label>externe Hashrate [Hashes pro Sekunde]</mat-label>
-        <input matInput type="number" [formControl]="externalHashRate" [readonly]="isExecuting" />
+        <input matInput type="number" [formControl]="externalHashRate" [readonly]="powService.isExecuting" />
         <!--label *ngIf="!isExecuting && !inputs.controls['externalHashRate'].valid">
           <span>{{getErrors('externalHashRate')}}</span>
         </label-->
@@ -82,7 +82,7 @@
 
       <hr />
 
-      <button mat-button (click)="setBitcoinBlockTime()" [disabled]="isExecuting">
+      <button mat-button (click)="setBitcoinBlockTime()" [disabled]="powService.isExecuting">
         Bitcoin Blockzeit setzen
       </button>
       <mat-form-field appearance="fill">
@@ -170,20 +170,20 @@
     <div class="actions-bar">
       <button mat-button class="btn-circle" (click)="toggleStartStop(probability)" title="Start/Stop"
         [disabled]="formGroup.invalid">
-        <mat-icon>{{isExecuting ? "stop" : "play_arrow"}}</mat-icon>
+        <mat-icon>{{powService.isExecuting ? "stop" : "play_arrow"}}</mat-icon>
       </button>
-      <button mat-button class="btn-circle" (click)="clear()" [disabled]="isExecuting"
+      <button mat-button class="btn-circle" (click)="clear()" [disabled]="powService.isExecuting"
         title="Clear"><mat-icon>replay</mat-icon></button>
     </div>
     <div class="action-info">
       <span *ngIf="hashCount > 0">
-        Simulation {{isExecuting ? 'gestartet...' : 'beendet.'}}<br />
+        Simulation {{powService.isExecuting ? 'gestartet...' : 'beendet.'}}<br />
       </span>
-      <div *ngIf="isExecuting">
+      <div *ngIf="powService.isExecuting">
         <mat-progress-bar [mode]="'indeterminate'">
         </mat-progress-bar>
       </div>
-      <div *ngIf="!isExecuting">
+      <div *ngIf="!powService.isExecuting">
         <span>Bereit für Simulation.</span>
         <mat-progress-bar [mode]="'determinate'">
         </mat-progress-bar>

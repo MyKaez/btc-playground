@@ -39,7 +39,6 @@ export class PowComponent implements AfterViewInit {
   });
 
   contentLayoutMode = ContentLayoutMode.LockImage;
-  isExecuting = false;
   hashCount = 0;
   executedCycles = 0;
   blocks: Block[] = this.powService.blocks;
@@ -48,7 +47,7 @@ export class PowComponent implements AfterViewInit {
     return (this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0);
   }
 
-  constructor(public layout: LayoutService, private btcService: BtcService, private simulationService: SimulationService, private powService: PowService) {
+  constructor(public layout: LayoutService, private btcService: BtcService, private simulationService: SimulationService, public powService: PowService) {
     this.isHandset$ = layout.isHandset$;
   }
 
@@ -121,12 +120,10 @@ export class PowComponent implements AfterViewInit {
 
   async determineHashRate(helper: SimulationHelper) {
     helper.before();
-    this.isExecuting = true;
     const hashRate = await this.powService.determine();
     this.hashRate.clearValidators();
     this.hashRate.addValidators([Validators.min(1), Validators.max(hashRate)]);
     this.hashRate.setValue(hashRate)
-    this.isExecuting = false;
     helper.after();
   }
 
@@ -139,32 +136,32 @@ export class PowComponent implements AfterViewInit {
   }
 
   toggleStartStop(probability: number) {
-    if (this.isExecuting)
+    if (this.powService.isExecuting)
       this.stop();
     else
       this.start(probability);
   }
 
   async start(probability: number) {
-    this.isExecuting = true;
+    this.powService.isExecuting = true;
     if (this.clearOnStart.value) {
       this.clear();
     }
-    let loadCreateJob = this.powService.findBlock('', { threshold: '00' });
+    let loadCreateJob = this.powService.findBlock('prod', { threshold: '00' });
     this.simulationService.updateStartSimulation(true);
-    const hash = await loadCreateJob;
-    // if (hash.isValid) {
-    //   alert('Fround hash: ' + hash.hash);
-    // // }
+    const block = await loadCreateJob
+    if (block) {
+      alert('Found hash: ' + block.hash);
+    }
   }
 
   clear() {
     this.executedCycles = 0;
     this.hashCount = 0;
-    this.blocks = [];
+    this.blocks.length = 0;
   }
 
   stop() {
-    this.isExecuting = false;
+    this.powService.isExecuting = false;
   }
 }
