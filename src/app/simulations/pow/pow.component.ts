@@ -6,7 +6,6 @@ import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
 import { calculateTime } from 'src/app/shared/helpers/time';
-import { delay } from 'src/app/shared/delay';
 import { SimulationService } from '../simulation.service';
 import { SimulationHelper } from '../simulation-container/simulation-helper';
 import { Block } from 'src/app/models/block';
@@ -23,9 +22,8 @@ export class PowComponent implements AfterViewInit {
   static readonly defaultAmountOfHashesToShow = 20;
 
   displayedColumns: { prop: string, text: string }[] = [
-    { prop: 'no', text: 'Nr.' },
+    { prop: 'text', text: 'Text' },
     { prop: 'hash', text: 'Hash' },
-    { prop: 'cycle', text: 'Zyklus' },
     { prop: 'isValid', text: 'Valide' }
   ]
   hashRate = new FormControl<number>(0, [Validators.min(1), Validators.max(50)]);
@@ -40,11 +38,11 @@ export class PowComponent implements AfterViewInit {
     blockTime: this.blockTime
   });
 
-  hashes: Block[] = [];
   contentLayoutMode = ContentLayoutMode.LockImage;
   isExecuting = false;
   hashCount = 0;
   executedCycles = 0;
+  blocks: Block[] = this.powService.blocks;
 
   get totalHashRate(): number {
     return (this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0);
@@ -124,22 +122,10 @@ export class PowComponent implements AfterViewInit {
   async determineHashRate(helper: SimulationHelper) {
     helper.before();
     this.isExecuting = true;
-    let overallHashRate = 0;
-    const determineRounds = 5;
-    for (let i = 0; i < determineRounds; i++) {
-      const start = new Date();
-      start.setSeconds(start.getSeconds() + 1);
-      while (start.getTime() > new Date().getTime()) {
-        overallHashRate++;
-        this.createHash(0, i, overallHashRate++);
-        await delay(1);
-      }
-      this.hashes = [];
-    }
-    const allowedHashRate = Math.round(Math.round(overallHashRate * 0.75) / determineRounds);
+    const hashRate = await this.powService.determine();
     this.hashRate.clearValidators();
-    this.hashRate.addValidators([Validators.min(1), Validators.max(allowedHashRate)]);
-    this.hashRate.setValue(allowedHashRate)
+    this.hashRate.addValidators([Validators.min(1), Validators.max(hashRate)]);
+    this.hashRate.setValue(hashRate)
     this.isExecuting = false;
     helper.after();
   }
@@ -153,8 +139,10 @@ export class PowComponent implements AfterViewInit {
   }
 
   toggleStartStop(probability: number) {
-    if (this.isExecuting) this.stop();
-    else this.start(probability);
+    if (this.isExecuting)
+      this.stop();
+    else
+      this.start(probability);
   }
 
   async start(probability: number) {
@@ -162,7 +150,7 @@ export class PowComponent implements AfterViewInit {
     if (this.clearOnStart.value) {
       this.clear();
     }
-    let loadCreateJob = this.createJob(probability);
+    let loadCreateJob = this.powService.findBlock('', { threshold: '00' });
     this.simulationService.updateStartSimulation(true);
     const hash = await loadCreateJob;
     // if (hash.isValid) {
@@ -170,45 +158,10 @@ export class PowComponent implements AfterViewInit {
     // // }
   }
 
-  createJob(probability: number): Promise<Block> {
-    return new Promise(async resolve => {
-      const hashRate = this.hashRate.value!;
-      const timeToWait = 1000 / hashRate;
-      let hash!: Block;
-      while (this.isExecuting) {
-        this.executedCycles++;
-        for (let i = 0; i < hashRate; i++) {
-          hash = this.createHash(probability, this.executedCycles, ++this.hashCount);
-          // if ((hash.isValid || !this.isExecuting) && this.stopOnFoundBlock.value) {
-          //   this.stop();
-          //   break;
-          // }
-          await delay(timeToWait);
-        }
-      }
-      resolve(hash);
-    });
-  }
-
-  createHash(probability: number, executedCycles: number, hashCount: number): Block {
-    //const hash = this.powService.createHash(probability, executedCycles, hashCount);
-    const hash: Block = {
-      hash: "hash",
-      text: "text",
-      userId: "userId"
-    }
-    hash.hash = hash.hash.substring(0, 20) + '[...]';
-    let pops = this.hashes.unshift(hash) - (this.amountOfHashes.value ?? 0);
-    for (let i = 0; i < pops; i++) {
-      this.hashes.pop();
-    }
-    return hash;
-  }
-
   clear() {
     this.executedCycles = 0;
     this.hashCount = 0;
-    this.hashes = [];
+    this.blocks = [];
   }
 
   stop() {
