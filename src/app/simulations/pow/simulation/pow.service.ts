@@ -25,9 +25,7 @@ export class PowService {
   async findBlock(runId: string, config: PowConfig, amountOfBlocks: number): Promise<Block | undefined> {
     this.isExecuting = true;
     let created = 0;
-    const id = runId.split('-')[0];
-    const timestamp = new Date().toISOString();
-    const template = `${id}_${timestamp}_`;
+    const template = this.createTemplate(runId);
     do {
       if (!this.isExecuting) {
         return undefined;
@@ -38,7 +36,8 @@ export class PowService {
       const block = {
         userId: runId,
         text: text,
-        hash: hash
+        hash: hash,
+        isValid: hash < config.threshold
       };
       this.blocks.unshift(block);
       if (this.blocks.length > amountOfBlocks) {
@@ -55,8 +54,7 @@ export class PowService {
     this.blocks.length = 0;
     let overallHashRate = 0;
     const determineRounds = 5;
-    const timestamp = new Date().toISOString();
-    const template = `${runId}_${timestamp}_`;
+    const template = this.createTemplate(runId);
     for (let i = 0; i < determineRounds; i++) {
       const start = new Date();
       start.setSeconds(start.getSeconds() + 1);
@@ -67,7 +65,8 @@ export class PowService {
         const block = {
           userId: runId,
           text: text,
-          hash: hash
+          hash: hash,
+          isValid: false
         };
         this.blocks.unshift(block);
         if (this.blocks.length > amountOfBlocks) {
@@ -80,5 +79,12 @@ export class PowService {
     const allowedHashRate = Math.round(Math.round(overallHashRate * 0.75) / determineRounds);
     this.isExecuting = false;
     return allowedHashRate;
+  }
+
+  createTemplate(runId: string): string {
+    const id = runId.split('-')[0];
+    const timestamp = new Date().toISOString().replace(/[^0-9_]/g, '');
+    const template = `${id}_${timestamp}_`;
+    return template;
   }
 }
