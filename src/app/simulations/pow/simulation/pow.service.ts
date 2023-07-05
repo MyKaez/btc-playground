@@ -16,6 +16,7 @@ export class PowService {
     const id = runId.split('-')[0];
     const timestamp = new Date().toISOString();
     const template = `${id}_${timestamp}_`;
+    this.blocks.length = 0;
     do {
       overallHashRate++;
       const text = template + overallHashRate;
@@ -38,6 +39,7 @@ export class PowService {
     if (!runId) {
       runId = 'determination-run'
     };
+    this.blocks.length = 0;
     let overallHashRate = 0;
     const determineRounds = 5;
     const template = `${runId}_${new Date().toLocaleDateString()}-${new Date().toLocaleTimeString()}'_`;
