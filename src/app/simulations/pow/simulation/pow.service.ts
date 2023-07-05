@@ -1,16 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { SHA256 } from 'crypto-js';
 import { Block } from 'src/app/models/block';
 import { delay } from 'src/app/shared/delay';
 import { PowConfig } from '../models/pow-config';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PowService {
-
   blocks: Block[] = [];
   isExecuting: boolean = false;
+
+  constructor(@Inject('BTCIS.ME-API') private url: string, private httpClient: HttpClient) { }
+
+  getConfig(totalHashRate: number, secondsUntilBlock: number): Observable<PowConfig> {
+    const url = `${this.url}/v1/simulations/proof-of-work`;
+    const req = { totalHashRate: totalHashRate, secondsUntilBlock: secondsUntilBlock };
+    console.log(url);
+    console.log(req);
+    return this.httpClient.post(url, req).pipe(
+      map(data => <PowConfig>data)
+    );
+  }
 
   async findBlock(runId: string, config: PowConfig): Promise<Block | undefined> {
     this.isExecuting = true;

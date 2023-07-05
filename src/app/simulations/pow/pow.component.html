@@ -3,6 +3,8 @@
   #container></app-simulation-container>
 
 <ng-template #simulation>
+  <span *ngIf="config$ | async as config">{{config | json}}</span>
+
   <ng-container *ngIf="(layout.isSmallScreen$ | async)">
     <ng-container *ngTemplateOutlet="actions"></ng-container>
   </ng-container>

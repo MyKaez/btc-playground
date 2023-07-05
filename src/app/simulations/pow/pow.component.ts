@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { FormControl, FormGroup, Validators, } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, map, merge, Observable, shareReplay } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, filter, map, merge, Observable, shareReplay, tap } from 'rxjs';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
@@ -76,13 +76,18 @@ export class PowComponent implements AfterViewInit {
   incorrectHashRate$ = this.totalHashRate$.pipe(
     map(_ => this.totalHashRate > 0 ? '' : 'HashRate muss größer 0 sein')
   );
+
+  config$ = combineLatest([this.totalHashRate$, this.blockTimeChanges$]).pipe(
+    map(([totalHashRate, blockTime]) => this.powService.getConfig(this.totalHashRate, this.blockTime.value ?? 0))
+  );
+
   probability$ = merge(this.totalHashRate$, this.blockTimeChanges$).pipe(
     filter(_ => this.totalHashRate > 0),
     map(_ => 1 / (this.totalHashRate * (this.blockTime.value ?? 0))),
     shareReplay(1)
   );
   difficulty$ = this.probability$.pipe(map(probability => 1 / probability));
-  currentBlockTime$ = this.blockTime.valueChanges.pipe(
+  currentBlockTime$ = this.blockTimeChanges$.pipe(
     map(time => calculateTime(time ?? 0)),
     shareReplay(1)
   );
