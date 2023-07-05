@@ -3,9 +3,16 @@
     <button mat-button fill="clear" slot="end" (click)="determine()">
         determine
     </button>
+    <br>
+
+    <ng-container *ngTemplateOutlet="console"></ng-container>
 </div>
 
 <div *ngIf="session?.status === 'started'">
+    <ng-container *ngTemplateOutlet="console"></ng-container>
+</div>
+
+<ng-template #console>
     <div *ngFor="let block of powService.blocks" class="block">
 
         <mat-form-field>
@@ -19,7 +26,7 @@
         </mat-form-field>
 
     </div>
-</div>
+</ng-template>
 
 <div *ngIf="session?.status === 'stopped'">
     <div *ngIf="user?.status === 'notReady';else userView">
