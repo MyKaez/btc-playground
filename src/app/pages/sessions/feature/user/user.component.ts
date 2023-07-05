@@ -81,7 +81,7 @@ export class UserComponent {
 
   async determine() {
     if (this.hashList) {
-      const hashRate = await this.hashList.powService.determine();
+      const hashRate = await this.hashList.powService.determine(this.user?.id ?? '', 20);
       this.hashRateControl.setValue(hashRate);
       this.ready();
     }

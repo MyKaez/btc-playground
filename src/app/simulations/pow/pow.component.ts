@@ -30,7 +30,7 @@ export class PowComponent implements AfterViewInit {
   hashRate = new FormControl<number>(0, [Validators.min(1), Validators.max(50)]);
   externalHashRate = new FormControl<number>(0, [Validators.min(0)]);
   blockTime = new FormControl<number>(0, [Validators.min(1)]);
-  amountOfHashes = new FormControl(PowComponent.defaultAmountOfHashesToShow, [Validators.min(1), Validators.max(200)]);
+  amountOfBlocks = new FormControl(PowComponent.defaultAmountOfHashesToShow, [Validators.min(1), Validators.max(200)]);
   stopOnFoundBlock = new FormControl<boolean>(true);
   clearOnStart = new FormControl<boolean>(true);
   formGroup = new FormGroup({
@@ -125,7 +125,7 @@ export class PowComponent implements AfterViewInit {
 
   async determineHashRate(helper: SimulationHelper) {
     helper.before();
-    const hashRate = await this.powService.determine();
+    const hashRate = await this.powService.determine('solo', this.amountOfBlocks.value ?? 0);
     this.hashRate.clearValidators();
     this.hashRate.addValidators([Validators.min(1), Validators.max(hashRate)]);
     this.hashRate.setValue(hashRate)

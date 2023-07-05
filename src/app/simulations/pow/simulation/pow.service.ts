@@ -50,10 +50,7 @@ export class PowService {
     return this.blocks[0];
   }
 
-  async determine(runId?: string): Promise<number> {
-    if (!runId) {
-      runId = 'test'
-    };
+  async determine(runId: string, amountOfBlocks: number): Promise<number> {
     this.isExecuting = true;
     this.blocks.length = 0;
     let overallHashRate = 0;
@@ -73,7 +70,7 @@ export class PowService {
           hash: hash
         };
         this.blocks.unshift(block);
-        if (this.blocks.length > 20) {
+        if (this.blocks.length > amountOfBlocks) {
           this.blocks.pop();
         }
         await delay(1);
