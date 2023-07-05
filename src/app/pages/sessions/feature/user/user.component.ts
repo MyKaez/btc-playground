@@ -81,7 +81,7 @@ export class UserComponent {
 
   async determine() {
     if (this.hashList) {
-      const hashRate = await this.hashList.determine();
+      const hashRate = await this.hashList.powService.determine();
       this.hashRateControl.setValue(hashRate);
       this.ready();
     }
@@ -94,5 +94,4 @@ export class UserComponent {
       subscription.unsubscribe();
     })
   }
-
 }

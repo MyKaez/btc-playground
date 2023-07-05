@@ -1,68 +1,68 @@
-import { PowHash } from "./pow-interfaces";
-import { BLOCK_ID_LENGTH, createBlockId } from "../../../shared/helpers/block";
-import { calculateHexaDecimalFormula } from "../../../shared/hash.methods";
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
+import { SHA256 } from 'crypto-js';
+import { Block } from 'src/app/models/block';
+import { delay } from 'src/app/shared/delay';
+import { PowConfig } from '../models/pow-config';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PowService {
 
-  expectedPrefix(probability: number): string {
-    const res: string[] = [];
-    let prefix = '';
-    let calculcation = this.calculateProbability(probability);
-    for (let i = 0; i < calculcation.leadingZeros; i++) {
-      prefix += '0';
-    }
-    for (let i = 0; i < calculcation.rest; i++) {
-      res.push(prefix + i.toString(16));
-    }
-    if (res.length === 1) {
-      return res[0];
-    }
-    return res[0] + '-' + res[res.length - 1];
-  }
+  blocks: Block[] = [];
 
-  hexaDecimalFormula(probability: number): string {
-    const leadingZeros = this.calculateProbability(probability);
-    return calculateHexaDecimalFormula(leadingZeros.leadingZeros, leadingZeros.rest);
-  }
-
-  createHash(probability: number, cycle: number, no: number): PowHash {
-    const { leadingZeros: zeros } = this.calculateProbability(probability);
-    const id = createBlockId();
-    return {
-      hash: id,
-      cycle: cycle,
-      difficulty: probability,
-      no: no,
-      isValid: probability === 1
-        ? true
-        : this.validate(id, zeros, probability)
-    };
-  }
-
-  validate(id: string, leadingZeros: number, probability: number): boolean {
-    let zerosOnly = id.substring(0, leadingZeros);
-    for (let i = 0; i < leadingZeros; i++) {
-      zerosOnly = zerosOnly.replace('0', '');
-    }
-    if (zerosOnly.length > 0) {
-      return false;
-    }
-    let relevantChar = id.substring(leadingZeros, leadingZeros + 1);
-    let hex = '0x' + relevantChar;
-    return Number.parseInt(hex) < probability;
-  }
-
-  calculateProbability(probability: number): { leadingZeros: number, rest: number } {
-    let leadingZeros = 0;
-    for (let i = 0; i < BLOCK_ID_LENGTH; i++) {
-      probability = probability * 16;
-      if (probability >= 1) {
-        break;
+  async findBlock(runId: string, config: PowConfig): Promise<Block> {
+    let overallHashRate = 0;
+    const id = runId.split('-')[0];
+    const timestamp = new Date().toISOString();
+    const template = `${id}_${timestamp}_`;
+    do {
+      overallHashRate++;
+      const text = template + overallHashRate;
+      const hash = SHA256(text).toString();
+      const block = {
+        userId: runId,
+        text: text,
+        hash: hash
+      };
+      this.blocks.unshift(block);
+      if (this.blocks.length > 20) {
+        this.blocks.pop();
       }
-      leadingZeros++;
+      await delay(1);
+    } while (this.blocks[0].hash > config.threshold);
+    return this.blocks[0];
+  }
+
+  async determine(runId?: string): Promise<number> {
+    if (!runId) {
+      runId = 'determination-run'
+    };
+    let overallHashRate = 0;
+    const determineRounds = 5;
+    const template = `${runId}_${new Date().toLocaleDateString()}-${new Date().toLocaleTimeString()}'_`;
+    for (let i = 0; i < determineRounds; i++) {
+      const start = new Date();
+      start.setSeconds(start.getSeconds() + 1);
+      while (start.getTime() > new Date().getTime()) {
+        overallHashRate++;
+        const text = template + overallHashRate;
+        const hash = SHA256(text).toString();
+        const block = {
+          userId: runId,
+          text: text,
+          hash: hash
+        };
+        this.blocks.unshift(block);
+        if (this.blocks.length > 20) {
+          this.blocks.pop();
+        }
+        await delay(1);
+      }
+      this.blocks = [];
     }
-    return { leadingZeros: leadingZeros, rest: probability };
+    const allowedHashRate = Math.round(Math.round(overallHashRate * 0.75) / determineRounds);
+
+    return allowedHashRate;
   }
 }

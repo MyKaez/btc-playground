@@ -5,12 +5,12 @@ import { debounceTime, distinctUntilChanged, filter, map, merge, Observable, sha
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
-import { PowHash } from './simulation/pow-interfaces';
-import { PowService } from './simulation/pow.service';
 import { calculateTime } from 'src/app/shared/helpers/time';
 import { delay } from 'src/app/shared/delay';
 import { SimulationService } from '../simulation.service';
 import { SimulationHelper } from '../simulation-container/simulation-helper';
+import { Block } from 'src/app/models/block';
+import { PowService } from './simulation/pow.service';
 
 @Component({
   selector: 'app-pow',
@@ -40,7 +40,7 @@ export class PowComponent implements AfterViewInit {
     blockTime: this.blockTime
   });
 
-  hashes: PowHash[] = [];
+  hashes: Block[] = [];
   contentLayoutMode = ContentLayoutMode.LockImage;
   isExecuting = false;
   hashCount = 0;
@@ -50,7 +50,7 @@ export class PowComponent implements AfterViewInit {
     return (this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0);
   }
 
-  constructor(public layout: LayoutService, private btcService: BtcService, private powService: PowService, private simulationService: SimulationService) {
+  constructor(public layout: LayoutService, private btcService: BtcService, private simulationService: SimulationService, private powService: PowService) {
     this.isHandset$ = layout.isHandset$;
   }
 
@@ -89,14 +89,22 @@ export class PowComponent implements AfterViewInit {
     map(time => calculateTime(time ?? 0)),
     shareReplay(1)
   );
-  expectedPrefix$ = this.probability$.pipe(map(probability => this.powService.expectedPrefix(probability)));
+  expectedPrefix$ = this.probability$.pipe(map(probability =>
+    //this.powService.expectedPrefix(probability)
+    probability
+
+  ));
   expectedDuration$ = merge(this.hashRateChanges$, this.externalHashRateChanges$, this.blockTimeChanges$).pipe(
     map(_ => {
       let time = this.totalHashRate * (this.blockTime.value ?? 0) / (this.hashRate.value ?? 0);
       return calculateTime(time)
     })
   );
-  hexaDecimalFormula$ = this.probability$.pipe(map(probability => this.powService.hexaDecimalFormula(probability)));
+  hexaDecimalFormula$ = this.probability$.pipe(map(probability =>
+    //this.powService.hexaDecimalFormula(probability)
+    probability
+
+  ));
 
   ngAfterViewInit(): void {
     this.hashRate.setValue(50);
@@ -145,7 +153,7 @@ export class PowComponent implements AfterViewInit {
   }
 
   toggleStartStop(probability: number) {
-    if(this.isExecuting) this.stop();
+    if (this.isExecuting) this.stop();
     else this.start(probability);
   }
 
@@ -157,24 +165,24 @@ export class PowComponent implements AfterViewInit {
     let loadCreateJob = this.createJob(probability);
     this.simulationService.updateStartSimulation(true);
     const hash = await loadCreateJob;
-    if (hash.isValid) {
-      alert('Fround hash: ' + hash.hash);
-    }
+    // if (hash.isValid) {
+    //   alert('Fround hash: ' + hash.hash);
+    // // }
   }
 
-  createJob(probability: number): Promise<PowHash> {
+  createJob(probability: number): Promise<Block> {
     return new Promise(async resolve => {
       const hashRate = this.hashRate.value!;
       const timeToWait = 1000 / hashRate;
-      let hash!: PowHash;
+      let hash!: Block;
       while (this.isExecuting) {
         this.executedCycles++;
         for (let i = 0; i < hashRate; i++) {
           hash = this.createHash(probability, this.executedCycles, ++this.hashCount);
-          if ((hash.isValid || !this.isExecuting) && this.stopOnFoundBlock.value) {
-            this.stop();
-            break;
-          }
+          // if ((hash.isValid || !this.isExecuting) && this.stopOnFoundBlock.value) {
+          //   this.stop();
+          //   break;
+          // }
           await delay(timeToWait);
         }
       }
@@ -182,8 +190,13 @@ export class PowComponent implements AfterViewInit {
     });
   }
 
-  createHash(probability: number, executedCycles: number, hashCount: number): PowHash {
-    const hash = this.powService.createHash(probability, executedCycles, hashCount);
+  createHash(probability: number, executedCycles: number, hashCount: number): Block {
+    //const hash = this.powService.createHash(probability, executedCycles, hashCount);
+    const hash: Block = {
+      hash: "hash",
+      text: "text",
+      userId: "userId"
+    }
     hash.hash = hash.hash.substring(0, 20) + '[...]';
     let pops = this.hashes.unshift(hash) - (this.amountOfHashes.value ?? 0);
     for (let i = 0; i < pops; i++) {
