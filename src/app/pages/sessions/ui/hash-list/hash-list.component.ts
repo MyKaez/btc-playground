@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Block } from 'src/app/models/block';
 import { SessionInfo } from 'src/app/models/session';
 import { User } from 'src/app/models/user';
@@ -12,6 +13,7 @@ import { PowService } from 'src/app/simulations';
 export class HashListComponent {
   @Input("session") session?: SessionInfo;
   @Input("user") user?: User;
+  @Output("determinedHashRate") determinedHashRate = new EventEmitter<number>();
   @Output("blockFound") blockFound = new EventEmitter<Block>();
 
   @Input("go") set go(value: boolean) {
@@ -19,6 +21,8 @@ export class HashListComponent {
       this.powService.findBlock(this.user.id, this.session!.configuration, 20).then(block => this.blockFound.emit(block));
     }
   }
+
+  hashRateControl = new FormControl<number>(0);
 
   constructor(public powService: PowService) { }
 
@@ -34,4 +38,12 @@ export class HashListComponent {
     const user = this.session!.users.find(u => u.id === this.winnerBlock.userId);
     return user?.name ?? 'unknown';
   }
+
+
+  async determine() {
+    const hashRate = await this.powService.determine(this.user?.id ?? '', 20);
+    this.hashRateControl.setValue(hashRate);
+    this.determinedHashRate.next(hashRate);
+  }
+
 }

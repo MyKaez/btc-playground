@@ -1,4 +1,27 @@
-<div *ngIf="session?.status === 'stopped';else work">
+<div *ngIf="session?.status === 'preparing'">
+    <input matInput [readonly]="true" [formControl]="hashRateControl" />
+    <button mat-button fill="clear" slot="end" (click)="determine()">
+        determine
+    </button>
+</div>
+
+<div *ngIf="session?.status === 'started'">
+    <div *ngFor="let block of powService.blocks" class="block">
+
+        <mat-form-field>
+            <mat-label>Text</mat-label>
+            <input matInput [value]="block.text" [readonly]="true">
+        </mat-form-field>
+        -
+        <mat-form-field>
+            <mat-label>Hash</mat-label>
+            <input matInput [value]="block.hash" [readonly]="true">
+        </mat-form-field>
+
+    </div>
+</div>
+
+<div *ngIf="session?.status === 'stopped'">
     <div *ngIf="user?.status === 'notReady';else userView">
         Session is over, please wait until next round!
     </div>
@@ -31,18 +54,3 @@
         </ul>
     </ng-template>
 </div>
-<ng-template #work>
-    <div *ngFor="let block of powService.blocks" class="block">
-
-        <mat-form-field>
-            <mat-label>Text</mat-label>
-            <input matInput [value]="block.text" [readonly]="true">
-        </mat-form-field>
-        -
-        <mat-form-field>
-            <mat-label>Hash</mat-label>
-            <input matInput [value]="block.hash" [readonly]="true">
-        </mat-form-field>
-
-    </div>
-</ng-template>

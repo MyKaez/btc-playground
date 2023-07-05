@@ -14,20 +14,15 @@
             Session hasn't started yet...
         </div>
         <div *ngSwitchCase="'preparing'">
-            <div>
-                <input matInput [readonly]="true" [formControl]="hashRateControl" />
-                <button mat-button fill="clear" slot="end" (click)="determine()">
-                    determine
-                </button>
-            </div>
-            <app-hash-list [session]="session" [user]="user" #hashList></app-hash-list>
+            <app-hash-list [session]="session" [user]="user"
+                (determinedHashRate)="determinedHashRate($event)"></app-hash-list>
         </div>
         <div *ngSwitchCase="'started'">
-            <app-hash-list [session]="session" [user]="user" [go]="true" (blockFound)="blockFound($event)"
-                #hashList></app-hash-list>
+            <app-hash-list [session]="session" [user]="user" [go]="true"
+                (blockFound)="blockFound($event)"></app-hash-list>
         </div>
         <div *ngSwitchCase="'stopped'">
-            <app-hash-list [session]="session" [user]="user" #hashList></app-hash-list>
+            <app-hash-list [session]="session" [user]="user"></app-hash-list>
         </div>
     </div>
 

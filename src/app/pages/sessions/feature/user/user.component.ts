@@ -6,7 +6,6 @@ import { SuggestionService } from 'src/app/core/suggestion.service';
 import { UserService } from 'src/app/core/user.service';
 import { SessionInfo } from 'src/app/models/session';
 import { User, UserControl } from 'src/app/models/user';
-import { HashListComponent } from '../../ui/hash-list/hash-list.component';
 import { Block } from 'src/app/models/block';
 
 @Component({
@@ -20,7 +19,6 @@ export class UserComponent {
   @Input("hubConnection") hubConnection!: HubConnection;
   @Input("user") user?: User;
   @Output("userChange") userChange = new EventEmitter<UserControl>();
-  @ViewChild("hashList") hashList?: HashListComponent;;
 
   private userName = new Subject<string>();
   private userId = new Subject<string>();
@@ -30,7 +28,6 @@ export class UserComponent {
   }
 
   userNameControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
-  hashRateControl = new FormControl<number>(0);
 
   registerUser$ = this.userName.pipe(
     switchMap(userName => this.userService.registerUser(this.session.id, userName)),
@@ -68,23 +65,15 @@ export class UserComponent {
     this.userName.next(this.userNameControl.value ?? '');
   }
 
-  ready(): void {
+  determinedHashRate(hashRate: number) {
     if (!this.user) {
       return;
     }
+    const config = { hashRate: hashRate };
     this.user.status = 'ready';
-    const config = { hashRate: this.hashRateControl.value ?? 0 };
     const subscription = this.userService.sendUpdate(this.session.id, <UserControl>this.user, config).subscribe(_ => {
       subscription.unsubscribe();
     });
-  }
-
-  async determine() {
-    if (this.hashList) {
-      const hashRate = await this.hashList.powService.determine(this.user?.id ?? '', 20);
-      this.hashRateControl.setValue(hashRate);
-      this.ready();
-    }
   }
 
   blockFound(block: Block) {
