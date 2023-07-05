@@ -130,9 +130,9 @@
           <input matInput type="text" [value]="expectedDuration" readonly="true" />
         </mat-form-field>
 
-        <mat-form-field appearance="fill" *ngIf="expectedPrefix$ | async as expectedPrefix">
-          <mat-label>Erwartete Hash Präfixe</mat-label>
-          <input matInput type="text" [value]="expectedPrefix" readonly="true" />
+        <mat-form-field appearance="fill" *ngIf="threshold$ | async as threshold">
+          <mat-label>Schwellwert</mat-label>
+          <input matInput type="text" [value]="threshold" readonly="true" />
         </mat-form-field>
 
       </div>

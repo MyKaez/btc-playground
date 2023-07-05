@@ -84,18 +84,7 @@ export class PowComponent implements AfterViewInit {
 
   probability$ = this.config$.pipe(map(config => config.expected));
   difficulty$ = this.config$.pipe(map(config => config.difficulty));
-  expectedPrefix$ = this.config$.pipe(map(config => {
-    const threshold = config.threshold;
-    let prefix = '';
-    for (let i = 0; i < threshold.length; i++) {
-      if (threshold[i] === '0') {
-        prefix += '0';
-      } else {
-        break;
-      }
-    }
-    return prefix;
-  }));
+  threshold$ = this.config$.pipe(map(config => config.threshold));
 
   currentBlockTime$ = this.blockTimeChanges$.pipe(
     map(time => calculateTime(time ?? 0)),
