@@ -22,9 +22,9 @@ export class PowService {
     );
   }
 
-  async findBlock(runId: string, config: PowConfig): Promise<Block | undefined> {
+  async findBlock(runId: string, config: PowConfig, amountOfBlocks: number): Promise<Block | undefined> {
     this.isExecuting = true;
-    let amountOfBlocks = 0;
+    let created = 0;
     const id = runId.split('-')[0];
     const timestamp = new Date().toISOString();
     const template = `${id}_${timestamp}_`;
@@ -32,8 +32,8 @@ export class PowService {
       if (!this.isExecuting) {
         return undefined;
       }
-      amountOfBlocks++;
-      const text = template + amountOfBlocks;
+      created++;
+      const text = template + created;
       const hash = SHA256(text).toString();
       const block = {
         userId: runId,
@@ -41,7 +41,7 @@ export class PowService {
         hash: hash
       };
       this.blocks.unshift(block);
-      if (this.blocks.length > 20) {
+      if (this.blocks.length > amountOfBlocks) {
         this.blocks.pop();
       }
       await delay(1);

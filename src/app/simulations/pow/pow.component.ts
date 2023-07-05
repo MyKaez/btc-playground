@@ -152,7 +152,7 @@ export class PowComponent implements AfterViewInit {
     if (this.clearOnStart.value) {
       this.clear();
     }
-    let loadCreateJob = this.powService.findBlock('prod', config);
+    let loadCreateJob = this.powService.findBlock('prod', config, this.amountOfBlocks.value ?? 0);
     this.simulationService.updateStartSimulation(true);
     const block = await loadCreateJob
     if (block) {

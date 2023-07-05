@@ -16,7 +16,7 @@ export class HashListComponent {
 
   @Input("go") set go(value: boolean) {
     if (value && this.user?.status == 'ready') {
-      this.powService.findBlock(this.user.id, this.session!.configuration).then(block => this.blockFound.emit(block));
+      this.powService.findBlock(this.user.id, this.session!.configuration, 20).then(block => this.blockFound.emit(block));
     }
   }
 
