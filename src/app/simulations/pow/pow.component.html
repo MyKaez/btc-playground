@@ -104,26 +104,33 @@
       </mat-expansion-panel-header>
       <div class="calculations">
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" *ngIf="probability$ | async as probability">
           <mat-label>Wahrscheinlichkeit [pro Block]</mat-label>
-          <input matInput type="text" value="1 / (Hashrate * Blockzeit)" readonly="true" />
+          <input matInput type="text" [value]="(probability * 100) + '%'" readonly="true" />
           <mat-hint>
+            1 / (Hashrate * Blockzeit) <br />
             1 / (
             <span *ngIf="totalHashRate$ | async as hr">{{hr}}</span>
             *
             <span>{{blockTime.value}}</span>
-            ) <br /> =
-            <span *ngIf="probability$ | async as probability">{{probability * 100}}%</span>
+            )
           </mat-hint>
         </mat-form-field>
 
         <br />
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" *ngIf="difficulty$ | async as difficulty">
           <mat-label>Erwartungswert [Anzahl Blöcke]</mat-label>
-          <input matInput type="text" value="Hashrate * Blockzeit" readonly="true" />
-          <mat-hint><span *ngIf="difficulty$ | async as difficulty">{{difficulty}}</span></mat-hint>
+          <input matInput type="text" [value]="difficulty" readonly="true" />
+          <mat-hint>
+            Hashrate * Blockzeit <br />
+            <span *ngIf="totalHashRate$ | async as hr">{{hr}}</span>
+            *
+            <span>{{blockTime.value}}</span>
+          </mat-hint>
         </mat-form-field>
+
+        <br />
 
         <mat-form-field appearance="fill" *ngIf="expectedDuration$ | async as expectedDuration">
           <mat-label>Erwartete Dauer</mat-label>
