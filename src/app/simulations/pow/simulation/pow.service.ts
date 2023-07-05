@@ -16,11 +16,8 @@ export class PowService {
   constructor(@Inject('BTCIS.ME-API') private url: string, private httpClient: HttpClient) { }
 
   getConfig(totalHashRate: number, secondsUntilBlock: number): Observable<PowConfig> {
-    const url = `${this.url}/v1/simulations/proof-of-work`;
     const req = { totalHashRate: totalHashRate, secondsUntilBlock: secondsUntilBlock };
-    console.log(url);
-    console.log(req);
-    return this.httpClient.post(url, req).pipe(
+    return this.httpClient.post(`${this.url}/v1/simulations/proof-of-work`, req).pipe(
       map(data => <PowConfig>data)
     );
   }
