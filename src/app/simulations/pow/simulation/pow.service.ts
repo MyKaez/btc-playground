@@ -42,13 +42,14 @@ export class PowService {
 
   async determine(runId?: string): Promise<number> {
     if (!runId) {
-      runId = 'determination-run'
+      runId = 'test'
     };
     this.isExecuting = true;
     this.blocks.length = 0;
     let overallHashRate = 0;
     const determineRounds = 5;
-    const template = `${runId}_${new Date().toLocaleDateString()}-${new Date().toLocaleTimeString()}'_`;
+    const timestamp = new Date().toISOString();
+    const template = `${runId}_${timestamp}_`;
     for (let i = 0; i < determineRounds; i++) {
       const start = new Date();
       start.setSeconds(start.getSeconds() + 1);
