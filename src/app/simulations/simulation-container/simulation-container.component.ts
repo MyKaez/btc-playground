@@ -23,7 +23,6 @@ export class SimulationContainerComponent implements OnInit {
 
   selectedTabIndex = 1;
 
-  isHandset$: Observable<boolean>;
   simulation$ = this.simulationService.getSimulationsStream().pipe(
     map(simulations => {
       const parts = this.router.url.substring(1).split('/');
@@ -54,7 +53,6 @@ export class SimulationContainerComponent implements OnInit {
 
   constructor(public layout: LayoutService, private simulationService: SimulationService,
     private router: Router) {
-    this.isHandset$ = layout.isHandset$;
   }
 
   ngOnInit() {
@@ -100,6 +98,13 @@ export class SimulationContainerComponent implements OnInit {
 
   toOptions(container: SimulationContainerComponent): void {
     console.log('switch to options!');
-    container.selectedTabIndex = 3;
+    const subscription = this.layout.isSmallScreen$.subscribe(isSmall => {
+      if (isSmall) {
+        // default, switch to here:
+        container.selectedTabIndex = 3;
+        // if session triggered this, switch to session
+      }
+    });
+    subscription.unsubscribe();
   }
 }
