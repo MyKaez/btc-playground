@@ -59,7 +59,7 @@ export class PowService {
         }
         await delay(1);
       }
-      this.blocks = [];
+      this.blocks.length = 0;
     }
     const allowedHashRate = Math.round(Math.round(overallHashRate * 0.75) / determineRounds);
 
