@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 import { FormControl, FormGroup, Validators, } from '@angular/forms';
-import { combineLatest, debounceTime, distinctUntilChanged, filter, map, merge, Observable, shareReplay, tap } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, map, merge, Observable, shareReplay, switchMap } from 'rxjs';
 import { BtcService } from 'src/app/shared/helpers/btc.service';
 import { BLOCK_DURATION_IN_SECONDS } from 'src/app/shared/helpers/block';
 import { calculateUnit, UnitOfHash } from 'src/app/shared/helpers/size';
@@ -10,6 +10,7 @@ import { SimulationService } from '../simulation.service';
 import { SimulationHelper } from '../simulation-container/simulation-helper';
 import { Block } from 'src/app/models/block';
 import { PowService } from './simulation/pow.service';
+import { PowConfig } from './models/pow-config';
 
 @Component({
   selector: 'app-pow',
@@ -78,35 +79,34 @@ export class PowComponent implements AfterViewInit {
   );
 
   config$ = combineLatest([this.totalHashRate$, this.blockTimeChanges$]).pipe(
-    map(([totalHashRate, blockTime]) => this.powService.getConfig(this.totalHashRate, this.blockTime.value ?? 0))
+    switchMap(([totalHashRate, blockTime]) => this.powService.getConfig(this.totalHashRate, this.blockTime.value ?? 0))
   );
 
-  probability$ = merge(this.totalHashRate$, this.blockTimeChanges$).pipe(
-    filter(_ => this.totalHashRate > 0),
-    map(_ => 1 / (this.totalHashRate * (this.blockTime.value ?? 0))),
-    shareReplay(1)
-  );
-  difficulty$ = this.probability$.pipe(map(probability => 1 / probability));
+  probability$ = this.config$.pipe(map(config => config.expected));
+  difficulty$ = this.config$.pipe(map(config => config.difficulty));
+  expectedPrefix$ = this.config$.pipe(map(config => {
+    const threshold = config.threshold;
+    let prefix = '';
+    for (let i = 0; i < threshold.length; i++) {
+      if (threshold[i] === '0') {
+        prefix += '0';
+      } else {
+        break;
+      }
+    }
+    return prefix;
+  }));
+
   currentBlockTime$ = this.blockTimeChanges$.pipe(
     map(time => calculateTime(time ?? 0)),
     shareReplay(1)
   );
-  expectedPrefix$ = this.probability$.pipe(map(probability =>
-    //this.powService.expectedPrefix(probability)
-    probability
-
-  ));
   expectedDuration$ = merge(this.hashRateChanges$, this.externalHashRateChanges$, this.blockTimeChanges$).pipe(
     map(_ => {
       let time = this.totalHashRate * (this.blockTime.value ?? 0) / (this.hashRate.value ?? 0);
       return calculateTime(time)
     })
   );
-  hexaDecimalFormula$ = this.probability$.pipe(map(probability =>
-    //this.powService.hexaDecimalFormula(probability)
-    probability
-
-  ));
 
   ngAfterViewInit(): void {
     this.hashRate.setValue(50);
@@ -140,19 +140,19 @@ export class PowComponent implements AfterViewInit {
     this.btcService.getCurrentHashRate().subscribe(rate => this.externalHashRate.setValue(rate));
   }
 
-  toggleStartStop(probability: number) {
+  toggleStartStop(config: PowConfig) {
     if (this.powService.isExecuting)
       this.stop();
     else
-      this.start(probability);
+      this.start(config);
   }
 
-  async start(probability: number) {
+  async start(config: PowConfig) {
     this.powService.isExecuting = true;
     if (this.clearOnStart.value) {
       this.clear();
     }
-    let loadCreateJob = this.powService.findBlock('prod', { threshold: '00' });
+    let loadCreateJob = this.powService.findBlock('prod', config);
     this.simulationService.updateStartSimulation(true);
     const block = await loadCreateJob
     if (block) {

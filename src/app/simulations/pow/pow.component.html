@@ -3,8 +3,6 @@
   #container></app-simulation-container>
 
 <ng-template #simulation>
-  <span *ngIf="config$ | async as config">{{config | json}}</span>
-
   <ng-container *ngIf="(layout.isSmallScreen$ | async)">
     <ng-container *ngTemplateOutlet="actions"></ng-container>
   </ng-container>
@@ -137,11 +135,6 @@
           <input matInput type="text" [value]="expectedPrefix" readonly="true" />
         </mat-form-field>
 
-        <mat-form-field appearance="fill" *ngIf="hexaDecimalFormula$ | async as hexaDecimalFormula">
-          <mat-label>Hexadezimal Formel</mat-label>
-          <input matInput type="text" [value]="hexaDecimalFormula" readonly="true" />
-        </mat-form-field>
-
       </div>
     </mat-expansion-panel>
   </mat-expansion-panel>
@@ -168,9 +161,9 @@
 </ng-template>
 
 <ng-template #actions>
-  <div class="actions" *ngIf="probability$ | async as probability">
+  <div class="actions" *ngIf="config$ | async as config">
     <div class="actions-bar">
-      <button mat-button class="btn-circle" (click)="toggleStartStop(probability)" title="Start/Stop"
+      <button mat-button class="btn-circle" (click)="toggleStartStop(config)" title="Start/Stop"
         [disabled]="formGroup.invalid">
         <mat-icon>{{powService.isExecuting ? "stop" : "play_arrow"}}</mat-icon>
       </button>
