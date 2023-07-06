@@ -41,8 +41,6 @@ export class PowComponent implements AfterViewInit {
   });
 
   contentLayoutMode = ContentLayoutMode.LockImage;
-  hashCount = 0;
-  executedCycles = 0;
   blocks: Block[] = this.powService.blocks;
 
   get totalHashRate(): number {
@@ -151,8 +149,6 @@ export class PowComponent implements AfterViewInit {
   }
 
   clear() {
-    this.executedCycles = 0;
-    this.hashCount = 0;
     this.blocks.length = 0;
   }
 

@@ -178,7 +178,7 @@
         title="Clear"><mat-icon>replay</mat-icon></button>
     </div>
     <div class="action-info">
-      <span *ngIf="hashCount > 0">
+      <span *ngIf="blocks.length > 0">
         Simulation {{powService.isExecuting ? 'gestartet...' : 'beendet.'}}<br />
       </span>
       <div *ngIf="powService.isExecuting">
