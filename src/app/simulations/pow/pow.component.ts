@@ -12,6 +12,7 @@ import { Block } from 'src/app/models/block';
 import { PowService } from './simulation/pow.service';
 import { PowConfig } from './models/pow-config';
 import { NotificationService } from 'src/app/shared/media/notification.service';
+import { DeterminationRunConfig, RunConfig } from './models/run-config';
 
 @Component({
   selector: 'app-pow',
@@ -113,7 +114,10 @@ export class PowComponent implements AfterViewInit {
 
   async determineHashRate(helper: SimulationHelper) {
     helper.before();
-    const hashRate = await this.powService.determine('', this.amountOfBlocks.value ?? 0);
+    const runConfig: DeterminationRunConfig = {
+      amountOfBlocks: this.amountOfBlocks.value ?? 0
+    }
+    const hashRate = await this.powService.determine(runConfig);
     this.hashRate.clearValidators();
     this.hashRate.addValidators([Validators.min(1), Validators.max(hashRate)]);
     this.hashRate.setValue(hashRate)
@@ -140,7 +144,11 @@ export class PowComponent implements AfterViewInit {
     if (this.clearOnStart.value) {
       this.clear();
     }
-    let loadCreateJob = this.powService.findBlock('', config, this.amountOfBlocks.value ?? 0);
+    const runConfig: RunConfig = {
+      powConfig: config,
+      amountOfBlocks: this.amountOfBlocks.value ?? 0
+    }
+    const loadCreateJob = this.powService.findBlock(runConfig);
     this.simulationService.updateStartSimulation(true);
     const block = await loadCreateJob
     if (block) {

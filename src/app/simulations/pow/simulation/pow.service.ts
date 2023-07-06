@@ -5,6 +5,7 @@ import { delay } from 'src/app/shared/delay';
 import { PowConfig } from '../models/pow-config';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { DeterminationRunConfig, RunConfig } from '../models/run-config';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +23,10 @@ export class PowService {
     );
   }
 
-  async findBlock(runId: string, config: PowConfig, amountOfBlocks: number): Promise<Block | undefined> {
+  async findBlock(runConfig: RunConfig): Promise<Block | undefined> {
     this.isExecuting = true;
     let created = 0;
-    const template = this.createTemplate(runId);
+    const template = this.createTemplate(runConfig.runId);
     do {
       if (!this.isExecuting) {
         return undefined;
@@ -33,28 +34,28 @@ export class PowService {
       created++;
       const text = template + created;
       const hash = SHA256(text).toString();
-      const block = {
-        userId: runId,
+      const block: Block = {
+        userId: runConfig.runId ?? '',
         text: text,
         hash: hash,
-        isValid: hash < config.threshold
+        isValid: hash < runConfig.powConfig.threshold
       };
       this.blocks.unshift(block);
-      if (this.blocks.length > amountOfBlocks) {
+      if (this.blocks.length > runConfig.amountOfBlocks) {
         this.blocks.pop();
       }
       await delay(1);
-    } while (this.blocks[0].hash > config.threshold);
+    } while (this.blocks[0].hash > runConfig.powConfig.threshold);
     this.isExecuting = false;
     return this.blocks[0];
   }
 
-  async determine(runId: string, amountOfBlocks: number): Promise<number> {
+  async determine(runConfig: DeterminationRunConfig): Promise<number> {
     this.isExecuting = true;
     this.blocks.length = 0;
     let overallHashRate = 0;
     const determineRounds = 5;
-    const template = this.createTemplate(runId);
+    const template = this.createTemplate(runConfig.runId);
     for (let i = 0; i < determineRounds; i++) {
       const start = new Date();
       start.setSeconds(start.getSeconds() + 1);
@@ -62,14 +63,14 @@ export class PowService {
         overallHashRate++;
         const text = template + overallHashRate;
         const hash = SHA256(text).toString();
-        const block = {
-          userId: runId,
+        const block: Block = {
+          userId: runConfig.runId ?? '',
           text: text,
           hash: hash,
           isValid: false
         };
         this.blocks.unshift(block);
-        if (this.blocks.length > amountOfBlocks) {
+        if (this.blocks.length > runConfig.amountOfBlocks) {
           this.blocks.pop();
         }
         await delay(1);
@@ -81,10 +82,10 @@ export class PowService {
     return allowedHashRate;
   }
 
-  createTemplate(runId: string): string {
-    const id = runId.split('-')[0];
+  createTemplate(runId?: string): string {
     const timestamp = new Date().toISOString().replace(/[^0-9_]/g, '');
-    if (id.length > 0) {
+    if (runId) {
+      const id = runId.split('-')[0];
       return `${id}_${timestamp}_`;
     }
     return `${timestamp}_`;;
