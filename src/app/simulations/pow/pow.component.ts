@@ -11,6 +11,7 @@ import { SimulationHelper } from '../simulation-container/simulation-helper';
 import { Block } from 'src/app/models/block';
 import { PowService } from './simulation/pow.service';
 import { PowConfig } from './models/pow-config';
+import { NotificationService } from 'src/app/shared/media/notification.service';
 
 @Component({
   selector: 'app-pow',
@@ -48,7 +49,7 @@ export class PowComponent implements AfterViewInit {
     return (this.hashRate.value ?? 0) + (this.externalHashRate.value ?? 0);
   }
 
-  constructor(public layout: LayoutService, private btcService: BtcService, private simulationService: SimulationService, public powService: PowService) {
+  constructor(public layout: LayoutService, public powService: PowService, private btcService: BtcService, private simulationService: SimulationService, private notificationService: NotificationService) {
     this.isHandset$ = layout.isHandset$;
   }
 
@@ -114,7 +115,7 @@ export class PowComponent implements AfterViewInit {
 
   async determineHashRate(helper: SimulationHelper) {
     helper.before();
-    const hashRate = await this.powService.determine('solo', this.amountOfBlocks.value ?? 0);
+    const hashRate = await this.powService.determine('', this.amountOfBlocks.value ?? 0);
     this.hashRate.clearValidators();
     this.hashRate.addValidators([Validators.min(1), Validators.max(hashRate)]);
     this.hashRate.setValue(hashRate)
@@ -141,11 +142,11 @@ export class PowComponent implements AfterViewInit {
     if (this.clearOnStart.value) {
       this.clear();
     }
-    let loadCreateJob = this.powService.findBlock('prod', config, this.amountOfBlocks.value ?? 0);
+    let loadCreateJob = this.powService.findBlock('', config, this.amountOfBlocks.value ?? 0);
     this.simulationService.updateStartSimulation(true);
     const block = await loadCreateJob
     if (block) {
-      alert('Found hash: ' + block.hash);
+      this.notificationService.display('Found hash: ' + block.hash);
     }
   }
 
