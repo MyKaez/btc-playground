@@ -34,12 +34,7 @@ export class PowService {
       created++;
       const text = template + created;
       const hash = SHA256(text).toString();
-      const block: Block = {
-        userId: runConfig.runId ?? '',
-        text: text,
-        hash: hash,
-        isValid: hash < runConfig.powConfig.threshold
-      };
+      const block: Block = this.createBlock(runConfig, text, hash, hash < runConfig.powConfig.threshold);
       this.blocks.unshift(block);
       if (this.blocks.length > runConfig.amountOfBlocks) {
         this.blocks.pop();
@@ -63,12 +58,7 @@ export class PowService {
         overallHashRate++;
         const text = template + overallHashRate;
         const hash = SHA256(text).toString();
-        const block: Block = {
-          userId: runConfig.runId ?? '',
-          text: text,
-          hash: hash,
-          isValid: false
-        };
+        const block: Block = this.createBlock(runConfig, text, hash, false);
         this.blocks.unshift(block);
         if (this.blocks.length > runConfig.amountOfBlocks) {
           this.blocks.pop();
@@ -80,6 +70,15 @@ export class PowService {
     const allowedHashRate = Math.round(Math.round(overallHashRate * 0.75) / determineRounds);
     this.isExecuting = false;
     return allowedHashRate;
+  }
+
+  private createBlock(runConfig: DeterminationRunConfig, text: string, hash: string, isValid: boolean): Block {
+    return {
+      userId: runConfig.runId ?? '',
+      text: text,
+      hash: runConfig.modifyHash ? runConfig.modifyHash(hash) : hash,
+      isValid: isValid,
+    };
   }
 
   createTemplate(runId?: string): string {
