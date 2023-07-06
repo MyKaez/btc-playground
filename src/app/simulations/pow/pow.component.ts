@@ -115,7 +115,8 @@ export class PowComponent implements AfterViewInit {
   async determineHashRate(helper: SimulationHelper) {
     helper.before();
     const runConfig: DeterminationRunConfig = {
-      amountOfBlocks: this.amountOfBlocks.value ?? 0
+      amountOfBlocks: this.amountOfBlocks.value ?? 0,
+      modifyHash: hash => hash.substring(0, 20) + '[...]'
     }
     const hashRate = await this.powService.determine(runConfig);
     this.hashRate.clearValidators();
@@ -146,7 +147,8 @@ export class PowComponent implements AfterViewInit {
     }
     const runConfig: RunConfig = {
       powConfig: config,
-      amountOfBlocks: this.amountOfBlocks.value ?? 0
+      amountOfBlocks: this.amountOfBlocks.value ?? 0,
+      modifyHash: hash => hash.substring(0, 20) + '[...]'
     }
     const loadCreateJob = this.powService.findBlock(runConfig);
     this.simulationService.updateStartSimulation(true);
