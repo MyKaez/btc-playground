@@ -75,7 +75,7 @@ import { MessageCenterComponent } from './pages/sessions/feature/message-center/
 import { HostInfoComponent } from './pages/sessions/ui/host-info/host-info.component';
 import { UserListComponent } from './pages/sessions/ui/user-list/user-list.component';
 import { ConfigInfoComponent } from './pages/sessions/ui/config-info/config-info.component';
-
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -146,7 +146,8 @@ import { ConfigInfoComponent } from './pages/sessions/ui/config-info/config-info
     MatIconModule,
     MatListModule,
     MatSnackBarModule,
-    CarouselModule
+    CarouselModule,
+    QRCodeModule
   ],
   providers: [
     AppContextService,

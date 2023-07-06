@@ -34,7 +34,8 @@
         <button mat-button fill="clear" (click)="openLink()">Open Link</button>
         <button mat-button fill="clear" (click)="copyLink()">Copy Link</button>
     </div>
-    <div>
-        <!--qrcode [qrdata]="sessionLink" [width]="256" [errorCorrectionLevel]="'L'" (click)="openLink()"></qrcode-->
+    <div class="qrcode">
+        <qrcode ngClass="code-data" [qrdata]="sessionLink" [width]="256" [errorCorrectionLevel]="'L'"
+            (click)="openLink()"></qrcode>
     </div>
 </div>
