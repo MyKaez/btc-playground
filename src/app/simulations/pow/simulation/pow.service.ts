@@ -84,7 +84,9 @@ export class PowService {
   createTemplate(runId: string): string {
     const id = runId.split('-')[0];
     const timestamp = new Date().toISOString().replace(/[^0-9_]/g, '');
-    const template = `${id}_${timestamp}_`;
-    return template;
+    if (id.length > 0) {
+      return `${id}_${timestamp}_`;
+    }
+    return `${timestamp}_`;;
   }
 }
