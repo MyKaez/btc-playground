@@ -32,14 +32,13 @@
         Loading...
     </div>
     <ng-template #enterData>
-        Please register as user
-
-        <div>
+        <mat-form-field>
+            <mat-label>User Name</mat-label>
             <input matInput (keyup.enter)="registerUser()" [formControl]="userNameControl" />
-            <button mat-button fill="clear" slot="end" (click)="registerUser()" [disabled]="userNameControl.invalid">
-                Register
-            </button>
-        </div>
+        </mat-form-field>
+        <button mat-button fill="clear" slot="end" (click)="registerUser()" [disabled]="userNameControl.invalid">
+            Register
+        </button>
 
     </ng-template>
 </ng-template>
