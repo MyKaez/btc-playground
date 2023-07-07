@@ -31,7 +31,7 @@ export class PowService {
       if (!this.isExecuting) {
         return undefined;
       }
-      if (runConfig.stopCondition()) {
+      if (runConfig.stopCondition && runConfig.stopCondition()) {
         return undefined;
       }
       created++;
@@ -58,7 +58,7 @@ export class PowService {
       const start = new Date();
       start.setSeconds(start.getSeconds() + 1);
       while (start.getTime() > new Date().getTime()) {
-        if (runConfig.stopCondition()) {
+        if (runConfig.stopCondition && runConfig.stopCondition()) {
           break;
         }
         overallHashRate++;
@@ -69,7 +69,7 @@ export class PowService {
         if (this.blocks.length > runConfig.amountOfBlocks) {
           this.blocks.pop();
         }
-        if (runConfig.stopCondition()) {
+        if (runConfig.stopCondition && runConfig.stopCondition()) {
           break;
         }
         await delay(1);
