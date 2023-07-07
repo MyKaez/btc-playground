@@ -13,6 +13,10 @@ export class SessionListComponent {
 
   sessions$ = this.sessionService.getAll().pipe();
 
+  logInSession(sessionId: string, controlId: string) {
+    alert('Log in to session is not implemented yet. SessionId: ' + sessionId + ', ControlId: ' + controlId);
+  }
+
   openSession(sessionId: string) {
     let baseUrl = window.location.href
       .replace('http://', '')

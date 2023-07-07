@@ -1,9 +1,17 @@
 <h2>Existing Sessions</h2>
 <ul *ngFor="let session of sessions$ | async ">
+    <li>{{session.id}}</li>
     <li>{{session.name}}</li>
     <li>{{session.status}}</li>
     <li>{{session.expirationTime}}</li>
     <button mat-button fill="clear" (click)="openSession(session.id)">
-        Open Session
+        Join Session
+    </button> <br />
+    <button mat-button fill="clear" (click)="logInSession(session.id, controlId.value)">
+        Join as Session Host
     </button>
+    <mat-form-field>
+        <mat-label>Control ID</mat-label>
+        <input matInput type="password" #controlId>
+    </mat-form-field>
 </ul>
