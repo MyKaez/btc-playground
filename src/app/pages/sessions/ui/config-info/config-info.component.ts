@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, debounceTime, distinctUntilChanged, tap } from 'rxjs';
+import { SessionService } from 'src/app/core/session.service';
+import { SessionControlInfo, SessionInfo } from 'src/app/models/session';
 
 @Component({
   selector: 'app-config-info',
@@ -10,6 +12,7 @@ import { Observable, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 export class ConfigInfoComponent implements OnInit {
 
   @Input("config") config!: any;
+  @Input("session") session!: SessionInfo;
 
   keys: string[] = [];
   infos: ConfigInfo[] = [
@@ -17,7 +20,19 @@ export class ConfigInfoComponent implements OnInit {
   ];
   formGroup = new FormGroup<any>([]);
 
+  constructor(private sessionService: SessionService) { }
+
+  get sessionControl(): SessionControlInfo | undefined {
+    if ('controlId' in this.session) {
+      return <SessionControlInfo>this.session;
+    }
+    return undefined;
+  }
+
   isReadonly(property: string): boolean {
+    if (!this.sessionControl) {
+      return false;
+    }
     return !(this.infos.find(info => info.property === property)?.editable ?? false);
   }
 
@@ -32,12 +47,24 @@ export class ConfigInfoComponent implements OnInit {
   ngOnInit(): void {
     this.keys = Object.keys(this.config);
     this.infos.filter(info => info.editable).forEach(info => {
-      const control = new FormControl<number>(this.config[info.property]);
+      if (!this.sessionControl) {
+        return;
+      }
+      const control = new FormControl<string>(this.config[info.property]);
       this.formGroup.addControl(info.property, control);
       const observable = control.valueChanges.pipe(
         debounceTime(300),
         distinctUntilChanged(),
-        tap(value => alert(value))
+        tap(value => {
+          if (value !== null) {
+            if (Number.isNaN(value)) {
+              this.config[info.property] = value;
+            } else {
+              this.config[info.property] = Number.parseFloat(value);
+            }
+          }
+          this.sessionService.update(this.sessionControl!, this.config).subscribe();
+        })
       );
       info.observable = observable;
     });
