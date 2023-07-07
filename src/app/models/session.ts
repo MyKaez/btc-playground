@@ -11,7 +11,7 @@ export interface SessionInfo {
     id: string;
     name: string;
     status: SessionStatus;
-    configuration?: any;
+    configuration: any;
     expirationTime: Date;
     users: User[];
 }
