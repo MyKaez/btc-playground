@@ -2,6 +2,7 @@ import { User } from "./user";
 
 export interface Session {
     name: string;
+    simulationType: string;
 }
 
 export type SessionAction = 'prepare' | 'start' | 'stop' | 'reset';

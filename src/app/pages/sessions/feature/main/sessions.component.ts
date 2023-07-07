@@ -108,7 +108,7 @@ export class SessionsComponent {
 
   registerSession(sessionName: string): void {
     this.load.next(true);
-    const session = { name: sessionName };
+    const session = { name: sessionName, simulationType: this.simulationType };
     this.session.next(session);
   }
 }
