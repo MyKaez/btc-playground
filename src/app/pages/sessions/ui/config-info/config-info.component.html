@@ -1,4 +1,4 @@
 <mat-form-field *ngFor="let key of keys">
     <mat-label>{{key}}</mat-label>
-    <input matInput [value]="config[key]" [readonly]="true">
+    <input matInput [value]="config[key]" [disabled]="isReadonly(key)">
 </mat-form-field>
