@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Observable, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 
 @Component({
   selector: 'app-config-info',
@@ -13,18 +15,38 @@ export class ConfigInfoComponent implements OnInit {
   infos: ConfigInfo[] = [
     { property: 'secondsUntilBlock', editable: true, sendData: true },
     { property: 'totalHashRate', editable: false, sendData: true },
-  ]
+  ];
+  formGroup = new FormGroup<any>([]);
 
   isReadonly(property: string): boolean {
     return !(this.infos.find(info => info.property === property)?.editable ?? false);
   }
 
-  ngOnInit(): void {
-    this.keys = Object.keys(this.config);
+  observable(property: string): Observable<any> {
+    const obs = this.infos.find(info => info.property === property)?.observable;
+    if (obs) {
+      return obs;
+    }
+    throw new Error("Observable not found");
   }
 
+  ngOnInit(): void {
+    this.keys = Object.keys(this.config);
+    this.infos.filter(info => info.editable).forEach(info => {
+      const control = new FormControl<number>(this.config[info.property]);
+      this.formGroup.addControl(info.property, control);
+      const observable = control.valueChanges.pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        tap(value => alert(value))
+      );
+      info.observable = observable;
+    });
+  }
 }
+
 export interface ConfigInfo {
+  observable?: Observable<any>;
   property: string;
   editable: boolean;
   sendData: boolean;

@@ -1,4 +1,7 @@
-<mat-form-field *ngFor="let key of keys">
-    <mat-label>{{key}}</mat-label>
-    <input matInput [value]="config[key]" [disabled]="isReadonly(key)">
-</mat-form-field>
+<form [formGroup]="formGroup">
+    <mat-form-field *ngFor="let key of keys">
+        <mat-label>{{key}}</mat-label>
+        <input matInput [value]="config[key]" [disabled]="isReadonly(key)" [formControlName]="key">
+        <span *ngIf="!isReadonly(key) && (observable(key) | async)"></span>
+    </mat-form-field>
+</form>
