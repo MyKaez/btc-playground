@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { SessionInfo } from 'src/app/models/session';
+import { Component, Input, ViewChild } from '@angular/core';
+import { SessionControlInfo, SessionInfo } from 'src/app/models/session';
 
 @Component({
   selector: 'app-session-info',
@@ -10,6 +10,15 @@ export class SessionInfoComponent {
 
   @Input("session") session!: SessionInfo;
 
+  hideControlId: boolean = true;
+
+  get controlSession(): SessionControlInfo | undefined {
+    if ('controlId' in this.session) {
+      return <SessionControlInfo>this.session;
+    }
+    return undefined;
+  }
+
   get sessionLink(): string {
     const sessionId = this.session.id;
     if (window.location.href.includes(sessionId))
@@ -17,6 +26,10 @@ export class SessionInfoComponent {
     if (window.location.href.includes('sessions'))
       return window.location.href + '/' + sessionId;
     return window.location.href + '/sessions/' + sessionId;
+  }
+
+  showControlId() {
+    this.hideControlId = !this.hideControlId
   }
 
   openLink(): void {

@@ -15,6 +15,15 @@
         <mat-label>Name</mat-label>
         <input matInput [value]="session.name" [readonly]="true">
     </mat-form-field>
+    <div *ngIf="controlSession" class="control-id">
+        <mat-form-field class="control-id-text">
+            <mat-label>ControlId</mat-label>
+            <input matInput [value]="controlSession.controlId" [readonly]="true" [hidden]="hideControlId">
+        </mat-form-field>
+        <button mat-button class="control-id-button" fill="clear" (click)="showControlId()">
+            Show Control ID
+        </button>
+    </div>
     <mat-form-field>
         <mat-label>Status</mat-label>
         <input matInput [value]="session.status" [readonly]="true">
@@ -23,11 +32,11 @@
         <mat-label>Expiration Time</mat-label>
         <input matInput [value]="session.expirationTime" [readonly]="true">
     </mat-form-field>
-
     <mat-form-field>
         <mat-label>Link</mat-label>
         <input matInput [value]="sessionLink" [readonly]="true">
     </mat-form-field>
+
     <button mat-button fill="clear" (click)="openLink()">Open Link</button>
     <button mat-button fill="clear" (click)="copyLink()">Copy Link</button>
 
