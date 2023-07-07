@@ -13,8 +13,7 @@ export class ConfigInfoComponent implements OnInit {
 
   keys: string[] = [];
   infos: ConfigInfo[] = [
-    { property: 'secondsUntilBlock', editable: true, sendData: true },
-    { property: 'totalHashRate', editable: false, sendData: true },
+    { property: 'secondsUntilBlock', editable: true },
   ];
   formGroup = new FormGroup<any>([]);
 
@@ -46,8 +45,7 @@ export class ConfigInfoComponent implements OnInit {
 }
 
 export interface ConfigInfo {
-  observable?: Observable<any>;
   property: string;
   editable: boolean;
-  sendData: boolean;
+  observable?: Observable<any>;
 }
