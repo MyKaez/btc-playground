@@ -31,6 +31,9 @@ export class PowService {
       if (!this.isExecuting) {
         return undefined;
       }
+      if (runConfig.stopCondition()) {
+        return undefined;
+      }
       created++;
       const text = template + created;
       const hash = SHA256(text).toString();
@@ -55,6 +58,9 @@ export class PowService {
       const start = new Date();
       start.setSeconds(start.getSeconds() + 1);
       while (start.getTime() > new Date().getTime()) {
+        if (runConfig.stopCondition()) {
+          break;
+        }
         overallHashRate++;
         const text = template + overallHashRate;
         const hash = SHA256(text).toString();
@@ -62,6 +68,9 @@ export class PowService {
         this.blocks.unshift(block);
         if (this.blocks.length > runConfig.amountOfBlocks) {
           this.blocks.pop();
+        }
+        if (runConfig.stopCondition()) {
+          break;
         }
         await delay(1);
       }

@@ -23,6 +23,7 @@ export class HashListComponent {
         runId: this.user.id,
         amountOfBlocks: 20,
         powConfig: this.session!.configuration,
+        stopCondition: () => this.session!.status !== 'started'
       }
       this.powService.findBlock(runConfig).then(block => this.blockFound.emit(block));
     }
@@ -48,7 +49,8 @@ export class HashListComponent {
   async determine() {
     const runConfig: DeterminationRunConfig = {
       runId: this.user?.id ?? '',
-      amountOfBlocks: 20
+      amountOfBlocks: 20,
+      stopCondition: () => this.session!.status !== 'started'
     }
     const hashRate = await this.powService.determine(runConfig);
     this.hashRateControl.setValue(hashRate);
