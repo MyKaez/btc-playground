@@ -1,6 +1,13 @@
 <h2>Session Info</h2>
 
+<div *ngIf="session.status !== 'notStarted'">
+    <h3>Configuration</h3>
+    <app-config-info [config]="session.configuration"></app-config-info>
+</div>
+
+
 <div>
+    <h3>Meta</h3>
     <mat-form-field>
         <mat-label>ID</mat-label>
         <input matInput [value]="session.id" [readonly]="true">
@@ -18,18 +25,12 @@
         <input matInput [value]="session.expirationTime" [readonly]="true">
     </mat-form-field>
 
-    <div *ngIf="session.configuration">
-        <app-config-info [config]="session.configuration"></app-config-info>
-    </div>
-
-    <div>
-        <mat-form-field *ngIf="session.configuration">
-            <mat-label>Link</mat-label>
-            <input matInput [value]="sessionLink" [readonly]="true">
-        </mat-form-field>
-        <button mat-button fill="clear" (click)="openLink()">Open Link</button>
-        <button mat-button fill="clear" (click)="copyLink()">Copy Link</button>
-    </div>
+    <mat-form-field>
+        <mat-label>Link</mat-label>
+        <input matInput [value]="sessionLink" [readonly]="true">
+    </mat-form-field>
+    <button mat-button fill="clear" (click)="openLink()">Open Link</button>
+    <button mat-button fill="clear" (click)="copyLink()">Copy Link</button>
 
     <div class="qrcode">
         <qrcode ngClass="code-data" [qrdata]="sessionLink" [width]="256" [errorCorrectionLevel]="'L'"
