@@ -56,7 +56,7 @@ export class ConfigInfoComponent implements OnInit {
         debounceTime(300),
         distinctUntilChanged(),
         tap(value => {
-          if (value !== null) {
+          if (value) {
             if (Number.isNaN(value)) {
               this.config[info.property] = value;
             } else {
