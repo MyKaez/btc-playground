@@ -11,7 +11,7 @@
 
     <div [ngSwitch]="session.status">
         <div *ngSwitchCase="'notStarted'">
-            Session hasn't started yet...
+            <app-hash-list [session]="session" [user]="user" [clear]="true"></app-hash-list>
         </div>
         <div *ngSwitchCase="'preparing'">
             <app-hash-list [session]="session" [user]="user"

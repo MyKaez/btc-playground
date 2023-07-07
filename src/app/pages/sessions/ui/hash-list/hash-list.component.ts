@@ -17,8 +17,14 @@ export class HashListComponent {
   @Output("determinedHashRate") determinedHashRate = new EventEmitter<number>();
   @Output("blockFound") blockFound = new EventEmitter<Block>();
 
+  @Input("clear") set clear(value: boolean) {
+    if (value && this.session?.status === 'notStarted') {
+      this.powService.blocks.length = 0;
+    }
+  }
+
   @Input("go") set go(value: boolean) {
-    if (value && this.user?.status == 'ready') {
+    if (value && this.user?.status === 'ready') {
       const runConfig: RunConfig = {
         runId: this.user.id,
         amountOfBlocks: 20,
@@ -50,7 +56,7 @@ export class HashListComponent {
     const runConfig: DeterminationRunConfig = {
       runId: this.user?.id ?? '',
       amountOfBlocks: 20,
-      stopCondition: () => this.session!.status !== 'started'
+      stopCondition: () => this.session!.status !== 'preparing'
     }
     const hashRate = await this.powService.determine(runConfig);
     this.hashRateControl.setValue(hashRate);
