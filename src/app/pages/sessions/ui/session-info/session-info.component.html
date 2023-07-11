@@ -34,11 +34,11 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Link</mat-label>
-        <input matInput [value]="sessionLink" [readonly]="true">
+        <input matInput class="hidden">
+        <a [href]="sessionLink" class="form-field-link">{{sessionLink}}</a>
+        <button mat-button class="btn-circle form-field-button" (click)="copyLink()"><mat-icon>file_copy</mat-icon></button>
     </mat-form-field>
 
-    <button mat-button fill="clear" (click)="openLink()">Open Link</button>
-    <button mat-button fill="clear" (click)="copyLink()">Copy Link</button>
 
     <div class="qrcode" [class.fullscreen]="isQrFullscreen" (click)="switchQrFullscreen($event)" >        
         <qrcode ngClass="code-data" [qrdata]="sessionLink" [width]="256" [errorCorrectionLevel]="'L'"
