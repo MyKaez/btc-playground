@@ -11,6 +11,7 @@ export class SessionInfoComponent {
   @Input("session") session!: SessionInfo;
 
   hideControlId: boolean = true;
+  isQrFullscreen: boolean = false;
 
   get controlSession(): SessionControlInfo | undefined {
     if ('controlId' in this.session) {
@@ -33,6 +34,7 @@ export class SessionInfoComponent {
   }
 
   openLink(): void {
+    if(this.isQrFullscreen) return;
     window.open(this.sessionLink, '_blank');
   }
 
@@ -44,6 +46,15 @@ export class SessionInfoComponent {
     };
     document.addEventListener('copy', listener);
     document.execCommand('copy');
+  }
+
+  switchQrFullscreen(event: MouseEvent, toValue?: boolean): boolean {
+    this.isQrFullscreen = toValue == null
+      ? !this.isQrFullscreen
+      : toValue;
+
+    event.stopPropagation();
+    return false;
   }
 
 }

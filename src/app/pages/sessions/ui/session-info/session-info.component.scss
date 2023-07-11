@@ -22,6 +22,7 @@ div {
 }
 
 .qrcode {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,5 +30,36 @@ div {
 
     .code-data {
         cursor: pointer;
+
+        &:hover~.btn-circle {
+            display: block;
+        }
+    }
+
+    >.btn-circle {
+        display: none;
+        position: absolute;
+        top: 10px;
+        margin-left: 190px;
+
+        &:hover {
+            display: inline-block;
+        }
+    }
+
+    &.fullscreen {
+        ::ng-deep { 
+            .code-data > .qrcode {
+                @extend .fullscreen-element;
+                display: flex;
+                justify-content: center;                
+                background-color: rgba(var(--primary), 0.9);
+
+                canvas {
+                    height: auto !important;
+                    width: auto !important;
+                }
+            }
+        }
     }
 }

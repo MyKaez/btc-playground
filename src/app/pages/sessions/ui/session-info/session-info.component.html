@@ -40,8 +40,10 @@
     <button mat-button fill="clear" (click)="openLink()">Open Link</button>
     <button mat-button fill="clear" (click)="copyLink()">Copy Link</button>
 
-    <div class="qrcode">
+    <div class="qrcode" [class.fullscreen]="isQrFullscreen" (click)="switchQrFullscreen($event)" >        
         <qrcode ngClass="code-data" [qrdata]="sessionLink" [width]="256" [errorCorrectionLevel]="'L'"
             (click)="openLink()"></qrcode>
+        
+        <button mat-button class="btn-circle" (click)="switchQrFullscreen($event)" title="Fullscreen"><mat-icon>fullscreen</mat-icon></button>
     </div>
 </div>
