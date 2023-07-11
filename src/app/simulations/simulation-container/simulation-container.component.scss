@@ -286,4 +286,10 @@
             pointer-events: none
         }
     }
+
+    button {
+        border: 2px solid $light-color;
+        border-radius: 2em;
+        line-height: inherit;
+    }
 }

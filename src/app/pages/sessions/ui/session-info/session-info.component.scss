@@ -21,6 +21,15 @@ div {
     }
 }
 
+.form-field-link {
+    display: inline-block;
+    margin-top: $margin-large;
+}
+
+.form-field-button {
+    margin-left: $margin-large;
+}
+
 .qrcode {
     position: relative;
     display: flex;
