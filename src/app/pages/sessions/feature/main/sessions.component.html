@@ -1,4 +1,4 @@
-<div *ngIf="vm$ | async as vm;else noSession">
+<div class="sessions-root" *ngIf="vm$ | async as vm;else noSession">
     <button mat-button fill="clear" (click)="logOut()">
         Leave Session
     </button>

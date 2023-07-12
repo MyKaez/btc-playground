@@ -22,3 +22,7 @@ textarea {
 
     resize: none;
 }
+
+.send-message-container > *:not(:first-child) {
+    margin-left: $margin-small;
+}

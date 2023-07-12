@@ -1,7 +1,7 @@
-<div>
+<div class="send-message-container">
     <textarea label="Message" labelPlacement="stacked" placeholder="Enter message" [formControl]="messageControl"
         (keyup.enter)="sendMessage()"></textarea>
-    <button mat-button="clear" slot="end" (click)="sendMessage()" [disabled]="messageControl.invalid">
-        Send
+    <button mat-button class="btn-circle" (click)="sendMessage()" [disabled]="messageControl.invalid">
+        <mat-icon>send</mat-icon>
     </button>
 </div>

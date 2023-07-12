@@ -6,7 +6,11 @@
       width: 100%;
 
       .mat-tab-body-wrapper {
-        flex-grow: 1;
+        flex-grow: 1;       
+        
+        @media only screen and (min-width: $max-content-width) {
+            margin-top: $margin-large !important;
+        }
       }
     }
 
@@ -72,10 +76,6 @@
                 width: 80vw;
                 border-bottom-left-radius: 2em;
             }
-        }
-        
-        @media only screen and (min-width: $max-content-width) {
-            margin-top: $margin-large !important;
         }
     }
 
@@ -167,7 +167,6 @@
     .simulation-items {
         display: flex;
         justify-content: space-evenly;
-        padding-top: $margin-large;
 
         .text {
             overflow: auto;
@@ -291,5 +290,10 @@
         border: 2px solid $light-color;
         border-radius: 2em;
         line-height: inherit;
+    }
+
+    .simulation-sessions {
+        height: 100%;
+        margin: 0;
     }
 }
