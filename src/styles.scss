@@ -405,6 +405,26 @@ h3 {
   line-height: inherit;
 }
 
+.btn-compound {
+  padding: $margin-small $margin-large !important;
+  position: relative;
+
+  .mat-button-wrapper > span:last-child {
+    margin-left: 1.5rem;
+  }
+  
+  .mat-button-wrapper:before {
+    content: "";
+    position: absolute;
+    background-color: #2b4487;
+    display: inline-block;
+    height: 40px;
+    width: 2px;
+    left: 50px;
+    top: 0;
+  }
+}
+
 .form-field-link {
   color: $field-link-color;
 

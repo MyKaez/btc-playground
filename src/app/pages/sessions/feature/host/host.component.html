@@ -1,12 +1,13 @@
-<button mat-button fill="clear" (click)="prepare()" #prepareButton>
-    Prepare
+<button mat-button class="btn-circle btn-compound" (click)="prepare()" title="Kalkulieren" #prepareButton>
+    <mat-icon>poll</mat-icon>
+    <span>Kalkulieren</span>
 </button>
-<button mat-button fill="clear" (click)="start()" #startButton>
-    Start
+<button mat-button class="btn-circle" (click)="start()" title="Hashing für alle starten" #startButton>
+    <mat-icon>play_arrow</mat-icon>
 </button>
-<button mat-button fill="clear" (click)="stop()" #stopButton>
-    Stop
+<button mat-button class="btn-circle" (click)="stop()" title="Hashing für alle beenden" #stopButton>
+    <mat-icon>stop</mat-icon>
 </button>
-<button mat-button fill="clear" (click)="clear()" #clearButton>
-    Clear
+<button mat-button class="btn-circle" (click)="clear()" title="Zurücksetzen" #clearButton>
+    <mat-icon>replay</mat-icon>
 </button>

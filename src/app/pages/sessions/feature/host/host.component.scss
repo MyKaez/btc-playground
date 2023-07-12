@@ -1,0 +1,5 @@
+@import "/src/styles.scss";
+
+button:not(:first-child) {
+    margin-left: $margin-small;
+}
