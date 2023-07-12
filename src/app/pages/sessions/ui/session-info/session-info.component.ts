@@ -29,6 +29,10 @@ export class SessionInfoComponent {
     return window.location.href + '/sessions/' + sessionId;
   }
 
+  get hiddenControlId(): string {
+    return "".padEnd(this.controlSession!.controlId.length, "*");
+  }
+
   showControlId() {
     this.hideControlId = !this.hideControlId
   }

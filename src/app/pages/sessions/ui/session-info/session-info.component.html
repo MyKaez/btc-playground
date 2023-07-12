@@ -18,11 +18,9 @@
     <div *ngIf="controlSession" class="control-id">
         <mat-form-field class="control-id-text">
             <mat-label>ControlId</mat-label>
-            <input matInput [value]="controlSession.controlId" [readonly]="true" [hidden]="hideControlId">
+            <input matInput [value]="hideControlId ? hiddenControlId : controlSession.controlId" [readonly]="true">
         </mat-form-field>
-        <button mat-button class="control-id-button" fill="clear" (click)="showControlId()">
-            Show Control ID
-        </button>
+        <button mat-button class="btn-circle form-field-button" (click)="showControlId()"><mat-icon>{{hideControlId ? "visibility" : "visibility_off"}}</mat-icon></button>
     </div>
     <mat-form-field>
         <mat-label>Status</mat-label>
