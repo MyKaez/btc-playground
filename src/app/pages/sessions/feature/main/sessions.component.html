@@ -40,13 +40,14 @@
 </div>
 
 <ng-template #noSession>
-    <div *ngIf="loading$ | async;else enterData">
-        Loading...
+    <div class="info-card loading-section">
+        <div *ngIf="loading$ | async;else enterData">
+            Loading...
+        </div>
+        <ng-template #enterData>
+            Please create a session or hook up into an existing one<br />
+            <app-input-session (nameChange)="registerSession($event)"></app-input-session>
+            <app-session-list></app-session-list>
+        </ng-template>
     </div>
-    <ng-template #enterData>
-        Please create a session or hook up into an existing one<br />
-        <app-input-session (nameChange)="registerSession($event)"></app-input-session>
-        <app-session-list></app-session-list>
-    </ng-template>
-
 </ng-template>
