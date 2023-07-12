@@ -176,6 +176,79 @@ app-blocksize {
 mat-label {
   color: $light-color;
 }
+/* global theme applyment */
+h1,
+h2,
+h3 {
+  color: var(--accent);
+}
+
+.presentation-mode>* {
+  pointer-events: none;
+}
+
+.mat-form-field.inconspicuous {
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
+
+  .mat-form-field-flex {
+    padding: 0;
+    background-color: unset;
+  }
+
+  .mat-form-field-infix {
+    width: auto;
+    padding: 0 4px;
+    border: none;
+  }
+
+  .mat-form-field-label-wrapper {
+    display: none;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+    color: var(--font-color);
+    border-bottom: 1px solid var(--font-color);
+
+    .mat-form-field-ripple {
+      background-color: var(--font-color);
+    }
+  }
+
+  .mat-select-value-text,
+  .mat-select-arrow {
+    color: var(--font-color);
+  }
+
+  .mat-select-arrow-wrapper {
+    transform: none !important;
+    margin-top: 2px;
+    margin-left: 4px;
+  }
+}
+
+.mat-button-base {
+  &:not(.mat-icon-button) {
+    background-color: $sugar-700;
+    border-color: $sugar;
+    padding: $margin-small;
+    color: $gray-70;
+  }
+
+  &.btn-circle {
+    min-width: unset;
+  }
+}
+
+.fixed-footer,
+.support-tile-header {
+  a img:hover {
+    -webkit-box-shadow: 0px 1px 9px 3px #fff, inset 0px 0px 9px 0px #fff;
+    box-shadow: 0px 1px 9px 3px #fff, inset 0px 0px 9px 0px #fff;
+  }
+}
 
 ::ng-deep {
     .cdk-overlay-dark-backdrop {
