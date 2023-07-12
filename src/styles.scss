@@ -405,6 +405,11 @@ h3 {
   line-height: inherit;
 }
 
+.btn-secondary {
+  background-color: $gray-40 !important;
+  border-color: $gray-50 !important;
+}
+
 .btn-compound {
   padding: $margin-small $margin-large !important;
   position: relative;

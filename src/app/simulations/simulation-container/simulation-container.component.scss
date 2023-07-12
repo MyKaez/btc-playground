@@ -293,7 +293,10 @@
     }
 
     .simulation-sessions {
-        height: 100%;
-        margin: 0;
+        display: flex;
+
+        >* {
+            flex-grow: 1;
+        }
     }
 }
