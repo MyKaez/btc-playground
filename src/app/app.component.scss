@@ -234,12 +234,20 @@ h3 {
   }
 }
 
-.mat-button-base {
+.mat-button-base.mat-button-base.mat-button-base.mat-button-base {
   &:not(.mat-icon-button) {
     background-color: $sugar-700;
     border-color: $sugar;
     padding: $margin-small;
     color: $gray-70;
+  }
+
+  &.mat-button-disabled {
+    opacity: .6;
+  }
+
+  &:hover:not(.mat-button-disabled) {
+    opacity: .8;
   }
 
   &.btn-circle {

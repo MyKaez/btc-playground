@@ -1,7 +1,7 @@
-<h2>Session Info</h2>
+<h2>Sitzungsinformationen</h2>
 
 <div *ngIf="session.status !== 'notStarted'">
-    <h3>Configuration</h3>
+    <h3>Konfiguration</h3>
     <app-config-info [config]="session.configuration" [session]="session"></app-config-info>
 </div>
 
@@ -17,7 +17,7 @@
     </mat-form-field>
     <div *ngIf="controlSession" class="control-id">
         <mat-form-field class="control-id-text">
-            <mat-label>ControlId</mat-label>
+            <mat-label>Control ID</mat-label>
             <input matInput [value]="hideControlId ? hiddenControlId : controlSession.controlId" [readonly]="true">
         </mat-form-field>
         <button mat-button class="btn-circle form-field-button" (click)="showControlId()"><mat-icon>{{hideControlId ? "visibility" : "visibility_off"}}</mat-icon></button>
@@ -27,7 +27,7 @@
         <input matInput [value]="session.status" [readonly]="true">
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Expiration Time</mat-label>
+        <mat-label>Gültig bis</mat-label>
         <input matInput [value]="session.expirationTime" [readonly]="true">
     </mat-form-field>
     <mat-form-field>

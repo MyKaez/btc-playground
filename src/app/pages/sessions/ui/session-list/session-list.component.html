@@ -1,17 +1,20 @@
-<h2>Existing Sessions</h2>
+<h2>Aktuelle Sitzungen</h2>
 <ul *ngFor="let session of sessions$ | async ">
     <li>{{session.id}}</li>
     <li>{{session.name}}</li>
     <li>{{session.status}}</li>
     <li>{{session.expirationTime}}</li>
     <button mat-button fill="clear" (click)="openSession(session.id)">
-        Join Session
+        Sitzung beitreten
     </button> <br />
     <button mat-button fill="clear" (click)="logInSession(session.id, controlId.value)">
-        Join as Session Host
+        Als Sitzungshost beitreten
     </button>
     <mat-form-field>
         <mat-label>Control ID</mat-label>
         <input matInput type="password" #controlId>
     </mat-form-field>
 </ul>
+<div *ngIf="!(sessions$ | async)?.length" class="no-sessions-section">
+    Es gibt noch keine Sitzungen.
+</div>

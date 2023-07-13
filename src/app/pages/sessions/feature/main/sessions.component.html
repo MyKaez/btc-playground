@@ -42,10 +42,10 @@
 <ng-template #noSession>
     <div class="info-card loading-section">
         <div *ngIf="loading$ | async;else enterData">
-            Loading...
+            Lade...
         </div>
         <ng-template #enterData>
-            Please create a session or hook up into an existing one<br />
+            Bitte erstelle eine Sitzung oder tritt einer bestehenden bei.<br />
             <app-input-session (nameChange)="registerSession($event)"></app-input-session>
             <app-session-list></app-session-list>
         </ng-template>
