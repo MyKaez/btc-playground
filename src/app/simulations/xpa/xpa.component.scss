@@ -1,4 +1,5 @@
-@import "/src/styles.scss";
+@use "/src/styles.scss";
+@import "/src/colors.scss";
 
 .mat-tab-body-wrapper {
     height: 100%;

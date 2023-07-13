@@ -1,4 +1,6 @@
-@import "/src/styles.scss";
+@use "/src/styles.scss";
+@import "/src/colors.scss"
+;
 
 .fixed-footer {
     padding: $margin-large 0 $margin-small 0;    

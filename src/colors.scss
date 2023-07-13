@@ -1,0 +1,168 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+
+/* Color Theme Swatches in Hex */
+$fixesthis-test-1-hex: #373747;
+$fixesthis-test-2-hex: #434355;
+$fixesthis-test-3-hex: #5405D0;
+$fixesthis-test-4-hex: #04D94F;
+$fixesthis-test-5-hex: #F25D07;
+
+$fixes-primary-color: #21212a;
+$fixes-primary-contrast: #cce;
+$fixes-primary-palette: (
+  50: lighten($fixes-primary-color, 50),
+  100: lighten($fixes-primary-color, 35),
+  200: lighten($fixes-primary-color, 25),
+  300: lighten($fixes-primary-color, 15),
+  400: lighten($fixes-primary-color, 5),
+  500: $fixes-primary-color,
+  600: darken($fixes-primary-color, 5),
+  700: darken($fixes-primary-color, 10),
+  800: darken($fixes-primary-color, 12),
+  900: darken($fixes-primary-color, 14),
+  contrast: (50: lighten($fixes-primary-contrast, 35),
+    100: lighten($fixes-primary-contrast, 25),
+    200: lighten($fixes-primary-contrast, 15),
+    300: lighten($fixes-primary-contrast, 10),
+    400: lighten($fixes-primary-contrast, 5),
+    500: $fixes-primary-contrast,
+    600: darken($fixes-primary-contrast, 15),
+    700: darken($fixes-primary-contrast, 25),
+    800: darken($fixes-primary-contrast, 35),
+    900: darken($fixes-primary-contrast, 50))
+);
+
+$fixes-accent-color: #F25D07;
+$fixes-accent-contrast: #032222;
+$fixes-accent-palette: (
+  50: lighten($fixes-accent-color, 50),
+  100: lighten($fixes-accent-color, 35),
+  200: lighten($fixes-accent-color, 25),
+  300: lighten($fixes-accent-color, 15),
+  400: lighten($fixes-accent-color, 5),
+  500: $fixes-accent-color,
+  600: darken($fixes-accent-color, 1),
+  700: darken($fixes-accent-color, 2),
+  800: darken($fixes-accent-color, 3),
+  900: darken($fixes-accent-color, 5),
+  contrast: (50: lighten($fixes-accent-contrast, 35),
+    100: lighten($fixes-accent-contrast, 25),
+    200: lighten($fixes-accent-contrast, 15),
+    300: lighten($fixes-accent-contrast, 10),
+    400: lighten($fixes-accent-contrast, 5),
+    500: $fixes-accent-contrast,
+    600: darken($fixes-accent-contrast, 15),
+    700: darken($fixes-accent-contrast, 25),
+    800: darken($fixes-accent-contrast, 35),
+    900: darken($fixes-accent-contrast, 50))
+);
+
+$fixes-sugar-color: #2B4487;
+$fixes-sugar-contrast: #AACD55;
+$fixes-sugar-palette: (
+  50: lighten($fixes-sugar-color, 50),
+  100: lighten($fixes-sugar-color, 35),
+  200: lighten($fixes-sugar-color, 25),
+  300: lighten($fixes-sugar-color, 15),
+  400: lighten($fixes-sugar-color, 5),
+  500: $fixes-sugar-color,
+  600: darken($fixes-sugar-color, 15),
+  700: darken($fixes-sugar-color, 25),
+  800: darken($fixes-sugar-color, 28),
+  900: darken($fixes-sugar-color, 32),
+  contrast: (50: lighten($fixes-sugar-contrast, 35),
+    100: lighten($fixes-sugar-contrast, 25),
+    200: lighten($fixes-sugar-contrast, 15),
+    300: lighten($fixes-sugar-contrast, 10),
+    400: lighten($fixes-sugar-contrast, 5),
+    500: $fixes-sugar-contrast,
+    600: darken($fixes-sugar-contrast, 15),
+    700: darken($fixes-sugar-contrast, 25),
+    800: darken($fixes-sugar-contrast, 35),
+    900: darken($fixes-sugar-contrast, 50))
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$Simulator-primary: mat.define-palette($fixes-primary-palette, 500);
+$Simulator-accent: mat.define-palette($fixes-accent-palette);
+$Simulator-sugar: mat.define-palette($fixes-sugar-palette);
+
+// The warn palette is optional (defaults to red).
+$Simulator-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$Simulator-theme: mat.define-dark-theme((color: (primary: $Simulator-primary,
+  accent: $Simulator-accent,
+  warn: $Simulator-warn,
+)));
+
+
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($Simulator-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+// desired: #21212a;
+
+$primary: mat.get-color-from-palette($Simulator-primary, 500);
+$primary-100: mat.get-color-from-palette($Simulator-primary, 100);
+$primary-300: mat.get-color-from-palette($Simulator-primary, 300);
+$primary-700: mat.get-color-from-palette($Simulator-primary, 700);
+$primary-800: mat.get-color-from-palette($Simulator-primary, 800);
+$primary-900: mat.get-color-from-palette($Simulator-primary, 900);
+
+$accent: mat.get-color-from-palette($Simulator-accent, 500);
+$accent-100: mat.get-color-from-palette($Simulator-accent, 100);
+$accent-300: mat.get-color-from-palette($Simulator-accent, 300);
+$accent-700: mat.get-color-from-palette($Simulator-accent, 700);
+$accent-900: mat.get-color-from-palette($Simulator-accent, 900);
+
+$sugar: mat.get-color-from-palette($Simulator-sugar, 500);
+$sugar-100: mat.get-color-from-palette($Simulator-sugar, 100);
+$sugar-300: mat.get-color-from-palette($Simulator-sugar, 300);
+$sugar-700: mat.get-color-from-palette($Simulator-sugar, 700);
+$sugar-900: mat.get-color-from-palette($Simulator-sugar, 900);
+
+$error: #f44336;
+
+$dark-color: #1d1000;
+$light-color: white;
+
+$field-link-color: #5E5EC8;
+$field-link-color-hover: lighten($field-link-color, 10%);
+
+$gray: #788;
+$gray-50: $gray;
+$gray-10: darken($gray, 80%);
+$gray-20: darken($gray, 60%);
+$gray-30: darken($gray, 40%);
+$gray-40: darken($gray, 20%);
+$gray-60: lighten($gray, 20%);
+$gray-70: lighten($gray, 40%);
+$gray-80: lighten($gray, 60%);
+$gray-90: lighten($gray, 80%);
+
+$code-font: 'Courier New', Courier, monospace;
+
+/* experimental colors */
+
+/* sizes */
+$header-height: 50px;
+$max-content-width: 1200px;
+$min-content-width: 200px;
+$small-screen-width: 900px;
+
+/* spaces */
+$margin-slim: .25rem;
+$margin-small: .5rem;
+$margin-large: 1rem;
+$margin-huge: 2rem;
+$margin-ultra: 4rem;
