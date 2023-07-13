@@ -1,4 +1,5 @@
-@import "/src/app/app.component.scss";
+@use "/src/styles.scss";
+@import "/src/colors.scss";
 
 $simulation-image-background-color: black;
 $simulation-text-height: 60px;

@@ -1,4 +1,5 @@
-@import '/src/app/app.component.scss';
+@use "/src/styles.scss";
+@import "/src/colors.scss";
 
 $content-width: 900px;
 $image-width: 420px;

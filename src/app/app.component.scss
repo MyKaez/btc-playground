@@ -180,11 +180,12 @@ app-blocksize {
 mat-label {
   color: $light-color;
 }
+
 /* global theme applyment */
 h1,
 h2,
 h3 {
-  color: var(--accent);
+  color: var(--accent) !important;
 }
 
 .presentation-mode>* {
