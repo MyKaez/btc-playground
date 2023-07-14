@@ -32,8 +32,12 @@ export class SessionsComponent {
   type: 'session-info' | 'message-center' | 'user-action' = 'session-info';
   messages: Message[] = [];
 
-  getSessionById$ = this.route.params.pipe(
+  params$ = this.route.params.pipe(
     map(p => ({ sessionId: p['sessionId'], controlId: p['controlId'] })),
+    shareReplay(1)
+  );
+
+  getSessionById$ = this.params$.pipe(
     filter(data => data.sessionId !== undefined && data.sessionId !== null),
     switchMap(p => this.sessionService.getSession(p.sessionId, p.controlId).pipe(
       catchError(error => {
@@ -53,7 +57,13 @@ export class SessionsComponent {
         }
       })
     )),
-    tap(_ => this.type = 'user-action')
+    tap(_ => this.type = 'user-action'),
+    tap(session => {
+      if ('controlId' in (session ?? {})) {
+        localStorage.setItem(SessionsComponent.LOCAL_STORAGE, JSON.stringify(session));
+        // todo: forward to "sessions" page
+      }
+    })
   );
 
   storedSession$ = of(localStorage.getItem(SessionsComponent.LOCAL_STORAGE)).pipe(
