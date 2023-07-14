@@ -1,5 +1,9 @@
 <h2>Sitzungsinformationen</h2>
 
+<div *ngIf="session.status == 'stopped'">
+    <app-user-done [session]="session"></app-user-done>
+</div>
+
 <div *ngIf="session.status !== 'notStarted'">
     <h3>Konfiguration</h3>
     <app-config-info [config]="session.configuration" [session]="session"></app-config-info>
