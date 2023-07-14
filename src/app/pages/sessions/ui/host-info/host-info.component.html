@@ -1,1 +1,3 @@
 {{vm.session.status}}
+
+<app-user-done *ngIf="vm.session.status === 'stopped'" [user]="vm.user" [session]="vm.session"></app-user-done>

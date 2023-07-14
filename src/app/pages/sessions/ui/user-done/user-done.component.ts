@@ -25,5 +25,4 @@ export class UserDoneComponent {
     const user = this.session!.users.find(u => u.id === this.winnerBlock.userId);
     return user?.name ?? 'unknown';
   }
-
 }
