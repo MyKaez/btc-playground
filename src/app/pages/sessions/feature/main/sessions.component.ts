@@ -61,7 +61,7 @@ export class SessionsComponent {
     tap(session => {
       if ('controlId' in (session ?? {})) {
         localStorage.setItem(SessionsComponent.LOCAL_STORAGE, JSON.stringify(session));
-        // todo: forward to "sessions" page
+        // todo: we need to get rid off the ids in the url!
       }
     })
   );
