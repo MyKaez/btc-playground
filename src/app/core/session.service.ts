@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { Session, SessionAction, SessionControlInfo, SessionInfo } from '../models/session';
 import { Message } from '../models/message';
 
@@ -16,9 +16,18 @@ export class SessionService {
     )
   }
 
-  getSession(sessionId: string): Observable<SessionInfo> {
-    return this.httpClient.get(`${this.url}/v1/sessions/${sessionId}`).pipe(
-      map(value => <SessionInfo>value)
+  getSession(sessionId: string, controlId?: string): Observable<SessionInfo> {
+    let url = `${this.url}/v1/sessions/${sessionId}`;
+    if (controlId) {
+      url += `?controlId=${controlId}`;
+    }
+    return this.httpClient.get(url).pipe(
+      map(value => {
+        if (!controlId) {
+          return <SessionInfo>value;
+        }
+        return <SessionControlInfo>{ ...value, 'controlId': controlId };
+      }),
     )
   }
 

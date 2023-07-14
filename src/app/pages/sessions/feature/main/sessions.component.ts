@@ -25,15 +25,17 @@ export class SessionsComponent {
     private route: ActivatedRoute,
     private router: Router,
     private sessionService: SessionService,
-    private connectionService: ConnectionService) {
+    private connectionService: ConnectionService,
+  ) {
   }
 
   type: 'session-info' | 'message-center' | 'user-action' = 'session-info';
   messages: Message[] = [];
+
   getSessionById$ = this.route.params.pipe(
-    map(p => p['sessionId']),
-    filter(sessionId => sessionId !== undefined && sessionId !== null),
-    switchMap(p => this.sessionService.getSession(p).pipe(
+    map(p => ({ sessionId: p['sessionId'], controlId: p['controlId'] })),
+    filter(data => data.sessionId !== undefined && data.sessionId !== null),
+    switchMap(p => this.sessionService.getSession(p.sessionId, p.controlId).pipe(
       catchError(error => {
         if (error.status === 404) {
           let sessionUrl = window.location.href

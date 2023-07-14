@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { EMPTY, catchError } from 'rxjs';
 import { SessionService } from 'src/app/core/session.service';
 
 @Component({
@@ -14,10 +15,26 @@ export class SessionListComponent {
   sessions$ = this.sessionService.getAll().pipe();
 
   logInSession(sessionId: string, controlId: string) {
-    alert('Log in to session is not implemented yet. SessionId: ' + sessionId + ', ControlId: ' + controlId);
+    if (controlId === undefined || controlId === null || controlId === '') {
+      alert('control id is required');
+      return;
+    }
+    const subscription = this.sessionService.getSession(sessionId, controlId).pipe(
+      catchError(err => {
+        if (err.status === 404) {
+          alert('not found');
+        } else if (err.status === 401) {
+          alert('false control id');
+        }
+        return EMPTY;
+      })
+    ).subscribe(session => {
+      this.openSession(session.id, controlId);
+      subscription.unsubscribe();
+    });
   }
 
-  openSession(sessionId: string) {
+  openSession(sessionId: string, controlId?: string) {
     let baseUrl = window.location.href
       .replace('http://', '')
       .replace('https://', '');
@@ -27,6 +44,7 @@ export class SessionListComponent {
       sessionUrl += '/' + sessionId;
     else
       sessionUrl += '/sessions/' + sessionId;
-    this.router.navigate([sessionUrl]);
+
+    this.router.navigate([sessionUrl, controlId ? { controlId: controlId } : undefined]);
   }
 }
