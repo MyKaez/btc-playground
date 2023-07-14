@@ -45,7 +45,7 @@ export class ConfigInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.keys = Object.keys(this.config);
+    this.keys = Object.keys(this.config).filter(key => key !== 'result');
     this.infos.filter(info => info.editable).forEach(info => {
       if (!this.sessionControl) {
         return;

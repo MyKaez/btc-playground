@@ -10,3 +10,6 @@
         </ng-template>
     </mat-form-field>
 </form>
+<div *ngIf="config.result">
+    {{config.result | json}}
+</div>
