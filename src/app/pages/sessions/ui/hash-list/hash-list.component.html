@@ -17,33 +17,7 @@
         Session is over, please wait until next round!
     </div>
     <ng-template #userView>
-        <span *ngIf="isMe" class="winner">
-            WIN!!!!
-        </span>
-        <span *ngIf="!isMe" class="loser">
-            LOSE!!!!
-        </span>
-        <ul>
-            <li>
-                <mat-form-field>
-                    <mat-label>Winner</mat-label>
-                    <input matInput [value]="winner" [readonly]="true">
-                </mat-form-field>
-            </li>
-            <li>
-                <mat-form-field>
-                    <mat-label>Text</mat-label>
-                    <input matInput [value]="winnerBlock.text" [readonly]="true">
-                </mat-form-field>
-            </li>
-            <li>
-                <mat-form-field>
-                    <mat-label>Hash</mat-label>
-                    <input matInput [value]="winnerBlock.hash" [readonly]="true">
-                </mat-form-field>
-            </li>
-        </ul>
-
+        <app-user-done [user]="user" [session]="session"></app-user-done>
         <ng-container *ngTemplateOutlet="console"></ng-container>
     </ng-template>
 </div>

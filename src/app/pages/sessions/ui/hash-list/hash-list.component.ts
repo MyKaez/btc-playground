@@ -39,19 +39,6 @@ export class HashListComponent {
 
   constructor(public powService: PowService) { }
 
-  get winnerBlock(): Block {
-    return <Block>this.session!.configuration.result;
-  }
-
-  get isMe(): boolean {
-    return this.user?.id === this.winnerBlock.userId;
-  }
-
-  get winner(): string {
-    const user = this.session!.users.find(u => u.id === this.winnerBlock.userId);
-    return user?.name ?? 'unknown';
-  }
-
   async determine() {
     const runConfig: DeterminationRunConfig = {
       runId: this.user?.id ?? '',
