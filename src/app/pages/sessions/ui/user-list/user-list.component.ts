@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { User } from 'src/app/models/user';
+import { User, UserStatus, UserStatusDisplayValues } from 'src/app/models/user';
 
 @Component({
   selector: 'app-user-list',
@@ -8,4 +8,8 @@ import { User } from 'src/app/models/user';
 })
 export class UserListComponent {
   @Input("users") users!: User[];
+
+  getUserStatusDisplayValue(userStatus: UserStatus) {
+    return UserStatusDisplayValues[userStatus];
+  }
 }

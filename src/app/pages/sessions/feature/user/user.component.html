@@ -32,7 +32,7 @@
         Loading...
     </div>
     <ng-template #enterData>
-        <mat-form-field>
+        <mat-form-field appearance="fill">
             <mat-label>User Name</mat-label>
             <input matInput (keyup.enter)="registerUser()" [formControl]="userNameControl" />
         </mat-form-field>

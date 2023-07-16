@@ -1,4 +1,6 @@
 <div *ngFor="let user of users">
-    {{user.name}} is {{user.status}} - {{user.configuration | json}}
+    <span>{{user.name}} ist</span>
+    <div [ngClass]="'chip user-status-' + user.status">{{getUserStatusDisplayValue(user.status)}}</div>
+    <span>- {{user.configuration | json}}</span>
 </div>
 <div *ngIf="!users.length" class="no-users">Es ist noch niemand der Sitzung beigetreten.</div>
