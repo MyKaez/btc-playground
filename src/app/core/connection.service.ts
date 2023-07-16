@@ -70,7 +70,7 @@ export class ConnectionService {
         const user = session.users.find(u => u.id == update.id);
         if (user) {
           if (vm.user?.id == user?.id) {
-            vm.user = { ...vm.user, ...user };
+            vm.user = { ...vm.user, ...update };
           }
           updateUsers();
           messageUpdate([{ senderId: user.id, text: `user update: ${user.status}` }]);

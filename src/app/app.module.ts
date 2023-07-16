@@ -76,6 +76,7 @@ import { HostInfoComponent } from './pages/sessions/ui/host-info/host-info.compo
 import { UserListComponent } from './pages/sessions/ui/user-list/user-list.component';
 import { ConfigInfoComponent } from './pages/sessions/ui/config-info/config-info.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { UserDoneComponent } from './pages/sessions/ui/user-done/user-done.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     MessageCenterComponent,
     HostInfoComponent,
     UserListComponent,
-    ConfigInfoComponent
+    ConfigInfoComponent,
+    UserDoneComponent
   ],
   imports: [
     BrowserModule,

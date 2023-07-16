@@ -25,15 +25,21 @@ export class SessionsComponent {
     private route: ActivatedRoute,
     private router: Router,
     private sessionService: SessionService,
-    private connectionService: ConnectionService) {
+    private connectionService: ConnectionService,
+  ) {
   }
 
   type: 'session-info' | 'message-center' | 'user-action' = 'session-info';
   messages: Message[] = [];
-  getSessionById$ = this.route.params.pipe(
-    map(p => p['sessionId']),
-    filter(sessionId => sessionId !== undefined && sessionId !== null),
-    switchMap(p => this.sessionService.getSession(p).pipe(
+
+  params$ = this.route.params.pipe(
+    map(p => ({ sessionId: p['sessionId'], controlId: p['controlId'] })),
+    shareReplay(1)
+  );
+
+  getSessionById$ = this.params$.pipe(
+    filter(data => data.sessionId !== undefined && data.sessionId !== null),
+    switchMap(p => this.sessionService.getSession(p.sessionId, p.controlId).pipe(
       catchError(error => {
         if (error.status === 404) {
           let sessionUrl = window.location.href
@@ -51,7 +57,13 @@ export class SessionsComponent {
         }
       })
     )),
-    tap(_ => this.type = 'user-action')
+    tap(_ => this.type = 'user-action'),
+    tap(session => {
+      if ('controlId' in (session ?? {})) {
+        localStorage.setItem(SessionsComponent.LOCAL_STORAGE, JSON.stringify(session));
+        // todo: we need to get rid off the ids in the url!
+      }
+    })
   );
 
   storedSession$ = of(localStorage.getItem(SessionsComponent.LOCAL_STORAGE)).pipe(
