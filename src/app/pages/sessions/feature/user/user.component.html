@@ -36,9 +36,9 @@
             <mat-label>User Name</mat-label>
             <input matInput (keyup.enter)="registerUser()" [formControl]="userNameControl" />
         </mat-form-field>
-        <button mat-button fill="clear" slot="end" (click)="registerUser()" [disabled]="userNameControl.invalid">
-            Register
+        <button mat-button class="btn-circle btn-compound btn-register-user" (click)="registerUser()" [disabled]="userNameControl.invalid">
+            <mat-icon>group_add</mat-icon>
+            <span>Sitzung beitreten</span>
         </button>
-
     </ng-template>
 </ng-template>
