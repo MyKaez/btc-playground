@@ -17,6 +17,7 @@ export class ConfigInfoComponent implements OnInit {
   keys: string[] = [];
   infos: ConfigInfo[] = [
     { property: 'secondsUntilBlock', editable: true },
+    { property: 'secondsToSkipValidBlocks', editable: true },
   ];
   formGroup = new FormGroup<any>([]);
 
