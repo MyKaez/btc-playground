@@ -17,8 +17,8 @@ export class TeamService {
             name: "Danny",
             description: "geb. 1989",
             images: [
-                { srcFile: "assets/img/personal/danny.jpg", displayDuration: 4500 },
-                { srcFile: "assets/img/personal/danny_laser.jpg", displayDuration: 500 }
+                { srcFile: "assets/img/personal/danny.jpg", displayDuration: 4300 },
+                { srcFile: "assets/img/personal/danny_laser.jpg", displayDuration: 450 }
             ],
             quote: "Bitcoin, there is no second best.",
             paragraphs: [
@@ -51,7 +51,7 @@ export class TeamService {
             description: "Kenneth N., geb. 13.09.1990",
             images: [
                 { srcFile: "assets/img/personal/kenny.jpg", displayDuration: 4500 },
-                { srcFile: "assets/img/personal/kenny_laser.jpg", displayDuration: 500 }
+                { srcFile: "assets/img/personal/kenny_laser.jpg", displayDuration: 510 }
             ],
             quote: "Lieber Satoshis inner Wallet als Euros auf'm Konto.",
             paragraphs: [
@@ -79,7 +79,8 @@ export class TeamService {
             name: "Sarah",
             description: "Sarah K., geb. 1995",
             images: [
-                { srcFile: "assets/img/personal/sarah.png" }
+                { srcFile: "assets/img/personal/sarah.jpg", displayDuration: 5000 },
+                { srcFile: "assets/img/personal/sarah-laser.jpeg", displayDuration: 450 }
             ],
             quote: "Do your own proof of work.",
             paragraphs: [
@@ -101,7 +102,7 @@ export class TeamService {
             name: "Nico",
             description: "Nico D., geb. 1991",
             images: [
-                { srcFile: "assets/img/personal/nico.png", displayDuration: 4500 },                
+                { srcFile: "assets/img/personal/nico.png", displayDuration: 4400 },                
                 { srcFile: "assets/img/personal/nico-laser.jpeg", displayDuration: 400 },
                 { srcFile: "assets/img/personal/nico.png", displayDuration: 2500 },  
                 { srcFile: "assets/img/personal/nico-laser-skadi.jpeg", displayDuration: 300 }
