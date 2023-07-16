@@ -33,6 +33,8 @@ export class SessionInfoComponent {
         return window.location.href + '/' + sessionId;
       return window.location.href + '/sessions/' + sessionId;
     }
+    if (!this.controlSession)
+      return func();
     return func().replace(';controlId=' + this.controlSession!.controlId, '');
   }
 
