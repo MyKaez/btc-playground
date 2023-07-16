@@ -1,5 +1,5 @@
 <h2>Neue Sitzung erstellen</h2>
-<div class="marge-children" *ngIf="nameControl$ | async as name">
+<div class="marge-children" *ngIf="nameControl$ | async as name;else loadingSection">
 
     <mat-form-field appearance="fill">
         <mat-label>Sitzungsname</mat-label>
@@ -11,3 +11,7 @@
         <span>Sitzung erstellen</span>
     </button>
 </div>
+
+<ng-template #loadingSection>
+    Lade Sitzungen...
+</ng-template>
