@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Observable, debounceTime, distinctUntilChanged, tap } from 'rxjs';
+import { EMPTY, Observable, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 import { SessionService } from 'src/app/core/session.service';
 import { SessionControlInfo, SessionInfo } from 'src/app/models/session';
 
@@ -41,7 +41,7 @@ export class ConfigInfoComponent implements OnInit {
     if (obs) {
       return obs;
     }
-    throw new Error("Observable not found");
+    return EMPTY;
   }
 
   ngOnInit(): void {
