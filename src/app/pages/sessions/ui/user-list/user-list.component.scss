@@ -1,0 +1,10 @@
+@import '/src/styles.scss';
+
+.no-users {
+    font-style: italic;
+}
+
+.chip {
+    display: inline-block;
+    margin: 0 $margin-small;
+}

@@ -290,7 +290,7 @@ a.nav-link {
     height: 85%;
   }
 
-  ::ng-deep .mat-tab-header {   
+  ::ng-deep .simulation-navigation > .mat-tab-header {   
     border-bottom: 2px solid $sugar; 
 
     .mat-tab-label {
@@ -329,7 +329,7 @@ a.nav-link {
   }
 
   &.handset-layout {
-    ::ng-deep .mat-tab-header {
+    ::ng-deep .simulation-navigation > .mat-tab-header {
       position: fixed;
       top: 0px;
       left: 55px;

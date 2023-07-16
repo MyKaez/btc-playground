@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { SessionControlInfo, SessionInfo } from 'src/app/models/session';
+import { SessionControlInfo, SessionInfo, SessionStatusDisplayValues } from 'src/app/models/session';
 
 @Component({
   selector: 'app-session-info',
@@ -12,6 +12,10 @@ export class SessionInfoComponent {
 
   hideControlId: boolean = true;
   isQrFullscreen: boolean = false;
+
+  get sessionStatusDisplayValue(): string {
+    return SessionStatusDisplayValues[this.session.status];
+  }
 
   get controlSession(): SessionControlInfo | undefined {
     if ('controlId' in this.session) {

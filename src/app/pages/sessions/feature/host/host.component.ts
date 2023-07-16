@@ -34,10 +34,7 @@ export class HostComponent implements AfterViewInit {
     this.context.push({ button: this.stopButton, action: 'stop', status: 'started' });
     this.context.push({ button: this.clearButton, action: 'reset', status: 'stopped' });
     this.context.forEach(button => {
-      if (button.status === this.controlSession.status) {
-        button.button.color = 'primary';
-      } else {
-        button.button.color = 'accent';
+      if (button.status !== this.controlSession.status) {
         button.button.disabled = true;
       }
     });
@@ -88,10 +85,8 @@ export class HostComponent implements AfterViewInit {
     const currentButtonIndex = this.context.findIndex(b => b.action === action)!;
     const currentButton = this.context[currentButtonIndex];
     currentButton.button.disabled = true;
-    currentButton.button.color = 'accent';
     const nextButton = this.context.length - 1 == currentButtonIndex
       ? this.context[0].button : this.context[currentButtonIndex + 1].button;
     nextButton.disabled = false;
-    nextButton.color = 'primary';
   }
 }

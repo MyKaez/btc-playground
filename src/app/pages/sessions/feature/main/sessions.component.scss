@@ -22,5 +22,11 @@
 
 .sessions-content-container {
     margin: 0;
+    padding: 0;
     border-top-right-radius: 0;
+
+    ::ng-deep .mat-tab-body-wrapper {
+        padding: $margin-large;
+        margin-top: 0 !important;
+    }
 }

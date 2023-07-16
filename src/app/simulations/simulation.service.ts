@@ -31,6 +31,7 @@ export class SimulationService {
             title: PowComponent.title,
             description: "Fixes this... Determinismus / Vorhersehbarkeit",
             youtubeSrc: "E2ee5ewEddE",
+            imageSrc: "assets/img/simulations/sim-pow-title.jpg",
             navigationLink: "simulations/pow"
         }, {
             title: XpaComponent.title,

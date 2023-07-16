@@ -1,5 +1,3 @@
-<h2>Sitzungsinformationen</h2>
-
 <div *ngIf="session.status == 'stopped'">
     <h3>Ergebnis</h3>
     <app-user-done [session]="session"></app-user-done>
@@ -30,11 +28,12 @@
     </div>
     <mat-form-field>
         <mat-label>Status</mat-label>
-        <input matInput [value]="session.status" [readonly]="true">
+        <div [ngClass]="'chip session-status-' + session.status">{{sessionStatusDisplayValue}}</div>
+        <input type="hidden" matInput [value]="session.status" [readonly]="true">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Gültig bis</mat-label>
-        <input matInput [value]="session.expirationTime" [readonly]="true">
+        <input matInput [value]="session.expirationTime | date :'HH:mm.ss'" [readonly]="true">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Link</mat-label>
