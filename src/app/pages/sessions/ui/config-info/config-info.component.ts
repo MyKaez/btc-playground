@@ -31,7 +31,7 @@ export class ConfigInfoComponent implements OnInit {
 
   isReadonly(property: string): boolean {
     if (!this.sessionControl) {
-      return false;
+      return true;
     }
     return !(this.infos.find(info => info.property === property)?.editable ?? false);
   }
