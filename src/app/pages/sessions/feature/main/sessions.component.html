@@ -10,28 +10,28 @@
     <mat-tab-group class="info-card sessions-content-container" [selectedIndex]="vm.isSessionHost ? 0 : 2">
         <mat-tab>
             <ng-template mat-tab-label>
-                Session
+                Sitzung
             </ng-template>
             <app-session-info [session]="vm.session"></app-session-info>
         </mat-tab>
 
         <mat-tab>
             <ng-template mat-tab-label>
-                Session Users
+                Teilnehmer
             </ng-template>
             <app-user-list [users]="vm.session.users"></app-user-list>
         </mat-tab>
 
         <mat-tab *ngIf="!vm.isSessionHost">
             <ng-template mat-tab-label>
-                User
+                Simulation
             </ng-template>
             <app-user [session]="vm.session" [(user)]="vm.user" [hubConnection]="vm.connection"></app-user>
         </mat-tab>
 
         <mat-tab *ngIf="!hideMessageCenter">
             <ng-template mat-tab-label>
-                Message Center
+                Nachrichten
             </ng-template>
             <app-message-center [session]="vm.session" [user]="vm.user" [messages]="messages"></app-message-center>
         </mat-tab>

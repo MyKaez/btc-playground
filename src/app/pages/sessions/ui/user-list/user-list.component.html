@@ -1,3 +1,4 @@
 <div *ngFor="let user of users">
     {{user.name}} is {{user.status}} - {{user.configuration | json}}
 </div>
+<div *ngIf="!users.length" class="no-users">Es ist noch niemand der Sitzung beigetreten.</div>
