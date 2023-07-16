@@ -30,7 +30,8 @@
     </div>
     <mat-form-field>
         <mat-label>Status</mat-label>
-        <input matInput [value]="session.status" [readonly]="true">
+        <div [ngClass]="'chip session-status-' + session.status">{{sessionStatusDisplayValue}}</div>
+        <input type="hidden" matInput [value]="session.status" [readonly]="true">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Gültig bis</mat-label>

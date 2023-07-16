@@ -126,6 +126,14 @@ app-blocksize {
   }*/
 }
 
+.chip {
+    color: $light-color;
+    background-color: $accent;
+    border-radius: 1rem;
+    border-top-right-radius: .25rem;
+    padding: $margin-slim $margin-large;
+}
+
 /***
     Angular materials
 **/
