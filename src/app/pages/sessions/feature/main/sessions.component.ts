@@ -42,11 +42,8 @@ export class SessionsComponent {
     switchMap(p => this.sessionService.getSession(p.sessionId, p.controlId).pipe(
       catchError(error => {
         if (error.status === 404) {
-          let sessionUrl = window.location.href
-            .replace('http://', '')
-            .replace('https://', '');
-          sessionUrl = sessionUrl.substring(sessionUrl.indexOf('/'));
-          if (sessionUrl.includes('/sessions/')) {
+          let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
+          if (sessionUrl.includes('sessions')) {
             localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
             sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
           }
