@@ -22,11 +22,14 @@ export class SessionInfoComponent {
 
   get sessionLink(): string {
     const sessionId = this.session.id;
-    if (window.location.href.includes(sessionId))
-      return window.location.href;
-    if (window.location.href.includes('sessions'))
-      return window.location.href + '/' + sessionId;
-    return window.location.href + '/sessions/' + sessionId;
+    const func = () => {
+      if (window.location.href.includes(sessionId))
+        return window.location.href;
+      if (window.location.href.includes('sessions'))
+        return window.location.href + '/' + sessionId;
+      return window.location.href + '/sessions/' + sessionId;
+    }
+    return func().replace(';controlId=' + this.controlSession!.controlId, '');
   }
 
   get hiddenControlId(): string {
@@ -38,7 +41,7 @@ export class SessionInfoComponent {
   }
 
   openLink(): void {
-    if(this.isQrFullscreen) return;
+    if (this.isQrFullscreen) return;
     window.open(this.sessionLink, '_blank');
   }
 
