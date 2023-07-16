@@ -46,7 +46,7 @@ export class SessionListComponent {
       sessionUrl += '/sessions/' + sessionId;
 
     if (controlId) {
-      this.router.navigate([sessionUrl], { state: { controlId: controlId } });
+      this.router.navigate([sessionUrl, { controlId: controlId }]);
     }
     else {
       this.router.navigate([sessionUrl]);
