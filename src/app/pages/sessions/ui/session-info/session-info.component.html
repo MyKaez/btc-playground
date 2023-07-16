@@ -34,7 +34,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Gültig bis</mat-label>
-        <input matInput [value]="session.expirationTime" [readonly]="true">
+        <input matInput [value]="session.expirationTime | date :'hh:mm.ss'" [readonly]="true">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Link</mat-label>

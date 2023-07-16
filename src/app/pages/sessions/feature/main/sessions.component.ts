@@ -20,6 +20,7 @@ export class SessionsComponent {
 
   private session = new Subject<Session>();
   private load = new Subject<boolean>();
+  hideMessageCenter = true;
 
   constructor(
     private route: ActivatedRoute,

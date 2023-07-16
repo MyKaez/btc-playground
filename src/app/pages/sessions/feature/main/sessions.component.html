@@ -29,7 +29,7 @@
             <app-user [session]="vm.session" [(user)]="vm.user" [hubConnection]="vm.connection"></app-user>
         </mat-tab>
 
-        <mat-tab>
+        <mat-tab *ngIf="!hideMessageCenter">
             <ng-template mat-tab-label>
                 Message Center
             </ng-template>
