@@ -1,5 +1,5 @@
 <div class="content simulation-container" *ngIf="simulation$ | async as simulation">
-    <mat-tab-group mat-align-tabs="center" [selectedIndex]="selectedTabIndex"
+    <mat-tab-group class="simulation-navigation" mat-align-tabs="center" [selectedIndex]="selectedTabIndex"
         (selectedTabChange)="onTabChanged($event)">
         <mat-tab>
             <ng-template mat-tab-label>
