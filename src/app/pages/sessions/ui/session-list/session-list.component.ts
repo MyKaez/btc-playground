@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, catchError } from 'rxjs';
 import { SessionService } from 'src/app/core/session.service';
 
@@ -10,7 +10,7 @@ import { SessionService } from 'src/app/core/session.service';
 })
 export class SessionListComponent {
 
-  constructor(private sessionService: SessionService, private router: Router) { }
+  constructor(private sessionService: SessionService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   sessions$ = this.sessionService.getAll().pipe();
 
@@ -35,16 +35,13 @@ export class SessionListComponent {
   }
 
   openSession(sessionId: string, controlId?: string) {
-    let baseUrl = window.location.href
-      .replace('http://', '')
-      .replace('https://', '');
-    baseUrl = baseUrl.substring(baseUrl.indexOf('/'));
-    let sessionUrl = baseUrl;
-    if (baseUrl.includes('sessions'))
+    let sessionUrl = this.activatedRoute.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
+    if (sessionUrl.includes('sessions')) {
       sessionUrl += '/' + sessionId;
-    else
+    }
+    else {
       sessionUrl += '/sessions/' + sessionId;
-
+    }
     if (controlId) {
       this.router.navigate([sessionUrl, { controlId: controlId }]);
     }
