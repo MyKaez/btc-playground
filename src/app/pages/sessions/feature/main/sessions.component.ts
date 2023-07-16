@@ -30,7 +30,6 @@ export class SessionsComponent {
   ) {
   }
 
-  type: 'session-info' | 'message-center' | 'user-action' = 'session-info';
   messages: Message[] = [];
 
   params$ = this.route.params.pipe(
@@ -55,7 +54,6 @@ export class SessionsComponent {
         }
       })
     )),
-    tap(_ => this.type = 'user-action'),
     tap(session => {
       if ('controlId' in (session ?? {})) {
         localStorage.setItem(SessionsComponent.LOCAL_STORAGE, JSON.stringify(session));
