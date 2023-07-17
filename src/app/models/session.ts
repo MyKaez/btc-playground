@@ -7,10 +7,11 @@ export interface Session {
 
 export type SessionAction = 'prepare' | 'start' | 'stop' | 'reset';
 export type SessionStatus = 'notStarted' | 'preparing' | 'started' | 'stopped';
-export const SessionStatusDisplayValues: Record<SessionStatus,string> = {
+
+export const SessionStatusDisplayValues: Record<SessionStatus, string> = {
     notStarted: "Offen",
-    preparing: "Am Vorbereiten",
-    started: "Gestarted",
+    preparing: "In Vorbereitung",
+    started: "Gestartet",
     stopped: "Gestoppt"
 };
 
@@ -20,6 +21,8 @@ export interface SessionInfo {
     status: SessionStatus;
     configuration: any;
     expirationTime: Date;
+    startTime?: string;
+    endTime?: string;
     users: User[];
 }
 

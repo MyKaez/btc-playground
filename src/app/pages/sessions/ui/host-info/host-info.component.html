@@ -1,1 +1,3 @@
 <div [ngClass]="'chip session-status-' + vm.session.status">{{sessionStatusDisplayValue}}</div>
+<div *ngIf="vm.session.startTime">Startzeit: {{vm.session.startTime}}</div>
+<div *ngIf="vm.session.endTime">Endzeit: {{vm.session.endTime}}</div>
