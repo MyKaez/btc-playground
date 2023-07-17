@@ -43,6 +43,8 @@ export class ConnectionService {
       con.on(`${session.id}:SessionUpdate`, update => {
         console.log('UpdateSession');
         session.status = update.status;
+        session.startTime = update.startTime ? new Date(update.startTime) : undefined;
+        session.endTime = update.endTime ? new Date(update.endTime) : undefined;
         session.configuration = update.configuration;
         updateUsers();
         messageUpdate([{ senderId: update.id, text: `status update:  ${update.status}` }]);
