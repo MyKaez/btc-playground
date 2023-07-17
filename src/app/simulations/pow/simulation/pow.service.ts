@@ -44,6 +44,12 @@ export class PowService {
       }
       await delay(1);
     } while (this.blocks[0].hash > runConfig.powConfig.threshold);
+
+    if (runConfig.startTime.getTime() + runConfig.powConfig.secondsToSkipValidBlocks * 1000 > new Date().getTime()) {
+      console.log('skipped valid: ' + this.blocks[0].hash);
+      return await this.findBlock(runConfig);
+    }
+
     this.isExecuting = false;
     return this.blocks[0];
   }

@@ -9,4 +9,5 @@ export interface DeterminationRunConfig {
 
 export interface RunConfig extends DeterminationRunConfig {
     powConfig: PowConfig;
+    startTime: Date;
 }

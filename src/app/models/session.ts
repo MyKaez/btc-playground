@@ -21,8 +21,8 @@ export interface SessionInfo {
     status: SessionStatus;
     configuration: any;
     expirationTime: Date;
-    startTime?: string;
-    endTime?: string;
+    startTime?: Date;
+    endTime?: Date;
     users: User[];
 }
 

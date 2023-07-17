@@ -29,6 +29,7 @@ export class HashListComponent {
         runId: this.user.id,
         amountOfBlocks: 20,
         powConfig: this.session!.configuration,
+        startTime: this.session!.startTime!,
         stopCondition: () => this.session!.status !== 'started'
       }
       this.powService.findBlock(runConfig).then(block => this.blockFound.emit(block));

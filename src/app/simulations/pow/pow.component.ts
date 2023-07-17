@@ -148,6 +148,7 @@ export class PowComponent implements AfterViewInit {
     const runConfig: RunConfig = {
       powConfig: config,
       amountOfBlocks: this.amountOfBlocks.value ?? 0,
+      startTime: new Date(),
       modifyHash: hash => hash.substring(0, 20) + '[...]'
     }
     const loadCreateJob = this.powService.findBlock(runConfig);
