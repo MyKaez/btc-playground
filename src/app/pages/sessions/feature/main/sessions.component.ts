@@ -81,7 +81,17 @@ export class SessionsComponent {
 
   createSession$ = this.session.pipe(
     filter(session => session !== undefined && session !== null),
-    switchMap(session => this.sessionService.createSession(session)),
+    switchMap(session => this.sessionService.createSession(session).pipe(
+      catchError(error => {
+        if (error.status === 400) {
+          alert("Session name already exists!");
+          this.load.next(false);
+          return of(undefined);
+        } else {
+          throw error;
+        }
+      })
+    )),
     tap(session => localStorage.setItem(SessionsComponent.LOCAL_STORAGE, JSON.stringify({ ...session, users: [] }))),
   );
 
