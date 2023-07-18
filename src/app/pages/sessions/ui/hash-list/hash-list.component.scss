@@ -1,6 +1,10 @@
 @use "/src/styles.scss";
 @import "/src/colors.scss";
 
+.hash-list > * > *:not(:first-child) {
+    margin-top: $margin-small;
+}
+
 .simulation-console {
     border: 1px solid $primary-300;
     border-radius: 0 2em 0 0;

@@ -9,6 +9,7 @@
 .host-section {    
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     background-color: $primary-700;
     border-bottom: 2px solid #434355;
     left: 0;

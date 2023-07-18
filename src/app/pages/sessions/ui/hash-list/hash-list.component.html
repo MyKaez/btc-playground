@@ -1,20 +1,26 @@
-<div *ngIf="session?.status === 'preparing'">
-    <input matInput [readonly]="true" [formControl]="hashRateControl" />
-    <button mat-button fill="clear" slot="end" (click)="determine()">
-        determine
-    </button>
-    <br>
+<div class="hash-list">
+<div class="hash-list-content-preparing" *ngIf="session?.status === 'preparing'">
+    <div class="marge-children">
+        <mat-form-field>
+        <mat-label>Hashrate</mat-label>
+        <input matInput [formControl]="hashRateControl" [disabled]="true" />
+        </mat-form-field>
+        <button mat-button class="btn-circle btn-compound" (click)="determine()" title="Kalkulieren" #prepareButton>
+            <mat-icon>poll</mat-icon>
+            <span>Kalkulieren</span>
+        </button>
+    </div>
 
     <ng-container *ngTemplateOutlet="console"></ng-container>
 </div>
 
-<div *ngIf="session?.status === 'started'">
+<div class="hash-list-content-started" *ngIf="session?.status === 'started'">
     <ng-container *ngTemplateOutlet="console"></ng-container>
 </div>
 
-<div *ngIf="session?.status === 'stopped'">
+<div class="hash-list-content-stopped" *ngIf="session?.status === 'stopped'">
     <div *ngIf="user?.status === 'notReady';else userView">
-        Session is over, please wait until next round!
+        Die Sitzung ist beendet. Bitte warte bis zur nächsten Runde.
     </div>
     <ng-template #userView>
         <app-user-done [user]="user" [session]="session"></app-user-done>
@@ -58,3 +64,4 @@
     </div>
 
 </ng-template>
+</div>
