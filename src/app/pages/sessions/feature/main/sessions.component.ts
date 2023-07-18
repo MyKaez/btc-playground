@@ -6,6 +6,7 @@ import { SessionService } from 'src/app/core/session.service';
 import { Message } from 'src/app/models/message';
 import { Session, SessionControlInfo } from 'src/app/models/session';
 import { ViewModel } from 'src/app/models/view-model';
+import { NotificationService } from 'src/app/shared/media/notification.service';
 
 @Component({
   selector: 'app-sessions',
@@ -27,6 +28,7 @@ export class SessionsComponent {
     private router: Router,
     private sessionService: SessionService,
     private connectionService: ConnectionService,
+    private notificationService: NotificationService
   ) {
   }
 
@@ -84,7 +86,7 @@ export class SessionsComponent {
     switchMap(session => this.sessionService.createSession(session).pipe(
       catchError(error => {
         if (error.status === 400) {
-          alert("Session name already exists!");
+          this.notificationService.display(error.error.errorMessage);
           this.load.next(false);
           return of(undefined);
         } else {
