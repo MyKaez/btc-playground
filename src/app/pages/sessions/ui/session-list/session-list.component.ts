@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, catchError } from 'rxjs';
 import { SessionService } from 'src/app/core/session.service';
+import { SessionStatus, SessionStatusDisplayValues } from 'src/app/models/session';
 
 @Component({
   selector: 'app-session-list',
@@ -14,11 +15,16 @@ export class SessionListComponent {
 
   sessions$ = this.sessionService.getAll().pipe();
 
-  logInSession(sessionId: string, controlId: string) {
+  getSessionStatusDisplayValue(status: SessionStatus): string {
+    return SessionStatusDisplayValues[status];
+  }
+
+  logInSession(sessionId: string, controlId?: string) {
     if (controlId === undefined || controlId === null || controlId === '') {
-      alert('control id is required');
+      this.openSession(sessionId);
       return;
     }
+
     const subscription = this.sessionService.getSession(sessionId, controlId).pipe(
       catchError(err => {
         if (err.status === 404) {

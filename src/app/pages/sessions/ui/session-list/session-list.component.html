@@ -1,5 +1,30 @@
 <h2>Aktuelle Sitzungen</h2>
-<ul *ngFor="let session of sessions$ | async ">
+<table cTable *ngIf="sessions$ | async as sessions; if sessions?.length;else noSessions">
+ <thead><tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Status</th>
+    <th>Gültig Bis</th>
+    <th>Beitreten</th>
+    <th>Kontroll-ID</th>
+ </tr></thead>
+ <tbody>
+    <tr *ngFor="let session of sessions">
+        <td>{{session.id}}</td>
+        <td>{{session.name}}</td>
+        <td><div [ngClass]="'chip session-status-' + session.status">{{getSessionStatusDisplayValue(session.status)}}</div></td>
+        <td>{{session.expirationTime | date :'HH:mm.ss'}}</td>
+        <td><button mat-button class="btn-circle" (click)="logInSession(session.id, controlId.value)">
+            <mat-icon>launch</mat-icon>
+        </button></td>
+        <td><mat-form-field appearance="fill">
+            <input matInput type="password" #controlId>
+        </mat-form-field></td>
+    </tr>
+ </tbody>
+</table>
+
+<!--<ul *ngFor="let session of sessions$ | async ">
     <li>{{session.id}}</li>
     <li>{{session.name}}</li>
     <li>{{session.status}}</li>
@@ -14,7 +39,10 @@
         <mat-label>Control ID</mat-label>
         <input matInput type="password" #controlId>
     </mat-form-field>
-</ul>
-<div *ngIf="!(sessions$ | async)?.length" class="no-sessions-section">
+</ul>-->
+
+<ng-template #noSessions>
+<div class="no-sessions-section">
     Es gibt noch keine Sitzungen.
 </div>
+</ng-template>
