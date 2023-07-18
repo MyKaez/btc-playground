@@ -39,6 +39,19 @@ export class SessionsComponent {
     shareReplay(1)
   );
 
+  blocktrainer$ = this.params$.pipe(
+    filter(data => data.sessionId === "blocktrainer"),
+    switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => of(undefined)))),
+    tap(session => this.notificationService.display("Joining Blocktrainer session: " + JSON.stringify(session)))
+  );
+
+  blocktrainerAdmin$ = this.params$.pipe(
+    filter(data => data.sessionId === "blocktrainer-admin"),
+    switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => of(undefined)))),
+    tap(session => localStorage.setItem(SessionsComponent.LOCAL_STORAGE, JSON.stringify(session))),
+    tap(session => this.notificationService.display("Joining Blocktrainer session as host: " + JSON.stringify(session)))
+  );
+
   getSessionById$ = this.params$.pipe(
     filter(data => data.sessionId !== undefined && data.sessionId !== null),
     switchMap(p => this.sessionService.getSession(p.sessionId, p.controlId).pipe(
@@ -97,7 +110,9 @@ export class SessionsComponent {
     tap(session => localStorage.setItem(SessionsComponent.LOCAL_STORAGE, JSON.stringify({ ...session, users: [] }))),
   );
 
-  currentSession$ = merge(this.getSessionById$, this.createSession$, this.storedSession$).pipe(
+  currentSession$ = merge(this.getSessionById$, this.createSession$, this.storedSession$,
+    this.blocktrainer$, this.blocktrainerAdmin$
+  ).pipe(
     filter(session => session !== undefined),
     take(1),
     map(session => <SessionControlInfo>session),
