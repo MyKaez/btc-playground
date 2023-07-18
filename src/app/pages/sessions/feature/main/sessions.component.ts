@@ -40,20 +40,42 @@ export class SessionsComponent {
   );
 
   blocktrainer$ = this.params$.pipe(
-    filter(data => data.sessionId === "blocktrainer"),
+    filter(data => data.sessionId === 'blocktrainer'),
     switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => of(undefined)))),
-    tap(session => this.notificationService.display("Joining Blocktrainer session: " + JSON.stringify(session)))
+    map(session => {
+      if (!session) {
+        return undefined;
+      }
+      let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
+      if (sessionUrl.includes('sessions')) {
+        localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
+        sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
+      }
+      this.router.navigate([sessionUrl + session.id]);
+      return undefined;
+    }),
   );
 
   blocktrainerAdmin$ = this.params$.pipe(
-    filter(data => data.sessionId === "blocktrainer-admin"),
+    filter(data => data.sessionId === 'blocktrainer-admin'),
     switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => of(undefined)))),
-    tap(session => localStorage.setItem(SessionsComponent.LOCAL_STORAGE, JSON.stringify(session))),
-    tap(session => this.notificationService.display("Joining Blocktrainer session as host: " + JSON.stringify(session)))
+    map(session => {
+      if (!session) {
+        return undefined;
+      }
+      let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
+      if (sessionUrl.includes('sessions')) {
+        localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
+        sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
+      }
+      this.router.navigate([sessionUrl + session.id, { controlId: session.controlId }]);
+      return undefined;
+    })
   );
 
   getSessionById$ = this.params$.pipe(
     filter(data => data.sessionId !== undefined && data.sessionId !== null),
+    filter(data => !data.sessionId.includes('blocktrainer')),
     switchMap(p => this.sessionService.getSession(p.sessionId, p.controlId).pipe(
       catchError(error => {
         if (error.status === 404) {
