@@ -16,6 +16,12 @@ export class SessionService {
     )
   }
 
+  getBlocktrainerSession(): Observable<SessionControlInfo> {
+    return this.httpClient.get(`${this.url}/v1/sessions/blocktrainer`).pipe(
+      map(value => <SessionControlInfo>value)
+    )
+  }
+
   getSession(sessionId: string, controlId?: string): Observable<SessionInfo> {
     let url = `${this.url}/v1/sessions/${sessionId}`;
     if (controlId) {

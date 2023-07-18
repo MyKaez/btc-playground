@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, catchError } from 'rxjs';
 import { SessionService } from 'src/app/core/session.service';
 import { SessionStatus, SessionStatusDisplayValues } from 'src/app/models/session';
+import { NotificationService } from 'src/app/shared/media/notification.service';
 
 @Component({
   selector: 'app-session-list',
@@ -11,7 +12,12 @@ import { SessionStatus, SessionStatusDisplayValues } from 'src/app/models/sessio
 })
 export class SessionListComponent {
 
-  constructor(private sessionService: SessionService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private sessionService: SessionService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private notificationService: NotificationService
+  ) { }
 
   sessions$ = this.sessionService.getAll().pipe();
 
@@ -28,9 +34,9 @@ export class SessionListComponent {
     const subscription = this.sessionService.getSession(sessionId, controlId).pipe(
       catchError(err => {
         if (err.status === 404) {
-          alert('not found');
+          this.notificationService.display('not found');
         } else if (err.status === 401) {
-          alert('false control id');
+          this.notificationService.display('false control id');
         }
         return EMPTY;
       })

@@ -20,6 +20,8 @@ import { FormulaComponent } from './simulations/formula/formula.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'blocktrainer', redirectTo: '/simulations/pow/sessions/blocktrainer', component: PowComponent },
+  { path: 'blocktrainer-admin', redirectTo: '/simulations/pow/sessions/blocktrainer-admin', component: PowComponent },
   { path: 'home', component: HomeComponent },
   { path: 'info', component: InfoComponent },
   { path: 'simulations', component: SimulationsComponent },

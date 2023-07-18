@@ -6,6 +6,7 @@ import { SessionService } from 'src/app/core/session.service';
 import { Message } from 'src/app/models/message';
 import { Session, SessionControlInfo } from 'src/app/models/session';
 import { ViewModel } from 'src/app/models/view-model';
+import { NotificationService } from 'src/app/shared/media/notification.service';
 
 @Component({
   selector: 'app-sessions',
@@ -27,6 +28,7 @@ export class SessionsComponent {
     private router: Router,
     private sessionService: SessionService,
     private connectionService: ConnectionService,
+    private notificationService: NotificationService
   ) {
   }
 
@@ -37,8 +39,43 @@ export class SessionsComponent {
     shareReplay(1)
   );
 
+  blocktrainer$ = this.params$.pipe(
+    filter(data => data.sessionId === 'blocktrainer'),
+    switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => of(undefined)))),
+    map(session => {
+      if (!session) {
+        return undefined;
+      }
+      let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
+      if (sessionUrl.includes('sessions')) {
+        localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
+        sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
+      }
+      this.router.navigate([sessionUrl + session.id]);
+      return undefined;
+    }),
+  );
+
+  blocktrainerAdmin$ = this.params$.pipe(
+    filter(data => data.sessionId === 'blocktrainer-admin'),
+    switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => of(undefined)))),
+    map(session => {
+      if (!session) {
+        return undefined;
+      }
+      let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
+      if (sessionUrl.includes('sessions')) {
+        localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
+        sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
+      }
+      this.router.navigate([sessionUrl + session.id, { controlId: session.controlId }]);
+      return undefined;
+    })
+  );
+
   getSessionById$ = this.params$.pipe(
     filter(data => data.sessionId !== undefined && data.sessionId !== null),
+    filter(data => !data.sessionId.includes('blocktrainer')),
     switchMap(p => this.sessionService.getSession(p.sessionId, p.controlId).pipe(
       catchError(error => {
         if (error.status === 404) {
@@ -81,11 +118,23 @@ export class SessionsComponent {
 
   createSession$ = this.session.pipe(
     filter(session => session !== undefined && session !== null),
-    switchMap(session => this.sessionService.createSession(session)),
+    switchMap(session => this.sessionService.createSession(session).pipe(
+      catchError(error => {
+        if (error.status === 400) {
+          this.notificationService.display(error.error.errorMessage);
+          this.load.next(false);
+          return of(undefined);
+        } else {
+          throw error;
+        }
+      })
+    )),
     tap(session => localStorage.setItem(SessionsComponent.LOCAL_STORAGE, JSON.stringify({ ...session, users: [] }))),
   );
 
-  currentSession$ = merge(this.getSessionById$, this.createSession$, this.storedSession$).pipe(
+  currentSession$ = merge(this.getSessionById$, this.createSession$, this.storedSession$,
+    this.blocktrainer$, this.blocktrainerAdmin$
+  ).pipe(
     filter(session => session !== undefined),
     take(1),
     map(session => <SessionControlInfo>session),
