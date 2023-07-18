@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, catchError } from 'rxjs';
 import { SessionService } from 'src/app/core/session.service';
 import { SessionStatus, SessionStatusDisplayValues } from 'src/app/models/session';
+import { LayoutService } from 'src/app/pages/layout-service';
 import { NotificationService } from 'src/app/shared/media/notification.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class SessionListComponent {
     private sessionService: SessionService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    public layout: LayoutService
   ) { }
 
   sessions$ = this.sessionService.getAll().pipe();
