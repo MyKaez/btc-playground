@@ -28,7 +28,7 @@ export class SimulationContainerComponent implements OnInit {
       const parts = this.router.url.substring(1).split('/');
       const currentRoute = `${parts[0]}/${parts[1]}`;
       const sim = simulations.find(sim => sim.navigationLink === currentRoute);
-      console.log(`current simulation: ${sim?.title} `);
+      //console.log(`current simulation: ${sim?.title} `);
       const tab = parts[2];
       if (tab) {
         if (tab === 'definition') {
@@ -92,7 +92,7 @@ export class SimulationContainerComponent implements OnInit {
   }
 
   toSessions(container: SimulationContainerComponent): void {
-    console.log('switch to session!');
+    //console.log('switch to session!');
     container.selectedTabIndex = 2;
   }
 
