@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SessionControlInfo, SessionInfo, SessionStatusDisplayValues } from 'src/app/models/session';
 
 @Component({
