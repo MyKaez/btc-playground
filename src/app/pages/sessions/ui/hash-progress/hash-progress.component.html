@@ -3,7 +3,9 @@
         <span>{{hashes$}} / {{estimatedHashes}}</span>
     </mat-progress-bar>
 
-    <mat-progress-bar mode="determinate" [value]="bar" [color]="'warn'" *ngFor="let bar of getBars(progress)">
-        <span>{{hashes$}} / {{estimatedHashes}}</span>
-    </mat-progress-bar>
+    <div *ngFor="let bar of getBars(progress)" class="separator">
+        <mat-progress-bar mode="determinate" [value]="bar" [color]="'warn'">
+            <span>{{hashes$}} / {{estimatedHashes}}</span>
+        </mat-progress-bar>
+    </div>
 </div>
