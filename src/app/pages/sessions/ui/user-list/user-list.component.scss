@@ -1,5 +1,7 @@
 @import '/src/styles.scss';
 
+$table-min-width: 501px;
+
 .no-users {
     font-style: italic;
 }
@@ -7,4 +9,51 @@
 .chip {
     display: inline-block;
     margin: 0 $margin-small;
+}
+
+.session-user-table {
+    td,
+    th {
+        padding: $margin-slim $margin-small;
+    }
+
+    .user-list-small {
+        margin-top: $margin-small;
+    }
+
+    @media only screen and (min-width: $table-min-width) {
+        .user-list-small {
+            display: none;
+        }
+    }
+
+    @media only screen and (max-width: $table-min-width) {
+        .user-list-wide {
+            display: none;
+        }
+    }
+}
+
+.user-text,
+.user-id {
+    word-break: break-word;
+}
+
+.user-hash {
+    word-break: break-all;
+}
+
+.user-hash-rate {
+    font-weight: bold;
+    color: $gray-60;
+}
+
+.user-id,
+.user-text {
+    font-style: italic;
+    color: $gray-60;
+}
+
+.isValid {
+    color: $success;
 }

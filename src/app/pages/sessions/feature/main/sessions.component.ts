@@ -7,6 +7,7 @@ import { Message } from 'src/app/models/message';
 import { Session, SessionControlInfo } from 'src/app/models/session';
 import { ViewModel } from 'src/app/models/view-model';
 import { NotificationService } from 'src/app/shared/media/notification.service';
+import { UserListComponent } from '../../ui/user-list/user-list.component';
 
 @Component({
   selector: 'app-sessions',

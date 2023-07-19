@@ -19,7 +19,7 @@
             <ng-template mat-tab-label>
                 Teilnehmer
             </ng-template>
-            <app-user-list [users]="vm.session.users"></app-user-list>
+            <app-user-list [users]="vm.session.users" [session]="vm.session"></app-user-list>
         </mat-tab>
 
         <mat-tab *ngIf="!vm.isSessionHost">
