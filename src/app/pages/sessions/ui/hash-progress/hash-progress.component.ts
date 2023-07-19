@@ -41,4 +41,13 @@ export class HashProgressComponent {
       return seconds / max * 100;
     })
   );
+
+  getBars(progress: number): number[] {
+    const bars: number[] = [];
+    while (progress > 100) {
+      progress -= 100;
+      bars.push(progress);
+    }
+    return bars;
+  }
 }
