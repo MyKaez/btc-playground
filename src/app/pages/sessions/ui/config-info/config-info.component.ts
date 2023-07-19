@@ -20,6 +20,15 @@ export class ConfigInfoComponent implements OnInit {
     { property: 'secondsToSkipValidBlocks', editable: true },
   ];
   formGroup = new FormGroup<any>([]);
+  labelMapping: Record<string,string> = {
+    simulationType: "Simulationstyp",
+    secondsUntilBlock: "Dauer bis Block (in Sekunden)",
+    secondsToSkipValidBlocks: "Valide Blöcke ignorieren (in Sekunden)",
+    totalHashRate: "Gesamte HashRate",
+    difficulty: "Schwierigkeit",
+    expected: "Erwartet",
+    threshold: "Schwellwert"
+  };
 
   constructor(private sessionService: SessionService) { }
 
