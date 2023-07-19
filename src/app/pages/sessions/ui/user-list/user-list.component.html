@@ -2,7 +2,7 @@
     <table class="session-user-table" cTable *ngIf="showResults;else smallTable">
         <thead>
             <tr>
-                <th class="user-list-wide">ID</th>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Status</th>
                 <th class="user-list-wide">Hashrate</th>
@@ -12,7 +12,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let user of users">
-                <td class="user-list-wide"><span class="user-id">{{user.id}}</span></td>
+                <td><span class="user-id">{{user.id}}</span></td>
                 <td>
                     <div class="flex-column">
                         <span>{{user.name}}</span>
@@ -41,7 +41,7 @@
     <table class="session-user-table" cTable>
         <thead>
             <tr>
-                <th class="user-list-wide">ID</th>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Status</th>
                 <th>Hashrate</th>
@@ -49,9 +49,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let user of users">
-                <td>
-                    <span>{{user.id}}</span>
-                </td>
+                <td><span class="user-id">{{user.id}}</span></td>
                 <td>
                     <span>{{user.name}}</span>
                 </td>
