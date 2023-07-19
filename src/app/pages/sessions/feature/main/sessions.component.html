@@ -1,12 +1,14 @@
 <div class="sessions-root" *ngIf="vm$ | async as vm;else noSession">
     <div class="host-section container-card">
         <app-host [vm]="vm" *ngIf="vm.isSessionHost"></app-host>
-        <app-host-info [vm]="vm" *ngIf="!vm.isSessionHost"></app-host-info>
+        <app-host-info [vm]="vm"></app-host-info>
         <button mat-button class="btn-circle btn-secondary" (click)="logOut()" title="Sitzung verlassen">
             <mat-icon>close</mat-icon>
         </button>
     </div>
-
+    <app-hash-progress [session]="vm.session"
+        *ngIf="vm.session.status === 'started' || vm.session.status === 'stopped'">
+    </app-hash-progress>
     <mat-tab-group class="info-card sessions-content-container" [selectedIndex]="vm.isSessionHost ? 0 : 2">
         <mat-tab>
             <ng-template mat-tab-label>

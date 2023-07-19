@@ -1,1 +1,8 @@
-<p>hash-progress works!</p>
+<div *ngIf="progress$ | async as progress">
+    <mat-progress-bar mode="determinate" [value]="progress" [color]="'accent'" *ngIf="progress <=100">
+        <span>{{hashes$}} / {{estimatedHashes}}</span>
+    </mat-progress-bar>
+    <mat-progress-bar mode="determinate" [value]="progress - 100" [color]="'warn'" *ngIf="progress >100">
+        <span>{{hashes$}} / {{estimatedHashes}}</span>
+    </mat-progress-bar>
+</div>
