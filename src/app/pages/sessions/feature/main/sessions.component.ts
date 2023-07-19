@@ -41,7 +41,7 @@ export class SessionsComponent {
   );
 
   blocktrainer$ = this.params$.pipe(
-    filter(data => data.sessionId === 'blocktrainer'),
+    filter(data => data.sessionId === 'beach'),
     switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => of(undefined)))),
     map(session => {
       if (!session) {
@@ -58,7 +58,7 @@ export class SessionsComponent {
   );
 
   blocktrainerAdmin$ = this.params$.pipe(
-    filter(data => data.sessionId === 'blocktrainer-admin'),
+    filter(data => data.sessionId === 'beach-admin'),
     switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => of(undefined)))),
     map(session => {
       if (!session) {
@@ -76,7 +76,7 @@ export class SessionsComponent {
 
   getSessionById$ = this.params$.pipe(
     filter(data => data.sessionId !== undefined && data.sessionId !== null),
-    filter(data => !data.sessionId.includes('blocktrainer')),
+    filter(data => !data.sessionId.includes('beach')),
     switchMap(p => this.sessionService.getSession(p.sessionId, p.controlId).pipe(
       catchError(error => {
         if (error.status === 404) {
