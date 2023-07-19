@@ -12,7 +12,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let user of users">
-                <td class="user-list-wide"><span class="user-id">{{user.configuration.userId}}</span></td>
+                <td class="user-list-wide"><span class="user-id">{{user.id}}</span></td>
                 <td>
                     <div class="flex-column">
                         <span>{{user.name}}</span>
@@ -27,7 +27,8 @@
                 <td class="user-list-wide"><span class="user-text">{{user.configuration.text}}</span></td>
                 <td>
                     <div class="flex-column">
-                        <span class="user-hash" [ngClass]="{isValid: user.configuration.isValid}">{{user.configuration.hash}}</span>
+                        <span class="user-hash"
+                            [ngClass]="{isValid: user.configuration.isValid}">{{user.configuration.hash}}</span>
                         <span class="user-list-small user-text">{{user.configuration.text}}</span>
                     </div>
                 </td>
@@ -37,26 +38,32 @@
 </div>
 
 <ng-template #smallTable>
-<table class="session-user-table" cTable>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Hashrate</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of users">
-            <td>
-                <span>{{user.name}}</span>
-            </td>
-            <td>
-                <div [ngClass]="'chip user-status-' + user.status">{{getUserStatusDisplayValue(user.status)}}</div>
-            </td>
-            <td class="user-hash-rate">{{user.configuration.hashRate}}</td>
-        </tr>
-    </tbody>
-</table>
+    <table class="session-user-table" cTable>
+        <thead>
+            <tr>
+                <th class="user-list-wide">ID</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Hashrate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>
+                    <span>{{user.id}}</span>
+                </td>
+                <td>
+                    <span>{{user.name}}</span>
+                </td>
+                <td>
+                    <div [ngClass]="'chip user-status-' + user.status">{{getUserStatusDisplayValue(user.status)}}</div>
+                </td>
+                <td class="user-hash-rate">{{user.configuration.hashRate}}</td>
+            </tr>
+        </tbody>
+    </table>
 </ng-template>
 
-<ng-template #noUsers><div class="no-users">Es ist noch niemand der Sitzung beigetreten.</div></ng-template>
+<ng-template #noUsers>
+    <div class="no-users">Es ist noch niemand der Sitzung beigetreten.</div>
+</ng-template>
