@@ -1,43 +1,51 @@
 <div class="session-list">
-<h2>Aktuelle Sitzungen</h2>
-<table class="session-table" cTable *ngIf="sessions$ | async as sessions; if sessions?.length;else noSessions">
- <thead><tr>
-    <th class="session-list-wide">ID</th>
-    <th>Name</th>
-    <th>Status</th>
-    <th class="session-list-wide">Gültig Bis</th>
-    <th>Link</th>
-    <th>Kontroll-ID</th>
- </tr></thead>
- <tbody>
-    <tr *ngFor="let session of sessions">
-        <td class="session-list-wide">{{session.id}}</td>
-        <td><div class="flex-column">
-            <span class="session-link" (click)="logInSession(session.id)">{{session.name}}</span>
-            <span class="session-list-small">{{session.id}}</span>
-        </div></td>
-        <td><div class="flex-column">
-            <div [ngClass]="'chip session-status-' + session.status">{{getSessionStatusDisplayValue(session.status)}}</div>
-            <span class="session-list-small">
-                {{session.expirationTime | date :'HH:mm'}}
-            </span>
-        </div></td>
-        <td class="session-list-wide">{{session.expirationTime | date :'HH:mm'}}</td>
-        <td>
-            <button mat-button class="btn-circle" (click)="logInSession(session.id, controlId.value)">
-                <mat-icon>launch</mat-icon>
-            </button>
-        </td>
-        <td><mat-form-field appearance="fill">
-            <input matInput type="password" #controlId>
-        </mat-form-field></td>
-    </tr>
- </tbody>
-</table>
+    <h2>Aktuelle Sitzungen</h2>
+    <table class="session-table" cTable *ngIf="sessions$ | async as sessions; if sessions?.length;else noSessions">
+        <thead>
+            <tr>
+                <th class="session-list-wide">ID</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th class="session-list-wide">Gültig Bis</th>
+                <th>Link</th>
+                <th>Kontroll-ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let session of sessions">
+                <td class="session-list-wide">{{session.id}}</td>
+                <td>
+                    <div class="flex-column">
+                        <span class="session-link" (click)="logInSession(session.id)">{{session.name}}</span>
+                        <span class="session-list-small">{{session.id}}</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="flex-column">
+                        <div [ngClass]="'chip session-status-' + session.status">
+                            {{getSessionStatusDisplayValue(session.status)}}</div>
+                        <span class="session-list-small">
+                            {{session.expirationTime | date :'HH:mm'}}
+                        </span>
+                    </div>
+                </td>
+                <td class="session-list-wide">{{session.expirationTime | date :'HH:mm'}}</td>
+                <td>
+                    <button mat-button class="btn-circle" (click)="logInSession(session.id, controlId.value)">
+                        <mat-icon>launch</mat-icon>
+                    </button>
+                </td>
+                <td><mat-form-field appearance="fill">
+                        <input matInput type="password" #controlId
+                            (keyup.enter)="logInSession(session.id, controlId.value)">
+                    </mat-form-field></td>
+            </tr>
+        </tbody>
+    </table>
 
-<ng-template #noSessions>
-<div class="no-sessions-section">
-    Es gibt noch keine Sitzungen.
-</div>
-</ng-template>
+    <ng-template #noSessions>
+        <div class="no-sessions-section">
+            Es gibt noch keine Sitzungen.
+        </div>
+    </ng-template>
 </div>
