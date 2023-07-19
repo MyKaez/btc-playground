@@ -77,6 +77,7 @@ import { UserListComponent } from './pages/sessions/ui/user-list/user-list.compo
 import { ConfigInfoComponent } from './pages/sessions/ui/config-info/config-info.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { UserDoneComponent } from './pages/sessions/ui/user-done/user-done.component';
+import { HashProgressComponent } from './pages/sessions/ui/hash-progress/hash-progress.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import { UserDoneComponent } from './pages/sessions/ui/user-done/user-done.compo
     HostInfoComponent,
     UserListComponent,
     ConfigInfoComponent,
-    UserDoneComponent
+    UserDoneComponent,
+    HashProgressComponent
   ],
   imports: [
     BrowserModule,
