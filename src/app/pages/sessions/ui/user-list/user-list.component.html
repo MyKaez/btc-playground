@@ -2,7 +2,7 @@
     <table class="session-user-table" cTable *ngIf="showResults;else smallTable">
         <thead>
             <tr>
-                <th>ID</th>
+                <th class="user-list-wide">ID</th>
                 <th>Name</th>
                 <th>Status</th>
                 <th class="user-list-wide">Hashrate</th>
@@ -12,10 +12,10 @@
         </thead>
         <tbody>
             <tr *ngFor="let user of users">
-                <td><span class="user-id">{{user.id}}</span></td>
+                <td class="user-list-wide"><span class="user-id">{{user.id}}</span></td>
                 <td>
                     <div class="flex-column">
-                        <span>{{user.name}}</span>
+                        <span class="user-name">{{user.name}}</span>
                         <span class="user-list-small user-id">{{user.id}}</span>
                         <span class="user-list-small user-hash-rate">{{user.configuration.hashRate}} #</span>
                     </div>
@@ -41,7 +41,7 @@
     <table class="session-user-table" cTable>
         <thead>
             <tr>
-                <th>ID</th>
+                <th class="user-list-wide">ID</th>
                 <th>Name</th>
                 <th>Status</th>
                 <th>Hashrate</th>
@@ -49,10 +49,12 @@
         </thead>
         <tbody>
             <tr *ngFor="let user of users">
-                <td><span class="user-id">{{user.id}}</span></td>
+                <td class="user-list-wide"><span class="user-id">{{user.id}}</span></td>
                 <td>
-                    <span>{{user.name}}</span>
-                </td>
+                    <div class="flex-column">
+                        <span class="user-name">{{user.name}}</span>
+                        <span class="user-list-small user-id">{{user.id}}</span>
+                    </div>
                 <td>
                     <div [ngClass]="'chip user-status-' + user.status">{{getUserStatusDisplayValue(user.status)}}</div>
                 </td>

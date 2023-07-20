@@ -5,7 +5,7 @@ import { Subject, map, merge, shareReplay, switchMap, tap } from 'rxjs';
 import { SuggestionService } from 'src/app/core/suggestion.service';
 import { UserService } from 'src/app/core/user.service';
 import { SessionInfo } from 'src/app/models/session';
-import { User, UserControl } from 'src/app/models/user';
+import { User, UserControl, UserStatus, UserStatusDisplayValues } from 'src/app/models/user';
 import { Block } from 'src/app/models/block';
 
 @Component({
@@ -27,6 +27,18 @@ export class UserComponent {
   constructor(private userService: UserService, private suggestionService: SuggestionService) {
   }
 
+  getUserNameInitials(name?: string): string | undefined {
+    return name?.split(" ")
+      .filter(part => part)
+      .slice(0, 2)
+      .map(part => part[0])
+      .join("");
+  }
+
+  getUserStatusDisplayValue(userStatus: UserStatus) {
+    return UserStatusDisplayValues[userStatus];
+  }
+  
   userNameControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
 
   registerUser$ = this.userName.pipe(

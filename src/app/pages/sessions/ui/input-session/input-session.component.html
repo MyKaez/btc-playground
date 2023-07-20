@@ -3,7 +3,7 @@
 
     <mat-form-field appearance="fill">
         <mat-label>Sitzungsname</mat-label>
-        <input matInput [formControl]="nameControl" (keyup.enter)="nameChange.emit(name)" />
+        <input matInput [formControl]="nameControl" (keyup.enter)="nameChange.emit(name)"  maxlength="64"/>
     </mat-form-field>
 
     <button mat-button class="btn-circle btn-compound" (click)="nameChange.emit(name)" [disabled]="nameControl.invalid">

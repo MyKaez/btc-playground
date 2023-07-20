@@ -28,6 +28,10 @@
     </ng-template>
 </div>
 
+<div class="hash-list-content-notStarted" *ngIf="session?.status === 'notStarted'">
+    <span>Warte auf Host</span>
+</div>
+
 <ng-template #console>
     <div class="simulation-console">
         <div class="console-header">
