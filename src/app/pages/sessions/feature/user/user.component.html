@@ -1,13 +1,18 @@
-<h2>User Actions</h2>
+<h2>Aktueller User</h2>
 
-<div *ngIf="user || (user$ | async) as user;else noUser">
-    <ul>
-        <li>ID: {{user.id}}</li>
-        <li>Name: {{user.name}}</li>
-        <li>Status: {{user.status}}</li>
-    </ul>
+<div class="flex-column align-start" *ngIf="user || (user$ | async) as user;else noUser">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <div mat-card-avatar>{{getUserNameInitials(user.name)}}</div>
+            <mat-card-title>{{user.name}}</mat-card-title>
+            <mat-card-subtitle>{{user.id}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <div [ngClass]="'chip user-status-' + user.status">{{getUserStatusDisplayValue(user.status)}}</div>
+        </mat-card-content>
+    </mat-card>
 
-    <h3>Personal Session Data</h3>
+    <h3>Eigene Sitzungsdaten</h3>
 
     <div [ngSwitch]="session.status">
         <div *ngSwitchCase="'notStarted'">
