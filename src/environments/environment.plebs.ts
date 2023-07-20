@@ -1,11 +1,11 @@
-import { FormulaComponent, XpaComponent } from "src/app/simulations";
+import { PowComponent, XpaComponent } from "src/app/simulations";
 
 export const environment = {
   production: true,
   beta: true,
   presentationMode: false,
   environmentName: "plebs",
-  simulations: [XpaComponent.title],
+  simulations: [XpaComponent.title, PowComponent.title],
   debugImages: false,
   btcApi: 'https://api.btcis.me',
   //btcApi: 'https://localhost:5001',
