@@ -15,7 +15,7 @@
                 <td><span class="user-id">{{user.id}}</span></td>
                 <td>
                     <div class="flex-column">
-                        <span>{{user.name}}</span>
+                        <span class="user-name">{{user.name}}</span>
                         <span class="user-list-small user-id">{{user.id}}</span>
                         <span class="user-list-small user-hash-rate">{{user.configuration.hashRate}} #</span>
                     </div>
@@ -50,9 +50,7 @@
         <tbody>
             <tr *ngFor="let user of users">
                 <td><span class="user-id">{{user.id}}</span></td>
-                <td>
-                    <span>{{user.name}}</span>
-                </td>
+                <td><span class="user-name">{{user.name}}</span></td>
                 <td>
                     <div [ngClass]="'chip user-status-' + user.status">{{getUserStatusDisplayValue(user.status)}}</div>
                 </td>

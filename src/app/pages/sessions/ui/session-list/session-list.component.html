@@ -13,10 +13,10 @@
         </thead>
         <tbody>
             <tr *ngFor="let session of sessions">
-                <td class="session-list-wide">{{session.id}}</td>
+                <td class="session-list-wide session-id">{{session.id}}</td>
                 <td>
                     <div class="flex-column">
-                        <span class="session-link" (click)="logInSession(session.id)">{{session.name}}</span>
+                        <span class="session-link session-name" (click)="logInSession(session.id)">{{session.name}}</span>
                         <span class="session-list-small">{{session.id}}</span>
                     </div>
                 </td>

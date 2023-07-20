@@ -34,7 +34,7 @@
     <ng-template #enterData>
         <mat-form-field appearance="fill">
             <mat-label>User Name</mat-label>
-            <input matInput (keyup.enter)="registerUser()" [formControl]="userNameControl" />
+            <input matInput (keyup.enter)="registerUser()" [formControl]="userNameControl"  maxlength="128"/>
         </mat-form-field>
         <button mat-button class="btn-circle btn-compound btn-register-user" (click)="registerUser()" [disabled]="userNameControl.invalid">
             <mat-icon>group_add</mat-icon>
