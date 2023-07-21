@@ -13,16 +13,16 @@ export class UserDoneComponent {
   @Input("session") session?: SessionInfo;
   @Input("user") user?: User;
 
-  get winnerBlock(): Block {
+  get winnerBlock(): Block | undefined {
     return <Block>this.session!.configuration.result;
   }
 
   get isMe(): boolean {
-    return this.user?.id === this.winnerBlock.userId;
+    return this.user?.id === this.winnerBlock?.userId;
   }
 
   get winner(): string {
-    const user = this.session!.users.find(u => u.id === this.winnerBlock.userId);
+    const user = this.session!.users.find(u => u.id === this.winnerBlock?.userId);
     return user?.name ?? 'unknown';
   }
 }
