@@ -5,9 +5,7 @@ import { UserControl } from "./user";
 
 export class ViewModel {
 
-    constructor(public session: SessionInfo, public connection: HubConnection) {
-        this.sortUsersInSession(session);
-     }
+    constructor(public session: SessionInfo, public connection: HubConnection) {}
 
     user?: UserControl;
     userUpdates: (() => void)[] = [];
@@ -19,6 +17,7 @@ export class ViewModel {
     onUsersUpdate() {
         console.log(`running ${this.userUpdates.length} updates`);
         this.userUpdates.forEach(update => update());
+        this.sortUsersInSession(this.session);
     }
 
     /** @deprecated move into streams of session */
