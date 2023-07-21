@@ -41,7 +41,6 @@ export class HostComponent implements AfterViewInit {
   }
 
   onUserUpdate() {
-    console.log('host-action')
     if (this.controlSession.status === 'preparing') {
       const users = this.controlSession.users.filter(u => u.status === 'ready');
       const currentButton = this.context.find(b => b.action === 'start')!;

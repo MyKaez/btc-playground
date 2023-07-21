@@ -14,7 +14,6 @@ export class ViewModel {
     }
 
     onUsersUpdate() {
-        console.log(`running ${this.userUpdates.length} updates`);
         this.userUpdates.forEach(update => update());
     }
 }
