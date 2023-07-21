@@ -31,6 +31,14 @@ export class ConnectionService {
       });
     };
 
+    con.onclose(err => {
+      if (err) {
+        console.log('connection closed with error: ' + JSON.stringify(err));
+      } else {
+        console.log('connection closed');
+      }
+    });
+
     con.start().then(() => {
       console.log('connection started');
 
