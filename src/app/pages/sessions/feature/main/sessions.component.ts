@@ -149,7 +149,7 @@ export class SessionsComponent {
 
   vm$ = combineLatest([this.currentSession$, this.hubConnection$]).pipe(
     map(([session, connection]) => new ViewModel(session, connection)),
-    tap(vm => this.connectionService.connect(vm, messages => this.messages = [...messages, ...this.messages])),
+    tap(vm => this.connectionService.connect(vm)),
     shareReplay(1)
   );
 
