@@ -33,7 +33,7 @@ export class ConnectionService {
 
     con.onclose(err => {
       if (err) {
-        console.log('connection closed with error: ' + JSON.stringify(err));
+        console.log('[ERROR] connection closed with error: ' + err);
       } else {
         console.log('connection closed');
       }
