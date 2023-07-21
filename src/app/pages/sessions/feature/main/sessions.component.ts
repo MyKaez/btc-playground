@@ -16,8 +16,6 @@ import { UserListComponent } from '../../ui/user-list/user-list.component';
 })
 export class SessionsComponent {
 
-  private static readonly LOCAL_STORAGE = 'sessionHost';
-
   @Input("simulationType") simulationType !: string;
 
   private session = new Subject<Session>();
@@ -49,7 +47,6 @@ export class SessionsComponent {
       }
       let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
       if (sessionUrl.includes('sessions')) {
-        localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
         sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
       }
       this.router.navigate([sessionUrl + session.id]);
@@ -66,7 +63,6 @@ export class SessionsComponent {
       }
       let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
       if (sessionUrl.includes('sessions')) {
-        localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
         sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
       }
       this.router.navigate([sessionUrl + session.id, { controlId: session.controlId }]);
@@ -82,33 +78,9 @@ export class SessionsComponent {
         if (error.status === 404) {
           let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
           if (sessionUrl.includes('sessions')) {
-            localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
             sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
           }
           this.router.navigate([sessionUrl]);
-          return of(undefined);
-        } else {
-          throw error;
-        }
-      })
-    )),
-    tap(session => {
-      if ('controlId' in (session ?? {})) {
-        localStorage.setItem(SessionsComponent.LOCAL_STORAGE, JSON.stringify(session));
-        // todo: we need to get rid off the ids in the url!
-      }
-    })
-  );
-
-  storedSession$ = of(localStorage.getItem(SessionsComponent.LOCAL_STORAGE)).pipe(
-    filter(session => session !== undefined && session !== null),
-    delay(200), // we should delay this, since it's just a fallback!! 
-    map(session => <SessionControlInfo>JSON.parse(session!)),
-    switchMap(session => this.sessionService.getSession(session.id).pipe(
-      map(inner => <SessionControlInfo>{ ...session, ...inner }),
-      catchError(error => {
-        if (error.status === 404) {
-          localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
           return of(undefined);
         } else {
           throw error;
@@ -130,11 +102,22 @@ export class SessionsComponent {
         }
       })
     )),
-    tap(session => localStorage.setItem(SessionsComponent.LOCAL_STORAGE, JSON.stringify({ ...session, users: [] }))),
+    map(session => {
+      if (session) {
+        let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
+        if (!sessionUrl.includes('sessions')) {
+          sessionUrl = sessionUrl + '/sessions/';
+        }
+        if (!sessionUrl.endsWith('/')) {
+          sessionUrl = sessionUrl + '/';
+        }
+        this.router.navigate([sessionUrl + session.id, { controlId: session.controlId }]);
+      }
+      return of(undefined);
+    })
   );
 
-  currentSession$ = merge(this.getSessionById$, this.createSession$, this.storedSession$,
-    this.blocktrainer$, this.blocktrainerAdmin$
+  currentSession$ = merge(this.getSessionById$, this.createSession$, this.blocktrainer$, this.blocktrainerAdmin$
   ).pipe(
     filter(session => session !== undefined),
     take(1),
@@ -156,7 +139,6 @@ export class SessionsComponent {
   loading$ = this.load.pipe();
 
   logOut() {
-    localStorage.removeItem(SessionsComponent.LOCAL_STORAGE);
     let url = window.location.href ?? '';
     if (url.includes('/sessions/')) {
       url = url.substring(0, url.indexOf('/sessions/'));
