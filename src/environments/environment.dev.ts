@@ -9,7 +9,7 @@ export const environment = {
     presentationMode: false,
     beta: true,
     environmentName: "dev",
-    simulations: undefined,
+    simulations: [XpaComponent.title, PowComponent.title],
     debugImages: false,
     btcApi: 'https://api.btcis.me',
     //btcApi: 'https://localhost:5001',
