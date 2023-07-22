@@ -5,7 +5,7 @@
 
     <span *ngFor="let bar of getBars(progress);let index">
         <div *ngIf="bar.index === getBars(progress).length-1" class="separator">
-            {{bar.index}}
+            {{bar.index + 1}}
             <mat-progress-bar mode="determinate" [value]="bar.progress" [color]="'warn'">
                 <span>{{hashes$}} / {{estimatedHashes}}</span>
             </mat-progress-bar>
