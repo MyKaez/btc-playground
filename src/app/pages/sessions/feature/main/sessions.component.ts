@@ -7,7 +7,6 @@ import { Message } from 'src/app/models/message';
 import { Session, SessionControlInfo } from 'src/app/models/session';
 import { ViewModel } from 'src/app/models/view-model';
 import { NotificationService } from 'src/app/shared/media/notification.service';
-import { UserListComponent } from '../../ui/user-list/user-list.component';
 
 @Component({
   selector: 'app-sessions',
@@ -20,6 +19,7 @@ export class SessionsComponent {
 
   private session = new Subject<Session>();
   private load = new Subject<boolean>();
+
   hideMessageCenter = true;
 
   constructor(
@@ -137,6 +137,11 @@ export class SessionsComponent {
   );
 
   loading$ = this.load.pipe();
+
+  readyUsers$ = this.vm$.pipe(
+    map(vm => vm.session.users.filter(u => u.status !== 'notReady')),
+    map(vm => vm.length)
+  );
 
   logOut() {
     let url = window.location.href ?? '';
