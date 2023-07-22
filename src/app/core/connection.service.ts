@@ -38,9 +38,8 @@ export class ConnectionService {
       this.updateUsers(vm);
 
       con.on(`${session.id}:SessionAlive`, () => {
-        if (vm.user) {
-          con.invoke('Alive', vm.user.id);
-        }
+        console.log('SessionAlive');
+        con.invoke('Alive', vm.user?.id);
       });
 
       con.on(`${session.id}:SessionUpdate`, update => {
