@@ -48,7 +48,7 @@ export class SessionsComponent {
         sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
       }
       this.router.navigate([sessionUrl + session.id]);
-      return EMPTY;
+      return undefined;
     }),
   );
 
@@ -61,7 +61,7 @@ export class SessionsComponent {
         sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
       }
       this.router.navigate([sessionUrl + session.id, { controlId: session.controlId }]);
-      return EMPTY;
+      return undefined;
     })
   );
 
@@ -110,6 +110,7 @@ export class SessionsComponent {
   );
 
   currentSession$ = merge(this.getSessionById$, this.createSession$, this.blocktrainer$, this.blocktrainerAdmin$).pipe(
+    filter(s => s !== undefined && s !== null),
     take(1),
     map(session => <SessionControlInfo>session),
     switchMap(session => this.sessionService.getSession(session.id).pipe(
