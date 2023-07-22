@@ -22,7 +22,6 @@ export class UserComponent {
   @Output("userChange") userChange = new EventEmitter<UserControl>();
 
   private userName = new Subject<string>();
-  private userId = new Subject<string>();
   private loading = new Subject<boolean>();
 
   constructor(private userService: UserService, private suggestionService: SuggestionService, private notificationService: NotificationService) {
@@ -53,13 +52,8 @@ export class UserComponent {
     )),
     shareReplay(1)
   );
-  getUser$ = this.userId.pipe(
-    switchMap(id => this.userService.getUsers(this.session.id).pipe(
-      map(users => users.find(u => u.id === id)!)
-    )),
-    map(user => { return { ...<UserControl>this.user, ...user } })
-  );
-  user$ = merge(this.registerUser$, this.getUser$).pipe(
+
+  user$ = this.registerUser$.pipe(
     tap(user => this.userChange.emit(user)),
     tap(user => this.hubConnection.invoke('RegisterUser', user.id))
   );
@@ -68,11 +62,6 @@ export class UserComponent {
 
   ngAfterViewInit(): void {
     if (!this.user) {
-      this.hubConnection.on(`${this.session.id}:UserUpdate`, user => {
-        if (this.user?.id == user.id) {
-          this.userId.next(user.id);
-        }
-      });
       const subscription = this.suggestionService.suggestUser().subscribe(suggestion => {
         this.userNameControl.setValue(suggestion.name);
         subscription.unsubscribe();
