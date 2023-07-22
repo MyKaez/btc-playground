@@ -19,7 +19,7 @@
 
         <mat-tab>
             <ng-template mat-tab-label>
-                Teilnehmer ({{readyUsers$ | async}}/{{vm.session.users.length}})
+                Teilnehmer ({{getNotReady(vm.session.users)}}/{{vm.session.users.length}})
             </ng-template>
             <app-user-list [users]="vm.session.users" [session]="vm.session"></app-user-list>
         </mat-tab>

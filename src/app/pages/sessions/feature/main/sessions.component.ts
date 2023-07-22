@@ -5,6 +5,7 @@ import { ConnectionService } from 'src/app/core/connection.service';
 import { SessionService } from 'src/app/core/session.service';
 import { Message } from 'src/app/models/message';
 import { Session, SessionControlInfo } from 'src/app/models/session';
+import { User } from 'src/app/models/user';
 import { ViewModel } from 'src/app/models/view-model';
 import { NotificationService } from 'src/app/shared/media/notification.service';
 
@@ -138,10 +139,9 @@ export class SessionsComponent {
 
   loading$ = this.load.pipe();
 
-  readyUsers$ = this.vm$.pipe(
-    map(vm => vm.session.users.filter(u => u.status !== 'notReady')),
-    map(vm => vm.length)
-  );
+  getNotReady(users: User[]) {
+    return users.filter(u => u.status !== 'notReady').length
+  }
 
   logOut() {
     let url = window.location.href ?? '';
