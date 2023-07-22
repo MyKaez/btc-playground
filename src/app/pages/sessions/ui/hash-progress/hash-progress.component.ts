@@ -42,11 +42,12 @@ export class HashProgressComponent {
     })
   );
 
-  getBars(progress: number): number[] {
-    const bars: number[] = [];
+  getBars(progress: number): { index: number, progress: number }[] {
+    const bars: { index: number, progress: number }[] = [];
+    let index = 0;
     while (progress > 100) {
       progress -= 100;
-      bars.push(progress);
+      bars.push({ index: index++, progress: progress });
     }
     return bars;
   }
