@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, catchError, combineLatest, delay, filter, map, merge, of, shareReplay, switchMap, take, tap } from 'rxjs';
+import { EMPTY, Subject, catchError, combineLatest, filter, map, merge, of, shareReplay, switchMap, take, tap } from 'rxjs';
 import { ConnectionService } from 'src/app/core/connection.service';
 import { SessionService } from 'src/app/core/session.service';
 import { Message } from 'src/app/models/message';
@@ -41,33 +41,27 @@ export class SessionsComponent {
 
   blocktrainer$ = this.params$.pipe(
     filter(data => data.sessionId === 'beach'),
-    switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => of(undefined)))),
+    switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => EMPTY))),
     map(session => {
-      if (!session) {
-        return undefined;
-      }
       let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
       if (sessionUrl.includes('sessions')) {
         sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
       }
       this.router.navigate([sessionUrl + session.id]);
-      return undefined;
+      return EMPTY;
     }),
   );
 
   blocktrainerAdmin$ = this.params$.pipe(
     filter(data => data.sessionId === 'beach-admin'),
-    switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => of(undefined)))),
+    switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => EMPTY))),
     map(session => {
-      if (!session) {
-        return undefined;
-      }
       let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
       if (sessionUrl.includes('sessions')) {
         sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
       }
       this.router.navigate([sessionUrl + session.id, { controlId: session.controlId }]);
-      return undefined;
+      return EMPTY;
     })
   );
 
@@ -81,10 +75,14 @@ export class SessionsComponent {
           if (sessionUrl.includes('sessions')) {
             sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
           }
+          this.notificationService.display("Die Session gibt es nicht - Seite wird aktualisiert!");
           this.router.navigate([sessionUrl]);
-          return of(undefined);
+          return EMPTY;
         } else {
-          throw error;
+          console.error(error);
+          this.notificationService.display("Da hat etwas nicht geklappt - bitte die Seite aktualisieren!");
+          this.load.next(false);
+          return EMPTY;
         }
       })
     ))
@@ -94,33 +92,25 @@ export class SessionsComponent {
     filter(session => session !== undefined && session !== null),
     switchMap(session => this.sessionService.createSession(session).pipe(
       catchError(error => {
-        if (error.status === 400) {
-          this.notificationService.display(error.error.errorMessage);
-          this.load.next(false);
-          return of(undefined);
-        } else {
-          throw error;
-        }
+        console.error(error);
+        this.notificationService.display("Da hat etwas nicht geklappt - bitte noch mal probieren!");
+        this.load.next(false);
+        return EMPTY;
       })
     )),
     map(session => {
-      if (session) {
-        let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
-        if (!sessionUrl.includes('sessions')) {
-          sessionUrl = sessionUrl + '/sessions/';
-        }
-        if (!sessionUrl.endsWith('/')) {
-          sessionUrl = sessionUrl + '/';
-        }
-        this.router.navigate([sessionUrl + session.id, { controlId: session.controlId }]);
+      let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
+      if (!sessionUrl.includes('sessions')) {
+        sessionUrl = sessionUrl + '/sessions/';
       }
-      return of(undefined);
+      if (!sessionUrl.endsWith('/')) {
+        sessionUrl = sessionUrl + '/';
+      }
+      this.router.navigate([sessionUrl + session.id, { controlId: session.controlId }]);
     })
   );
 
-  currentSession$ = merge(this.getSessionById$, this.createSession$, this.blocktrainer$, this.blocktrainerAdmin$
-  ).pipe(
-    filter(session => session !== undefined),
+  currentSession$ = merge(this.getSessionById$, this.createSession$, this.blocktrainer$, this.blocktrainerAdmin$).pipe(
     take(1),
     map(session => <SessionControlInfo>session),
     switchMap(session => this.sessionService.getSession(session.id).pipe(
