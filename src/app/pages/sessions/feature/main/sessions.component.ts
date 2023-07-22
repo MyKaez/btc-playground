@@ -108,6 +108,7 @@ export class SessionsComponent {
         sessionUrl = sessionUrl + '/';
       }
       this.router.navigate([sessionUrl + session.id, { controlId: session.controlId }]);
+      return undefined;
     })
   );
 
