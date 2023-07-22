@@ -81,8 +81,7 @@ export class SessionsComponent {
           this.notificationService.display("Da hat etwas nicht geklappt - Seite wird aktualisiert!");
         }
         this.router.navigate([sessionUrl]);
-        return EMPTY;
-
+        return of(undefined);
       })
     ))
   );
@@ -94,10 +93,13 @@ export class SessionsComponent {
         console.error(error);
         this.notificationService.display("Da hat etwas nicht geklappt - bitte noch mal probieren!");
         this.load.next(false);
-        return EMPTY;
+        return of(undefined);
       })
     )),
     map(session => {
+      if (!session) {
+        return session;
+      }
       let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
       if (!sessionUrl.includes('sessions')) {
         sessionUrl = sessionUrl + '/sessions/';
