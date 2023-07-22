@@ -23,9 +23,6 @@ export class ConnectionService {
     const con = vm.connection;
     const session = vm.session;
 
-    con.keepAliveIntervalInMilliseconds = 15 * 1000;
-    con.serverTimeoutInMilliseconds = 10 * 60 * 1000;
-
     con.onclose(async err => {
       console.log('connection closed, trying to reconnect');
       if (err) {
@@ -39,6 +36,12 @@ export class ConnectionService {
       con.invoke('RegisterSession', vm.session.id);
 
       this.updateUsers(vm);
+
+      con.on(`${session.id}:SessionAlive`, () => {
+        if (vm.user) {
+          con.invoke('Alive', vm.user.id);
+        }
+      });
 
       con.on(`${session.id}:SessionUpdate`, update => {
         console.log('SessionUpdate');
