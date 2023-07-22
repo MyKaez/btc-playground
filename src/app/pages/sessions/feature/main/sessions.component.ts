@@ -70,20 +70,19 @@ export class SessionsComponent {
     filter(data => !data.sessionId.includes('beach')),
     switchMap(p => this.sessionService.getSession(p.sessionId, p.controlId).pipe(
       catchError(error => {
-        if (error.status === 404) {
-          let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
-          if (sessionUrl.includes('sessions')) {
-            sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
-          }
-          this.notificationService.display("Die Session gibt es nicht - Seite wird aktualisiert!");
-          this.router.navigate([sessionUrl]);
-          return EMPTY;
-        } else {
-          console.error(error);
-          this.notificationService.display("Da hat etwas nicht geklappt - bitte die Seite aktualisieren!");
-          this.load.next(false);
-          return EMPTY;
+        let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
+        if (sessionUrl.includes('sessions')) {
+          sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions')) + '/sessions/';
         }
+        console.error(error);
+        if (error.status === 404) {
+          this.notificationService.display("Die Session gibt es nicht - Seite wird aktualisiert!");
+        } else {
+          this.notificationService.display("Da hat etwas nicht geklappt - Seite wird aktualisiert!");
+        }
+        this.router.navigate([sessionUrl]);
+        return EMPTY;
+
       })
     ))
   );
