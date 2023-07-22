@@ -1,12 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HubConnection } from '@microsoft/signalr';
-import { Subject, map, merge, shareReplay, switchMap, tap } from 'rxjs';
+import { EMPTY, Subject, catchError, map, merge, shareReplay, switchMap, tap } from 'rxjs';
 import { SuggestionService } from 'src/app/core/suggestion.service';
 import { UserService } from 'src/app/core/user.service';
+import { Block } from 'src/app/models/block';
 import { SessionInfo } from 'src/app/models/session';
 import { User, UserControl, UserStatus, UserStatusDisplayValues } from 'src/app/models/user';
-import { Block } from 'src/app/models/block';
+import { NotificationService } from 'src/app/shared/media/notification.service';
 
 @Component({
   selector: 'app-user',
@@ -24,7 +25,7 @@ export class UserComponent {
   private userId = new Subject<string>();
   private loading = new Subject<boolean>();
 
-  constructor(private userService: UserService, private suggestionService: SuggestionService) {
+  constructor(private userService: UserService, private suggestionService: SuggestionService, private notificationService: NotificationService) {
   }
 
   getUserNameInitials(name?: string): string | undefined {
@@ -38,11 +39,18 @@ export class UserComponent {
   getUserStatusDisplayValue(userStatus: UserStatus) {
     return UserStatusDisplayValues[userStatus];
   }
-  
+
   userNameControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
 
   registerUser$ = this.userName.pipe(
-    switchMap(userName => this.userService.registerUser(this.session.id, userName)),
+    switchMap(userName => this.userService.registerUser(this.session.id, userName).pipe(
+      catchError(error => {
+        this.loading.next(false);
+        this.notificationService.display("Da hat etwas nicht geklappt - bitte noch mal probieren!");
+        console.error(error);
+        return EMPTY;
+      })
+    )),
     shareReplay(1)
   );
   getUser$ = this.userId.pipe(
