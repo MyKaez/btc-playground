@@ -79,7 +79,7 @@ export class PowComponent implements AfterViewInit {
   );
 
   config$ = combineLatest([this.totalHashRate$, this.blockTimeChanges$]).pipe(
-    switchMap(([totalHashRate, blockTime]) => this.powService.getConfig(this.totalHashRate, this.blockTime.value ?? 0))
+    switchMap(([totalHashRate, blockTime]) => this.powService.getConfig(this.totalHashRate, this.blockTime.value || 0, this.hashRate.value || 0))
   );
 
   probability$ = this.config$.pipe(map(config => config.expected));

@@ -4,8 +4,10 @@ import { Block } from 'src/app/models/block';
 import { delay } from 'src/app/shared/delay';
 import { PowConfig } from '../models/pow-config';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, catchError, of } from 'rxjs';
 import { DeterminationRunConfig, RunConfig } from '../models/run-config';
+import { calculateTime } from 'src/app/shared/helpers/time';
+import { calculateHexaDecimalFormula } from 'src/app/shared/hash.methods';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +18,31 @@ export class PowService {
 
   constructor(@Inject('BTCIS.ME-API') private url: string, private httpClient: HttpClient) { }
 
-  getConfig(totalHashRate: number, secondsUntilBlock: number): Observable<PowConfig> {
+  getConfig(totalHashRate: number, secondsUntilBlock: number, hashRate: number): Observable<PowConfig> {
     const req = { totalHashRate: totalHashRate, secondsUntilBlock: secondsUntilBlock };
     return this.httpClient.post(`${this.url}/v1/simulations/proof-of-work`, req).pipe(
-      map(data => <PowConfig>data)
+      map(data => <PowConfig>data),
+      catchError(error => {
+        console.error("Failed get pow config from server. Fallback to local config", error);
+        return of(this.getLocalConfig(totalHashRate, secondsUntilBlock, hashRate))
+      })
     );
+  }
+
+  private getLocalConfig(totalHashRate: number, secondsUntilBlock: number, hashRate: number): PowConfig {
+    //return calculateTime(time)
+
+    let difficulty = hashRate * secondsUntilBlock;
+    let exptected = 1 / ((totalHashRate || 1) * secondsUntilBlock);
+
+    return {
+      totalHashRate: totalHashRate,
+      secondsUntilBlock: secondsUntilBlock,
+      difficulty: difficulty,
+      expected: exptected,
+      secondsToSkipValidBlocks: 0,
+      threshold: "00"//calculateHexaDecimalFormula(2, exptected)
+    }
   }
 
   async findBlock(runConfig: RunConfig): Promise<Block | undefined> {
