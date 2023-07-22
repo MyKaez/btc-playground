@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
+import { EMPTY, catchError } from 'rxjs';
 import { SessionService } from 'src/app/core/session.service';
 import { SessionAction, SessionControlInfo, SessionStatus } from 'src/app/models/session';
 import { ViewModel } from 'src/app/models/view-model';
+import { NotificationService } from 'src/app/shared/media/notification.service';
 
 @Component({
   selector: 'app-host',
@@ -20,7 +22,7 @@ export class HostComponent implements AfterViewInit {
 
   private context: { button: MatButton, action: SessionAction, status: SessionStatus }[] = [];
 
-  constructor(private sessionService: SessionService) {
+  constructor(private sessionService: SessionService, private notificationService: NotificationService) {
   }
 
   get controlSession(): SessionControlInfo {
@@ -74,7 +76,13 @@ export class HostComponent implements AfterViewInit {
       ...this.controlSession.configuration
     };
     console.log(JSON.stringify(configuration));
-    const subscription = this.sessionService.executeAction(this.controlSession, action, configuration).subscribe(_ => {
+    const subscription = this.sessionService.executeAction(this.controlSession, action, configuration).pipe(
+      catchError(err => {
+        console.error(err);
+        this.notificationService.display('Etwas ist schiefgegangen - bitte noch mal probieren!')
+        return EMPTY;
+      })
+    ).subscribe(_ => {
       this.updateButtons(action);
       subscription.unsubscribe();
     });

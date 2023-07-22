@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HubConnection } from '@microsoft/signalr';
-import { EMPTY, Subject, catchError, map, merge, shareReplay, switchMap, tap } from 'rxjs';
+import { EMPTY, Subject, catchError, shareReplay, switchMap, tap } from 'rxjs';
 import { SuggestionService } from 'src/app/core/suggestion.service';
 import { UserService } from 'src/app/core/user.service';
 import { Block } from 'src/app/models/block';
@@ -80,15 +80,32 @@ export class UserComponent {
     }
     const config = { hashRate: hashRate };
     this.user.status = 'ready';
-    const subscription = this.userService.sendUpdate(this.session.id, <UserControl>this.user, config).subscribe(_ => {
-      subscription.unsubscribe();
-    });
+    this.sendUpdate(config);
   }
 
   blockFound(block: Block) {
     const user = <UserControl>this.user;
     user.status = 'done';
-    const subscription = this.userService.sendUpdate(this.session.id, <UserControl>this.user, block).subscribe(_ => {
+
+  }
+
+  sendUpdate(obj: any, count?: number) {
+    const subscription = this.userService.sendUpdate(this.session.id, <UserControl>this.user, obj).pipe(
+      catchError(err => {
+        console.error(err);
+        if (!count) {
+          count = 1;
+        } else {
+          count++;
+        }
+        if (count < 3) {
+          this.sendUpdate(obj, count);
+        } else {
+          this.notificationService.display("Da hat etwas nicht geklappt - bitte noch mal probieren!");
+        }
+        return EMPTY;
+      })
+    ).subscribe(_ => {
       subscription.unsubscribe();
     })
   }

@@ -4,8 +4,9 @@ import { Block } from 'src/app/models/block';
 import { delay } from 'src/app/shared/delay';
 import { PowConfig } from '../models/pow-config';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { EMPTY, Observable, catchError, map } from 'rxjs';
 import { DeterminationRunConfig, RunConfig } from '../models/run-config';
+import { NotificationService } from 'src/app/shared/media/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,16 @@ export class PowService {
   blocks: Block[] = [];
   isExecuting: boolean = false;
 
-  constructor(@Inject('BTCIS.ME-API') private url: string, private httpClient: HttpClient) { }
+  constructor(@Inject('BTCIS.ME-API') private url: string, private httpClient: HttpClient, private notificationService: NotificationService) { }
 
   getConfig(totalHashRate: number, secondsUntilBlock: number): Observable<PowConfig> {
     const req = { totalHashRate: totalHashRate, secondsUntilBlock: secondsUntilBlock };
     return this.httpClient.post(`${this.url}/v1/simulations/proof-of-work`, req).pipe(
+      catchError(err => {
+        console.error(err);
+        this.notificationService.display('Etwas ist schiefgegangen - bitte noch mal probieren!')
+        return EMPTY;
+      }),
       map(data => <PowConfig>data)
     );
   }
