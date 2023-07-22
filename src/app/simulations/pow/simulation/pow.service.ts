@@ -4,9 +4,8 @@ import { Block } from 'src/app/models/block';
 import { delay } from 'src/app/shared/delay';
 import { PowConfig } from '../models/pow-config';
 import { HttpClient } from '@angular/common/http';
-import { EMPTY, Observable, catchError, map } from 'rxjs';
+import { Observable, map, catchError, of } from 'rxjs';
 import { DeterminationRunConfig, RunConfig } from '../models/run-config';
-import { NotificationService } from 'src/app/shared/media/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,45 +14,70 @@ export class PowService {
   blocks: Block[] = [];
   isExecuting: boolean = false;
 
-  constructor(@Inject('BTCIS.ME-API') private url: string, private httpClient: HttpClient, private notificationService: NotificationService) { }
+  constructor(@Inject('BTCIS.ME-API') private url: string, private httpClient: HttpClient) { }
 
-  getConfig(totalHashRate: number, secondsUntilBlock: number): Observable<PowConfig> {
+  getConfig(totalHashRate: number, secondsUntilBlock: number, hashRate: number): Observable<PowConfig> {
     const req = { totalHashRate: totalHashRate, secondsUntilBlock: secondsUntilBlock };
     return this.httpClient.post(`${this.url}/v1/simulations/proof-of-work`, req).pipe(
-      catchError(err => {
-        console.error(err);
-        this.notificationService.display('Etwas ist schiefgegangen - bitte noch mal probieren!')
-        return EMPTY;
-      }),
-      map(data => <PowConfig>data)
+      map(data => <PowConfig>data),
+      catchError(error => {
+        console.error("Failed get pow config from server. Fallback to local config", error);
+        return of(this.getLocalConfig(totalHashRate, secondsUntilBlock, hashRate))
+      })
     );
+  }
+
+  private getLocalConfig(totalHashRate: number, secondsUntilBlock: number, hashRate: number): PowConfig {
+    let difficulty = hashRate * secondsUntilBlock;
+    let exptected = 1 / ((totalHashRate || 1) * secondsUntilBlock);
+
+    return {
+      totalHashRate: totalHashRate,
+      secondsUntilBlock: secondsUntilBlock,
+      difficulty: difficulty,
+      expected: exptected,
+      secondsToSkipValidBlocks: 0,
+      threshold: "00"
+    }
   }
 
   async findBlock(runConfig: RunConfig): Promise<Block | undefined> {
     this.isExecuting = true;
     let created = 0;
-    const template = this.createTemplate(runConfig.runId);
-    do {
-      if (!this.isExecuting) {
-        return undefined;
-      }
-      if (runConfig.stopCondition && runConfig.stopCondition()) {
-        return undefined;
-      }
-      created++;
-      const text = template + created;
-      const hash = SHA256(text).toString();
-      const block: Block = this.createBlock(runConfig, text, hash, hash < runConfig.powConfig.threshold);
-      this.blocks.unshift(block);
-      if (this.blocks.length > runConfig.amountOfBlocks) {
-        this.blocks.pop();
-      }
-      await delay(1);
-    } while (this.blocks[0].hash > runConfig.powConfig.threshold);
 
-    if (runConfig.startTime.getTime() + runConfig.powConfig.secondsToSkipValidBlocks * 1000 > new Date().getTime()) {
-      console.log('skipped valid: ' + this.blocks[0].hash);
-      return await this.findBlock(runConfig);
+    try {
+      const template = this.createTemplate(runConfig.runId);
+      let foundBlock = false;
+      do {
+        if (!this.isExecuting) {
+          return undefined;
+        }
+        if (runConfig.stopCondition && runConfig.stopCondition()) {
+          return undefined;
+        }
+        created++;
+        const text = template + created;
+        const hash = SHA256(text).toString();
+        const block: Block = this.createBlock(runConfig, text, hash, hash < runConfig.powConfig.threshold);
+        this.blocks.unshift(block);
+        if (this.blocks.length > runConfig.amountOfBlocks) {
+          this.blocks.pop();
+        }
+        await delay(1);
+
+        if (this.blocks[0].hash <= runConfig.powConfig.threshold) {
+          if (runConfig.startTime.getTime() + runConfig.powConfig.secondsToSkipValidBlocks * 1000 > new Date().getTime()) {
+            console.log('skipped valid: ' + this.blocks[0].hash);
+            this.blocks.splice(0, 1);
+          }
+          else {
+            foundBlock = true;
+          }
+        }
+      } while (!foundBlock);
+    }
+    catch (error) {
+      console.error("Failed at finding block", error);
     }
 
     this.isExecuting = false;
