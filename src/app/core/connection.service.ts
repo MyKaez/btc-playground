@@ -22,31 +22,6 @@ export class ConnectionService {
   connect(vm: ViewModel) {
     const con = vm.connection;
     const session = vm.session;
-    const updateUsers = (count?: number) => {
-      console.log('updating users');
-      const subscription = this.userService.getUsers(session.id).pipe(
-        catchError(err => {
-          console.error('error while getting users: ' + err);
-          delay(100);
-          if (!count) {
-            count = 1;
-          } else if (count++ >= 3) {
-            throw err;
-          }
-          updateUsers(count);
-          return EMPTY;
-        }),
-      ).subscribe(users => {
-        session.users = users;
-        const user = users.find(u => u.id == vm.user?.id);
-        if (user && vm.user) {
-          vm.user.configuration = user.configuration;
-          vm.user.status = user.status;
-        }
-        vm.onUsersUpdate();
-        subscription.unsubscribe();
-      });
-    };
 
     con.onclose(async err => {
       if (err) {
@@ -61,24 +36,50 @@ export class ConnectionService {
       console.log('connection started');
       con.invoke('RegisterSession', vm.session.id);
 
-      updateUsers();
+      this.updateUsers(vm);
 
       con.on(`${session.id}:SessionUpdate`, update => {
-        console.log('UpdateSession');
+        console.log('SessionUpdate');
         session.status = update.status;
         session.startTime = update.startTime ? new Date(update.startTime) : undefined;
         session.endTime = update.endTime ? new Date(update.endTime) : undefined;
         session.configuration = update.configuration;
         if (update.urgent) {
-          updateUsers();
+          this.updateUsers(vm);
         }
       });
 
-      con.on(`${session.id}:UserUpdates`, (update?: { urgent: boolean }) => {
+      con.on(`${session.id}:UserUpdates`, () => {
         console.log('UserUpdates');
-        updateUsers();
+        this.updateUsers(vm);
       });
-    })
-      .catch((err) => console.log('error while establishing signalr connection: ' + err));
+    }).catch((err) => console.log('error while establishing signalr connection: ' + err));
   }
+
+  private updateUsers(vm: ViewModel, count?: number) {
+    console.log('updating users');
+    const session = vm.session;
+    const subscription = this.userService.getUsers(session.id).pipe(
+      catchError(err => {
+        console.error('error while getting users: ' + err);
+        delay(100);
+        if (!count) {
+          count = 1;
+        } else if (count++ >= 3) {
+          throw err;
+        }
+        this.updateUsers(vm, count);
+        return EMPTY;
+      }),
+    ).subscribe(users => {
+      session.users = users;
+      const user = users.find(u => u.id == vm.user?.id);
+      if (user && vm.user) {
+        vm.user.configuration = user.configuration;
+        vm.user.status = user.status;
+      }
+      vm.onUsersUpdate();
+      subscription.unsubscribe();
+    });
+  };
 }

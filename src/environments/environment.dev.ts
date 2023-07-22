@@ -11,8 +11,8 @@ export const environment = {
     environmentName: "dev",
     simulations: [XpaComponent.title, PowComponent.title],
     debugImages: false,
-    btcApi: 'https://api.btcis.me',
-    //btcApi: 'https://localhost:5001',
+    //btcApi: 'https://api.btcis.me',
+    btcApi: 'https://localhost:5001',
 };
 
 export class Config {
