@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { UserService } from './user.service';
-import { Message } from '../models/message';
 import { ViewModel } from '../models/view-model';
+import { EMPTY, catchError, delay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +22,21 @@ export class ConnectionService {
   connect(vm: ViewModel) {
     const con = vm.connection;
     const session = vm.session;
-    const updateUsers = () => {
+    const updateUsers = (count?: number) => {
       console.log('updating users');
-      const subscription = this.userService.getUsers(session.id).subscribe(users => {
+      const subscription = this.userService.getUsers(session.id).pipe(
+        catchError(err => {
+          console.error('error while getting users: ' + err);
+          delay(100);
+          if (!count) {
+            count = 1;
+          } else if (count++ >= 3) {
+            throw err;
+          }
+          updateUsers(count);
+          return EMPTY;
+        }),
+      ).subscribe(users => {
         session.users = users;
         const user = users.find(u => u.id == vm.user?.id);
         if (user && vm.user) {
