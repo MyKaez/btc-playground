@@ -23,13 +23,15 @@ export class ConnectionService {
     const con = vm.connection;
     const session = vm.session;
 
+    con.keepAliveIntervalInMilliseconds = 15 * 1000;
+    con.serverTimeoutInMilliseconds = 10 * 60 * 1000;
+
     con.onclose(async err => {
+      console.log('connection closed, trying to reconnect');
       if (err) {
-        console.log('connection closed, trying to reconnect:' + err);
-        await con.start();
-      } else {
-        console.log('connection closed');
+        console.error('error occurred while closing: ' + err);
       }
+      await con.start();
     });
 
     con.start().then(() => {
