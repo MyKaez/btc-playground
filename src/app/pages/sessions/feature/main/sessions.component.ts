@@ -139,7 +139,7 @@ export class SessionsComponent {
 
   loading$ = this.load.pipe();
 
-  getNotReady(users: User[]) {
+  getReady(users: User[]) {
     return users.filter(u => u.status !== 'notReady').length
   }
 
