@@ -86,7 +86,7 @@ export class UserComponent {
   blockFound(block: Block) {
     const user = <UserControl>this.user;
     user.status = 'done';
-
+    this.sendUpdate(block);
   }
 
   sendUpdate(obj: any, count?: number) {
