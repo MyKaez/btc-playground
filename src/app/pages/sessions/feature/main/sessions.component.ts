@@ -39,32 +39,6 @@ export class SessionsComponent {
     shareReplay(1)
   );
 
-  blocktrainer$ = this.params$.pipe(
-    filter(data => data.sessionId === 'beach'),
-    switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => EMPTY))),
-    map(session => {
-      let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
-      if (sessionUrl.includes('sessions')) {
-        sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
-      }
-      this.router.navigate([sessionUrl + session.id]);
-      return undefined;
-    }),
-  );
-
-  blocktrainerAdmin$ = this.params$.pipe(
-    filter(data => data.sessionId === 'beach-admin'),
-    switchMap(_ => this.sessionService.getBlocktrainerSession().pipe(catchError(_ => EMPTY))),
-    map(session => {
-      let sessionUrl = this.route.snapshot.url.map(u => u.path).reduce((p, c) => p + '/' + c, '');
-      if (sessionUrl.includes('sessions')) {
-        sessionUrl = sessionUrl.substring(0, sessionUrl.indexOf('/sessions/')) + '/sessions/';
-      }
-      this.router.navigate([sessionUrl + session.id, { controlId: session.controlId }]);
-      return undefined;
-    })
-  );
-
   getSessionById$ = this.params$.pipe(
     filter(data => data.sessionId !== undefined && data.sessionId !== null),
     filter(data => !data.sessionId.includes('beach')),
@@ -112,7 +86,7 @@ export class SessionsComponent {
     })
   );
 
-  currentSession$ = merge(this.getSessionById$, this.createSession$, this.blocktrainer$, this.blocktrainerAdmin$).pipe(
+  currentSession$ = merge(this.getSessionById$, this.createSession$).pipe(
     filter(s => s !== undefined && s !== null),
     take(1),
     map(session => <SessionControlInfo>session),
