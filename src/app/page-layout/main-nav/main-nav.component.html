@@ -2,8 +2,8 @@
   {'content-simulation': layout.isSimulation,
    'handset-layout': (layout.isSmallScreen$ | async)}">
   <mat-sidenav #drawer class="sidenav" [ngClass]="{hidden: !(layout.isSmallScreen$ |async)}" fixedInViewport
-    [attr.role]="(layout.isSmallScreen$ | async) ? 'dialog' : 'navigation'" [mode]="(layout.isSmallScreen$ | async) ? 'over' : 'side'"
-    [opened]="(layout.isSmallScreen$ | async) === false">
+    [attr.role]="(layout.isSmallScreen$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(layout.isSmallScreen$ | async) ? 'over' : 'side'" [opened]="(layout.isSmallScreen$ | async) === false">
     <mat-nav-list>
       <app-logo></app-logo>
       <a mat-list-item *ngFor="let link of navLinks" class="nav-link nav-link-side" [routerLink]="link.href"
@@ -48,7 +48,7 @@
         </div>
 
         <div class="far-navigation flex-container">
-          <div class="donation blink" (click)="openDonation()" [hidden]="presentationMode">
+          <div class="donation blink" (click)="openDonation()">
             Spenden
           </div>
           <div class="btc-live-data flex-table">
@@ -84,8 +84,10 @@
       <app-footer></app-footer>
     </div>
     <div class="app-images">
-      <img *ngIf="isLockImage$ | async" [src]="firstImage$ | async" alt="background" class="d-block w-100" loading="lazy" />
-      <app-image-carousel *ngIf="isCarousel$ | async" [image-urls]="(images$ | async) || fallbackImages" [interval]="5000"></app-image-carousel>
+      <img *ngIf="isLockImage$ | async" [src]="firstImage$ | async" alt="background" class="d-block w-100"
+        loading="lazy" />
+      <app-image-carousel *ngIf="isCarousel$ | async" [image-urls]="(images$ | async) || fallbackImages"
+        [interval]="5000"></app-image-carousel>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

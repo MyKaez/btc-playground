@@ -8,10 +8,4 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent {
 
-  get presentationMode(): string {
-    if (environment.presentationMode) {
-      return 'presentation-mode';
-    }
-    return '';
-  }
 }

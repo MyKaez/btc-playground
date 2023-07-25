@@ -6,7 +6,6 @@ import { PowComponent, XpaComponent } from "src/app/simulations";
 
 export const environment = {
     production: true,
-    presentationMode: false,
     beta: true,
     environmentName: "dev",
     simulations: [XpaComponent.title, PowComponent.title],

@@ -24,11 +24,6 @@ export class SocialBarComponent implements OnInit {
       enable: !environment.production
     }, {
       iconName: "test",
-      href: "https://github.com/MyKaez/btc-playground",
-      imageSrc: "assets/GitHub-Mark-Light-64px.png",
-      enable: !environment.presentationMode
-    }, {
-      iconName: "test",
       href: "https://www.youtube.com/channel/UC08NXXwbdkZRWSwFOYRSrDA",
       imageSrc: "https://cdn.cdnlogo.com/logos/y/57/youtube-icon.svg",
       alt: "Orange Relationship Youtube Channel",

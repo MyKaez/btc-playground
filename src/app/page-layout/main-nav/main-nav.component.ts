@@ -34,10 +34,6 @@ export class MainNavComponent implements OnInit {
     this.isHandset$ = layout.isHandset$;
   }
 
-  get presentationMode(): boolean {
-    return environment.presentationMode;
-  }
-
   get currentBlock(): number {
     return this.latestBlocks.length > 0 ? this.latestBlocks[0].height : 0;
   }
@@ -47,8 +43,8 @@ export class MainNavComponent implements OnInit {
       this.btcService.getCurrentPrice().subscribe(price => this.currentPrice = price);
       this.btcService.getLatestBlocks().subscribe(blocks => this.latestBlocks = blocks);
       let test = this.isCarousel$;
-    }, 1000);   
-    
+    }, 1000);
+
     this.layout.backgroundImages$.subscribe(images => console.log("new images", images));
     this.firstImage$.subscribe(value => console.log("Updatedt firstimage", value));
     this.isCarousel$.subscribe(value => console.log("Updatedt isCarousel", value));

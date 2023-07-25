@@ -15,7 +15,4 @@ export class HomeComponent implements OnInit {
     this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel, { imageMode: ContentLayoutImageMode.Fancy });
   }
 
-  get presentationMode(): boolean {
-    return environment.presentationMode;
-  }
 }

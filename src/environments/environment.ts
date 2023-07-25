@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   beta: false,
-  presentationMode: false,
   environmentName: "default",
   simulations: undefined,
   debugImages: false,
