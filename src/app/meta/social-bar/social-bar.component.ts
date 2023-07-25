@@ -18,16 +18,22 @@ export class SocialBarComponent implements OnInit {
   private getSocialLinks(): SocialIcon[] {
     return [{
       iconName: "test",
-      href: "https://twitter.com/bitty_kn",
-      imageSrc: "assets/twitter_white.svg",
-      alt: "bitty_kn",
-      enable: !environment.production
-    }, {
-      iconName: "test",
       href: "https://www.youtube.com/channel/UC08NXXwbdkZRWSwFOYRSrDA",
       imageSrc: "https://cdn.cdnlogo.com/logos/y/57/youtube-icon.svg",
       alt: "Orange Relationship Youtube Channel",
       enable: true
+    }, {
+      iconName: "test",
+      href: "https://t.me/FixesThis",
+      imageSrc: "https://cdn.cdnlogo.com/logos/t/39/telegram.svg",
+      alt: "FixesThis Telegram Channel",
+      enable: true
+    }, {
+      iconName: "test",
+      href: "https://twitter.com/bitty_kn",
+      imageSrc: "assets/twitter_white.svg",
+      alt: "bitty_kn",
+      enable: !environment.production
     }, {
       iconName: "test",
       href: 'https://drive.google.com/drive/folders/1dvoWCAcgsuv3Xf7AADXFmh7qoFdWTgI2',
