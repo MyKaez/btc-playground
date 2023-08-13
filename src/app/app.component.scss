@@ -1,10 +1,6 @@
 @use "/src/styles.scss";
 @import "/src/colors.scss";
 
-@function hexToRgb($colorHexValue) {
-  @return #{red($colorHexValue), green($colorHexValue), blue($colorHexValue)};
-}
-
 /***
     General settings
 **/
