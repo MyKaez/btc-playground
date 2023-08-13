@@ -11,10 +11,6 @@
 @import "@coreui/coreui/dist/css/coreui.min.css";
 @import "./colors.scss";
 
-@function hexToRgb($colorHexValue) {
-  @return #{red($colorHexValue), green($colorHexValue), blue($colorHexValue)};
-}
-
 /* fonts */
 @font-face {
   font-family: "Bitcoin";
@@ -24,30 +20,6 @@
 @font-face {
   font-family: "Starjedi";
   src: url("./assets/fonts/Starjedi.ttf") format("truetype");
-}
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-
-  --primary: #{hexToRgb($primary)};
-  --accent: #{$accent};
-  --sugar: #{$sugar};
-
-  --error: #{$error};
-
-  --background-color: #{lighten($primary, 5%)};
-  --header-color: #{hexToRgb($primary)};
-  --footer-color: #{hexToRgb($primary)};
-  --font-color: #{$gray-70};
-
-  background-color: $primary-700;
-  background: linear-gradient(45deg, $primary-700, $sugar-700);
 }
 
 table {
