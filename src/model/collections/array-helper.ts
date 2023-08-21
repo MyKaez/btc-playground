@@ -15,4 +15,21 @@ export class ArrayHelper {
         to.push(element);
         return to;
     }
+
+    static selectFor(times: number, startAt = 0, step = 1): number[] {
+        const elements: number[] = [];
+        if(!step) return elements;
+
+        const target = startAt + times * (step > 0 ? 1 : -1);
+        const compareForRunning = step > 0 
+            ? () => startAt <= target
+            : () => startAt >= target;
+
+        while(compareForRunning()) {
+            elements.push(startAt);
+            startAt += step;
+        }
+
+        return elements;
+    }
 }

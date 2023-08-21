@@ -8,7 +8,7 @@ export const environment = {
     production: true,
     beta: true,
     environmentName: "dev",
-    simulations: [XpaComponent.title, PowComponent.title],
+    simulations: null,
     debugImages: false,
     btcApi: 'https://api.btcis.me',
     //btcApi: 'https://localhost:5001',

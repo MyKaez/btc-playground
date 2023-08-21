@@ -4,6 +4,7 @@
         [style.top]="node.yPx" 
         [style.left]="node.xPx"
         [style.background-color]="node.color"
+        [style.color]="node.textColor"
         >{{node.text}}</div>
     <div *ngFor="let relation of nodeCanvas.relations" class="relation"            
         [style.top]="relation.yPx" 

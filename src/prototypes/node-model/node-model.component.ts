@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 import { Vector } from 'src/model/anim';
 import { StringHelper } from 'src/model/text';
-import { NodeCanvas, VisualizedNode, VisualizedNodeRelation, VisualizedPin } from "./";
+import { NodeCanvas, NodeModelAnimator, VisualizedNode, VisualizedNodeRelation, VisualizedPin } from "./";
 
 @Component({
     selector: 'node-model',
@@ -25,8 +25,11 @@ export class NodeModelComponent implements OnInit {
     @Input("onClickPin")
     onClickPin?: (event: any, VisualizedPin: VisualizedNode) => void;
 
+    private animator: NodeModelAnimator;
+
     constructor() {
-        this.nodeCanvas = NodeModelComponent.createDefaultCanvas(this.nodeCount);
+        this.animator = new NodeModelAnimator(new Vector(0,0));
+        this.nodeCanvas = this.animator.createDefaultCanvas(this.nodeCount);
         this.nodeCanvas.updatePositions(true);
     }
 
@@ -63,80 +66,6 @@ export class NodeModelComponent implements OnInit {
         console.log("Remaining", relation.lastPins.length);
 
         this.nodeCanvas.updatePositions(true);
-    }
-
-    static createDefaultCanvas(nodeCount: number): NodeCanvas {
-        const colors = ["#66f", "#ec3", "#5db"];
-        const nodeTexts = ["A", "B", "C"];
-        let canvas = new NodeCanvas(
-            600,
-            400,
-            [], // nodes
-            [], // rels
-            [] // pins
-        );
-
-        for(let i = 0; i < nodeCount; i++) {
-            canvas.nodes.push({
-                color: colors[i % 3],
-                connections: [],
-                pins: [],
-                size: 80 + "px",
-                text: nodeTexts[i % 3],
-                x: i * 60,
-                y: i * 60,
-                id: StringHelper.createUiId()
-            });
-        }
-
-        let combinations: VisualizedNode[][] = [];
-        canvas.nodes.forEach(node => {
-            canvas.nodes.forEach(other => {                
-                if(node === other) return;
-                if(combinations.some(combination => combination.indexOf(node) >= 0 && combination.indexOf(other) >= 0)) return;
-                combinations.push([node, other]);
-            
-                let relation: VisualizedNodeRelation = {
-                    color: "#aad",
-                    first: node,
-                    firstPins: [],
-                    last: other,
-                    lastPins: [],
-                    x: 0,
-                    y: 0,
-                    id: StringHelper.createUiId()
-                };
-                for(let i = 0; i < 6; i++) {
-                    let first: VisualizedPin = {
-                        color: "gray",
-                        parent: node,
-                        relation: relation,
-                        size: 20 + "px",
-                        x: i * 20,
-                        y: i * 20,
-                        id: StringHelper.createUiId()
-                    };
-
-                    let second = {... first, 
-                        parent: other,
-                        id: StringHelper.createUiId()
-                    };
-
-                    relation.firstPins.push(first);
-                    relation.lastPins.push(second);
-                    canvas.pins.push(first);
-                    node.pins.push(first);
-                    canvas.pins.push(second);
-                    other.pins.push(first);
-                }
-
-                node.connections.push(relation);
-                other.connections.push(relation);
-                canvas.relations.push(relation);
-            });
-        });
-
-        return canvas;
     }
 
     private mouseDown = false;

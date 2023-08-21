@@ -6,3 +6,4 @@ export * from "./visualized-pin";
 export * from "./node-canvas";
 export * from "./node-model-map";
 export * from "./node-model.component";
+export * from "./node-model-animator";

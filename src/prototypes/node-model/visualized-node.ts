@@ -10,4 +10,5 @@ export interface VisualizedNode extends CanvasElement {
     pins: VisualizedPin[];    
 
     color: string;
+    textColor: string;
 }
