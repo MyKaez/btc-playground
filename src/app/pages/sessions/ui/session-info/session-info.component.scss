@@ -1,0 +1,78 @@
+@use "/src/styles.scss";
+@import "/src/colors.scss";
+
+div {
+    display: flex;
+    flex-direction: column;
+}
+
+.control-id {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .control-id-text {
+        flex-grow: 1;
+    }
+
+    .control-id-button {
+        flex-grow: 0;
+    }
+}
+
+.form-field-link {
+    display: inline-block;
+    margin-top: $margin-large;
+}
+
+.form-field-button {
+    margin-left: $margin-large;
+}
+
+.qrcode {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: $margin-huge;
+
+    .code-data {
+        cursor: pointer;
+
+        &:hover~.btn-circle {
+            display: block;
+        }
+    }
+
+    >.btn-circle {
+        display: none;
+        position: absolute;
+        top: 10px;
+        margin-left: 190px;
+
+        &:hover {
+            display: inline-block;
+        }
+    }
+
+    &.fullscreen {
+        ::ng-deep { 
+            .code-data > .qrcode {
+                @extend .fullscreen-element;
+                display: flex;
+                justify-content: center;                
+                background-color: rgba(var(--primary), 0.9);
+
+                canvas {
+                    height: auto !important;
+                    width: auto !important;
+                }
+            }
+        }
+    }
+}
+
+.chip {
+    display: inline-block;
+}

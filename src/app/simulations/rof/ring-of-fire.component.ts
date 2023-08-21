@@ -9,7 +9,7 @@ import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 export class RingOfFireComponent implements OnInit {
     constructor(private layout: LayoutService) { }
 
-    ngOnInit() { 
-        this.layout.setLayoutMode(ContentLayoutMode.Plane);
+    ngOnInit() {
+        this.layout.setLayoutMode(ContentLayoutMode.LockImage);
     }
 }

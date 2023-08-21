@@ -1,67 +1,123 @@
-@import "/src/app/app.component.scss";
+@import "/src/colors.scss";
+
+.simulation-items-handset {
+  display: grid;
+  padding: $margin-huge;
+
+  .text {
+  }
+
+  .simulation {
+    margin-top: $margin-small;
+    width: 100%;
+    height: 60%;
+
+    .actions {
+      .actions-bar {
+        border-radius: 0 2em 0 0;
+      }
+
+      .action-info {
+        display: none;
+      }
+    }
+  }
+}
 
 .simulation-items {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-evenly;
+
+  .text {
+    overflow: auto;
+  }
+
+  .simulation {
+    width: 70%;
     height: 100%;
-    width: 100%;
-    overflow: hidden;
+    margin-left: $margin-large;
+  }
+}
 
-    .text {
-        width: 28%;
-        height: 100%;
+.simulation-items, .simulation-items-handset {
+  height: 100%;
+  width: 100%;
 
-        .parameters,
-        .calculations,
-        .options,
-        .actions {
-            display: flex;
-            flex-direction: column;
-            color: $light-color;
-        }
+  a {
+    color: white;
+  }
 
-        form {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
+  .text {
+    &.info-card {
+      width: auto;
+      height: auto;
+      margin: 0;
     }
 
-    .simulation {
-        height: 100%;
-        width: 70%;
-        border: 1px solid $light-color;
-        background-color: $light-color;
-        border-radius: 0.2em;
-        text-align: left;
+    .parameters,
+    .calculations,
+    .options,
+    .actions {
+      display: flex;
+      flex-direction: column;
+      color: $light-color;
 
-        .header {
-            height: 5%;
-            background-color: $light-color;
-            color: $dark-color;
-            display: flex;
-            flex-direction: row;
-            vertical-align: middle;
-            padding-top: 0px;
-            padding-bottom: 0px;
+      .formula {
+        text-align: center;
+        font-size: medium;
+      }
 
-            img {
-                height: 70%;
-            }
-        }
-
-        .data {
-            display: flex;
-            flex-direction: column;
-            color: $accent;
-            white-space: nowrap;
-            background-color: $dark-color;
-            overflow: scroll;
-            height: 94%;
-            font-family: $code-font;
-            padding-right: $margin-slim;
-            padding-left: $margin-slim;
-        }
+      .small {
+        margin-top: $margin-large;
+        font-size: small;
+      }
     }
+
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .simulation {
+    .simulation-console {
+      border: 1px solid $primary-300;
+      border-radius: 0 2em 0 0;
+      text-align: left;height: 100%;
+
+      .console-header {
+        height: 4%;
+        background-color: rgba(var(--header-color), 0.9);
+        border-bottom: 1px solid $primary-300;
+        color: white;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        padding-left: $margin-small;
+        border-radius: 0 2em 0 0;
+
+        img {
+          height: 16px;
+        }
+
+        span {
+          margin-left: $margin-huge;
+        }
+      }
+
+      .console-data {
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        color: $accent;
+        background-color: $primary-700;
+        white-space: nowrap;
+        padding: $margin-small;
+        height: 96%;
+        font-family: $code-font;
+      }
+    }
+  }
 }

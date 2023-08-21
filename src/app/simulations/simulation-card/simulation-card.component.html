@@ -1,6 +1,18 @@
-<mat-card class="simulation-card">
-    <h2>{{title}}</h2>
-    <p>{{description}}</p>
-    <button mat-button (click)="navigateTo(navigationLink)"> Zur Simulation... </button>
-    <youtube-player [videoId]="youtubeSrc" [width]="280" [height]="160"></youtube-player>
-</mat-card>
+<div class="info-card">
+    <div class="info-card-content">
+        <div class="info-card-text">
+            <h3>{{title}}</h3>
+            <p>{{description}}</p>
+        </div>
+        <div class="simulation-button" *ngIf="navigationLink" (click)="navigateTo(navigationLink)">
+            <app-conditional-image 
+                default-image-src="./assets/img/simulations/sim-atom-still.gif" 
+                hover-image-src="./assets/img/simulations/sim-atom.gif"></app-conditional-image>
+            <span>Zur Simulation</span>
+        </div>
+    </div>
+    <div class="info-card-media">
+        <youtube-player *ngIf="!showImage" [videoId]="youtubeSrc"></youtube-player>
+        <img *ngIf="showImage" [src]="imageSrc || defaultImage" />
+    </div>
+</div>

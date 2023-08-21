@@ -1,4 +1,49 @@
+@import "/src/colors.scss";
+
+:host {
+    display: flex;
+    height: 100%;
+}
+
 .logo {
+    display: flex;
+    height: 100%;
+    padding: $margin-small 0;
+    cursor: pointer;
+    background: linear-gradient(115deg, $accent 0%, $sugar-300 50%, $sugar-700 90%, $sugar-700 100%);
+    align-items: center;
+
+    a {
+        display: flex;
+        align-items: center;
+        padding: 0 $margin-large 0 $margin-large;
+
+        img {
+            height: 30px;
+            margin-right: $margin-large;
+        }
+
+        span {
+            display: block;
+            transition-property: color;
+            transition-duration: .5s;
+            font-family: Bitcoin;
+        }
+    }
+
+    &:hover {        
+        background: linear-gradient(115deg, $accent 0%, $sugar-700 60%, $sugar-700 100%);
+    }
+}
+
+.polygon.slash-up-right {
+    width: 60px;
+    height: 100%;
+    clip-path: polygon(0% 0%, 100% 0, 0% 100%);
+    background: linear-gradient(110deg, $sugar-700 0%, $sugar-700 20%, $sugar-900 50%, rgba(var(--header-color), .75) 100%);
+}
+
+.logo-old {
     margin-right: 2em;
     cursor: pointer;
 

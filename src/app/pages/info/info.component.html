@@ -1,21 +1,18 @@
 <div class="content">
-    <div class="items">
+    <div class="info-card page-card">
+        <h2>Ein paar Informationen</h2>
         <div class="text">
-            We're
-            <img src="assets/donate.png" />
-
-            <div>
-                <p>Alle Validierungsregeln können hier gefunden werden:<a
-                        href="https://github.com/bitcoin/bitcoin/blob/master/src/validation.cpp#L1471">
-                        https://github.com/bitcoin/bitcoin/blob/master/src/validation.cpp#L1471
-                    </a>
-                </p>
-                <p>Beipielsweise kann man nach folgender Methode gucken und dort die Belohnungslogik für Miner ansehen:
-                    <code>GetBlockSubsidy</code>
-                </p>
-                <p>Die Implementierung sieht wie folgt aus:</p>
-                <p>
-                    <code>
+            <p>Alle Validierungsregeln können hier gefunden werden:<a
+                    href="https://github.com/bitcoin/bitcoin/blob/master/src/validation.cpp#L1471">
+                    https://github.com/bitcoin/bitcoin/blob/master/src/validation.cpp#L1471
+                </a>
+            </p>
+            <p>Beipielsweise kann man nach folgender Methode gucken und dort die Belohnungslogik für Miner ansehen:
+                <code>GetBlockSubsidy</code>
+            </p>
+            <p>Die Implementierung sieht wie folgt aus:</p>
+            <p>
+                <code>
                         CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
                         &#123;<br/>
                             int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;<br/>
@@ -29,23 +26,22 @@
                             return nSubsidy;<br/>
                         &#125;
                  </code>
-                </p>
-                <p>
-                    Constante <code>COIN = 1.000.000</code> bedeutet, dass 1.000.000 Satoshis = 1 BTC sind.<br />
-                    <a
-                        href="https://github.com/bitcoin/bitcoin/blob/623745ca74cf3f54b474dac106f5802b7929503f/src/consensus/amount.h">
-                        https://github.com/bitcoin/bitcoin/blob/623745ca74cf3f54b474dac106f5802b7929503f/src/consensus/amount.h
-                    </a>
-                </p>
-                <p>
-                    Constante <code>MAX_BLOCK_WEIGHT = 4.000.000</code> bedeutet, dass 4.000.000 Bytes = 4.000 KBytes =
-                    4 MBytes der maximalen Blockgröße entsprechen.<br />
-                    <a
-                        href="https://github.com/bitcoin/bitcoin/blob/623745ca74cf3f54b474dac106f5802b7929503f/src/consensus/amount.h">
-                        https://github.com/bitcoin/bitcoin/blob/623745ca74cf3f54b474dac106f5802b7929503f/src/consensus/amount.h
-                    </a>
-                </p>
-            </div>
+            </p>
+            <p>
+                Constante <code>COIN = 1.000.000</code> bedeutet, dass 1.000.000 Satoshis = 1 BTC sind.<br />
+                <a
+                    href="https://github.com/bitcoin/bitcoin/blob/623745ca74cf3f54b474dac106f5802b7929503f/src/consensus/amount.h">
+                    https://github.com/bitcoin/bitcoin/blob/623745ca74cf3f54b474dac106f5802b7929503f/src/consensus/amount.h
+                </a>
+            </p>
+            <p>
+                Constante <code>MAX_BLOCK_WEIGHT = 4.000.000</code> bedeutet, dass 4.000.000 Bytes = 4.000 KBytes =
+                4 MBytes der maximalen Blockgröße entsprechen.<br />
+                <a
+                    href="https://github.com/bitcoin/bitcoin/blob/623745ca74cf3f54b474dac106f5802b7929503f/src/consensus/amount.h">
+                    https://github.com/bitcoin/bitcoin/blob/623745ca74cf3f54b474dac106f5802b7929503f/src/consensus/amount.h
+                </a>
+            </p>
         </div>
     </div>
 </div>

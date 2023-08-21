@@ -1,0 +1,48 @@
+@import '/src/colors.scss';
+
+.text-explanation {
+  margin-top: $margin-huge;
+}
+
+.reason {
+  font-style: italic;
+  padding-left: $margin-huge;
+}
+
+.groundwork {
+  margin-top: $margin-huge;
+}
+
+.section {
+  margin-top: $margin-huge;
+}
+
+img {
+  width: 80%;
+  background-color: rgba($accent, 0.85);
+  border: 2px solid $light-color;
+  border-radius: 0 2em 0 2em;
+  padding: $margin-large;
+  margin: $margin-large;
+}
+
+.simulation-definition {
+  &.info-card {
+    margin: 0;    
+  }
+
+  .video-explanation {
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid $primary-300;
+    padding-bottom: 1rem;
+
+    ::ng-deep iframe {
+      border: 2px solid $primary-300;
+      max-width: 560px;
+      max-height: 315px;
+      height: 40vw;
+      width: 80vw;
+    } 
+  }
+}

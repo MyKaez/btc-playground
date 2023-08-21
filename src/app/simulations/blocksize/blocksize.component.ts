@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
-import { calculateSize } from 'src/app/shared/helpers/size';
+import { calculateUnit, UnitOfSize } from 'src/app/shared/helpers/size';
 import { calculateTime } from 'src/app/shared/helpers/time';
 import { BlockSizeService } from './simulation/blocksize.service';
 import { BlockData, Interval } from './simulation/types';
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-blocksize',
@@ -11,17 +12,23 @@ import { BlockData, Interval } from './simulation/types';
   styleUrls: ['./blocksize.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class BlocksizeComponent implements OnInit {
+export class BlocksizeComponent implements OnInit, OnDestroy {
   blocks: BlockData[];
   spaceInBytes: number = 1_000_000_000_000;
+  isHandset$: Observable<boolean>;
 
-  constructor(private blocksizeService: BlockSizeService,
+  contentLayoutMode = ContentLayoutMode.LockImage;
+
+  constructor(private blockSizeService: BlockSizeService,
     private layout: LayoutService) {
     this.blocks = this.createBlocks();
+    this.isHandset$ = layout.isHandset$;
   }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
+  }
+
+  ngOnDestroy(): void {
   }
 
   private createBlocks(): BlockData[] {
@@ -38,26 +45,26 @@ export class BlocksizeComponent implements OnInit {
     return {
       interval: interval.text,
       amountOfTime: amountOfTime,
-      amountOfBlocks: this.blocksizeService.blocksPer(amountOfTime, interval),
-      blockSize: this.calculateSize(this.blocksizeService.blockSizeInBytesPer(amountOfTime, interval))
+      amountOfBlocks: this.blockSizeService.blocksPer(amountOfTime, interval),
+      blockSize: this.calculateSize(this.blockSizeService.blockSizeInBytesPer(amountOfTime, interval))
     }
   }
 
   get blockTime(): number {
-    return this.blocksizeService.blockTimeInSeconds;
+    return this.blockSizeService.blockTimeInSeconds;
   }
 
   set blockTime(value: number) {
-    this.blocksizeService.blockTimeInSeconds = value;
+    this.blockSizeService.blockTimeInSeconds = value;
     this.blocks = this.createBlocks();
   }
 
   get blockSize(): number {
-    return this.blocksizeService.size.bytes;
+    return this.blockSizeService.size.smallesUnits;
   }
 
   set blockSize(value: number) {
-    this.blocksizeService.size.bytes = value;
+    this.blockSizeService.size.smallesUnits = value;
     this.blocks = this.createBlocks();
   }
 
@@ -71,7 +78,7 @@ export class BlocksizeComponent implements OnInit {
   }
 
   calculateSize(size: number): string {
-    return calculateSize(size).toText();
+    return calculateUnit(size, UnitOfSize.bytes).toText();
   }
 
   calculateTime(seconds: number): string {

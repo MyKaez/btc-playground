@@ -1,1 +1,6 @@
-@import "/src/app/simulations/simulation.component.scss";
+@import "/src/colors.scss"
+;
+
+.info-card {
+  padding: $margin-huge;
+}

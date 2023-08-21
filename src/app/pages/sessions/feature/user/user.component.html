@@ -1,0 +1,49 @@
+<h2>Aktueller User</h2>
+
+<div class="flex-column align-start" *ngIf="user || (user$ | async) as user;else noUser">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <div mat-card-avatar>{{getUserNameInitials(user.name)}}</div>
+            <mat-card-title>{{user.name}}</mat-card-title>
+            <mat-card-subtitle>{{user.id}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <div [ngClass]="'chip user-status-' + user.status">{{getUserStatusDisplayValue(user.status)}}</div>
+        </mat-card-content>
+    </mat-card>
+
+    <h3>Eigene Sitzungsdaten</h3>
+
+    <div [ngSwitch]="session.status">
+        <div *ngSwitchCase="'notStarted'">
+            <app-hash-list [session]="session" [user]="user" [clear]="true"></app-hash-list>
+        </div>
+        <div *ngSwitchCase="'preparing'">
+            <app-hash-list [session]="session" [user]="user"
+                (determinedHashRate)="determinedHashRate($event)"></app-hash-list>
+        </div>
+        <div *ngSwitchCase="'started'">
+            <app-hash-list [session]="session" [user]="user" [go]="true"
+                (blockFound)="blockFound($event)"></app-hash-list>
+        </div>
+        <div *ngSwitchCase="'stopped'">
+            <app-hash-list [session]="session" [user]="user"></app-hash-list>
+        </div>
+    </div>
+
+</div>
+<ng-template #noUser>
+    <div *ngIf="loading$ | async;else enterData">
+        Lade...
+    </div>
+    <ng-template #enterData>
+        <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input matInput (keyup.enter)="registerUser()" [formControl]="userNameControl"  maxlength="64"/>
+        </mat-form-field>
+        <button mat-button class="btn-circle btn-compound btn-register-user" (click)="registerUser()" [disabled]="userNameControl.invalid">
+            <mat-icon>group_add</mat-icon>
+            <span>Sitzung beitreten</span>
+        </button>
+    </ng-template>
+</ng-template>

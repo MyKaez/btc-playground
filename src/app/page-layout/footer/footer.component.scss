@@ -1,4 +1,5 @@
-@import "/src/styles.scss";
+@import "/src/colors.scss"
+;
 
 .fixed-footer {
     padding: $margin-large 0 $margin-small 0;    
@@ -25,6 +26,10 @@
     }
 
     ::ng-deep .bottom-actions {
+        /* Currently bottom actions are without functions  */
+        min-width: 1px;
+        >* { display: none !important; }
+
         button:hover,
         .language-selector:hover .mat-select-value-text {              
             color: rgba(255,255,255,.4);

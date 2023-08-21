@@ -1,49 +1,73 @@
-import { Component } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { first, map, Observable, share, shareReplay, take, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { LayoutService, ContentLayoutMode } from 'src/app/pages';
+import { BtcBlock, BtcPrice, BtcService } from 'src/app/shared/helpers/btc.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DonationComponent } from '../../shared/donation/donation.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.scss']
 })
-export class MainNavComponent {
+export class MainNavComponent implements OnInit {
   homeImages = HomeBackgroundImages;
   navLinks: NavLink[] = [];
   title: string = 'The Bitcoin Playground';
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  isHandset$: Observable<boolean>;
+  currentPrice?: BtcPrice;
+  latestBlocks: BtcBlock[] = [];
 
-  hideImages = () => this.layout.currentLayoutMode !== ContentLayoutMode.ImageCarousel;
-  
-  constructor(private breakpointObserver: BreakpointObserver, 
-    private router: Router,
-    public layout: LayoutService) {
+  isCarousel$ = this.layout.backgroundImages$.pipe(map(images => images.length > 1), shareReplay());
+  isLockImage$ = this.layout.backgroundImages$.pipe(map(images => images.length === 1), shareReplay());
+  firstImage$ = this.layout.backgroundImages$.pipe(map(images => images.length ? images[0] : null), shareReplay());
+  images$ = this.layout.backgroundImages$.pipe(map(images => images), share(), tap(i => console.log("new imagess", i)));
+  fallbackImages = ["assets/img/wallpapers/fixed-smooth-prisma.png"];
+
+  constructor(private router: Router,
+    public layout: LayoutService,
+    private btcService: BtcService,
+    private dialog: MatDialog) {
     this.navLinks = this.getNavLinks();
+    this.isHandset$ = layout.isHandset$;
   }
 
-  public isLast(part: string): boolean {
+  get currentBlock(): number {
+    return this.latestBlocks.length > 0 ? this.latestBlocks[0].height : 0;
+  }
+
+  ngOnInit(): void {
+    setInterval(() => {
+      this.btcService.getCurrentPrice().subscribe(price => this.currentPrice = price);
+      this.btcService.getLatestBlocks().subscribe(blocks => this.latestBlocks = blocks);
+      let test = this.isCarousel$;
+    }, 1000);
+
+    this.layout.backgroundImages$.subscribe(images => console.log("new images", images));
+    this.firstImage$.subscribe(value => console.log("Updatedt firstimage", value));
+    this.isCarousel$.subscribe(value => console.log("Updatedt isCarousel", value));
+    this.isLockImage$.subscribe(value => console.log("Updatedt isLockImage", value));
+  }
+
+  isLast(part: string): boolean {
     return this.pathParts[this.pathParts.length - 1] == part;
   }
 
-  public get pathParts(): string[] {
+  get pathParts(): string[] {
     return this.router.url.split('/').filter(p => p && p !== '');
+  }
+
+  openDonation() {
+    this.dialog.open(DonationComponent);
   }
 
   private getNavLinks(): NavLink[] {
     return [{
       title: "Simulationen",
       href: "simulations"
-    },{
-      title: "Info",
-      href: "info"
-    },{
+    }, {
       title: "Über Uns",
       links: [{
         title: "Über das Team",
@@ -52,8 +76,8 @@ export class MainNavComponent {
         title: "Über das Projekt",
         href: "about"
       }]
-    },{
-      title: "Unterstütze uns",
+    }, {
+      title: "Unterstütze Uns",
       href: "support"
     }];
   }
@@ -73,20 +97,22 @@ export class MainNavComponent {
     return fullPath;
   }
 
-  navigateTo(link: string): void {
-    this.router.navigate(['/' + link]);
+  navigateTo(url: string): Promise<boolean> {
+    return this.router.navigate(['/' + url]);
+  }
+
+  toggleNavigationEntry(link: NavLink) {
+    link.isExpanded = !link.isExpanded;
   }
 }
-
 
 export interface NavLink {
   title: string;
   href?: string;
   links?: NavLink[];
+  isExpanded?: boolean;
 }
 
-const HomeBackgroundImages: string[] = [
-  "./assets/img/fixed-crystals.png",
-  "./assets/img/fixed-cascade.png",
-  "./assets/img/fixed-connected.png"
-] 
+export const HomeBackgroundImages: string[] = [
+  "./assets/img/wallpapers/fixed-crystals.png"
+]

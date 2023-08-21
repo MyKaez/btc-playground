@@ -1,0 +1,5 @@
+<div class="conditional-image" (click)="onClick()" [class.clicked]="isClicked">
+    <div class="default-image" [style.background-image]="'url(' + defaultImageSrc + ')'"></div>
+    <div class="hover-image" [style.background-image]="'url(' + hoverImageSrc + ')'"></div>
+    <div class="click-image" [style.background-image]="'url(' + clickImageSrc + ')'"></div>
+</div>

@@ -1,0 +1,52 @@
+<div *ngIf="session.status == 'stopped'">
+    <h3>Ergebnis</h3>
+    <app-user-done [session]="session"></app-user-done>
+</div>
+
+<div *ngIf="session.status !== 'notStarted'">
+    <h3>Konfiguration</h3>
+    <app-config-info [config]="session.configuration" [session]="session"></app-config-info>
+</div>
+
+<div>
+    <h3>Meta</h3>
+    <mat-form-field>
+        <mat-label>ID</mat-label>
+        <input matInput [value]="session.id" [readonly]="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [value]="session.name" [readonly]="true">
+    </mat-form-field>
+    <div *ngIf="controlSession" class="control-id">
+        <mat-form-field class="control-id-text">
+            <mat-label>Control ID</mat-label>
+            <input matInput [value]="hideControlId ? hiddenControlId : controlSession.controlId" [readonly]="true">
+        </mat-form-field>
+        <button mat-button class="btn-circle form-field-button" (click)="showControlId()"><mat-icon>{{hideControlId ?
+                "visibility" : "visibility_off"}}</mat-icon></button>
+    </div>
+    <mat-form-field>
+        <mat-label>Status</mat-label>
+        <div [ngClass]="'chip session-status-' + session.status">{{sessionStatusDisplayValue}}</div>
+        <input type="hidden" matInput [value]="session.status" [readonly]="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Gültig bis</mat-label>
+        <input matInput [value]="session.expirationTime | date :'HH:mm.ss'" [readonly]="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Link</mat-label>
+        <input matInput class="hidden">
+        <a [href]="sessionLink" class="form-field-link" target="_blank">{{sessionLink}}</a>
+        <button mat-button class="btn-circle form-field-button"
+            (click)="copyLink()"><mat-icon>file_copy</mat-icon></button>
+    </mat-form-field>
+
+    <div class="qrcode" [class.fullscreen]="isQrFullscreen" (click)="switchQrFullscreen($event)">
+        <qrcode ngClass="code-data" [qrdata]="sessionLink" [width]="256" [errorCorrectionLevel]="'L'"></qrcode>
+
+        <button mat-button class="btn-circle" (click)="switchQrFullscreen($event)"
+            title="Fullscreen"><mat-icon>fullscreen</mat-icon></button>
+    </div>
+</div>

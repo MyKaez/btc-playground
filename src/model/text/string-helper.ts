@@ -14,5 +14,17 @@ export class StringHelper {
     private static uiIds = 0;
     static createUiId(): number {
         return StringHelper.uiIds++;
+    }    
+
+    /** Renders a base string X times into the output */
+    static renderCharacter(character: string, count: number, maxCount: number, removeLastCharacter = false, prefix = ""): string {
+        if(count <= 0) return "";
+        count = Math.min(maxCount, count);
+        
+        let text = character.repeat(count);
+        if(prefix) text = prefix + text;
+        return removeLastCharacter 
+        ? text.substring(0, text.length - 1)
+        : text;
     }
 }

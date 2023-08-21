@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-social-bar',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./social-bar.component.scss']
 })
 export class SocialBarComponent implements OnInit {
-  socialLinks: ImageLink[] = [];
+  socialLinks: SocialIcon[] = [];
 
   constructor() { }
 
@@ -14,25 +15,39 @@ export class SocialBarComponent implements OnInit {
     this.socialLinks = this.getSocialLinks();
   }
 
-  private getSocialLinks(): ImageLink[] {
+  private getSocialLinks(): SocialIcon[] {
     return [{
-      href: "https://twitter.com/bitty_kn",
-      src: "assets/twitter_white.svg",
-      alt: "bitty_kn"
-    }, {
-      
-      href: "https://github.com/MyKaez/btc-playground",
-      src: "assets/GitHub-Mark-Light-64px.png"
-    }, {      
+      iconName: "test",
       href: "https://www.youtube.com/channel/UC08NXXwbdkZRWSwFOYRSrDA",
-      src: "https://cdn.cdnlogo.com/logos/y/57/youtube-icon.svg",
-      alt: "Orange Relationship Youtube Channel"
-    }]
+      imageSrc: "https://cdn.cdnlogo.com/logos/y/57/youtube-icon.svg",
+      alt: "Orange Relationship Youtube Channel",
+      enable: true
+    }, {
+      iconName: "test",
+      href: "https://t.me/FixesThis",
+      imageSrc: "https://cdn.cdnlogo.com/logos/t/39/telegram.svg",
+      alt: "FixesThis Telegram Channel",
+      enable: true
+    }, {
+      iconName: "test",
+      href: "https://twitter.com/bitty_kn",
+      imageSrc: "assets/twitter_white.svg",
+      alt: "bitty_kn",
+      enable: !environment.production
+    }, {
+      iconName: "test",
+      href: 'https://drive.google.com/drive/folders/1dvoWCAcgsuv3Xf7AADXFmh7qoFdWTgI2',
+      imageSrc: 'https://www.iconninja.com/files/562/581/211/logo-brand-network-social-gdrive-icon.svg',
+      alt: 'Nico`s GDrive',
+      enable: !environment.production
+    }].filter(link => link.enable);
   }
 }
 
-export interface ImageLink {
-  src: string;
+export interface SocialIcon {
   href: string;
+  iconName: string;
+  imageSrc?: string;
   alt?: string;
+  enable: boolean;
 }

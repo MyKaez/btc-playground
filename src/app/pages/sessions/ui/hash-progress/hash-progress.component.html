@@ -1,0 +1,14 @@
+<div *ngIf="progress$ | async as progress">
+    <mat-progress-bar mode="determinate" [value]="progress" [color]="'accent'">
+        <span>{{hashes$}} / {{estimatedHashes}}</span>
+    </mat-progress-bar>
+
+    <span *ngFor="let bar of getBars(progress);let index">
+        <div *ngIf="bar.index === getBars(progress).length-1" class="separator">
+            {{bar.index + 1}}
+            <mat-progress-bar mode="determinate" [value]="bar.progress" [color]="'warn'">
+                <span>{{hashes$}} / {{estimatedHashes}}</span>
+            </mat-progress-bar>
+        </div>
+    </span>
+</div>

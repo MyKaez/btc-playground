@@ -1,0 +1,55 @@
+<div class="sessions-root" *ngIf="vm$ | async as vm;else noSession">
+    <div class="host-section container-card">
+        <app-host [vm]="vm" *ngIf="vm.isSessionHost"></app-host>
+        <app-host-info [vm]="vm"></app-host-info>
+        <button mat-button class="btn-circle btn-secondary" (click)="logOut()" title="Sitzung verlassen">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <app-hash-progress [session]="vm.session"
+        *ngIf="vm.session.status === 'started' || vm.session.status === 'stopped'">
+    </app-hash-progress>
+    <mat-tab-group class="info-card sessions-content-container" [selectedIndex]="vm.isSessionHost ? 0 : 2">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Sitzung
+            </ng-template>
+            <app-session-info [session]="vm.session"></app-session-info>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Teilnehmer ({{getReady(vm.session.users)}}/{{vm.session.users.length}})
+            </ng-template>
+            <app-user-list [users]="vm.session.users" [session]="vm.session"></app-user-list>
+        </mat-tab>
+
+        <mat-tab *ngIf="!vm.isSessionHost">
+            <ng-template mat-tab-label>
+                Simulation
+            </ng-template>
+            <app-user [session]="vm.session" [(user)]="vm.user" [hubConnection]="vm.connection"></app-user>
+        </mat-tab>
+
+        <mat-tab *ngIf="!hideMessageCenter">
+            <ng-template mat-tab-label>
+                Nachrichten
+            </ng-template>
+            <app-message-center [session]="vm.session" [user]="vm.user" [messages]="messages"></app-message-center>
+        </mat-tab>
+
+    </mat-tab-group>
+</div>
+
+<ng-template #noSession>
+    <div class="info-card loading-section">
+        <div *ngIf="loading$ | async;else enterData">
+            Lade...
+        </div>
+        <ng-template #enterData>
+            Bitte erstelle eine Sitzung oder tritt einer bestehenden bei.<br />
+            <app-input-session (nameChange)="registerSession($event)"></app-input-session>
+            <app-session-list></app-session-list>
+        </ng-template>
+    </div>
+</ng-template>

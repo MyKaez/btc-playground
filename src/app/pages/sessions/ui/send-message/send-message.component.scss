@@ -1,0 +1,28 @@
+@import "/src/colors.scss";
+
+div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+textarea {
+    color: var(--font-color);
+    flex-grow: 1;
+    border: 2px solid $primary-300;
+    border-radius: 0 2em 0 2em;
+    padding: $margin-large;
+
+    background-color: lighten($primary, 15%);
+    padding: $margin-small $margin-large;
+    transition-duration: .5s;
+    transition-property: background-color;
+    margin: 0;
+
+    resize: none;
+}
+
+.send-message-container > *:not(:first-child) {
+    margin-left: $margin-small;
+}

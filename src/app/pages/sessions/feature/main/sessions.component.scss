@@ -1,0 +1,32 @@
+@import "/src/colors.scss"
+;
+
+.loading-section {
+    margin: 0;
+}
+
+.host-section {    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $primary-700;
+    border-bottom: 2px solid #434355;
+    left: 0;
+
+    border-bottom-left-radius: 0;
+
+    >:not(:first-child) {        
+        margin-left: $margin-large;
+    }
+}
+
+.sessions-content-container {
+    margin: 0;
+    padding: 0;
+    border-top-right-radius: 0;
+
+    ::ng-deep .mat-tab-body-wrapper {
+        padding: $margin-large;
+        margin-top: 0 !important;
+    }
+}

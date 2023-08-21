@@ -1,0 +1,17 @@
+<h2>Neue Sitzung erstellen</h2>
+<div class="marge-children" *ngIf="nameControl$ | async as name;else loadingSection">
+
+    <mat-form-field appearance="fill">
+        <mat-label>Sitzungsname</mat-label>
+        <input matInput [formControl]="nameControl" (keyup.enter)="nameChange.emit(name)"  maxlength="64"/>
+    </mat-form-field>
+
+    <button mat-button class="btn-circle btn-compound" (click)="nameChange.emit(name)" [disabled]="nameControl.invalid">
+        <mat-icon>add_to_queue</mat-icon>
+        <span>Sitzung erstellen</span>
+    </button>
+</div>
+
+<ng-template #loadingSection>
+    Lade Sitzungen...
+</ng-template>

@@ -3,8 +3,20 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  beta: false,
+  environmentName: "default",
+  simulations: undefined,
+  debugImages: false,
+  btcApi: 'https://api.btcis.me',
+  //btcApi: 'https://localhost:5001',
 };
+
+export class Config {
+  static readonly VOLTAGE_KEY: string = "api-key";
+  static readonly BTC_PAY_AUTH: string = "basic auth";
+  static readonly FIRE_REQUEST: boolean = false;
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

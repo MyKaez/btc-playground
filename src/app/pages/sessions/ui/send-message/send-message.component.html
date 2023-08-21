@@ -1,0 +1,7 @@
+<div class="send-message-container">
+    <textarea label="Message" labelPlacement="stacked" placeholder="Nachricht eingeben..." [formControl]="messageControl"
+        (keyup.enter)="sendMessage()"></textarea>
+    <button mat-button class="btn-circle" (click)="sendMessage()" [disabled]="messageControl.invalid">
+        <mat-icon>send</mat-icon>
+    </button>
+</div>

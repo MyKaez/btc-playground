@@ -1,21 +1,21 @@
-@import "/src/styles.scss";
+@import "/src/colors.scss"
+;
 
 :host {
     width: 100%;
 }
 
 .contacts {
-    margin-top: $margin-huge;
     display: flex;
     flex-direction: column;
 
-    .contact {        
+    .contact {
         display: flex;
         flex-direction: column;
         max-width: 800px;
-        min-width: 600px;
+        min-width: 300px;
 
-        > * {
+        >* {
             padding: $margin-large;
         }
 
@@ -26,10 +26,11 @@
         .contact-header {
             position: relative;
             display: flex;
-            justify-content: space-between; 
+            justify-content: space-between;
+            align-items: center;
             background-color: #1a1a1a;
 
-            > * {
+            >* {
                 z-index: 20;
             }
 
@@ -43,22 +44,35 @@
                     font-style: italic;
                     font-weight: bold;
                     margin-top: $margin-large;
+                    text-align: center;
                 }
 
                 .contact-name {
                     margin-top: $margin-large;
                     font-size: x-large;
+                    color: var(--accent);
                 }
 
                 .contact-description {
                     margin-top: $margin-small;
                     color: #aaa;
                 }
+
+                .contact-social-media {
+                    margin-top: $margin-small;
+                    flex-direction: row;
+
+                    a {
+                        color: white;
+                        font-size: x-small;
+                    }
+                }
             }
 
             .contact-image {
                 width: 180px;
                 height: 160px;
+                cursor: pointer;
             }
 
             .pane {
@@ -70,14 +84,15 @@
                 background-color: #323239;
                 top: 0;
                 right: -36px;
-                clip-path: polygon(75% 0%, 75% 50%, 75% 100%, 0% 100%, 43% 50%, 0% 0%);                
+                clip-path: polygon(75% 0%, 75% 50%, 75% 100%, 0% 100%, 43% 50%, 0% 0%);
             }
         }
 
         .contact-body {
             display: flex;
             flex-direction: column;
-            background-color: rgba(50,50,57,.3);
+            background-color: rgba(50, 50, 57, .9);
+            border-top: 1px solid $primary-300;
 
             .contact-image {
                 margin-right: $margin-large;
@@ -85,15 +100,16 @@
                 img {
                     width: 140px;
                 }
+
             }
 
-            .contact-properties {       
-                margin-top: $margin-small;         
+            .contact-properties {
+                margin-top: $margin-small;
                 display: flex;
                 flex-direction: column;
             }
         }
-    }    
+    }
 
     &.alternate .contact:nth-child(even) {
         align-self: flex-end;

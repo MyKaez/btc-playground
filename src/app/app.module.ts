@@ -5,7 +5,7 @@ import { CarouselModule } from '@coreui/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PowComponent } from './simulations/pow/pow.component';
+import { PowComponent } from './simulations';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -19,13 +19,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VidComponent } from './shared/vid/vid.component';
 import {
+  SimulationService,
+  SimulationContainerComponent,
   BlockSizeService, PowService,
   SimulationCardComponent,
   BlocksizeComponent,
-  PowSimulationComponent,
-  PowCalculatorComponent,
   XpaComponent,
-  XpaSimulationComponent,
   RingOfFireComponent
 } from './simulations';
 
@@ -54,9 +53,31 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { ImageCarouselComponent } from './shared/media';
-import { SimulationService } from './pages/simulations/simulation.service';
 import { NotificationService } from './shared/media/notification.service';
-
+import { TeamService } from './pages/about-the-team/team.service';
+import { BtcService } from './shared/helpers/btc.service';
+import { BtcPayService } from './shared/helpers/btc-pay.service';
+import { DonationComponent } from './shared/donation/donation.component';
+import { ConditionalImageComponent } from './shared/media/conditional-image/conditional-image.component';
+import { PowDefinitionComponent } from './simulations/pow/definition/pow-definition.component';
+import { XpaDefinitionComponent } from './simulations/xpa/definition/definition.component';
+import { FormulaComponent } from './simulations/formula/formula.component';
+import { AppContextService } from './core';
+import { SessionsComponent } from './pages/sessions/feature/main/sessions.component';
+import { InputSessionComponent } from './pages/sessions/ui/input-session/input-session.component';
+import { SessionListComponent } from './pages/sessions/ui/session-list/session-list.component';
+import { SessionInfoComponent } from './pages/sessions/ui/session-info/session-info.component';
+import { UserComponent } from './pages/sessions/feature/user/user.component';
+import { HashListComponent } from './pages/sessions/ui/hash-list/hash-list.component';
+import { HostComponent } from './pages/sessions/feature/host/host.component';
+import { SendMessageComponent } from './pages/sessions/ui/send-message/send-message.component';
+import { MessageCenterComponent } from './pages/sessions/feature/message-center/message-center.component';
+import { HostInfoComponent } from './pages/sessions/ui/host-info/host-info.component';
+import { UserListComponent } from './pages/sessions/ui/user-list/user-list.component';
+import { ConfigInfoComponent } from './pages/sessions/ui/config-info/config-info.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { UserDoneComponent } from './pages/sessions/ui/user-done/user-done.component';
+import { HashProgressComponent } from './pages/sessions/ui/hash-progress/hash-progress.component';
 
 @NgModule({
   declarations: [
@@ -68,14 +89,11 @@ import { NotificationService } from './shared/media/notification.service';
     HomeComponent,
     SimulationCardComponent,
     SimulationsComponent,
-    PowSimulationComponent,
-    PowCalculatorComponent,
     LogoComponent,
     RingOfFireComponent,
     MainNavComponent,
     FooterComponent,
     XpaComponent,
-    XpaSimulationComponent,
     InfoComponent,
     SocialBarComponent,
     LanguageSelectorComponent,
@@ -83,7 +101,27 @@ import { NotificationService } from './shared/media/notification.service';
     AboutComponent,
     AboutTheTeamComponent,
     SupportUsComponent,
-    BlocksizeComponent
+    BlocksizeComponent,
+    DonationComponent,
+    ConditionalImageComponent,
+    PowDefinitionComponent,
+    XpaDefinitionComponent,
+    SimulationContainerComponent,
+    FormulaComponent,
+    SessionsComponent,
+    InputSessionComponent,
+    SessionListComponent,
+    SessionInfoComponent,
+    UserComponent,
+    HashListComponent,
+    HostComponent,
+    SendMessageComponent,
+    MessageCenterComponent,
+    HostInfoComponent,
+    UserListComponent,
+    ConfigInfoComponent,
+    UserDoneComponent,
+    HashProgressComponent
   ],
   imports: [
     BrowserModule,
@@ -112,15 +150,24 @@ import { NotificationService } from './shared/media/notification.service';
     MatIconModule,
     MatListModule,
     MatSnackBarModule,
-    CarouselModule
+    CarouselModule,
+    QRCodeModule
   ],
   providers: [
+    AppContextService,
     LayoutService,
+    BtcService,
+    BtcPayService,
     BlockSizeService,
     PowService,
     SimulationService,
-    NotificationService
+    NotificationService,
+    TeamService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(appContext: AppContextService) {
+    appContext.setup();
+  }
+}

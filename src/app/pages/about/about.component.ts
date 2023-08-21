@@ -7,9 +7,10 @@ import { ContentLayoutMode, LayoutService } from '../layout-service';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
+
   constructor(private layout: LayoutService) { }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
+    this.layout.setLayoutMode(ContentLayoutMode.Plane);
   }
 }

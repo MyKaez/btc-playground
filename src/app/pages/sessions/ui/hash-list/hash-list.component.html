@@ -1,0 +1,73 @@
+<div class="hash-list">
+    <div class="hash-list-content-preparing" *ngIf="session?.status === 'preparing'">
+        <div class="marge-children">
+            <mat-form-field>
+                <mat-label>Hashrate</mat-label>
+                <input matInput [formControl]="hashRateControl" [disabled]="true" />
+            </mat-form-field>
+            <button mat-button class="btn-circle btn-compound" (click)="determine()" title="Kalkulieren" #prepareButton>
+                <mat-icon>poll</mat-icon>
+                <span>Kalkulieren</span>
+            </button>
+        </div>
+
+        <ng-container *ngTemplateOutlet="console"></ng-container>
+    </div>
+
+    <div class="hash-list-content-started" *ngIf="session?.status === 'started'">
+        <ng-container *ngTemplateOutlet="console"></ng-container>
+    </div>
+
+    <div class="hash-list-content-stopped" *ngIf="session?.status === 'stopped'">
+        <div *ngIf="user?.status === 'notReady';else userView">
+            Die Sitzung ist beendet. Bitte warte bis zur nächsten Runde.
+        </div>
+        <ng-template #userView>
+            <app-user-done [user]="user" [session]="session"></app-user-done>
+            <ng-container *ngTemplateOutlet="console"></ng-container>
+        </ng-template>
+    </div>
+
+    <div class="hash-list-content-notStarted" *ngIf="session?.status === 'notStarted'">
+        <span>Warte auf Host</span>
+    </div>
+
+    <ng-template #console>
+        <div class="simulation-console">
+            <div class="console-header">
+                <img src="assets/bitcoin-btc-logo.svg">
+                <span>
+                    Proof of Work
+                </span>
+            </div>
+            <div class="console-data">
+                <table>
+                    <tr>
+                        <th>Hash</th>
+                        <th> | </th>
+                        <th>Text</th>
+                        <!-- <th *ngFor="let column of displayedColumns">
+                                <span *ngIf="column !== displayedColumns[0]"> | </span> <span> {{column.text}} </span>
+                            </th>
+                            -->
+                    </tr>
+                    <tr *ngFor="let hash of powService.blocks">
+                        <td>
+                            {{hash.hash}}
+                        </td>
+                        <td> | </td>
+                        <td>
+                            {{hash.text}}
+                        </td>
+                        <!--<td *ngFor="let column of displayedColumns">
+                                <span *ngIf="column !== displayedColumns[0]"> | </span> {{getValue(hash, column.prop)}}
+                            </td>
+                        -->
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+    </ng-template>
+</div>

@@ -1,55 +1,86 @@
-@import "../../app.component.scss";
+@import "/src/colors.scss";
 
 $content-width: 900px;
 $image-width: 420px;
+$max-text-width: 500px;
 
 img {
-    width: $image-width;
+  width: $image-width;
 }
 
-.text-block {
-    a > img {
-        width: 32px;
-    }
+.info-card {
+  a > img {
+    width: 32px;
+  }
 }
 
-.donate {
-    width: 35%;
-    min-width: $image-width;
+.support-tiles {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-width: $content-width;
 
-    iframe {
-        width: $image-width;
-    }
-}
-
-.tiles {
+  >*:not(:first-child) {
+    margin-top: $margin-huge;
+  }
+  
+  .support-tile-span {
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
-    max-width: 900px;
 
-    .text-block {
-        flex: 1 0 calc($content-width / 3);
-        margin-top: 3em;
+    .support-tile-image {
+      > img {        
+        border: 2px solid $primary-300;
+        border-radius: 0 2em 0 2em;
+        width: 85vw;
+        max-width: 420px
+      }
+    }
 
-        &:first-child {
-            margin-top: 1em;
+    .support-tile {
+      max-width: $max-text-width;
+      padding: $margin-small 0;
+      flex-wrap: wrap;
+
+      .support-tile-header {
+        display: flex;
+        margin-bottom: $margin-small;
+
+        a {
+          margin-left: $margin-large;
         }
+      }
+    }
+  }
 
-        .block-heading {
-            display: flex;
+  ::ng-deep .lightning,
+  ::ng-deep .on-chain {
+    margin: $margin-small;
+  }
+}
 
-            >:not(:first-child) {
-                margin-left: $margin-large;
-            }
-        }
+@media only screen and (min-width: $max-content-width) {
+  .support-tile-span {  
+    flex-wrap: nowrap !important;
+
+    .support-tile {      
+      padding: $margin-huge 0;
     }
 
-    > img,
-    > .donate {
-        margin-top: 3em;
-    }
+    .support-tile-image {
+      margin-left: $margin-huge;
+    } 
 
-    :nth-child(even) {        
-        margin-left: $margin-large;
+    &:nth-child(even) { 
+      .support-tile {
+        margin-left: $margin-huge;
+        order: 2;
+      }
+
+      .support-tile-image {        
+        margin-left: 0;
+      }
     }
+  }
 }

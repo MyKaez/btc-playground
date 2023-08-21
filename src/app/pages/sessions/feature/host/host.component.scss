@@ -1,0 +1,6 @@
+@import "/src/colors.scss"
+;
+
+button:not(:first-child) {
+    margin-left: $margin-large;
+}

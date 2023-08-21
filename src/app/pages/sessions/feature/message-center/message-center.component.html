@@ -1,0 +1,17 @@
+<h2>Shared Messages</h2>
+<div>
+    <ul>
+        <li *ngFor="let message of messages">
+            <div [ngClass]="isMe(message) ? 'end' : 'start'">
+                <div>
+                    {{message.text}}
+
+                    <div color="primary">
+                        {{getSender(message)}}
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <app-send-message [senderId]="user?.id ?? session.id" (messageSend)="sendMessage($event)"></app-send-message>
+</div>

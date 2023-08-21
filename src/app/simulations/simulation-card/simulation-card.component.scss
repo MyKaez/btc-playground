@@ -1,26 +1,103 @@
-@import "/src/styles.scss";
+@import "/src/colors.scss";
 
-.mat-card {
-    color: var(--font-color);
-    background-color: rgba(var(--footer-color), 0.85);
+$simulation-image-background-color: black;
+$simulation-text-height: 60px;
+
+.info-card {
+    position: relative;
     width: 320px;
-    height: max-content;
-    min-width: 20em;
-    border: 2px solid $light-color;
-    border-radius: 0em 2em 0em 2em;
-    margin-bottom: $margin-large;
+    padding: 0;
+
+    .info-card-content {
+        display: flex;
+        border-bottom: 2px solid $primary-300;
+
+        .info-card-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 130px;
+            font-size: 1em;
+            padding: $margin-large;
+            flex-grow: 1;
+    
+            h2,h3,h4 {
+                color: var(--accent);
+                font-size: x-large;
+            }
+
+            p {
+                margin-bottom: 0;
+                max-height: $simulation-text-height;
+                height: $simulation-text-height;
+            }
+
+            mat-icon {
+                display: none;
+            }
+        }
+
+        .simulation-button {
+            position: relative;
+            cursor: pointer;
+            border-left: 2px solid $primary-300;
+            border-top-right-radius: 25%;
+            background-color: $simulation-image-background-color;
+
+            span {
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                padding: $margin-small $margin-small;
+                background-color: rgba(var(--primary), .5);
+                bottom: 0;
+            }
+
+            &:hover {
+                margin-left: 0;
+
+                span {
+                    color: var(--accent);
+                }
+
+                ::ng-deep {
+                    .conditional-image > * {
+                        display: none;
+                    }
+
+                    .conditional-image > .hover-image {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+    button {
+        border: none;
+        padding: 0;
+    }
 }
 
-button {
-    padding: 1em;
-}
+::ng-deep {
+    youtube-player {
+        padding: 0 !important;
+    }
 
-img {
-    width: 100%;
-    border: 2px solid $light-color;
-    border-radius: 1em;
-}
+    youtube-player iframe,
+    .info-card-media img {
+        width: 100%;
+        height: 180px;
+        border-bottom-left-radius: 2em;
+        display: block;
+    }
 
-h2 {
-    color: var(--accent);
+    app-conditional-image {
+        width: 120px;
+        height: 120px;
+
+        .conditional-image > * {            
+            border-top-right-radius: 25%;
+        }
+    }
 }

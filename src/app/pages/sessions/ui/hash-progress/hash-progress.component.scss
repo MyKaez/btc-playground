@@ -1,0 +1,14 @@
+@import "/src/colors.scss";
+
+.separator {
+    border-top: 1px solid $primary-300;
+    // put items next to each other. first item is auto, second takes the rest
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 1rem;
+    align-items: center;
+}
+
+::ng-deep .mat-progress-bar {
+    height: 8px;
+}

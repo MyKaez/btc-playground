@@ -1,16 +1,24 @@
-<h2>Über das Team</h2>
+<h2 *ngIf="false">Über das Team</h2>
 <div class="contacts alternate">
     <div *ngFor="let contact of contacts" class="contact">
         <div class="contact-header">
-            <div class="contact-title">                
-                <h4>{{contact.quote}}</h4>
+            <div class="contact-title">
+                <h4>„{{contact.quote}}“</h4>
                 <span class="contact-name">{{contact.name}}</span>
                 <span class="contact-description">{{contact.description}}</span>
+                <span class="contact-social-media" *ngIf="contact.socialMedia && contact.socialMedia.length > 0">
+                    <span> - </span>
+                    <span *ngFor="let sm of contact.socialMedia">
+                        <a href="{{sm.url}}" target="_blank">{{sm.type}}</a>
+                        <span> - </span>
+                    </span>
+                </span>
             </div>
             <div class="contact-image polygon">
-                <img [src]="contact.imageSrc">
+                <img [src]="getImage(contact)" (click)="openPicture(contact)">
             </div>
-            <div class="pane"></div>
+            <div class="pane">
+            </div>
         </div>
         <div class="contact-body">
             <p *ngFor="let par of contact.paragraphs">{{par}}</p>

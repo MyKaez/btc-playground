@@ -1,121 +1,8 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
+@import "/src/colors.scss";
 // Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat.core();
-//@import "~@coreui/coreui-pro/scss/coreui";
-@import "@coreui/coreui/dist/css/coreui.min.css";
-
-
-/* Color Theme Swatches in Hex */
-$fixesthis-test-1-hex: #373747;
-$fixesthis-test-2-hex: #434355;
-$fixesthis-test-3-hex: #5405D0;
-$fixesthis-test-4-hex: #04D94F;
-$fixesthis-test-5-hex: #F25D07;
-
-$fixes-primary-color: #21212a;
-$fixes-primary-contrast: #cce;
-$fixes-primary-palette: (
- 50: lighten($fixes-primary-color, 50),
- 100: lighten($fixes-primary-color, 35),
- 200: lighten($fixes-primary-color, 25),
- 300: lighten($fixes-primary-color, 15),
- 400: lighten($fixes-primary-color, 5),
- 500: $fixes-primary-color,
- 600: darken($fixes-primary-color, 5),
- 700: darken($fixes-primary-color, 10),
- 800: darken($fixes-primary-color, 15),
- 900: darken($fixes-primary-color, 20),
- contrast: (
-    50: lighten($fixes-primary-contrast, 35),
-    100: lighten($fixes-primary-contrast, 25),
-    200: lighten($fixes-primary-contrast, 15),
-    300: lighten($fixes-primary-contrast, 10),
-    400: lighten($fixes-primary-contrast, 5),
-    500: $fixes-primary-contrast,
-    600: darken($fixes-primary-contrast, 15),
-    700: darken($fixes-primary-contrast, 25),
-    800: darken($fixes-primary-contrast, 35),
-    900: darken($fixes-primary-contrast, 50)
- )
-);
-
-$fixes-accent-color: #F25D07;
-$fixes-accent-contrast: #032222;
-$fixes-accent-palette: (
- 50: lighten($fixes-accent-color, 50),
- 100: lighten($fixes-accent-color, 35),
- 200: lighten($fixes-accent-color, 25),
- 300: lighten($fixes-accent-color, 15),
- 400: lighten($fixes-accent-color, 5),
- 500: $fixes-accent-color,
- 600: darken($fixes-accent-color, 1),
- 700: darken($fixes-accent-color, 2),
- 800: darken($fixes-accent-color, 3),
- 900: darken($fixes-accent-color, 5),
- contrast: (
-    50: lighten($fixes-accent-contrast, 35),
-    100: lighten($fixes-accent-contrast, 25),
-    200: lighten($fixes-accent-contrast, 15),
-    300: lighten($fixes-accent-contrast, 10),
-    400: lighten($fixes-accent-contrast, 5),
-    500: $fixes-accent-contrast,
-    600: darken($fixes-accent-contrast, 15),
-    700: darken($fixes-accent-contrast, 25),
-    800: darken($fixes-accent-contrast, 35),
-    900: darken($fixes-accent-contrast, 50)
- )
-);
-
-$fixes-sugar-color: #493BAE;
-$fixes-sugar-contrast: #AACD55;
-$fixes-sugar-palette: (
- 50: lighten($fixes-sugar-color, 50),
- 100: lighten($fixes-sugar-color, 35),
- 200: lighten($fixes-sugar-color, 25),
- 300: lighten($fixes-sugar-color, 15),
- 400: lighten($fixes-sugar-color, 5),
- 500: $fixes-sugar-color,
- 600: darken($fixes-sugar-color, 1),
- 700: darken($fixes-sugar-color, 2),
- 800: darken($fixes-sugar-color, 3),
- 900: darken($fixes-sugar-color, 5),
- contrast: (
-    50: lighten($fixes-sugar-contrast, 35),
-    100: lighten($fixes-sugar-contrast, 25),
-    200: lighten($fixes-sugar-contrast, 15),
-    300: lighten($fixes-sugar-contrast, 10),
-    400: lighten($fixes-sugar-contrast, 5),
-    500: $fixes-sugar-contrast,
-    600: darken($fixes-sugar-contrast, 15),
-    700: darken($fixes-sugar-contrast, 25),
-    800: darken($fixes-sugar-contrast, 35),
-    900: darken($fixes-sugar-contrast, 50)
- )
-);
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$Simulator-primary: mat.define-palette($fixes-primary-palette, 500);
-$Simulator-accent: mat.define-palette($fixes-accent-palette);
-$Simulator-sugar: mat.define-palette($fixes-sugar-palette);
-
-// The warn palette is optional (defaults to red).
-$Simulator-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$Simulator-theme: mat.define-dark-theme((color: (primary: $Simulator-primary,
-  accent: $Simulator-accent,
-  warn: $Simulator-warn,
-)));
-
 
 
 // Include theme styles for core and each component used in your app.
@@ -123,63 +10,23 @@ $Simulator-theme: mat.define-dark-theme((color: (primary: $Simulator-primary,
 // that you are using.
 @include mat.all-component-themes($Simulator-theme);
 
-/* You can add global styles to this file, and also import other style files */
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+//@import "~@coreui/coreui-pro/scss/coreui";
+@import "@coreui/coreui/dist/css/coreui.min.css";
+@import "./colors.scss";
 
-// desired: #21212a;
-
-$primary: mat.get-color-from-palette($Simulator-primary, 500);
-$accent: mat.get-color-from-palette($Simulator-accent, 500);
-$accent2: mat.get-color-from-palette($Simulator-accent, 100);
-$sugar: mat.get-color-from-palette($Simulator-sugar, 500);
-
-$dark-color: #1d1000;
-$light-color: white;
-
-$gray: #788;
-$gray-50: $gray;
-$gray-10: darken($gray, 80%);
-$gray-20: darken($gray, 60%);
-$gray-30: darken($gray, 40%);
-$gray-40: darken($gray, 20%);
-$gray-60: lighten($gray, 20%);
-$gray-70: lighten($gray, 40%);
-$gray-80: lighten($gray, 60%);
-$gray-90: lighten($gray, 80%);
-
-$code-font: 'Courier New', Courier, monospace;
-
-/* experimental colors */
-
-/* sizes */
-$header-height: 50px;
-$max-content-width: 1200px;
-
-/* spaces */
-$margin-slim: .25em;
-$margin-small: .5em;
-$margin-large: 1em;
-$margin-huge: 2em;
-
-html,
-body {
-  height: 100%;
+/* fonts */
+@font-face {
+  font-family: "Bitcoin";
+  src: url("./assets/fonts/Ubuntu-BoldItalic.ttf") format("truetype");
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-
-  --primary: #{$primary};
-  --accent: #{$accent};
-  --accent2: #{$accent2};
-  --sugar: #{$sugar};
-
-  --background-color: #{lighten($primary, 5%)};
-  --header-color: #{red(lighten($primary, 15%)), green(lighten($primary, 15%)), blue(lighten($primary, 15%))};
-  --footer-color: #{red(lighten($primary, 20%)), green(lighten($primary, 20%)), blue(lighten($primary, 20%))};
-  --font-color: #{$gray-70};
-
-  background-color: var(--background-color);
+@font-face {
+  font-family: "Starjedi";
+  src: url("./assets/fonts/Starjedi.ttf") format("truetype");
 }
 
 table {
@@ -193,7 +40,7 @@ table {
 
 .flex-row {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
 }
 
 .flex-column {
@@ -201,39 +48,95 @@ table {
   flex-direction: column;
 }
 
-.justify-start { justify-content: flex-start; }
-.justify-center { justify-content: center; }
-.justify-end { justify-content: flex-end; }
-.justify-between { justify-content: space-between; }
-.justify-around { justify-content: space-around; }
-.justify-evenly { justify-content: space-evenly; }
-
-.align-start { align-items: flex-start; }
-.align-center { align-items: center; }
-.align-end { align-items: flex-end; }
-.align-between { align-items: space-between; }
-.align-around { align-items: space-around; }
-.align-evenly { align-items: space-evenly; }
-
-.hidden { display: none; }
-.transparent { opacity: 0; }
-
-/* global theme applyment */
-h1, h2, h3 {
-  color: var(--accent);
+.justify-start {
+  justify-content: flex-start;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.align-between {
+  align-items: space-between;
+}
+
+.align-around {
+  align-items: space-around;
+}
+
+.align-evenly {
+  align-items: space-evenly;
+}
+
+.hidden {
+  display: none;
+}
+
+.transparent {
+  opacity: 0;
+}
+
+.marge-children > *:not(:first-child) { margin-left: $margin-large; }
+.marge-children-top > *:not(:first-child) { margin-top: $margin-large; }
+
+.fullscreen-element {  
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+}
 
 /* ### shared component styles ### */
 
-.container {
+.flex-container {
   display: flex;
   flex-wrap: wrap;
-  padding: $margin-large;
 
-  :not(:first-child) {
+  > :not(:first-child) {
     margin-left: $margin-large;
-    margin-bottom: $margin-large;
+  }
+
+  &.huge-gaps> :not(:first-child) {
+    margin-left: $margin-huge;
+  }
+}
+
+.flex-table {
+  display: flex;
+  flex-direction: column;
+
+  >* {
+    display: flex;
   }
 }
 
@@ -247,44 +150,41 @@ h1, h2, h3 {
   }
 }
 
-.mat-form-field.inconspicuous { 
-  .mat-form-field-wrapper {
-    padding: 0;
+.btn-circle {
+  border: 2px solid $light-color;
+  border-radius: 2em;
+  line-height: inherit;
+}
+
+.btn-secondary {
+  background-color: $gray-40 !important;
+  border-color: $gray-50 !important;
+}
+
+.btn-compound {
+  padding: $margin-small $margin-large !important;
+  position: relative;
+
+  .mat-button-wrapper > span:last-child {
+    margin-left: 1.5rem;
   }
-
- .mat-form-field-flex {
-    padding: 0;
-    background-color: unset;
+  
+  .mat-button-wrapper:before {
+    content: "";
+    position: absolute;
+    background-color: #2b4487;
+    display: inline-block;
+    height: 40px;
+    width: 2px;
+    left: 50px;
+    top: 0;
   }
+}
 
-  .mat-form-field-infix {
-    width: auto;
-    padding: 0 4px;
-    border: none;
-  }
+.form-field-link {
+  color: $field-link-color;
 
-  .mat-form-field-label-wrapper {
-    display: none;
-  }
-
-  .mat-form-field-underline {
-    display: none;
-    color: var(--font-color);
-    border-bottom: 1px solid var(--font-color);
-
-    .mat-form-field-ripple {
-      background-color: var(--font-color);
-    }
-  }
-
-  .mat-select-value-text, 
-  .mat-select-arrow {
-    color: var(--font-color);
-  }
-
-  .mat-select-arrow-wrapper {
-    transform: none !important;
-    margin-top: 2px;
-    margin-left: 4px;
+  &:hover {
+    color: $field-link-color-hover;
   }
 }

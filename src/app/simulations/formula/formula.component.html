@@ -1,0 +1,85 @@
+<app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
+    [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" #container>
+</app-simulation-container>
+
+<ng-template #simulation>
+    <ng-container *ngIf="isHandset$ | async">
+    </ng-container>
+    <div class="simulation-console" *ngIf="container.simulation$ | async as simulation">
+        <div class="console-header">
+            <img src="assets/bitcoin-btc-logo.svg">
+            <span>
+                {{simulation.title}}
+            </span>
+        </div>
+        <div class="console-data" *ngIf="halvings$ | async as halvings">
+            <table>
+                <tr>
+                    <th *ngFor="let column of displayedColumns">
+                        <span *ngIf="column !== displayedColumns[0]"> | </span> <span> {{column.text}} </span>
+                    </th>
+                </tr>
+
+                <tr>
+                    <td *ngFor="let column of displayedColumns">
+                        <span *ngIf="column !== displayedColumns[0]">|-</span>{{getSeparatorLine(halvings, column)}}
+                    </td>
+                </tr>
+
+                <tr *ngFor="let halving of halvings">
+                    <td *ngFor="let column of displayedColumns">
+                        <span *ngIf="column !== displayedColumns[0]"> | </span> {{getValue(halving, column.prop)}}
+                    </td>
+                </tr>
+
+            </table>
+
+            <hr />
+
+            Total Amount of Bitcoin: {{getData(halvings)}}
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #controls>
+
+    <div class="parameters">
+        <h3>Input</h3>
+        <div class="container-card"><img src="assets/img/simulations/bitcoin-formula.png"></div><br />
+
+        <form [formGroup]="formGroup">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Halvings</mat-label>
+                <input matInput type="number" formControlName="halvingCount" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Blöcke <i>[pro Halving]</i></mat-label>
+                <input matInput type="number" formControlName="blockCount" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Bitcoin <i>[pro Block]</i></mat-label>
+                <input matInput type="number" formControlName="coinCount" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Sats <i>[pro Bitcoin]</i></mat-label>
+                <input matInput type="number" formControlName="satCount" />
+            </mat-form-field>
+
+        </form>
+
+        code: <a
+            href="https://github.com/bitcoin/bitcoin/blob/54f812d9d29893c690ae06b84aaeab128186aa36/src/chainparams.cpp#L66"
+            target="_blank">link to the code</a><br />
+        wiki: <a href="https://en.bitcoin.it/w/index.php?title=Controlled_supply&oldid=67473" target="_blank">link to
+            the wiki</a><br />
+    </div>
+
+</ng-template>
+
+<ng-template #definition>
+    Noch keine Definition vorhanden!
+</ng-template>

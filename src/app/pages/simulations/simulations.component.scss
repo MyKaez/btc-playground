@@ -1,1 +1,68 @@
-@import "/src/app/app.component.scss";
+@import "/src/colors.scss";
+
+:host {
+    display: flex;
+    align-items: center;
+}
+
+::ng-deep app-simulation-card:last-child .info-card {
+    height: 313px;
+    border: 2px dashed var(--font-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .info-card-content {
+        border-bottom: none !important;
+
+        h3 {
+            text-align: center;
+            color: var(--font-color) !important;
+
+            position: absolute;
+            top: 140px;
+            left: 75px;
+
+            transition-property: top;
+            transition-duration: .5s;
+        }
+    }
+
+    .info-card-media {
+        display: inline-block !important;
+        position: absolute;
+        top: 160px;
+        left: 137px;
+
+        opacity: 0;
+        transition-property: opacity;
+        transition-duration: 1s;
+
+        img {
+            width: 48px;
+            height: 48px;
+        }
+    }
+
+    &:hover {
+        h3 {                
+            top: 110px;
+        }
+
+        .info-card-media {
+            opacity: 1;
+        }
+    }
+
+    p {
+        display: none;
+    }
+}
+
+.items {
+    justify-content: center;
+
+    @media only screen and (min-width: $max-content-width) {
+        justify-content: space-between;        
+    }
+}

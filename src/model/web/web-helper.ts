@@ -14,4 +14,10 @@ export class WebHelper {
         tag.src = 'https://www.youtube.com/iframe_api';
         document.body.appendChild(tag);
     }
+
+    public static async waitSeconds(seconds: number) {
+        return new Promise(res => {
+            window.setTimeout(res, seconds * 1000);
+        });
+    }
 }

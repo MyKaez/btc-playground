@@ -1,0 +1,57 @@
+<div class="content simulation-container" *ngIf="simulation$ | async as simulation">
+    <mat-tab-group class="simulation-navigation" mat-align-tabs="center" [selectedIndex]="selectedTabIndex"
+        (selectedTabChange)="onTabChanged($event)">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="mat-tab-label">Video</span>
+            </ng-template>
+
+            <div class="info-card simulation-definition">
+                <div *ngIf="showImageContainer$ | async" class="video-explanation">
+                    <youtube-player *ngIf="showVideo$ | async" [videoId]="simulation.youtubeSrc"></youtube-player>
+                    <img *ngIf="!(showVideo$ | async)" [src]="simulation.imageSrc" />
+                </div>
+                <div *ngIf="simulationDefinition" class="text-explanation">
+                    <ng-container [ngTemplateOutlet]="simulationDefinition"></ng-container>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="mat-tab-label">Simulation</span>
+            </ng-template>
+            <div [class]="(layout.isSmallScreen$ | async) ? 'simulation-items-handset': 'simulation-items'">
+                <div *ngIf="simulationControls && !(layout.isSmallScreen$ | async)"
+                    class="text info-card simulation-controls">
+                    <ng-container [ngTemplateOutlet]="simulationControls"></ng-container>
+                </div>
+
+                <div *ngIf="simulationBody" class="simulation">
+                    <ng-container [ngTemplateOutlet]="simulationBody"></ng-container>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab *ngIf="simulationSessions">
+            <ng-template mat-tab-label>
+                <span class="mat-tab-label">Session</span>
+            </ng-template>
+
+            <div class="simulation-sessions">
+                <ng-container [ngTemplateOutlet]="simulationSessions"></ng-container>
+            </div>
+        </mat-tab>
+
+        <mat-tab *ngIf="simulationControls && (layout.isSmallScreen$ | async)">
+            <ng-template mat-tab-label>
+                <span class="mat-tab-label">Optionen</span>
+            </ng-template>
+            <div class="simulation-items-handset">
+                <div class="text info-card simulation-controls">
+                    <ng-container [ngTemplateOutlet]="simulationControls"></ng-container>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

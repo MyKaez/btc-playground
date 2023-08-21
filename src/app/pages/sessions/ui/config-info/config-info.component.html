@@ -1,0 +1,12 @@
+<form [formGroup]="formGroup">
+    <mat-form-field *ngFor="let key of keys">
+        <mat-label>{{labelMapping[key] || key}}</mat-label>
+        <div *ngIf="isReadonly(key);else editable">
+            <input matInput [value]="config[key]" [disabled]="true">
+        </div>
+        <ng-template #editable>
+            <input matInput [value]="config[key]" [disabled]="false" [formControlName]="key">
+            <span *ngIf="observable(key) | async"></span>
+        </ng-template>
+    </mat-form-field>
+</form>

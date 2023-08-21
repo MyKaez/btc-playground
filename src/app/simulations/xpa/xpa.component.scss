@@ -1,11 +1,66 @@
-@import "/src/app/app.component.scss";
-
-.mat-tab-group {
-    width: 100%;
-    height: 100%;
-}
+@import "/src/colors.scss";
 
 .mat-tab-body-wrapper {
     height: 100%;
-    margin-top: $margin-large;
+}
+
+.scenario-header {
+    font-size: 12px !important;
+    font-style: italic;
+    color: $gray;
+    margin-left: $margin-large !important;
+}
+
+.simulation-controls .scenario-header { display: none; }
+.handset-layout .simulation-controls .scenario-header { display: inline; }
+
+.non-confirm {
+    color: $accent-300;
+}
+
+.confirm {
+    color: $accent;
+}
+
+.xpa-participant {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    color: $accent-300;;
+    
+    h3 {
+        margin-bottom: 4px !important;
+    }
+
+    .xpa-blocks {
+        min-height: 20px;
+    }
+}
+
+.xpa-details {
+    display: table;
+
+    > * {
+        display: table-row;
+    } 
+    
+    > * > span {
+        display: table-cell;
+
+        &:first-child {
+            width: 1%;
+            white-space: nowrap;
+
+            &:before {
+                content: ">";
+                margin: 0 16px 0 4px;
+            } 
+        } 
+    } 
+    
+    > * > span:last-child:before {
+        content: ":";
+        margin: 0 16px 0 4px;
+        color: $accent-300;
+    } 
 }

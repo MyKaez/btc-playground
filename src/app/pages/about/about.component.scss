@@ -1,27 +1,53 @@
-@import "/src/styles.scss";
+@import "/src/colors.scss";
+
+$content-width: 900px;
 
 .visions {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-between;     
+    max-width: $content-width;   
+
+    >*:not(:first-child) {
+        border-top: 1px solid $primary-300;
+    }
 
     .vision {
         display: flex;
-        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: $margin-large 0;
+        flex-wrap: wrap;
 
-        .vision-head {
-            display: flex;
+        @media only screen and (min-width: $max-content-width) {
+            flex-wrap: nowrap;       
+            justify-content: space-between; 
+            padding: $margin-large;    
 
-            :not(:last-child) {
-                margin-right: $margin-small;
-            }
-
-            .mat-icon {
-                color: $accent2;
+            >*:not(:first-child) {
+                margin-left: $margin-large;
+                margin-top: 0;
             }
         }
+        
+        .mat-icon {
+            min-width: 34px;
+        }
 
-        &:not(:last-child) {
-            margin-right: $margin-huge;
+        h4 {
+            min-width: 180px;
+            margin-bottom: 0;
+            font-size: large;
+            margin-left: $margin-large;
+        }
+
+        span {
+            font-size: larger;
+            margin-top: $margin-small;
         }
     }
+}
+
+h3 {
+    margin-top: $margin-huge;
 }

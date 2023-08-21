@@ -1,0 +1,303 @@
+@import "/src/colors.scss"
+;
+
+.simulation-container {
+    .mat-tab-group {
+      height: 100%;
+      width: 100%;
+
+      .mat-tab-body-wrapper {
+        flex-grow: 1;       
+        
+        @media only screen and (min-width: $max-content-width) {
+            margin-top: $margin-large !important;
+        }
+      }
+    }
+
+    .text-explanation {
+        margin-top: $margin-huge;
+        
+        .mat-expansion-panel {
+            h1, h2, h3 {
+                margin-bottom: $margin-slim;
+            }
+        }
+
+        .reason {
+            font-style: italic;
+            padding-left: $margin-huge;
+        }
+
+        .groundwork {
+            margin-top: $margin-huge;
+        }
+
+        .section {
+            margin-top: $margin-large;
+
+            &:first-child {
+                margin-top: $margin-small;
+            }
+
+            :last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba($accent, 0.85);
+            border: 2px solid $light-color;
+            border-radius: 0 2em 0 2em;
+            padding: $margin-small $margin-large;
+            margin: 0 auto $margin-small auto;
+        }
+    }
+
+    .simulation-definition {
+        &.info-card {
+            margin: 0;
+        }
+
+        .video-explanation {
+            display: flex;
+            justify-content: center;
+            border-bottom: 2px solid $primary-300;
+            padding-bottom: 1rem;
+
+            img,
+            iframe {
+                border: 2px solid $primary-300;    
+                max-width: 560px;
+                max-height: 315px;
+                height: 40vw;
+                width: 80vw;
+                border-bottom-left-radius: 2em;
+            }
+        }
+    }
+
+    .simulation-controls {
+        position: relative;
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: $margin-small;
+        }
+
+        .validation-error {
+            color: var(--error);
+            font-size: small;
+            padding: 8px 0 0 0;
+            margin-bottom: -4px;
+            display: block;
+        }
+
+        .actions {
+            padding-top: 50px;
+
+            .actions-bar {
+                position: absolute;
+                top: 0;
+                width: 100%;
+                background-color: $primary-700;
+                border-bottom: 2px solid #434355;
+                left: 0;
+                padding: .5rem;
+            }
+        }
+
+        .action-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        
+            padding: 8px 10px;
+            min-height: 60px;
+        }
+
+        > *:not(:last-child) {
+            margin-bottom: $margin-large;
+        }
+
+        .mat-expansion-panel {
+            button,
+            .mat-form-field,
+            .mat-expansion-panel {
+               &:not(:first-child) {
+                margin-top: $margin-large;
+               }
+            }
+
+            hr {
+                margin: $margin-small 0 $margin-slim 0;
+            }
+        }
+    }
+
+    .simulation-items-handset {
+        display: flex;
+        flex-direction: column;
+
+        .simulation {
+            width: 100%;
+            flex-grow: 1;
+
+            >.actions {
+                display: flex;
+                justify-content: space-between;
+
+                >.action-info{
+                    display: none;
+                }
+
+                > * {
+                    flex-grow: 1;
+                }
+
+                .action-bar {
+                    margin-bottom: $margin-large;
+                }
+            }
+        }
+    }
+
+    .simulation-items {
+        display: flex;
+        justify-content: space-evenly;
+
+        .text {
+            overflow: auto;
+        }
+
+        .simulation {
+            width: 70%;
+            height: 100%;
+            margin-left: $margin-large;
+        }
+    }
+
+    .simulation-items,
+    .simulation-items-handset {
+        height: 100%;
+        width: 100%;
+
+        a {
+            color: white;
+        }
+
+        .text {
+            &.info-card {
+                width: auto;
+                height: auto;
+                margin: 0;
+            }
+
+            .parameters,
+            .calculations,
+            .options,
+            .actions {
+                display: flex;
+                flex-direction: column;
+                color: $light-color;
+
+                .formula {
+                    text-align: center;
+                    font-size: medium;
+                }
+
+                .small {
+                    margin-top: $margin-large;
+                    font-size: small;
+                }
+            }
+
+            form {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        .actions {
+            .actions-bar {
+                display: flex;
+                justify-content: space-evenly;
+                flex-grow: 1;
+            }
+
+            >:not(:last-child) {
+                margin-bottom: $margin-small;
+            }
+        }
+
+        .simulation {
+            .simulation-console {
+                border: 1px solid $primary-300;
+                border-radius: 0 2em 0 0;
+                background-color: $primary-700;
+                text-align: left;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+
+                .console-header {
+                    height: 2em;
+                    background-color: rgba(var(--header-color), 0.9);
+                    border-bottom: 1px solid $primary-300;
+                    color: white;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: start;
+                    padding-left: $margin-small;
+                    border-radius: 0 2em 0 0;
+
+                    img {
+                        height: 16px;
+                    }
+
+                    span {
+                        margin-left: $margin-huge;
+                    }
+                }
+
+                .console-data {
+                    overflow: auto;
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
+                    color: $accent;
+                    background-color: $primary-700;
+                    white-space: nowrap;
+                    padding: $margin-small;
+                    font-family: $code-font;
+                }
+            }
+        }
+    }
+
+    form.disabled {
+        .mat-form-field {
+            opacity: 0.5;
+            pointer-events: none
+        }
+    }
+
+    button {
+        border: 2px solid $light-color;
+        border-radius: 2em;
+        line-height: inherit;
+    }
+
+    .simulation-sessions {
+        display: flex;
+
+        >* {
+            flex-grow: 1;
+        }
+    }
+}

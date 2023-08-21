@@ -1,0 +1,26 @@
+<ul>
+    <li *ngIf="user">
+        <mat-form-field>
+            <mat-label>Ich habe</mat-label>
+            <input matInput [value]="isMe ? 'GEWONNEN!' : 'verloren...'" [readonly]="true">
+        </mat-form-field>
+    </li>
+    <li>
+        <mat-form-field>
+            <mat-label>Gewinner</mat-label>
+            <input matInput [value]="winner" [readonly]="true">
+        </mat-form-field>
+    </li>
+    <li>
+        <mat-form-field>
+            <mat-label>Text</mat-label>
+            <input matInput [value]="winnerBlock?.text" [readonly]="true">
+        </mat-form-field>
+    </li>
+    <li>
+        <mat-form-field>
+            <mat-label>Hash</mat-label>
+            <input matInput [value]="winnerBlock?.hash" [readonly]="true">
+        </mat-form-field>
+    </li>
+</ul>

@@ -1,0 +1,48 @@
+@import "/src/colors.scss";
+
+$table-min-width: 661px;
+
+.no-sessions-section {
+    font-style: italic;
+}
+
+h2 {
+    margin-top: $margin-large;
+    margin-bottom: $margin-slim;
+}
+
+.session-table {
+    td,th {
+        padding: $margin-slim $margin-small;
+    }
+
+    .session-list-small {
+        margin-top: $margin-small;
+    }
+
+    @media only screen and (min-width: $table-min-width) {
+        .session-list-small {
+            display: none;
+        }
+    }
+
+    @media only screen and (max-width: $table-min-width) {
+        .session-list-wide {
+            display: none;
+        }
+    }
+}
+
+.session-link {
+    color: $field-link-color;
+
+    &:hover {
+        cursor: pointer;
+        color: $field-link-color-hover;
+    }
+}
+
+.session-name,
+.session-id {
+    word-break: break-all;
+}

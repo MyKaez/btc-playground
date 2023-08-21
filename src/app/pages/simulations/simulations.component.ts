@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ContentLayoutMode, LayoutService } from '..';
-import { Simulation, SimulationService } from './simulation.service';
+import { Simulation, SimulationService } from '../../simulations';
 
 @Component({
   selector: 'app-simple-simulations',
@@ -17,6 +17,6 @@ export class SimulationsComponent {
   }
 
   ngOnInit(): void {
-    this.layout.setLayoutMode(ContentLayoutMode.ImageCarousel);
+    this.layout.setLayoutMode(ContentLayoutMode.LockImage);
   }
 }
