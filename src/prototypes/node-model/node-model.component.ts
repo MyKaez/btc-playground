@@ -14,7 +14,7 @@ export class NodeModelComponent implements OnInit {
     @ViewChild('canvasToDraw', {static: false}) canvas?: ElementRef<HTMLCanvasElement>;
     
     @Input("node-count")
-    nodeCount = 8;
+    nodeCount = 3;
 
     @Input("node-canvas")
     nodeCanvas: NodeCanvas;

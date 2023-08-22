@@ -29,12 +29,12 @@ export class NodeModelAnimator {
 
         for(let i = 0; i < nodeCount; i++) {
             canvas.nodes.push({
-                color: AnimHelper.getColorCssString(colors[i % 3]),
-                textColor: AnimHelper.getColorCssString(AnimHelper.convertToGrayscale(AnimHelper.getContrast(colors[i % 3]))),
+                color: AnimHelper.getColorCssString(colors[i]),
+                textColor: AnimHelper.getColorCssString(AnimHelper.convertToGrayscale(AnimHelper.getContrast(colors[i]))),
                 connections: [],
                 pins: [],
                 size: 80 + "px",
-                text: nodeTexts[i % 3],
+                text: nodeTexts[i],
                 x: 0,
                 y: 0,
                 id: StringHelper.createUiId()

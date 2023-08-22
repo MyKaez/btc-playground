@@ -58,13 +58,13 @@ export class NodeCanvas {
 
         const originX = this.containerWidth / 2;
         const originY = this.containerHeight / 2;
-        const radiusX = originX - this.nodeMargin;
-        const radiusY = originY - this.nodeMargin;
+        const radiusX = originX - this.nodeMargin - this.nodePadding;
+        const radiusY = originY - this.nodeMargin - this.nodePadding;
 
         this.nodes.forEach(node => {
             let angleRadians = Math.PI * angle / 180; // degree to radiant
-            node.x = originX + radiusX * Math.cos(angleRadians);
-            node.y = originY + radiusY * Math.sin(angleRadians);
+            node.x = originX - this.nodeSize + radiusX * Math.cos(angleRadians);
+            node.y = originY - this.nodeSize + radiusY * Math.sin(angleRadians);
             angle += angleStep;
         });
 
@@ -76,19 +76,6 @@ export class NodeCanvas {
             angleStep: angleStep,
             angle: angle
         });
-
-        /*
-        // First top center
-        this.nodes[0].x = this.containerWidth / 2 - this.nodeSize / 2;
-        this.nodes[0].y = this.nodeMargin;
-
-        // Second bottom left
-        this.nodes[1].x = this.nodeMargin;
-        this.nodes[1].y = this.containerHeight - this.nodeSize - this.nodeMargin;
-
-        // Third bottom right
-        this.nodes[2].x = this.containerWidth - this.nodeSize - this.nodeMargin;
-        this.nodes[2].y = this.containerHeight - this.nodeSize - this.nodeMargin;*/
 
         this.syncCanvasValues(... this.nodes);
     }
