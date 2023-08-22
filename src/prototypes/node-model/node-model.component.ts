@@ -14,7 +14,7 @@ export class NodeModelComponent implements OnInit {
     @ViewChild('canvasToDraw', {static: false}) canvas?: ElementRef<HTMLCanvasElement>;
     
     @Input("node-count")
-    nodeCount = 3;
+    nodeCount = 8;
 
     @Input("node-canvas")
     nodeCanvas: NodeCanvas;
@@ -27,13 +27,16 @@ export class NodeModelComponent implements OnInit {
 
     private animator: NodeModelAnimator;
 
-    constructor() {
-        this.animator = new NodeModelAnimator(new Vector(0,0));
-        this.nodeCanvas = this.animator.createDefaultCanvas(this.nodeCount);
-        this.nodeCanvas.updatePositions(true);
+    constructor(private elementRef: ElementRef) {
+        console.log("element model", elementRef.nativeElement.clientWidth);
+        this.animator = new NodeModelAnimator();
+        this.nodeCanvas = new NodeCanvas(0,0);
     }
 
     ngOnInit() { 
+        this.animator.size = new Vector(this.elementRef.nativeElement.clientWidth, this.elementRef.nativeElement.clientHeight);
+        this.nodeCanvas = this.animator.createDefaultCanvas(this.nodeCount);
+        this.nodeCanvas.updatePositions(true);        
     }
     
     public context: CanvasRenderingContext2D | null | undefined;
@@ -76,7 +79,7 @@ export class NodeModelComponent implements OnInit {
     }
 
     onMouseMove($event: any) {
-        console.log("Moving mouse", $event.clientX);
+        //console.log("Moving mouse", $event.clientX);
         if(!this.mouseDown) return;         
         if(!this.arrowStart) {
             this.arrowStart = new Vector($event.clientX, $event.clientY);

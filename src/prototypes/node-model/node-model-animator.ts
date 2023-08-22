@@ -7,7 +7,10 @@ import { NodeCanvas } from "./node-canvas";
 import { ArrayHelper } from "src/model/collections";
 
 export class NodeModelAnimator {
-    constructor(public size: Vector, public offset = new Vector(0,0)) {
+    static readonly nodeSize = 80;
+    static readonly pinSize = 20;
+
+    constructor(public size = new Vector(0,0), public offset = new Vector(0,0)) {
 
     }
 
@@ -15,10 +18,10 @@ export class NodeModelAnimator {
 
     createDefaultCanvas(nodeCount: number): NodeCanvas {
         const colors = ArrayHelper.selectFor(nodeCount).map(i => AnimHelper.generateColor());
-        const nodeTexts = ["A", "B", "C"];
+        const nodeTexts = ArrayHelper.selectFor(nodeCount).map(i => String.fromCharCode(i + 64 + 1));
         let canvas = new NodeCanvas(
-            600,
-            400,
+            this.size.x,
+            this.size.y,
             [], // nodes
             [], // rels
             [] // pins
@@ -32,8 +35,8 @@ export class NodeModelAnimator {
                 pins: [],
                 size: 80 + "px",
                 text: nodeTexts[i % 3],
-                x: i * 60,
-                y: i * 60,
+                x: 0,
+                y: 0,
                 id: StringHelper.createUiId()
             });
         }

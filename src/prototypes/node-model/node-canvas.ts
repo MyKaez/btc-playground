@@ -9,9 +9,7 @@ export class NodeCanvas {
         public nodes: VisualizedNode[] = [],
         public relations: VisualizedNodeRelation[] = [],
         public pins: VisualizedPin[] = []
-    ) { 
-        //if(nodes.length !== 3) throw new Error("Sorry, we are still missing some cool math to calculate positions and angles for more than 3 nodes");
-    }
+    ) { }
 
     movePin(pin: VisualizedPin) {
         let strang = ArrayHelper.swapElement(pin, pin.relation.firstPins, pin.relation.lastPins);
@@ -53,6 +51,33 @@ export class NodeCanvas {
     }
 
     private updateNodePositions() {
+        const angleStep = 360 / this.nodes.length;
+        let angle = this.nodes.length % 2
+            ? 360 / 4 * 3
+            : 0;
+
+        const originX = this.containerWidth / 2;
+        const originY = this.containerHeight / 2;
+        const radiusX = originX - this.nodeMargin;
+        const radiusY = originY - this.nodeMargin;
+
+        this.nodes.forEach(node => {
+            let angleRadians = Math.PI * angle / 180; // degree to radiant
+            node.x = originX + radiusX * Math.cos(angleRadians);
+            node.y = originY + radiusY * Math.sin(angleRadians);
+            angle += angleStep;
+        });
+
+        console.log("Updated positions by ", {
+            originX: originX,
+            originY: originY,
+            radiusX: radiusX,
+            radiusY: radiusY,
+            angleStep: angleStep,
+            angle: angle
+        });
+
+        /*
         // First top center
         this.nodes[0].x = this.containerWidth / 2 - this.nodeSize / 2;
         this.nodes[0].y = this.nodeMargin;
@@ -63,7 +88,7 @@ export class NodeCanvas {
 
         // Third bottom right
         this.nodes[2].x = this.containerWidth - this.nodeSize - this.nodeMargin;
-        this.nodes[2].y = this.containerHeight - this.nodeSize - this.nodeMargin;
+        this.nodes[2].y = this.containerHeight - this.nodeSize - this.nodeMargin;*/
 
         this.syncCanvasValues(... this.nodes);
     }
