@@ -3,6 +3,7 @@ import { MatSliderChange } from '@angular/material/slider';
 import { Vector } from 'src/model/anim';
 import { StringHelper } from 'src/model/text';
 import { NodeCanvas, NodeModelAnimator, VisualizedNode, VisualizedNodeRelation, VisualizedPin } from "./";
+import { distinctUntilChanged, distinctUntilKeyChanged, interval, map, tap } from 'rxjs';
 
 @Component({
     selector: 'node-model',
@@ -26,17 +27,28 @@ export class NodeModelComponent implements OnInit {
     onClickPin?: (event: any, VisualizedPin: VisualizedNode) => void;
 
     private animator: NodeModelAnimator;
+    private containerSize$ = interval(500).pipe(
+        map(i =>  new Vector(this.elementRef.nativeElement?.clientWidth || 0, this.elementRef.nativeElement?.clientHeight || 0)),
+        distinctUntilChanged((previous, current) => !(current.x - previous.x) || !(current.y - previous.y)),
+        tap(size => {
+            console.log("Updating size of animator", size);
+            this.animator.size = size;
+            this.nodeCanvas.size = size;
+            this.nodeCanvas.updatePositions(true);
+        })
+    );
 
     constructor(private elementRef: ElementRef) {
         console.log("element model", elementRef.nativeElement.clientWidth);
         this.animator = new NodeModelAnimator();
-        this.nodeCanvas = new NodeCanvas(0,0);
+        this.nodeCanvas = new NodeCanvas()
     }
 
     ngOnInit() { 
-        this.animator.size = new Vector(this.elementRef.nativeElement.clientWidth, this.elementRef.nativeElement.clientHeight);
+        //this.animator.size = new Vector(this.elementRef.nativeElement.clientWidth, this.elementRef.nativeElement.clientHeight);
         this.nodeCanvas = this.animator.createDefaultCanvas(this.nodeCount);
-        this.nodeCanvas.updatePositions(true);        
+        this.containerSize$.subscribe();
+        //this.nodeCanvas.updatePositions(true);
     }
     
     public context: CanvasRenderingContext2D | null | undefined;

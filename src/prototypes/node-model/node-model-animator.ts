@@ -21,11 +21,10 @@ export class NodeModelAnimator {
         const colors = ArrayHelper.selectFor(nodeCount).map(i => AnimHelper.generateColor());
         const nodeTexts = ArrayHelper.selectFor(nodeCount).map(i => String.fromCharCode(i + 64 + 1));
         let canvas = new NodeCanvas(
-            this.size.x,
-            this.size.y,
             [], // nodes
             [], // rels
-            [] // pins
+            [], // pins
+            this.size
         );
 
         canvas.nodes = ArrayHelper.selectFor(nodeCount).map(i => {

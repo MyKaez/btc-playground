@@ -4,11 +4,10 @@ import { CanvasElement, VisualizedNode, VisualizedNodeRelation, VisualizedPin } 
 
 export class NodeCanvas {    
     constructor(
-        private containerWidth: number,
-        private containerHeight: number,
         public nodes: VisualizedNode[] = [],
         public relations: VisualizedNodeRelation[] = [],
-        public pins: VisualizedPin[] = []
+        public pins: VisualizedPin[] = [],
+        public size = new Vector(0,0)
     ) { }
 
     movePin(pin: VisualizedPin) {
@@ -35,12 +34,12 @@ export class NodeCanvas {
         this.pinMargin = this.pinSize / 2 / 5;
         this.pinPadding = this.pinMargin + this.pinSize / 2;
 
-        console.log("nodeSize", this.nodeSize);
-        console.log("nodeMargin", this.nodeMargin);
-        console.log("nodePadding", this.nodePadding);
-        console.log("pinSize", this.pinSize);
-        console.log("pinMargin", this.pinMargin);
-        console.log("pingPadding", this.pinPadding);
+        //console.log("nodeSize", this.nodeSize);
+        //console.log("nodeMargin", this.nodeMargin);
+        //console.log("nodePadding", this.nodePadding);
+        //console.log("pinSize", this.pinSize);
+        //console.log("pinMargin", this.pinMargin);
+        //console.log("pingPadding", this.pinPadding);
 
         if(updateNodes) {
             this.updateNodePositions();
@@ -56,8 +55,8 @@ export class NodeCanvas {
             ? 360 / 4 * 3
             : 0;
 
-        const originX = this.containerWidth / 2;
-        const originY = this.containerHeight / 2;
+        const originX = this.size.x / 2;
+        const originY = this.size.y / 2;
         const radiusX = originX - this.nodeMargin - this.nodePadding;
         const radiusY = originY - this.nodeMargin - this.nodePadding;
 
@@ -68,14 +67,14 @@ export class NodeCanvas {
             angle += angleStep;
         });
 
-        console.log("Updated positions by ", {
+        /*console.log("Updated positions by ", {
             originX: originX,
             originY: originY,
             radiusX: radiusX,
             radiusY: radiusY,
             angleStep: angleStep,
             angle: angle
-        });
+        });*/
 
         this.syncCanvasValues(... this.nodes);
     }
