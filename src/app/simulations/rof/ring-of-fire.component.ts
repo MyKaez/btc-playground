@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 
 @Component({
@@ -8,7 +10,18 @@ import { ContentLayoutMode, LayoutService } from 'src/app/pages';
 })
 
 export class RingOfFireComponent implements OnInit {
-    constructor(private layout: LayoutService) { }
+
+    contentLayoutMode = ContentLayoutMode.LockImage;
+    isHandset$: Observable<boolean>;
+    constructor(private layout: LayoutService) {
+      this.isHandset$ = layout.isHandset$;
+    }
+
+    
+    nodeCount = new FormControl(3);
+    formGroup = new FormGroup({
+        nodeCount: this.nodeCount
+    });
 
     ngOnInit() {
         this.layout.setLayoutMode(ContentLayoutMode.LockImage);

@@ -24,8 +24,6 @@ export class FormulaComponent implements AfterViewInit {
     { prop: 'totalCoins', text: 'Gesamtanzahl Coins' },
   ];
 
-  contentLayoutMode = ContentLayoutMode.LockImage;
-
   halvingCount = new FormControl(0);
   blockCount = new FormControl(0);
   coinCount = new FormControl(0);
@@ -37,6 +35,8 @@ export class FormulaComponent implements AfterViewInit {
     satCount: this.satCount
   });
 
+  contentLayoutMode = ContentLayoutMode.LockImage;
+  isHandset$: Observable<boolean>;
   constructor(layout: LayoutService) {
     this.isHandset$ = layout.isHandset$;
   }
@@ -62,7 +62,6 @@ export class FormulaComponent implements AfterViewInit {
         return data;
       })
     );
-  isHandset$: Observable<boolean>;
 
   ngAfterViewInit(): void {
     this.formGroup.setValue({

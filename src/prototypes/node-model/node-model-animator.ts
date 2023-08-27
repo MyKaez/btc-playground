@@ -58,7 +58,7 @@ export class NodeModelAnimator {
                     y: 0,
                     id: StringHelper.createUiId()
                 };
-                for(let i = 0; i < pinCount / 2	; i++) {
+                for(let i = 0; i < pinCount	; i++) {
                     let first: VisualizedPin = {
                         color: node.color,
                         borderColor: node.textColor,
@@ -72,6 +72,8 @@ export class NodeModelAnimator {
 
                     let second = {... first, 
                         parent: other,
+                        color: other.color,
+                        borderColor: other.textColor,
                         id: StringHelper.createUiId()
                     };
 

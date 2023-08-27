@@ -1,3 +1,31 @@
-<div class="ring-of-fire">
-    <node-model [node-count]="3"></node-model>
-</div>
+<app-simulation-container [simulation-body]="simulation" [simulation-definition]="definition"
+    [simulation-controls]="controls" [content-layout-mode]="contentLayoutMode" #container>
+</app-simulation-container>
+
+<ng-template #simulation>
+    <ng-container *ngIf="isHandset$ | async">
+    </ng-container>
+    <div class="ring-of-fire">
+        <node-model [node-count]="nodeCount.value!"></node-model>
+    </div>
+</ng-template>
+
+<ng-template #controls>
+
+    <div class="parameters">
+        <h3>Input</h3>
+        <div class="container-card">
+            <form [formGroup]="formGroup">
+                <mat-form-field appearance="fill">
+                    <mat-label>Knoten</mat-label>
+                    <input matInput type="number" formControlName="nodeCount" />
+                </mat-form-field>
+            </form>
+        </div>
+    </div>
+
+</ng-template>
+
+<ng-template #definition>
+    Noch keine Definition vorhanden!
+</ng-template>

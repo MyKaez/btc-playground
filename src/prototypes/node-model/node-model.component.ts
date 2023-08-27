@@ -29,7 +29,9 @@ export class NodeModelComponent implements OnInit {
     private animator: NodeModelAnimator;
     private containerSize$ = interval(500).pipe(
         map(i =>  new Vector(this.elementRef.nativeElement?.clientWidth || 0, this.elementRef.nativeElement?.clientHeight || 0)),
-        distinctUntilChanged((previous, current) => !(current.x - previous.x) || !(current.y - previous.y)),
+        distinctUntilChanged((previous, current) => 
+            (!!current.x && !!current.y)
+             && (!(current.x - previous.x) || !(current.y - previous.y))),
         tap(size => {
             console.log("Updating size of animator", size);
             this.animator.size = size;
