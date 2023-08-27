@@ -8,5 +8,6 @@ export interface VisualizedPin extends CanvasElement {
     relation: VisualizedNodeRelation;
 
     color: string;
+    borderColor: string;
     clicked?: boolean;
 }

@@ -22,8 +22,8 @@ export class ArrayHelper {
 
         const target = startAt + times * (step > 0 ? 1 : -1);
         const compareForRunning = step > 0 
-            ? () => startAt <= target
-            : () => startAt >= target;
+            ? () => startAt < target
+            : () => startAt > target;
 
         while(compareForRunning()) {
             elements.push(startAt);

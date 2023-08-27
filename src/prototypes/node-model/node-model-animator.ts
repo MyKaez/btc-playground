@@ -17,6 +17,7 @@ export class NodeModelAnimator {
     
 
     createDefaultCanvas(nodeCount: number): NodeCanvas {
+        const pinCount = 6;
         const colors = ArrayHelper.selectFor(nodeCount).map(i => AnimHelper.generateColor());
         const nodeTexts = ArrayHelper.selectFor(nodeCount).map(i => String.fromCharCode(i + 64 + 1));
         let canvas = new NodeCanvas(
@@ -27,8 +28,8 @@ export class NodeModelAnimator {
             [] // pins
         );
 
-        for(let i = 0; i < nodeCount; i++) {
-            canvas.nodes.push({
+        canvas.nodes = ArrayHelper.selectFor(nodeCount).map(i => {
+            return {
                 color: AnimHelper.getColorCssString(colors[i]),
                 textColor: AnimHelper.getColorCssString(AnimHelper.convertToGrayscale(AnimHelper.getContrast(colors[i]))),
                 connections: [],
@@ -38,8 +39,8 @@ export class NodeModelAnimator {
                 x: 0,
                 y: 0,
                 id: StringHelper.createUiId()
-            });
-        }
+            };
+        });
 
         let combinations: VisualizedNode[][] = [];
         canvas.nodes.forEach(node => {
@@ -58,14 +59,15 @@ export class NodeModelAnimator {
                     y: 0,
                     id: StringHelper.createUiId()
                 };
-                for(let i = 0; i < 6; i++) {
+                for(let i = 0; i < pinCount / 2	; i++) {
                     let first: VisualizedPin = {
-                        color: "gray",
+                        color: node.color,
+                        borderColor: node.textColor,
                         parent: node,
                         relation: relation,
-                        size: 20 + "px",
-                        x: i * 20,
-                        y: i * 20,
+                        size: NodeModelAnimator.pinSize + "px",
+                        x: i * NodeModelAnimator.pinSize,
+                        y: i * NodeModelAnimator.pinSize,
                         id: StringHelper.createUiId()
                     };
 
