@@ -27,7 +27,8 @@ export class NodeModelComponent implements OnInit {
     onClickPin?: (event: any, VisualizedPin: VisualizedNode) => void;
 
     private animator: NodeModelAnimator;
-    private containerSize$ = interval(500).pipe(
+    private updateTicker$ = interval(500);
+    private containerSize$ = this.updateTicker$.pipe(
         map(i =>  new Vector(this.elementRef.nativeElement?.clientWidth || 0, this.elementRef.nativeElement?.clientHeight || 0)),
         distinctUntilChanged((previous, current) => !AnimHelper.hasVectorChanged(previous, current)),            
         tap(size => {
@@ -38,6 +39,16 @@ export class NodeModelComponent implements OnInit {
         })
     );
 
+    private nodeCount$ = this.updateTicker$.pipe(
+        map(i => this.nodeCount),
+        distinctUntilChanged(),
+        tap(count => {
+            console.log("Updating node count", count);
+            this.nodeCanvas = this.animator.updateNodeCount(this.nodeCount);
+            this.nodeCanvas.updatePositions(true);
+        })
+    )
+
     constructor(private elementRef: ElementRef) {
         console.log("element model", elementRef.nativeElement.clientWidth);
         this.animator = new NodeModelAnimator();
@@ -46,8 +57,9 @@ export class NodeModelComponent implements OnInit {
 
     ngOnInit() { 
         //this.animator.size = new Vector(this.elementRef.nativeElement.clientWidth, this.elementRef.nativeElement.clientHeight);
-        this.nodeCanvas = this.animator.createDefaultCanvas(this.nodeCount);
+        //this.nodeCanvas = this.animator.updateNodeCount(this.nodeCount);
         this.containerSize$.subscribe();
+        this.nodeCount$.subscribe();
         //this.nodeCanvas.updatePositions(true);
     }
     

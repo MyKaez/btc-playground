@@ -16,7 +16,7 @@ export class NodeModelAnimator {
 
     
 
-    createDefaultCanvas(nodeCount: number): NodeCanvas {
+    updateNodeCount(nodeCount: number): NodeCanvas {
         const pinCount = 6;
         const colors = ArrayHelper.selectFor(nodeCount).map(i => AnimHelper.generateColor());
         const nodeTexts = ArrayHelper.selectFor(nodeCount).map(i => String.fromCharCode(i + 64 + 1));
