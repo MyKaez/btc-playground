@@ -52,19 +52,22 @@ export class NodeCanvas {
     private updateNodePositions() {
         const angleStep = 360 / this.nodes.length;
         let angle = this.nodes.length % 2
-            ? 360 / 4 * 3
+            ? 360 * .75
             : 0;
 
         const originX = this.size.x / 2;
         const originY = this.size.y / 2;
-        const radiusX = originX - this.nodeMargin - this.nodePadding;
-        const radiusY = originY - this.nodeMargin - this.nodePadding;
+        const radiusX = originX - this.nodeMargin;
+        const radiusY = originY - this.nodeMargin;
 
         this.nodes.forEach(node => {
             let angleRadians = Math.PI * angle / 180; // degree to radiant
             node.x = originX - this.nodeSize + radiusX * Math.cos(angleRadians);
-            node.y = originY - this.nodeSize + radiusY * Math.sin(angleRadians);
+            node.y = originY + this.nodePadding + radiusY * Math.sin(angleRadians);
             angle += angleStep;
+
+            //TODO: this currently wont work consistently for all sizes, as it's based
+            // on a circular calculation, not one for an ellipses
         });
 
         console.log("Updated positions by ", {
