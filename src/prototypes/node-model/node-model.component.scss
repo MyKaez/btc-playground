@@ -22,6 +22,7 @@
 .node-model {
     display: flex;
     position: relative;
+    border: 1px solid red;
 
     > * {
         position: absolute;
@@ -40,7 +41,7 @@
         border-radius: 50%;
         border: 2px solid black;
 
-        transition-delay: 1s;
+        transition-delay: .1s;
         transition-duration: 3s;
         transition-property: top, left;
 

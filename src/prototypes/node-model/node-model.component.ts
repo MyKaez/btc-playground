@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
-import { Vector } from 'src/model/anim';
+import { AnimHelper, Vector } from 'src/model/anim';
 import { StringHelper } from 'src/model/text';
 import { NodeCanvas, NodeModelAnimator, VisualizedNode, VisualizedNodeRelation, VisualizedPin } from "./";
 import { distinctUntilChanged, distinctUntilKeyChanged, interval, map, tap } from 'rxjs';
@@ -29,9 +29,7 @@ export class NodeModelComponent implements OnInit {
     private animator: NodeModelAnimator;
     private containerSize$ = interval(500).pipe(
         map(i =>  new Vector(this.elementRef.nativeElement?.clientWidth || 0, this.elementRef.nativeElement?.clientHeight || 0)),
-        distinctUntilChanged((previous, current) => 
-            (!!current.x && !!current.y)
-             && (!(current.x - previous.x) || !(current.y - previous.y))),
+        distinctUntilChanged((previous, current) => !AnimHelper.hasVectorChanged(previous, current)),            
         tap(size => {
             console.log("Updating size of animator", size);
             this.animator.size = size;

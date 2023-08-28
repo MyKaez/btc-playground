@@ -67,14 +67,15 @@ export class NodeCanvas {
             angle += angleStep;
         });
 
-        /*console.log("Updated positions by ", {
+        console.log("Updated positions by ", {
+            nodes: this.nodes,
             originX: originX,
             originY: originY,
             radiusX: radiusX,
             radiusY: radiusY,
             angleStep: angleStep,
             angle: angle
-        });*/
+        });
 
         this.syncCanvasValues(... this.nodes);
     }

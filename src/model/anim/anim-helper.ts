@@ -1,4 +1,5 @@
 import { Rgba } from "ngx-color-picker";
+import { Vector } from "./vector";
 
 export class AnimHelper {
     private static readonly MaxRgbValue = 255;
@@ -48,5 +49,11 @@ export class AnimHelper {
 
     public static generateColorValue(): number {
         return Math.floor(Math.random() * this.MaxRgbValue);
+    }
+
+    public static hasVectorChanged(previous: Vector, current: Vector, returnTrueOnZeroSize = false): boolean {
+        if(!returnTrueOnZeroSize && (!current.x || !current.y)) return false;
+        const hasChanged = !!(current.x - previous.x) || !!(current.y - previous.y);
+        return hasChanged;
     }
 }
