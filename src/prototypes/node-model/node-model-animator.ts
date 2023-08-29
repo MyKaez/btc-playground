@@ -12,9 +12,7 @@ export class NodeModelAnimator {
 
     constructor(public size = new Vector(0,0), public offset = new Vector(0,0)) {
 
-    }
-
-    
+    }    
 
     updateNodeCount(nodeCount: number): NodeCanvas {
         const pinCount = 6;

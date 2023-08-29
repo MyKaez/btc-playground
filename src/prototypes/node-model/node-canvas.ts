@@ -51,23 +51,22 @@ export class NodeCanvas {
 
     private updateNodePositions() {
         const angleStep = 360 / this.nodes.length;
-        let angle = this.nodes.length % 2
-            ? 360 * .75
-            : 0;
+        let angle = this.getStartAngleInDegrees();
 
         const originX = this.size.x / 2;
         const originY = this.size.y / 2;
-        const radiusX = originX - this.nodeMargin;
-        const radiusY = originY - this.nodeMargin;
+        const radiusX = originX - this.nodeSize;
+        const radiusY = originY - this.nodeSize;
 
         this.nodes.forEach(node => {
             let angleRadians = Math.PI * angle / 180; // degree to radiant
-            node.x = originX - this.nodeSize + radiusX * Math.cos(angleRadians);
-            node.y = originY + this.nodePadding + radiusY * Math.sin(angleRadians);
+            node.x = originX + radiusX * Math.cos(angleRadians) - this.nodeSize;
+            node.y = originY + radiusY * Math.sin(angleRadians) - this.nodeSize;
             angle += angleStep;
 
             //TODO: this currently wont work consistently for all sizes, as it's based
             // on a circular calculation, not one for an ellipses
+            //@see https://stackoverflow.com/questions/13608186/trying-to-plot-coordinates-around-the-edge-of-a-circle
         });
 
         console.log("Updated positions by ", {
@@ -81,6 +80,14 @@ export class NodeCanvas {
         });
 
         this.syncCanvasValues(... this.nodes);
+    }
+
+    private getStartAngleInDegrees(): number {
+        const isOddNodesCount = (this.nodes.length % 2) == 1;
+        if(isOddNodesCount) return 360 * .75;
+        const isVerticalOrientation = (this.size.x / this.size.y) < 0.9;
+        if(isVerticalOrientation) return 360 * .75;
+        return 0;
     }
 
     private updatePinPositions() {
