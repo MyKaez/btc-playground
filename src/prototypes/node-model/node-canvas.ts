@@ -1,6 +1,6 @@
 import { Vector } from "src/model/anim";
 import { ArrayHelper } from "src/model/collections";
-import { CanvasElement, VisualizedNode, VisualizedNodeRelation, VisualizedPin } from ".";
+import { CanvasElement, NodeModelAnimator, VisualizedNode, VisualizedNodeRelation, VisualizedPin } from ".";
 
 export class NodeCanvas {    
     constructor(
@@ -110,8 +110,11 @@ export class NodeCanvas {
     }
 
     private updateStrangPosititions(pins: VisualizedPin[], from: VisualizedNode, to: VisualizedNode, invert = false) { 
-        let vector = new Vector(to.x - from.x, to.y - from.y);
+        let vector = new Vector(to.x - from.x, to.y - from.y);        
+
         let absoluteVector = vector.copy();
+        let pinVisualization = this.getPinVisualization(vector.getMagnitude(), pins.length);
+
         //console.log("From vector", vector.x, vector.y);
         let offset: any = null;// new Vector(this.nodePadding, this.nodePadding);
         vector.normalize();
@@ -123,9 +126,10 @@ export class NodeCanvas {
         if(invert)  pins = [... pins].reverse();
 
         pins.forEach(pin => {
+            pin.size = pinVisualization.pinSize + "px";
             let pinVector = vector.copy();
             //console.log("cloned", pinVector.x, pinVector.y);
-            let elementFactor = (this.pinSize * 1.5) * counter;
+            let elementFactor = (pinVisualization.pinSize * 1.5) * counter;
             //if(elementFactor === 0) pinVector = new Vector(0,0);
             pinVector = pinVector.multiply(elementFactor);
 
@@ -145,7 +149,30 @@ export class NodeCanvas {
         });
     }
 
-    private getNodeCenter(node: VisualizedNode, nodeSize: number): any {
+    private getPinVisualization(distanceBetweenNodes: number, pinCount: number): PinVisualization {
+        let startPinSize = NodeModelAnimator.pinSize;
+        let startRows = 1;
+        let shrinkSizeSwitch = true;
+        let maxDistance = distanceBetweenNodes / 2 - NodeModelAnimator.relationSize;
+        let neededDistance = 0;
+
+        do {
+            let distancePerPin = startPinSize * 1.5;
+            neededDistance = distancePerPin * pinCount / startRows;
+            
+            if(shrinkSizeSwitch) startPinSize *= .75;
+            else startRows ++;
+
+            shrinkSizeSwitch = !shrinkSizeSwitch;
+        } while(neededDistance >= maxDistance);
+
+        return {
+            rowCount: startRows,
+            pinSize: startPinSize
+        };
+    }
+
+    private getNodeCenter(node: VisualizedNode, nodeSize: number): Vector {
         return new Vector(node.x + nodeSize / 2, node.y + nodeSize / 2);
     }
 
@@ -155,4 +182,9 @@ export class NodeCanvas {
             element.yPx = Math.floor(element.y)+ "px";
         });
     }
+}
+
+export interface PinVisualization {
+    pinSize: number;
+    rowCount: number;
 }

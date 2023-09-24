@@ -9,13 +9,13 @@ import { ArrayHelper } from "src/model/collections";
 export class NodeModelAnimator {
     static readonly nodeSize = 80;
     static readonly pinSize = 20;
+    static readonly relationSize = 100;
 
     constructor(public size = new Vector(0,0), public offset = new Vector(0,0)) {
 
     }    
 
     updateNodeCount(nodeCount: number): NodeCanvas {
-        const pinCount = 6;
         const colors = ArrayHelper.selectFor(nodeCount).map(i => AnimHelper.generateColor());
         const nodeTexts = ArrayHelper.selectFor(nodeCount).map(i => String.fromCharCode(i + 64 + 1));
         let canvas = new NodeCanvas(
@@ -56,6 +56,8 @@ export class NodeModelAnimator {
                     y: 0,
                     id: StringHelper.createUiId()
                 };
+
+                let pinCount = Math.random() * 5 + 5;
                 for(let i = 0; i < pinCount	; i++) {
                     let first: VisualizedPin = {
                         color: node.color,
