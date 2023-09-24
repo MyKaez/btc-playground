@@ -33,19 +33,26 @@ export class NodeModelAnimator {
                 pins: [],
                 size: 80 + "px",
                 text: nodeTexts[i],
+                liquidity: 0,
                 x: 0,
                 y: 0,
                 id: StringHelper.createUiId()
             };
         });
 
+        //this.createRelations(canvas);
+
+        return canvas;
+    }
+
+    private createRelations(canvas: NodeCanvas) {
         let combinations: VisualizedNode[][] = [];
         canvas.nodes.forEach(node => {
-            canvas.nodes.forEach(other => {                
-                if(node === other) return;
-                if(combinations.some(combination => combination.indexOf(node) >= 0 && combination.indexOf(other) >= 0)) return;
+            canvas.nodes.forEach(other => {
+                if (node === other) return;
+                if (combinations.some(combination => combination.indexOf(node) >= 0 && combination.indexOf(other) >= 0)) return;
                 combinations.push([node, other]);
-            
+
                 let relation: VisualizedNodeRelation = {
                     color: "#aad",
                     first: node,
@@ -58,7 +65,7 @@ export class NodeModelAnimator {
                 };
 
                 let pinCount = Math.random() * 5 + 5;
-                for(let i = 0; i < pinCount	; i++) {
+                for (let i = 0; i < pinCount; i++) {
                     let first: VisualizedPin = {
                         color: node.color,
                         borderColor: node.textColor,
@@ -70,7 +77,8 @@ export class NodeModelAnimator {
                         id: StringHelper.createUiId()
                     };
 
-                    let second = {... first, 
+                    let second = {
+                        ...first,
                         parent: other,
                         color: other.color,
                         borderColor: other.textColor,
@@ -90,7 +98,5 @@ export class NodeModelAnimator {
                 canvas.relations.push(relation);
             });
         });
-
-        return canvas;
     }
 }

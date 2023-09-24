@@ -1,11 +1,15 @@
-<div class="node-model" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)">
+<div class="node-model">
+    <!--(mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)">-->
     <span *ngIf="!nodeCanvas">Loading...</span>
-    <div *ngFor="let node of nodeCanvas.nodes" class="node" 
+    <div *ngFor="let node of nodeCanvas.nodes" class="node" (click)="onNodeClick(node)"
         [style.top]="node.yPx" 
         [style.left]="node.xPx"
         [style.background-color]="node.color"
         [style.color]="node.textColor"
-        >{{node.text}}</div>
+        [class.inactive]="!node.liquidity">
+        <div class="liquidity" *ngIf="node.liquidity">{{node.liquidity}}</div>
+        <span>{{node.text}}</span>    
+    </div>
     <div *ngFor="let relation of nodeCanvas.relations" class="relation"            
         [style.top]="relation.yPx" 
         [style.left]="relation.xPx">

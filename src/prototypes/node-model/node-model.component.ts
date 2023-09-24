@@ -135,6 +135,11 @@ export class NodeModelComponent implements OnInit {
         ctx.stroke();
     }   
 
+    onNodeClick(node: VisualizedNode) {
+        if(node.liquidity) return;
+        node.liquidity = 300;
+    }
+
     canvas_arrow(context: CanvasRenderingContext2D, fromx: number, fromy: number, tox: number, toy: number) {
         var headlen = 10; // length of head in pixels
         var dx = tox - fromx;

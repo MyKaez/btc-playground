@@ -6,6 +6,8 @@ export interface VisualizedNode extends CanvasElement {
     id?: number;
     text: string;
 
+    liquidity: number;
+
     connections: VisualizedNodeRelation[];
     pins: VisualizedPin[];    
 

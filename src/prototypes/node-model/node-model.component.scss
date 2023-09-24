@@ -1,3 +1,5 @@
+@import "/src/colors.scss";
+
 @keyframes jump {
     0% {
         padding: 0px;
@@ -34,6 +36,27 @@
         width: 80px;
         height: 80px;
         border-radius: 50%;
+        cursor: pointer;
+
+        &:hover {
+            opacity: .7;
+        }
+
+        &.inactive {
+            background-color: darkgray !important;
+            color: white !important;
+        }
+
+        .liquidity {
+            position: absolute;
+            top: -10px;
+            right: -40px;
+            padding: $margin-slim $margin-small;
+
+            background-color: darkblue;
+            color: white;
+            border: 2px solid lightgray;
+        }
     }
 
     .pin {
