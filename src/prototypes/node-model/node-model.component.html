@@ -1,5 +1,4 @@
-<div class="node-model">
-    <!--(mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)">-->
+<div class="node-model" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)">
     <span *ngIf="!nodeCanvas">Loading...</span>
     <div *ngFor="let node of nodeCanvas.nodes" class="node" (click)="onNodeClick(node)"
         [style.top]="node.yPx" 
@@ -25,5 +24,5 @@
         [style.border-color]="pin.borderColor"
         [class.clicked]="pin.clicked"
     ></div>
-    <!--<canvas #canvasToDraw></canvas>-->
+    <canvas #canvasToDraw></canvas>
 </div>

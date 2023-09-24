@@ -36,6 +36,10 @@ export class NodeModelComponent implements OnInit {
             this.animator.size = size;
             this.nodeCanvas.size = size;
             this.nodeCanvas.updatePositions(true);
+            if(this.context)  {
+                this.context.canvas.width = size.x;
+                this.context.canvas.height = size.y;
+            }
         })
     );
 
@@ -110,9 +114,9 @@ export class NodeModelComponent implements OnInit {
             return;
         }
 
-        let ctx = this.context!;
+        /*let ctx = this.context!;
         ctx.beginPath();
-        this.canvas_arrow(ctx, this.arrowStart.x, this.arrowStart.y, $event.x, $event.y);
+        this.canvas_arrow(ctx, this.arrowStart.x, this.arrowStart.y, $event.x, $event.y);*/
     }
 
     onMouseDown($event: any) {
@@ -120,7 +124,7 @@ export class NodeModelComponent implements OnInit {
         this.mouseDown = true;
     }
 
-    renderArrow() {
+    renderArrow(from: Vector, to: Vector) {
         let ctx = this.context;
         if(!ctx) {
             console.error("No context!");
@@ -128,14 +132,14 @@ export class NodeModelComponent implements OnInit {
         }
 
         ctx.beginPath();
-        this.canvas_arrow(ctx, 10, 30, 200, 150);
-        this.canvas_arrow(ctx, 100, 200, 400, 50);
-        this.canvas_arrow(ctx, 200, 30, 10, 150);
-        this.canvas_arrow(ctx, 400, 200, 100, 50);
+        
+        this.canvas_arrow(ctx, from.x, from.y, to.x, to.y);
         ctx.stroke();
     }   
 
     onNodeClick(node: VisualizedNode) {
+        const otherNode = this.nodeCanvas.nodes.find(n => n != node) || node;
+        this.renderArrow(new Vector(node.x, node.y), new Vector(otherNode.x, otherNode.y));
         if(node.liquidity) return;
         node.liquidity = 300;
     }
@@ -150,5 +154,7 @@ export class NodeModelComponent implements OnInit {
         context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
         context.moveTo(tox, toy);
         context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+        
+        console.log("arrow at", fromx, fromy, tox, toy);
     }
 }
