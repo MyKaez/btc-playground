@@ -51,6 +51,15 @@ export class AnimHelper {
         return Math.floor(Math.random() * this.MaxRgbValue);
     }
 
+    public static getCenter(position: Vector, size: Vector, fromBottom = false, fromRight = false): Vector {
+        //if(fromBottom || fromRight) throw new Error("Other Ancor as top left is not supported, yet");
+        size = size.copy();
+        if(fromBottom) size.y *= -1;
+        if(fromRight) size.x *= -1;
+
+        return position.add(size.divide(2));        
+    }
+
     public static hasVectorChanged(previous: Vector, current: Vector, returnTrueOnZeroSize = false): boolean {
         if(!returnTrueOnZeroSize && (!current.x || !current.y)) return false;
         const hasChanged = !!(current.x - previous.x) || !!(current.y - previous.y);

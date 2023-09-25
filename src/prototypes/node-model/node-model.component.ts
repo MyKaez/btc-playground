@@ -99,29 +99,31 @@ export class NodeModelComponent implements OnInit {
         this.nodeCanvas.updatePositions(true);
     }
 
-    private mouseDown = false;
+    private isDrawMode = false;
     private arrowStart?: Vector;
-    onMouseUp(event: Event) {
-        this.mouseDown = false;
-        this.arrowStart = undefined;
+    onMouseUp($event: any) {
+        //this.isDrawMode = false;
+        //this.context?.fill();
     }
 
     onMouseMove($event: any) {
-        //console.log("Moving mouse", $event.clientX);
-        if(!this.mouseDown) return;         
-        if(!this.arrowStart) {
-            this.arrowStart = new Vector($event.clientX, $event.clientY);
-            return;
-        }
+        if(!this.isDrawMode || !this.arrowStart) return;     
+        const canvasElement = this.canvas?.nativeElement;
+        if(!canvasElement) return;
 
-        /*let ctx = this.context!;
-        ctx.beginPath();
-        this.canvas_arrow(ctx, this.arrowStart.x, this.arrowStart.y, $event.x, $event.y);*/
+        const canvasRect = canvasElement.getBoundingClientRect();
+        
+        this.context?.clearRect(0, 0, canvasRect.width, canvasRect.height); 
+        this.renderArrow(this.arrowStart, new Vector($event.clientX - canvasRect.left, $event.clientY - canvasRect.top));
     }
 
     onMouseDown($event: any) {
-        console.log("downing mouse", $event.clientX);
-        this.mouseDown = true;
+        const canvasElement = this.canvas?.nativeElement;
+        if(!canvasElement) return;
+
+        const canvasRect = canvasElement.getBoundingClientRect();
+        this.context?.clearRect(0, 0, canvasRect.width, canvasRect.height); 
+        this.isDrawMode = false;
     }
 
     renderArrow(from: Vector, to: Vector) {
@@ -138,23 +140,48 @@ export class NodeModelComponent implements OnInit {
     }   
 
     onNodeClick(node: VisualizedNode) {
-        const otherNode = this.nodeCanvas.nodes.find(n => n != node) || node;
-        this.renderArrow(new Vector(node.x, node.y), new Vector(otherNode.x, otherNode.y));
-        if(node.liquidity) return;
-        node.liquidity = 300;
+        if(!node.liquidity) {
+            node.liquidity = 300;
+        }
+
+        this.isDrawMode = true;
+        this.arrowStart = AnimHelper.getCenter(NodeModelAnimator.getVector(node), NodeModelAnimator.getSizeVector());        
     }
 
-    canvas_arrow(context: CanvasRenderingContext2D, fromx: number, fromy: number, tox: number, toy: number) {
-        var headlen = 10; // length of head in pixels
-        var dx = tox - fromx;
-        var dy = toy - fromy;
-        var angle = Math.atan2(dy, dx);
-        context.moveTo(fromx, fromy);
-        context.lineTo(tox, toy);
-        context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
-        context.moveTo(tox, toy);
-        context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+    canvas_arrow(ctx: CanvasRenderingContext2D, fromx: number, fromy: number, tox: number, toy: number) {
+        const width = 22;
+        var headlen = 10;
+        var angle = Math.atan2(toy-fromy,tox-fromx);
+        // This makes it so the end of the arrow head is located at tox, toy, don't ask where 1.15 comes from
+        tox -= Math.cos(angle) * ((width*1.15));
+        toy -= Math.sin(angle) * ((width*1.15));
+
         
-        console.log("arrow at", fromx, fromy, tox, toy);
+        //starting path of the arrow from the start square to the end square and drawing the stroke
+        ctx.beginPath();
+        ctx.moveTo(fromx, fromy);
+        ctx.lineTo(tox, toy);
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = width;
+        ctx.stroke();
+        
+        //starting a new path from the head of the arrow to one of the sides of the point
+        ctx.beginPath();
+        ctx.moveTo(tox, toy);
+        ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),toy-headlen*Math.sin(angle-Math.PI/7));
+        
+        //path from the side point of the arrow, to the other side point
+        ctx.lineTo(tox-headlen*Math.cos(angle+Math.PI/7),toy-headlen*Math.sin(angle+Math.PI/7));
+        
+        //path from the side point back to the tip of the arrow, and then again to the opposite side point
+        ctx.lineTo(tox, toy);
+        ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),toy-headlen*Math.sin(angle-Math.PI/7));
+
+        //draws the paths created above
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = width;
+        ctx.stroke();
+        ctx.fillStyle = "#fff";
+        ctx.fill();
     }
 }

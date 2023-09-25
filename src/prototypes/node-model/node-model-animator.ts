@@ -5,6 +5,7 @@ import { VisualizedNode } from "./visualized-node";
 import { VisualizedNodeRelation } from "./visualized-node-relation";
 import { NodeCanvas } from "./node-canvas";
 import { ArrayHelper } from "src/model/collections";
+import { CanvasElement } from "./canvas-element";
 
 export class NodeModelAnimator {
     static readonly nodeSize = 80;
@@ -98,5 +99,13 @@ export class NodeModelAnimator {
                 canvas.relations.push(relation);
             });
         });
+    }
+
+    static getVector(element: CanvasElement): Vector {
+        return new Vector(element.x, element.y);
+    }
+
+    static getSizeVector(): Vector {
+        return new Vector(this.nodeSize, this.nodeSize);
     }
 }
