@@ -1,6 +1,7 @@
 import { Vector } from "src/model/anim";
 import { ArrayHelper } from "src/model/collections";
 import { CanvasElement, NodeModelAnimator, VisualizedNode, VisualizedNodeRelation, VisualizedPin } from ".";
+import { StringHelper } from "src/model/text";
 
 export class NodeCanvas {    
     constructor(
@@ -47,6 +48,71 @@ export class NodeCanvas {
         }
 
         this.updatePinPositions();
+    }
+
+    
+
+    createInitialRelations(canvas: NodeCanvas) {
+        let combinations: VisualizedNode[][] = [];
+        canvas.nodes.forEach(from => {
+            canvas.nodes.forEach(to => {
+                if (from === to) return;
+                if (combinations.some(combination => combination.indexOf(from) >= 0 && combination.indexOf(to) >= 0)) return;
+                combinations.push([from, to]);
+
+                this.createRelation(from, to);
+            });
+        });
+    }
+
+    createRelation(from: VisualizedNode, to: VisualizedNode) {
+        if(this.relations.some(relation => ArrayHelper.areArraysEqual([relation.first, relation.last], [from, to]))) {
+            throw new Error(`Relation with nodes ${from.text} and ${to.text} already exists`);
+        }
+
+        let relation: VisualizedNodeRelation = {
+            color: "#aad",
+            first: from,
+            firstPins: [],
+            last: to,
+            lastPins: [],
+            x: 0,
+            y: 0,
+            id: StringHelper.createUiId()
+        };
+
+        let pinCount = Math.random() * 5 + 5;
+        for (let i = 0; i < pinCount; i++) {
+            let first: VisualizedPin = {
+                color: from.color,
+                borderColor: from.textColor,
+                parent: from,
+                relation: relation,
+                size: NodeModelAnimator.pinSize + "px",
+                x: i * NodeModelAnimator.pinSize,
+                y: i * NodeModelAnimator.pinSize,
+                id: StringHelper.createUiId()
+            };
+
+            let second = {
+                ...first,
+                parent: to,
+                color: to.color,
+                borderColor: to.textColor,
+                id: StringHelper.createUiId()
+            };
+
+            relation.firstPins.push(first);
+            relation.lastPins.push(second);
+            this.pins.push(first);
+            from.pins.push(first);
+            this.pins.push(second);
+            to.pins.push(first);
+        }
+
+        from.connections.push(relation);
+        to.connections.push(relation);
+        this.relations.push(relation);
     }
 
     private updateNodePositions() {

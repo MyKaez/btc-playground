@@ -99,22 +99,22 @@ export class NodeModelComponent implements OnInit {
         this.nodeCanvas.updatePositions(true);
     }
 
-    private isDrawMode = false;
-    private arrowStart?: Vector;
+    private selectedNode?: VisualizedNode;
     onMouseUp($event: any) {
         //this.isDrawMode = false;
         //this.context?.fill();
     }
 
     onMouseMove($event: any) {
-        if(!this.isDrawMode || !this.arrowStart) return;     
+        if(!this.selectedNode) return;     
         const canvasElement = this.canvas?.nativeElement;
         if(!canvasElement) return;
 
         const canvasRect = canvasElement.getBoundingClientRect();
         
         this.context?.clearRect(0, 0, canvasRect.width, canvasRect.height); 
-        this.renderArrow(this.arrowStart, new Vector($event.clientX - canvasRect.left, $event.clientY - canvasRect.top));
+        this.renderArrow(AnimHelper.getCenter(NodeModelAnimator.getVector(this.selectedNode), NodeModelAnimator.getSizeVector()), 
+            new Vector($event.clientX - canvasRect.left, $event.clientY - canvasRect.top));
     }
 
     onMouseDown($event: any) {
@@ -123,7 +123,6 @@ export class NodeModelComponent implements OnInit {
 
         const canvasRect = canvasElement.getBoundingClientRect();
         this.context?.clearRect(0, 0, canvasRect.width, canvasRect.height); 
-        this.isDrawMode = false;
     }
 
     renderArrow(from: Vector, to: Vector) {
@@ -142,10 +141,26 @@ export class NodeModelComponent implements OnInit {
     onNodeClick(node: VisualizedNode) {
         if(!node.liquidity) {
             node.liquidity = 300;
+        }    
+
+        if(!this.selectedNode) this.startDrawing(node);
+        else this.endDrawing(node);
+    }
+
+    startDrawing(node: VisualizedNode) {
+        this.selectedNode = node; 
+    }
+
+    endDrawing(node: VisualizedNode) {       
+        try { 
+            this.nodeCanvas.createRelation(this.selectedNode!, node);
+            this.nodeCanvas.updatePositions(true);
+        }
+        catch(error) {
+            console.error(error, this.selectedNode, node);
         }
 
-        this.isDrawMode = true;
-        this.arrowStart = AnimHelper.getCenter(NodeModelAnimator.getVector(node), NodeModelAnimator.getSizeVector());        
+        this.selectedNode = undefined;
     }
 
     canvas_arrow(ctx: CanvasRenderingContext2D, fromx: number, fromy: number, tox: number, toy: number) {

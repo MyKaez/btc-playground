@@ -32,4 +32,23 @@ export class ArrayHelper {
 
         return elements;
     }
+
+    static areArraysEqual<T>(left?: T[], right?: T[], compareOrder = false, compareElement?: (first: T, second: T) => boolean): boolean {
+        if(left == right) return true;
+        if(!left || !right) return false;
+        if(left.length != right.length) return false;
+
+        if(!compareElement) compareElement = (first: T, second: T) => first === second;
+        if(compareOrder) return !left.some((element, i) => {
+            return compareElement!(element, right[i]);
+        });
+
+        const matches: T[] = [];
+        left.forEach(first => {
+            const match = right.find(second => matches.indexOf(second) === -1 && compareElement!(first, second));
+            if(match) matches.push(match);
+        });
+
+        return matches.length === left.length;
+    }
 }
