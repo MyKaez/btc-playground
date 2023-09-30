@@ -1,8 +1,10 @@
+import { Vector } from "./vector";
+
 export interface CanvasElement {
     x: number;
     y: number;
     
-    size?: string;
+    size?: Vector;
     xPx?: string;
     yPx?: string;
 }
