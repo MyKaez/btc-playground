@@ -5,7 +5,7 @@ import { VisualizedNode } from "./visualized-node";
 import { VisualizedNodeRelation } from "./visualized-node-relation";
 import { NodeCanvas } from "./node-canvas";
 import { ArrayHelper } from "src/model/collections";
-import { CanvasElement } from "./canvas-element";
+import { CanvasElement } from "../../model/anim/canvas-element";
 
 export class NodeModelAnimator {
     static readonly nodeSize = 80;
@@ -32,7 +32,7 @@ export class NodeModelAnimator {
                 textColor: AnimHelper.getColorCssString(AnimHelper.convertToGrayscale(AnimHelper.getContrast(colors[i]))),
                 connections: [],
                 pins: [],
-                size: 80 + "px",
+                size: new Vector(80),
                 text: nodeTexts[i],
                 liquidity: 0,
                 x: 0,

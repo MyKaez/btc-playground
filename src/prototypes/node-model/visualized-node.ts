@@ -1,4 +1,4 @@
-import { CanvasElement } from "./canvas-element";
+import { CanvasElement } from "../../model/anim/canvas-element";
 import { VisualizedNodeRelation } from "./visualized-node-relation";
 import { VisualizedPin } from "./visualized-pin";
 

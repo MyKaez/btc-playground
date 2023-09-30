@@ -88,7 +88,7 @@ export class NodeCanvas {
                 borderColor: from.textColor,
                 parent: from,
                 relation: relation,
-                size: NodeModelAnimator.pinSize + "px",
+                size: new Vector(NodeModelAnimator.pinSize),
                 x: i * NodeModelAnimator.pinSize,
                 y: i * NodeModelAnimator.pinSize,
                 id: StringHelper.createUiId()
@@ -192,7 +192,7 @@ export class NodeCanvas {
         if(invert)  pins = [... pins].reverse();
 
         pins.forEach(pin => {
-            pin.size = pinVisualization.pinSize + "px";
+            pin.size = new Vector(pinVisualization.pinSize);
             let pinVector = vector.copy();
             //console.log("cloned", pinVector.x, pinVector.y);
             let elementFactor = (pinVisualization.pinSize * 1.5) * counter;
