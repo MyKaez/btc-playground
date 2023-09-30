@@ -118,11 +118,11 @@ export class NodeModelComponent implements OnInit {
     }
 
     onMouseDown($event: any) {
-        const canvasElement = this.canvas?.nativeElement;
+        /*const canvasElement = this.canvas?.nativeElement;
         if(!canvasElement) return;
 
         const canvasRect = canvasElement.getBoundingClientRect();
-        this.context?.clearRect(0, 0, canvasRect.width, canvasRect.height); 
+        this.context?.clearRect(0, 0, canvasRect.width, canvasRect.height); */
     }
 
     renderArrow(from: Vector, to: Vector) {
@@ -161,6 +161,11 @@ export class NodeModelComponent implements OnInit {
         }
 
         this.selectedNode = undefined;
+        const canvasElement = this.canvas?.nativeElement;
+        if(!canvasElement) return;
+
+        const canvasRect = canvasElement.getBoundingClientRect();
+        this.context?.clearRect(0, 0, canvasRect.width, canvasRect.height);
     }
 
     canvas_arrow(ctx: CanvasRenderingContext2D, fromx: number, fromy: number, tox: number, toy: number) {
